@@ -26,3 +26,4 @@ vendor/bundler_gems
 
 # Ignore IDE
 .idea
+.project
