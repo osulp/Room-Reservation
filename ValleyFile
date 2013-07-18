@@ -1,0 +1,44 @@
+config.vm.box = "Ubuntu Server 12.04 Chef"
+config.vm.box_url = "https://dl.dropbox.com/u/1543052/Boxes/UbuntuServer12.04amd64.box"
+config.vm.forward_port 8808,8808
+chefjson = {
+  "mysql" => {
+    "server_root_password" => "vagrant",
+    "server_repl_password" => "vagrant",
+    "server_debian_password" => "vagrant"
+  },
+  :project => {
+    :name => "roomreservation",
+    :environment => {
+      "DONORKIOSK_DB_PREFIX" => "roomreservation",
+      "DONORKIOSK_DB_USERNAME" => "root",
+      "DONORKIOSK_DB_PASSWORD" => "vagrant",
+      "DONORKIOSK_DB_HOST" => "localhost",
+      "SPRING_TMP_PATH" => "/tmp"
+    },
+    #Relative to /vagrant.
+    :docroot => "/public",
+    :railsenv => "development",
+    :packages => %w{libyaml-dev libxml2 libxml2-dev libxslt1.1 libxslt1-dev libicu-dev nodejs}
+  },
+  "rvm" => {
+    "default_ruby" => "ruby-1.9.3-p429",
+    "user_default_ruby" => "ruby-1.9.3-p429",
+    "rvmrc" => {
+      "rvm_gemset_create_on_use_flag" => 1,
+      "rvm_install_on_use_flag" => 1,
+      "rvm_trust_rvmrcs_flag" => 1
+    }
+  },
+  :passenger => {
+    :rvm_ruby_version => "ruby-1.9.3-p429",
+    :version => "3.0.19"
+  },
+  "phantomjs" => {
+    "version" => "1.9.0"
+  },
+  "apache" => {
+    "listen_ports" => ["80","8000"]
+  }
+}
+recipes = ["apt","phantomjs","main","main::mysql","main::sendmail","main::rails"]
