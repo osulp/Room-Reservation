@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 
 gem 'jquery-rails'
 gem 'mysql2'
-gem 'sqlite3'
 gem 'rails', '~> 3.2.12'
 gem 'simple_form'
 gem 'yard'
@@ -13,6 +12,10 @@ group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'
   gem 'uglifier'
+  gem 'execjs'
+  gem 'therubyracer'
+  gem 'jquery-ui-rails'
+  gem 'bootstrap-sass'
 end
 
 group :development do
