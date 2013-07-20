@@ -1,0 +1,4 @@
+.widget{padding:1px;text-align:left;background-color:transparent;-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box;border:1px solid #ccc;border:1px solid rgba(0, 0, 0, 0.2);-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;-webkit-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);-moz-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);white-space:normal;margin-bottom: 20px; }
+.widget-title{margin:0;padding:8px 14px;font-size:1.5em;font-weight:normal;line-height:24px;border-bottom:1px solid #ebebeb;-webkit-border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0;font-variant: small-caps; background-color:#CCC;}
+.widget-title:empty{display:none;}
+.widget-content{padding: 4px;}

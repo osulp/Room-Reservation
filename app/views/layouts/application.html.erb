@@ -3,13 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="ROBOTS" content="NOODP" />
-  <title><%= page_title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Study Room Reservation | OSU Libraries | Oregon State University</title>
   <%= stylesheet_link_tag :application, :media => 'all' %>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= body_class %>">
-  <%= render 'flashes' -%>
-  <%= yield %>
+<body>
+  <div class="container">
+    <%= render 'common_header' -%>
+
+    <%= render 'flashes' -%>
+    <%= yield %>
+  </div>
+  <%= render 'common_footer' -%>
   <%= render 'javascript' %>
 </body>
 </html>
+  

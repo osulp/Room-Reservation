@@ -1,0 +1,27 @@
+.osu-purple .title,
+.osu-purple .widget-title {
+	background-color:#561F4B;
+	color:white;
+}
+
+.osu-purple .nav-tabs > li > a,
+.osu-purple .nav-tabs > li > a:hover,
+.osu-purple .nav-tabs > li > a:focus {
+	background-color:#CCC;
+	color:black;
+}
+
+.osu-purple .nav-tabs > .active > a,
+.osu-purple .nav-tabs > .active > a:hover,
+.osu-purple .nav-tabs > .active > a:focus {
+	background-color:#561F4B;
+	color:white;
+}
+
+.osu-purple .nav-tabs > li {
+	margin: 0 10px;
+}
+
+.osu-purple .nav-tabs {
+	border-bottom: 1px solid #561F4B;
+}
