@@ -43,7 +43,7 @@
 
 #osu-top-hat {	background: #000;
 				width: 100%;
-				background-image: url(http://library.oregonstate.edu/sites/all/themes/osu_confident/images/tophat-bg.jpg);
+				background-image: url("https://osulibrary.oregonstate.edu/sites/all/themes/osu_confident/images/tophat-bg.jpg");
 
 				}
 #osu-header{

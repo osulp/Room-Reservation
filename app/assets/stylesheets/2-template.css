@@ -159,7 +159,7 @@ height:148px;
 
 #nav #menu>li h2 {  border-left:1px solid #4D4D4D; font-variant:small-caps; padding:0 15px; font-size:14px; margin:10px 0; letter-spacing:1px; font-weight:normal; line-height: 18px; }
 
-#nav #menu>li>h2>a {  text-decoration:none; color:#4D4D4D; background:url("/sites/all/themes/osu_confident/images/dotted-underline.gif") repeat-x left bottom; }
+#nav #menu>li>h2>a {  text-decoration:none; color:#4D4D4D; background:url("https://osulibrary.oregonstate.edu/sites/all/themes/osu_confident/images/dotted-underline.gif") repeat-x left bottom; }
 
 #nav #menu>li>h2>a:hover { background:none; color:#000; }
 
