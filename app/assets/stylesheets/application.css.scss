@@ -10,4 +10,10 @@
  *
  *= require_self
  *= require_tree .
+ *= require jquery.ui.core
+ *= require jquery.ui.theme
+ *= require jquery.ui.tabs
  */
+@import "bootstrap";
+@import "bootstrap-responsive";
+
