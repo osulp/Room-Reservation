@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130725260000) do
+ActiveRecord::Schema.define(:version => 20130725280000) do
 
   create_table "filters", :force => true do |t|
     t.string   "name"
@@ -20,11 +20,11 @@ ActiveRecord::Schema.define(:version => 20130725260000) do
   end
 
   create_table "reservations", :force => true do |t|
-    t.integer  "user_onid"
+    t.string   "user_onid"
     t.integer  "room_id"
-    t.integer  "reserver_onid"
-    t.date     "start_time"
-    t.date     "end_time"
+    t.string   "reserver_onid"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.string   "description"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
