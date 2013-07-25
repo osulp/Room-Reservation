@@ -2,7 +2,7 @@
                 <div class="tab-pane <%= floor == 1 ? 'active' : '' %>" id="floor-<%= floor %>">
                   <div class="room-data-wrap">
                     <% @rooms.select { |r| r.floor == floor }.each do |room| %>
-                    <div class="room-data">
+                    <div class="room-data <% room.filters.each do |f| %> room-filter-<%= f.id %> <% end %>">
                       <div class="title"><%= room.name %></div>
                       <div class="room-data-bar progress vertical">
                         <% last_bar_end = 0 %>
