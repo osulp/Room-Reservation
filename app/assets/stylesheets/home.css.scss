@@ -1,11 +1,16 @@
 .nav {margin-bottom: 0;}
 .progress {margin: 0;}
 .progress.vertical {margin: 0 auto; float: none;}
-.room-data {width: 30px; display: inline-block; margin-left: 4px; height: 500px;}
+.room-data {width: 40px; display: inline-block; margin-left: 4px; height: 500px;}
+.room-data .title {text-align: center;}
 .room-data-bar.progress.vertical {height: 480px;}
-#dayviewTable {height: 530px;}
-.room-data-wrap {overflow-x: scroll; margin-left: 80px; white-space: nowrap;}
+#dayviewTable {height: 550px;}
+.room-data-wrap {overflow-x: scroll; margin-left: 100px; white-space: nowrap;}
 .nav-tabs>li>a {padding-top: 2px; padding-bottom: 2px;}
 input[type="radio"], input[type="checkbox"] { margin: 0px 4px 0px; }
-.time-reference-line { height: 19px; width: 100%; border-top: 1px dotted grey;}
-.time-reference-line:nth-child(even) { background-color: #EED; }
+.room-time-reference-line { padding-left: 85px;}
+.room-time-reference-line > div { height: 19px; width: 100%; border-bottom: 1px dotted grey;}
+.time-reference-line:nth-child(odd) { background-color: #EED; }
+#room-time-list { margin-top: 10px; width: 90px; float:left;}
+.room-time { height: 20px; text-align: right; padding: 0 5px;}
+#loading-spinner {background: url('ajax-loader.gif') no-repeat 50% 50%; width:100%; height:100%; position: absolute; top: 0; display: none;}
