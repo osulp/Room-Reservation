@@ -13,7 +13,6 @@ class HomeController < ApplicationController
     @floors = [1, 2, 5, 6]
     @rooms = Room.all
     @rooms.each { |room| room.load_reservations_today the_day }
-
     if request.xhr?
       render :partial => 'room-list'
     end
