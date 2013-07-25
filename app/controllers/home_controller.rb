@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 
     @floors = [1, 2, 5, 6]
     @rooms = Room.all
-    @rooms.each { |room| room.load_reservations_today calendar.day }
+    @rooms.each { |room| room.load_hours_today calendar.day }
 
     if request.xhr?
       render :partial => 'room-list'

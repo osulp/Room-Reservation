@@ -14,14 +14,24 @@ class Room < ActiveRecord::Base
       r.start_time = midnight if r.start_time < midnight
       r.end_time = end_of_day if r.end_time > end_of_day
     end
-    @reservations_today <<= Reservation.new :start_time => midnight, :end_time => midnight + 6.hours, :reserver_onid => 'drupal', :user_onid => '_schedule', :description => 'Library closed'
-    @reservations_today <<= Reservation.new :start_time => midnight + 20.hours, :end_time => midnight + 24.hours, :reserver_onid => 'drupal', :user_onid => '_schedule', :description => 'Library closed'
-    @reservations_today <<= Reservation.new :start_time => midnight + 8.hours, :end_time => midnight + 9.hours, :reserver_onid => 'admin1', :user_onid => '_maintainance', :description => 'Room cleaning'
-    @reservations_today.sort_by! { |r| r.start_time }
+    @reservations_today
   end
 
-  def reservations_today
-    @reservations_today rescue nil
+  def load_special_hours_today day
+    midnight = day.midnight
+    @special_hours = []
+    @special_hours <<= Reservation.new :start_time => midnight, :end_time => midnight + 6.hours, :reserver_onid => 'drupal', :user_onid => '_schedule', :description => 'Library closed'
+    @special_hours <<= Reservation.new :start_time => midnight + 20.hours, :end_time => midnight + 24.hours, :reserver_onid => 'drupal', :user_onid => '_schedule', :description => 'Library closed'
+    @special_hours <<= Reservation.new :start_time => midnight + 8.hours, :end_time => midnight + 9.hours, :reserver_onid => 'admin1', :user_onid => '_maintainance', :description => 'Room cleaning'
+    @special_hours
   end
 
+  def load_hours_today day
+    load_reservations_today day
+    load_special_hours_today day
+  end
+
+  def hours_today
+    @hours_today ||= (@reservations_today + @special_hours).sort_by { |r| r.start_time }
+  end
 end
