@@ -7,7 +7,7 @@
       <div class="row osu-purple">
         <div class="span9">
           <div class="alert alert-info" id="remindermessage">
-            Fifth floor rooms are unlocked. No reservation needed. 
+            Fifth floor rooms are unlocked. No reservation needed.
           </div>
             <div class="tabbable" id="tabs-floor">
               <ul class="nav nav-tabs">
@@ -20,37 +20,19 @@
                 <div class="row-fluid" style="position:absolute">
                   <div class="span12 room-time-reference-line">
                     <div class="">Rooms</div>
-                    <div class="room-time time-reference-line">12:00 am</div>
-                    <div class="room-time time-reference-line">1:00 am</div>
-                    <div class="room-time time-reference-line">2:00 am</div>
-                    <div class="room-time time-reference-line">3:00 am</div>
-                    <div class="room-time time-reference-line">4:00 am</div>
-                    <div class="room-time time-reference-line">5:00 am</div>
-                    <div class="room-time time-reference-line">6:00 am</div>
-                    <div class="room-time time-reference-line">7:00 am</div>
-                    <div class="room-time time-reference-line">8:00 am</div>
-                    <div class="room-time time-reference-line">9:00 am</div>
-                    <div class="room-time time-reference-line">10:00 am</div>
-                    <div class="room-time time-reference-line">11:00 am</div>
-                    <div class="room-time time-reference-line">12:00 pm</div>
-                    <div class="room-time time-reference-line">1:00 pm</div>
-                    <div class="room-time time-reference-line">2:00 pm</div>
-                    <div class="room-time time-reference-line">3:00 pm</div>
-                    <div class="room-time time-reference-line">4:00 pm</div>
-                    <div class="room-time time-reference-line">5:00 pm</div>
-                    <div class="room-time time-reference-line">6:00 pm</div>
-                    <div class="room-time time-reference-line">7:00 pm</div>
-                    <div class="room-time time-reference-line">8:00 pm</div>
-                    <div class="room-time time-reference-line">9:00 pm</div>
-                    <div class="room-time time-reference-line">10:00 pm</div>
-                    <div class="room-time time-reference-line">11:00 pm</div>
+                    <% %w(am pm).each do |t| %>
+                      <% ([12]+(1..11).to_a).each do |h| %>
+                    <div class="room-time time-reference-line"><%= h %>:00 <%= t %></div>
+                      <% end -%>
+                    <% end -%>
                   </div>
                 </div>
-                <div class="tab-pane active" id="floor-1">
+                <% @floors.each do |floor| %>
+                <div class="tab-pane <%= floor == 1 ? 'active' : '' %>" id="floor-<%= floor %>">
                   <div class="room-data-wrap">
-                    <% (1800..1870).step(5).each do |room| %>
+                    <% @rooms.select { |r| r.floor == floor }.each do |room| %>
                     <div class="room-data">
-                      <div class="title"><%= room %></div>
+                      <div class="title"><%= room.name %></div>
                       <div class="room-data-bar progress vertical">
                         <div class="bar bar-danger" style="height: 15%;"></div>
                         <div class="bar bar-warning" style="height: 32%;"></div>
@@ -63,29 +45,7 @@
                     <% end %>
                   </div>
                 </div>
-                <div class="tab-pane" id="floor-2">
-                  <p></p>
-                </div>
-                <div class="tab-pane" id="floor-5">
-                  <p></p>
-                </div>
-                <div class="tab-pane" id="floor-6">
-                  <div class="room-data-wrap">
-                    <% %w(6420 6559 6560 6561 6562 6563 6564 6759 6761 6763 6812 6822 6832 6842 6852 6862).each do |room| %>
-                    <div class="room-data">
-                      <div class="title"><%= room %></div>
-                      <div class="room-data-bar progress vertical">
-                        <div class="bar bar-danger" style="height: 15%;"></div>
-                        <div class="bar bar-warning" style="height: 32%;"></div>
-                        <div class="bar bar-success" style="height: 12%;"></div>
-                        <div class="bar bar-info" style="height: 6%;"></div>
-                        <div class="bar bar-warning" style="height: 20%;"></div>
-                        <div class="bar bar-danger" style="height: 15%;"></div>
-                      </div>
-                    </div>
-                    <% end %>
-                  </div>
-                </div>
+                <% end %>
               </div>
             </div>
 
