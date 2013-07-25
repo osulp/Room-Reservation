@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130723200910) do
+ActiveRecord::Schema.define(:version => 20130725260000) do
 
   create_table "filters", :force => true do |t|
     t.string   "name"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20130723200910) do
 
   create_table "reservations", :force => true do |t|
     t.integer  "user_onid"
-    t.integer  "room_id_id"
+    t.integer  "room_id"
     t.integer  "reserver_onid"
     t.date     "start_time"
     t.date     "end_time"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20130723200910) do
     t.datetime "updated_at",    :null => false
   end
 
-  add_index "reservations", ["room_id_id"], :name => "index_reservations_on_room_id_id"
+  add_index "reservations", ["room_id"], :name => "index_reservations_on_room_id_id"
 
   create_table "room_filters", :force => true do |t|
     t.integer  "room_id"
