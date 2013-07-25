@@ -3,6 +3,8 @@ class Room < ActiveRecord::Base
   validates :floor, :name, presence: true
   validates :floor, numericality: {only_integer: true}
   has_many :reservations
+  has_many :room_filters
+  has_many :filters, :through => :room_filters
 
   def load_reservations_today day
     end_of_day = day.end_of_day

@@ -3,10 +3,10 @@
 FactoryGirl.define do
   factory :reservation do
     user_onid 1
-    room_id
+    room
     reserver_onid 1
-    start_time "2013-07-23"
-    end_time "2013-07-23"
+    start_time Time.now
+    end_time Time.now
     description "MyString"
   end
 end
