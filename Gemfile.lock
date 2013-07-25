@@ -67,6 +67,10 @@ GEM
     debugger-ruby_core_source (1.2.3)
     diff-lcs (1.2.4)
     diffy (3.0.1)
+    draper (1.2.1)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0.3)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (1.4.0)
@@ -199,6 +203,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    request_store (1.0.5)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -262,6 +267,7 @@ DEPENDENCIES
   capybara
   coffee-rails
   database_cleaner
+  draper
   execjs
   factory_girl_rails
   guard
