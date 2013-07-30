@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require jquery.ui.tabs
 //= require bootstrap
+//= require bootstrap.calendar
+//= require jquery.cookie
 //= require_tree .

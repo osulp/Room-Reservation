@@ -11,10 +11,11 @@
           </div>
             <div class="tabbable" id="tabs-floor">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#floor-1" data-toggle="tab">1st Floor</a></li>
-                <li><a href="#floor-2" data-toggle="tab">2nd Floor</a></li>
-                <li><a href="#floor-5" data-toggle="tab">5th Floor</a></li>
-                <li><a href="#floor-6" data-toggle="tab">6th Floor</a></li>
+                <% @floors.each do |floor| %>
+                  <li class="<%= floor == 1 ? 'active' : '' %>">
+                    <a href="#floor-<%= floor %>" data-toggle="tab"><%= floor.ordinalize %> Floor</a>
+                  </li>
+                <% end %>
               </ul>
               <div class="tab-content" id="dayviewTable">
                 <div class="row-fluid" style="position:absolute">
@@ -33,7 +34,7 @@
                   </div>
                   <div id="loading-spinner"></div>
                 </div>
-                <%= render :partial => 'room-list' -%>
+                <%= render :partial => 'room-list', :locals => {:floors => @floors} -%>
               </div>
             </div>
 
