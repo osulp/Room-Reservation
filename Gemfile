@@ -8,6 +8,9 @@ gem 'simple_form'
 gem 'yard'
 gem 'active_model_serializers', '~> 0.7.0'
 
+# Draper for decoration
+gem 'draper'
+
 group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'

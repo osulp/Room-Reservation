@@ -3,6 +3,7 @@
 .progress.vertical {margin: 0 auto; float: none;}
 .room-data {width: 40px; display: inline-block; margin-left: 4px; height: 500px;}
 .room-data .title {text-align: center;}
+.room-data.fadeout {opacity: 0.4}
 .room-data-bar.progress.vertical {height: 480px;}
 #dayviewTable {height: 550px;}
 .room-data-wrap {overflow-x: scroll; margin-left: 100px; white-space: nowrap;}

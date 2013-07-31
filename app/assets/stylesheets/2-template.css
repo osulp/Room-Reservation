@@ -12,7 +12,7 @@ background-color: #252525;
 background-image: url("footer-grad.png");
 background-position: left top;
 background-repeat: repeat-x;
-	
+
 height:148px;
 }
 
@@ -240,7 +240,7 @@ padding:0.5em 0 0.5em 1.6em;
 .ui-state-active a#wssb{ background:url('searchicons.png') no-repeat 6px -100px; }
 
 .socialLinks { vertical-align:middle; }
-.socialLinks a { background-image: url('images/socialnetworks.png'); display:inline-block; height:16px; margin:0 1px; overflow:hidden; text-indent:-100px; width:16px; }
+.socialLinks a { display:inline-block; height:16px; margin:0 1px; overflow:hidden; text-indent:-100px; width:16px; }
 .socialLinks .fb { background-position:0 32px; }
 .socialLinks .twitter { background-position:0 16px; }
 
@@ -254,8 +254,8 @@ padding:0.5em 0 0.5em 1.6em;
 	border-top:none;
 	min-height: 465px;
 	margin-bottom: 20px;
-	
-	
+
+
 }
 
 #body #border {

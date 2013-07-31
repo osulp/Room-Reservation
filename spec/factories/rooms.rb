@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :room do
-    name "MyString"
-    floor 1
+    sequence(:name) {|n| "Room #{n}"}
+    sequence(:floor) {|n| n}
   end
 end
