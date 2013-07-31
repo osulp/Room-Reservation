@@ -9,7 +9,7 @@ class CalendarPresenter
   def each
     return enum_for(:each) unless block_given?
     event_collection.each do |event|
-      yield ReservationDecorator.new(event)
+      yield event
     end
   end
 

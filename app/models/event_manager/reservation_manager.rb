@@ -5,7 +5,7 @@ class EventManager::ReservationManager < EventManager::EventManager
   end
 
   def to_event(reservation)
-    Event.new(reservation.start_time-reservation_padding, reservation.end_time+reservation_padding, priority, reservation)
+    ReservationDecorator.new(Event.new(reservation.start_time-reservation_padding, reservation.end_time+reservation_padding, priority, reservation))
   end
 
   # @TODO: Move this into configuration
