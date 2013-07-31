@@ -41,5 +41,21 @@ describe "GET / reservation bars" do
         expect(page).to have_content(@room2.name)
       end
     end
+    describe "reservation bars" do
+      context "when there are no reservations" do
+        it "should not show any red bars" do
+          expect(page).not_to have_selector(".bar-danger")
+        end
+      end
+      context "when there are reservations", :focus => true do
+        before(:each) do
+          r = create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1)
+          visit root_path
+        end
+        it "should show the red bar for the reservation" do
+          expect(page).to have_selector(".bar-danger")
+        end
+      end
+    end
   end
 end

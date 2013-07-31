@@ -14,9 +14,7 @@ class ReservationDecorator < Draper::Decorator
   end
 
   def color
-    return 'danger' if self.user_onid == '_schedule' || self.user_onid == '_maintainance'
-    return 'info' if self.user_onid == 'luxi' #current_user.name
-    return 'warning'
+    return 'danger'
   end
 
 

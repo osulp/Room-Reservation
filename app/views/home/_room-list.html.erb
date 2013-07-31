@@ -6,7 +6,7 @@
         <div class="title"><%= room.name %></div>
         <div class="room-data-bar progress vertical">
           <% last_bar_end = 0 %>
-          <% ReservationDecorator.decorate_collection(room.hours_today).each do |r| %>
+          <% room.presenter.each do |r| %>
             <% if r.bar_start > last_bar_end %>
               <div class="bar bar-success" style="height: <%= r.bar_start - last_bar_end %>px;" title="Available"></div>
             <% end %>

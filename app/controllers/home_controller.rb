@@ -3,11 +3,21 @@ class HomeController < ApplicationController
   def index
     calendar = CalendarManager.new(cookies)
     @rooms = RoomDecorator.decorate_collection(Room.all)
+    @rooms.each do |room|
+      room.presenter = CalendarPresenter.new(calendar.day.midnight, calendar.day.tomorrow.midnight, *managers(room))
+    end
     @floors = @rooms.map(&:floor).uniq
-    @rooms.each { |room| room.load_hours_today calendar.day }
 
     if request.xhr?
       render :partial => 'room-list', :locals => {:floors => @floors}
     end
+  end
+
+  private
+
+  def managers(object)
+    [
+        EventManager::ReservationManager.new(object)
+    ]
   end
 end

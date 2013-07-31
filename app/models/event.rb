@@ -15,6 +15,14 @@ class Event
     errors.add(:start_time, "must be less than end time") unless start_time < end_time
   end
 
+  def respond_to_missing?(sym, include_private = false)
+    if @payload.nil?
+      return super
+    else
+      @payload.respond_to?(sym, include_private)
+    end
+  end
+
   def method_missing(m, *args, &block)
     if @payload.nil?
       return super

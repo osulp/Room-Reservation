@@ -1,7 +1,6 @@
 class CalendarPresenter
   include Enumerable
-  def initialize(room, start_time, end_time, *managers)
-    @object = room
+  def initialize(start_time, end_time, *managers)
     @start_time = start_time
     @end_time = end_time
     @managers = managers
@@ -10,13 +9,13 @@ class CalendarPresenter
   def each
     return enum_for(:each) unless block_given?
     event_collection.each do |event|
-      yield event
+      yield ReservationDecorator.new(event)
     end
   end
 
   def event_collection(force=false)
     return @event_collection unless @event_collection.blank? || force
-    @event_collection = @managers.map{|m| m.events_between(@start_time, @end_time, @room)}
+    @event_collection = @managers.map{|m| m.events_between(@start_time, @end_time)}
                                  .flatten
                                  .sort_by(&:start_time)
     fix_event_collisions! @event_collection
