@@ -28,6 +28,7 @@ class CalendarPresenter
   def fix_event_collisions! (event_collection)
     event_collection.each do |event|
       next unless event.valid?
+      fix_event(event)
       event_collection.each do |event_2|
         next if event == event_2
         next unless event_2.valid?
@@ -35,6 +36,11 @@ class CalendarPresenter
       end
     end
     event_collection.delete_if{|event| !event.valid?}
+  end
+
+  def fix_event(event)
+    event.start_time = @start_time if event.start_time < @start_time
+    event.end_time = @end_time if event.end_time > @end_time
   end
 
   def collide(event, event_2)

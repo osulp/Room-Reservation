@@ -28,6 +28,20 @@ describe CalendarPresenter do
         result[1].end_time.should == Time.current.midnight+3.hours
       end
     end
+    context "when one event goes over the end time" do
+      let(:event_2_end) {Time.current.tomorrow.midnight+3.hours}
+      it "should truncate that event for viewing purposes" do
+        result = subject.to_a
+        result[1].end_time.should == Time.current.tomorrow.midnight
+      end
+    end
+    context "when one event goes below the start time" do
+      let(:event_1_start) {Time.current.midnight-3.hours}
+      it "should truncate that event for viewing purposes" do
+        result = subject.to_a
+        result[0].start_time.should == Time.current.midnight
+      end
+    end
     context "when two events conflict" do
       context "and they have equal priority" do
         let(:event_2_start) {Time.current.midnight+1.hours}
