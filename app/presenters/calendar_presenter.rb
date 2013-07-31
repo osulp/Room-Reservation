@@ -1,6 +1,6 @@
 class CalendarPresenter
   include Enumerable
-  def initialize room, start_time, end_time, *managers
+  def initialize(room, start_time, end_time, *managers)
     @object = room
     @start_time = start_time
     @end_time = end_time
@@ -18,7 +18,7 @@ class CalendarPresenter
     return @event_collection unless @event_collection.blank? || force
     @event_collection = @managers.map{|m| m.events_between(@start_time, @end_time, @room)}
                                  .flatten
-                                 .sort_by{[:start_time, :priority]}
+                                 .sort_by(&:start_time)
     fix_event_collisions! @event_collection
     return @event_collection
   end
