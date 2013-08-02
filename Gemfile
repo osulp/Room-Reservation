@@ -19,6 +19,7 @@ group :assets do
   gem 'therubyracer'
   gem 'jquery-ui-rails'
   gem 'bootstrap-sass'
+  gem 'compass-rails'
 end
 
 group :development do

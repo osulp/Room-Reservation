@@ -1,0 +1,118 @@
+@import "compass/css3";
+.ui-datepicker {
+  * {
+    box-sizing: border-box;
+  }
+  &.ui-widget-content {
+    background: transparent;
+  }
+  // *** Title Bar *** //
+  .ui-widget-header {
+    background: #561F4B;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 1.5em;
+    font-weight: normal;
+    line-height: 24px;
+    border-bottom: 1px solid #ebebeb;
+    @include border-radius(5px 5px 0 0);
+    font-variant: small-caps;
+    font-family: Helvetica, arial, sans-serif;
+    white-space: normal;
+  }
+  //**** Datepicker Buttons ****//
+  .ui-datepicker-button {
+    margin-top: 4px;
+    width: 32px;
+    cursor: pointer;
+    background: transparent !important;
+    border: none !important;
+  }
+  .ui-datepicker-next {
+    float: right;
+    @extend .ui-datepicker-button;
+    span {
+      margin-left: auto;
+    }
+  }
+  .ui-datepicker-prev {
+    float: left;
+    @extend .ui-datepicker-button;
+  }
+  .ui-widget-header {
+    .ui-icon {
+      background-image: url(image_path("glyphicons-halflings-white.png")) !important;
+      display: block;
+    }
+    .ui-icon-circle-triangle-w {
+      background-position: -240px -96px !important;
+    }
+    .ui-icon-circle-triangle-e {
+      background-position: -264px -96px !important;
+    }
+  }
+  /** Calendar Section **/
+  .ui-datepicker-calendar {
+    width: 100%;
+  }
+  table {
+    border-color: gray;
+    border-spacing: 0;
+    border-collapse: collapse;
+    td, th {
+      text-align: center;
+      width: 14%;
+      height: 20px;
+      border: 1px solid #AAA;
+      @include box-shadow(0 1px 1px rgba(0, 0, 0, 0.075) inset);
+    }
+    td {
+      a {
+        font-size: 12px !important;
+      }
+      a.ui-state-default {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        text-align: center;
+        background-color: transparent;
+        border: 0;
+        background: transparent;
+        font-weight: bold;
+        color: #333333 !important;
+      }
+      &.ui-datepicker-week-end a.ui-state-default {
+        color: rgba(0, 0, 0, 0.5) !important;
+      }
+    }
+    td.ui-datepicker-today {
+      background-color: orange;
+      a {
+        color: white;
+      }
+    }
+    td.ui-datepicker-current-day {
+      border: 2px solid black;
+      border-collapse: separate;
+      border-spacing: 2px;
+    }
+  }
+  /** Today Button **/
+  .ui-datepicker-buttonpane {
+    background: transparent;
+    button {
+      background: transparent;
+      width: 100%;
+      @include border-radius(0 0 0 0);
+      text-align: center;
+      padding: 7px;
+      color: black;
+      font-weight: bold;
+      opacity: 1;
+      font-size: 12px;
+      font-family: Helvetica, arial, sans-serif;
+    }
+  }
+}

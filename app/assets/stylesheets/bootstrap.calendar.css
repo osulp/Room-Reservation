@@ -88,3 +88,6 @@
      cursor:pointer;
 }
 
+.calendar td.day.day-selected {
+    border: 2px solid orange;
+}
