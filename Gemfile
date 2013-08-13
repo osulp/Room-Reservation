@@ -12,7 +12,8 @@ gem 'active_model_serializers', '~> 0.7.0'
 gem 'draper'
 
 # CAS Client
-gem 'rubycas-client-rails', :git => "git://github.com/rubycas/rubycas-client-rails.git"
+gem 'rubycas-client', git: 'git://github.com/terrellt/rubycas-client.git', branch: 'master'
+gem 'rubycas-client-rails', :git => 'git://github.com/rubycas/rubycas-client-rails.git'
 
 group :assets do
   gem 'coffee-rails'
@@ -30,6 +31,8 @@ group :development do
   gem 'binding_of_caller'
   gem 'jazz_hands'
   gem 'meta_request'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :development, :test do
