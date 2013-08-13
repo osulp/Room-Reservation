@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/rubycas/rubycas-client-rails.git
+  revision: b97de6edc7871bc43ca1c9572f4d9188a210b341
+  specs:
+    rubycas-client-rails (0.1.1)
+      rails (>= 3.0.0)
+      rubycas-client (~> 2.3.9.rc1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -227,6 +235,8 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rubycas-client (2.3.10.rc1)
+      activesupport
     sass (3.2.9)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -289,6 +299,7 @@ DEPENDENCIES
   poltergeist
   rails (~> 3.2.12)
   rspec-rails
+  rubycas-client-rails!
   sass-rails
   shoulda-matchers
   simple_form

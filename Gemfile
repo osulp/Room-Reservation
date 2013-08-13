@@ -11,6 +11,9 @@ gem 'active_model_serializers', '~> 0.7.0'
 # Draper for decoration
 gem 'draper'
 
+# CAS Client
+gem 'rubycas-client-rails', :git => "git://github.com/rubycas/rubycas-client-rails.git"
+
 group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'
