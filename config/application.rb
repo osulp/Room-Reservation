@@ -79,5 +79,6 @@ module RoomReservation
     # Configure CAS
     config.rubycas.cas_base_url = 'https://login.oregonstate.edu/cas'
     config.rubycas.validate_url = 'https://login.oregonstate.edu/cas/samlValidate'
+    config.rubycas.cas_destination_logout_param_name = "url"
   end
 end

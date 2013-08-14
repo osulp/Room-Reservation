@@ -5,6 +5,5 @@ class SessionsController < ApplicationController
   end
   def logout
     RubyCAS::Filter.logout(self)
-    #redirect_to root_path
   end
 end
