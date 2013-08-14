@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "GET / reservation bars" do
+  before(:each) do
+    # Fake a login
+    RubyCAS::Filter.fake("bla")
+  end
   describe "floor headers" do
     context "when there are no rooms" do
       before(:each) do

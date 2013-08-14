@@ -75,5 +75,10 @@ module RoomReservation
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Configure CAS
+    config.rubycas.cas_base_url = 'https://login.oregonstate.edu/cas'
+    config.rubycas.validate_url = 'https://login.oregonstate.edu/cas/samlValidate'
+    config.rubycas.cas_destination_logout_param_name = "url"
   end
 end

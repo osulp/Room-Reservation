@@ -11,6 +11,10 @@ gem 'active_model_serializers', '~> 0.7.0'
 # Draper for decoration
 gem 'draper'
 
+# CAS Client
+gem 'rubycas-client', git: 'git://github.com/terrellt/rubycas-client.git', branch: 'master'
+gem 'rubycas-client-rails', :git => 'git://github.com/rubycas/rubycas-client-rails.git'
+
 group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'
@@ -27,6 +31,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'jazz_hands'
   gem 'meta_request'
+  gem 'binding_of_caller'
 end
 
 group :development, :test do
@@ -35,6 +40,7 @@ group :development, :test do
   gem 'spring'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'better_errors'
 end
 
 group :test do
