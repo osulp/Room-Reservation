@@ -31,7 +31,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'jazz_hands'
   gem 'meta_request'
-  gem 'better_errors'
   gem 'binding_of_caller'
 end
 
@@ -41,6 +40,7 @@ group :development, :test do
   gem 'spring'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'better_errors'
 end
 
 group :test do
