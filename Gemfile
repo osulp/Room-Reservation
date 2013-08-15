@@ -21,6 +21,9 @@ gem 'newrelic_rpm'
 # Dalli for cache store
 gem 'dalli'
 
+# Unicorn for web server.
+gem 'unicorn'
+
 # Cache digests for rails partials
 gem 'cache_digests'
 
