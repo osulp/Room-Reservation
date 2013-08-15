@@ -5,7 +5,7 @@ class RoomDecorator < Draper::Decorator
   def filter_string
     string = ""
     filters.each do |filter|
-      string += "room-filter-#{filter.id}"
+      string += "filter-#{filter.id} "
     end
     string.strip
   end

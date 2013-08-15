@@ -1,8 +1,8 @@
               <div id="room-filters">
                 <label><input type="checkbox" id="filter_all" checked="checked" />Display all rooms</label>
                 <div id="filters">
-                  <% Filter.all.each do |f| %>
-                  <label><input type="checkbox" value="<%= f.id %>" /><%= f.name %></label>
+                  <% filters.each do |f| %>
+                  <label><input type="checkbox" value="<%= f.id %>" id="filter-<%= f.id %>"/><%= f.name %></label>
                   <% end %>
                 </div>
               </div>

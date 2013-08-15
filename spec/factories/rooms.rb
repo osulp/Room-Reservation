@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :room do
     sequence(:name) {|n| "Room #{n}"}
-    sequence(:floor) {|n| n}
+    floor 1
   end
 end

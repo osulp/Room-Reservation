@@ -6,6 +6,6 @@
             <div class="widget-title">Options</div>
             <div class="widget-content">
               <small>Click to only show rooms with the given feature.</small>
-              <%= render :partial => 'filter-list' %>
+              <%= render :partial => 'filter-list', :locals => {:filters => @filters} %>
             </div>
           </div>

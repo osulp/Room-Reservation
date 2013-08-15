@@ -16,7 +16,8 @@ describe "GET / reservation bars" do
     end
     context "when there are rooms" do
       before(:each) do
-        2.times {create(:room)}
+        create(:room, :floor => 1)
+        create(:room, :floor => 2)
         visit root_path
       end
       it "should display as many floor headers as there are rooms with those floors" do

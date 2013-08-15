@@ -7,7 +7,7 @@ class HomeController < ApplicationController
       room.presenter = CalendarPresenter.new(calendar.day.midnight, calendar.day.tomorrow.midnight, *managers(room))
     end
     @floors = @rooms.map(&:floor).uniq
-
+    @filters = Filter.all
     if request.xhr?
       render :partial => 'room-list', :locals => {:floors => @floors}
     end
