@@ -16,6 +16,7 @@ class CalendarManager
     return
   selected_date: (dateText, inst) =>
     date = @datepicker.datepicker("getDate")
+    @date_selected = [date.getFullYear(), date.getMonth()+1, date.getDate()]
     this.day_changed(date.getFullYear(), date.getMonth()+1, date.getDate())
     return
   day_changed: (year, month, day) =>
@@ -24,10 +25,11 @@ class CalendarManager
     this.load_day(year, month, day)
     # Highlight day on map
     $(".day").removeClass("day-selected")
-    $(".day[day=#{event.day}]").addClass("day-selected")
+    $(".day[day=#{day}]").addClass("day-selected")
   load_day: (year, month, day) ->
     $('#loading-spinner').fadeIn()
-    $.get('?ajax', (data) ->
+    $.get('?ajax', (data) =>
+      return unless @date_selected.toString() == [year, month, day].toString()
       new_room_list = $(data)
       for i in [0..new_room_list.length-1]
         div = $(new_room_list[i])
