@@ -28,7 +28,9 @@ class CalendarManager
     $(".day[day=#{day}]").addClass("day-selected")
   load_day: (year, month, day) ->
     $('#loading-spinner').fadeIn()
-    $.get('?ajax', (data) =>
+    cookie_requested = this.get_date_from_cookie()
+    console.log("Loading day from cookie #{this.get_date_from_cookie()}")
+    $.get("/home/day/#{encodeURIComponent("#{year}-#{month}-#{day}")}", (data) =>
       return unless @date_selected.toString() == [year, month, day].toString()
       new_room_list = $(data)
       for i in [0..new_room_list.length-1]
