@@ -4,35 +4,35 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 development:
-  adapter: <%= ENV['DONORKIOSK_ADAPTER'] || "mysql2" %>
+  adapter: <%= ENV['ROOMRES_ADAPTER'] || "mysql2" %>
   encoding: utf8
   reconnect: false
-  database: <%= "#{ENV['DONORKIOSK_DB_PREFIX']}_development" %>
+  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_development" %>
   pool: 5
-  username: <%= ENV['DONORKIOSK_DB_USERNAME'] %>
-  password: <%= ENV['DONORKIOSK_DB_PASSWORD'] %>
-  host: <%= ENV['DONORKIOSK_DB_HOST'] %>
+  username: <%= ENV['ROOMRES_DB_USERNAME'] %>
+  password: <%= ENV['ROOMRES_DB_PASSWORD'] %>
+  host: <%= ENV['ROOMRES_DB_HOST'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
-  adapter: <%= ENV['DONORKIOSK_ADAPTER'] || "mysql2" %>
+  adapter: <%= ENV['ROOMRES_ADAPTER'] || "mysql2" %>
   encoding: utf8
   reconnect: false
-  database: <%= "#{ENV['DONORKIOSK_DB_PREFIX']}_test" %>
+  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>
   pool: 5
-  username: <%= ENV['DONORKIOSK_DB_USERNAME'] %>
-  password: <%= ENV['DONORKIOSK_DB_PASSWORD'] %>
-  host: <%= ENV['DONORKIOSK_DB_HOST'] %>
+  username: <%= ENV['ROOMRES_DB_USERNAME'] %>
+  password: <%= ENV['ROOMRES_DB_PASSWORD'] %>
+  host: <%= ENV['ROOMRES_DB_HOST'] %>
   timeout: 20000
 
 production:
-  adapter: <%= ENV['DONORKIOSK_ADAPTER'] || "mysql2" %>
+  adapter: <%= ENV['ROOMRES_ADAPTER'] || "mysql2" %>
   encoding: utf8
   reconnect: false
-  database: <%= "#{ENV['DONORKIOSK_DB_PREFIX']}_production" %>
+  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_production" %>
   pool: 5
-  username: <%= ENV['DONORKIOSK_DB_USERNAME'] %>
-  password: <%= ENV['DONORKIOSK_DB_PASSWORD'] %>
-  host: <%= ENV['DONORKIOSK_DB_HOST'] %>
+  username: <%= ENV['ROOMRES_DB_USERNAME'] %>
+  password: <%= ENV['ROOMRES_DB_PASSWORD'] %>
+  host: <%= ENV['ROOMRES_DB_HOST'] %>

@@ -10,10 +10,10 @@ chefjson = {
   :project => {
     :name => "roomreservation",
     :environment => {
-      "DONORKIOSK_DB_PREFIX" => "roomreservation",
-      "DONORKIOSK_DB_USERNAME" => "root",
-      "DONORKIOSK_DB_PASSWORD" => "vagrant",
-      "DONORKIOSK_DB_HOST" => "localhost",
+      "ROOMRES_DB_PREFIX" => "roomreservation",
+      "ROOMRES_DB_USERNAME" => "root",
+      "ROOMRES_DB_PASSWORD" => "vagrant",
+      "ROOMRES_DB_HOST" => "localhost",
       "SPRING_TMP_PATH" => "/tmp"
     },
     #Relative to /vagrant.
