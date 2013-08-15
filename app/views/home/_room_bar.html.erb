@@ -3,11 +3,13 @@
   <div class="room-data-bar progress vertical">
     <% last_bar_end = 0 %>
     <% room.presenter.each do |r| %>
-      <% if r.bar_start > last_bar_end %>
-        <div class="bar bar-success" style="height: <%= r.bar_start - last_bar_end %>px;" title="Available"></div>
+      <% cache ["RoomPresenterFilter",r] do %>
+        <% if r.bar_start > last_bar_end %>
+          <div class="bar bar-success" style="height: <%= r.bar_start - last_bar_end %>px;" title="Available"></div>
+        <% end %>
+        <div class="bar bar-<%= r.color %>" style="height: <%= r.bar_length %>px;" title="<%= r.description %>"></div>
+        <% last_bar_end = r.bar_end %>
       <% end %>
-      <div class="bar bar-<%= r.color %>" style="height: <%= r.bar_length %>px;" title="<%= r.description %>"></div>
-      <% last_bar_end = r.bar_end %>
     <% end -%>
     <% if 480 > last_bar_end %>
       <div class="bar bar-success" style="height: <%= 480 - last_bar_end %>px;" title="Available"></div>

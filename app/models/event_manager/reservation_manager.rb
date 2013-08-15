@@ -1,5 +1,9 @@
 class EventManager::ReservationManager < EventManager::EventManager
 
+  def cache_key
+    room.cache_key
+  end
+
   def get_events
     events = room.reservations.where("start_time <= ? AND end_time >= ?", end_time, start_time).order(:start_time).map{|x| to_event(x)}
   end

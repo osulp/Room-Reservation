@@ -1,5 +1,6 @@
 class CalendarPresenter
   include Enumerable
+  attr_reader :start_time, :end_time
   def initialize(start_time, end_time, *managers)
     @start_time = start_time
     @end_time = end_time
@@ -15,14 +16,27 @@ class CalendarPresenter
 
   def event_collection(force=false)
     return @event_collection unless @event_collection.blank? || force
-    @event_collection = @managers.map{|m| m.events_between(@start_time, @end_time)}
-                                 .flatten
-                                 .sort_by(&:start_time)
-    fix_event_collisions! @event_collection
-    return @event_collection
+    Rails.cache.fetch(self.cache_key) do
+      @event_collection = @managers.map{|m| m.events_between(@start_time, @end_time)}
+                                   .flatten
+                                   .sort_by(&:start_time)
+      fix_event_collisions! @event_collection
+      @event_collection
+    end
   end
 
-  private
+  def cache_key
+    key = "#{self.class.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
+    @managers.each do |manager|
+      key += "/#{manager.class.to_s}"
+      if manager.respond_to? :cache_key
+        key += "/#{manager.cache_key}"
+      end
+    end
+    return key
+  end
+
+  protected
 
   def fix_event_collisions! (event_collection)
     event_collection.each do |event|

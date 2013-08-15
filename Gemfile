@@ -15,6 +15,15 @@ gem 'draper'
 gem 'rubycas-client', git: 'git://github.com/terrellt/rubycas-client.git', branch: 'master'
 gem 'rubycas-client-rails', :git => 'git://github.com/rubycas/rubycas-client-rails.git'
 
+# New Relic
+gem 'newrelic_rpm'
+
+# Dalli for cache store
+gem 'dalli'
+
+# Cache digests for rails partials
+gem 'cache_digests'
+
 group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'
