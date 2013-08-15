@@ -16,21 +16,18 @@ class CalendarPresenter
 
   def event_collection(force=false)
     return @event_collection unless @event_collection.blank? || force
-    Rails.cache.fetch(self.cache_key) do
-      @event_collection = @managers.map{|m| m.events_between(@start_time, @end_time)}
-                                   .flatten
-                                   .sort_by(&:start_time)
-      fix_event_collisions! @event_collection
-      @event_collection
-    end
+    @event_collection = @managers.map{|m| m.events_between(@start_time, @end_time)}
+                                 .flatten
+                                 .sort_by(&:start_time)
+    fix_event_collisions! @event_collection
+    return @event_collection
   end
 
   def cache_key
     key = "#{self.class.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
     @managers.each do |manager|
-      key += "/#{manager.class.to_s}"
       if manager.respond_to? :cache_key
-        key += "/#{manager.cache_key}"
+        key += "/#{manager.cache_key(start_time, end_time)}"
       end
     end
     return key
