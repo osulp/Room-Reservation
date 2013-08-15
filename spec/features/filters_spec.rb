@@ -75,6 +75,12 @@ describe "filters" do
         it "should only display rooms where both filters apply" do
           expect(page).to have_selector(".room-data", :count => 1)
         end
+        it "should persist after changing days" do
+          all("#datepicker a").last.click
+          expect(page).to have_selector("#loading-spinner")
+          expect(page).not_to have_selector("#loading-spinner")
+          expect(page).to have_selector(".room-data", :count => 1)
+        end
       end
     end
     describe "clicking the all filters box" do

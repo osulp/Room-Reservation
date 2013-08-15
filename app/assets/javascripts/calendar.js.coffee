@@ -31,17 +31,16 @@ class CalendarManager
       new_room_list = $(data)
       for i in [0..new_room_list.length-1]
         div = $(new_room_list[i])
-        console.log(div.html())
         id = div.attr('id')
         html = div.html()
         $('#' + id).html(html)
       $('#loading-spinner').fadeOut()
+      window.FilterManager.apply_filters()
     )
     return
   get_date_from_cookie: ->
     return [parseInt($.cookie('year')), parseInt($.cookie('month')),parseInt($.cookie('day'))]
   update_cookie: (year, month, day) ->
-    console.log("Day changed to #{year}/#{month}/#{day}")
     $.cookie('year', year, { expires: 30 })
     $.cookie('month', month, { expires: 30 })
     $.cookie('day', day, { expires: 30 })
