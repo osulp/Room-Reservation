@@ -3,7 +3,6 @@
     <div class="tab-pane <%= floor == 1 ? 'active' : '' %>" id="floor-<%= floor %>">
       <div class="room-data-wrap">
         <% @rooms.select { |r| r.floor == floor }.each do |room| %>
-          <% cache ["room_bar", room.presenter.cache_key] do %>
             <div class="room-data <%= room.filter_string %>">
               <div class="title"><%= room.name %></div>
               <div class="room-data-bar progress vertical">
@@ -19,7 +18,6 @@
                   <div class="bar bar-success" style="height: <%= 480 - last_bar_end %>px;" title="Available"></div>
                 <% end %>
               </div>
-            <% end %>
           </div>
         <% end %>
       </div>
