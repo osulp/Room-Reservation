@@ -24,13 +24,14 @@ class CalendarPresenter
   end
 
   def cache_key
-    key = "#{self.class.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
+    return @key if @key
+    @key = "#{self.class.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
     @managers.each do |manager|
       if manager.respond_to? :cache_key
-        key += "/#{manager.cache_key(start_time, end_time)}"
+        @key += "/#{manager.cache_key(start_time, end_time)}"
       end
     end
-    return key
+    return @key
   end
 
   protected
