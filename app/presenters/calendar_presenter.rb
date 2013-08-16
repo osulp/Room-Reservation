@@ -15,7 +15,6 @@ class CalendarPresenter
   end
 
   def event_collection(force=false)
-    return []
     return @event_collection unless @event_collection.blank? || force
       @event_collection = @managers.map{|m| m.events_between(@start_time, @end_time)}
                                    .flatten
