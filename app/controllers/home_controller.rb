@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_filter RubyCAS::GatewayFilter, :only => :day
+  before_filter RubyCAS::GatewayFilter, :only => :index
   layout Proc.new { |controller| controller.request.xhr? ? nil : "application" }
   def index
     calendar = CalendarManager.new(cookies)
