@@ -32,7 +32,8 @@ chefjson = {
   },
   :passenger => {
     :rvm_ruby_version => "ruby-1.9.3-p429",
-    :version => "3.0.19"
+    :version => "3.0.19",
+    :max_pool_size => 1
   },
   "phantomjs" => {
     "version" => "1.9.0"

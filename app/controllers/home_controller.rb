@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  skip_filter RubyCAS::GatewayFilter, :only => :day
   layout Proc.new { |controller| controller.request.xhr? ? nil : "application" }
   def index
     calendar = CalendarManager.new(cookies)
@@ -12,13 +13,13 @@ class HomeController < ApplicationController
     calendar_hash = {:year => date[0], :month => date[1], :day => date[2]}
     calendar = CalendarManager.new(calendar_hash)
     load_rooms(calendar)
-    render :partial => 'room-list', :locals => {:floors => @floors}
+    render :partial => 'room_list', :locals => {:floors => @floors}
   end
 
   private
 
   def load_rooms(calendar)
-    @rooms = RoomDecorator.decorate_collection(Room.all)
+    @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).all)
     @rooms.each do |room|
       room.presenter = CalendarPresenter.new(calendar.day.midnight, calendar.day.tomorrow.midnight, *managers(room))
     end
