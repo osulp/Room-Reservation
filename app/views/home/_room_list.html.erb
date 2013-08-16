@@ -1,4 +1,4 @@
-
+<% cache (["room_list_partial",Digest::MD5.hexdigest(@rooms.map{|x| x.presenter.cache_key}.join(","))])  do %>
   <% floors.each do |floor| %>
     <div class="tab-pane <%= floor == 1 ? 'active' : '' %>" id="floor-<%= floor %>">
       <div class="room-data-wrap">
@@ -25,3 +25,4 @@
       </div>
     </div>
   <% end %>
+<% end %>
