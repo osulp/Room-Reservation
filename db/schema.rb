@@ -11,13 +11,53 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130725280000) do
+ActiveRecord::Schema.define(:version => 20130819231553) do
 
   create_table "filters", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "hours", :force => true do |t|
+    t.text     "open_time_1",         :null => false
+    t.text     "close_time_1",        :null => false
+    t.text     "open_time_5",         :null => false
+    t.text     "close_time_5",        :null => false
+    t.text     "open_time_6",         :null => false
+    t.text     "close_time_6",        :null => false
+    t.text     "open_time_7",         :null => false
+    t.text     "close_time_7",        :null => false
+    t.text     "int_open_time_1",     :null => false
+    t.text     "int_close_time_1",    :null => false
+    t.text     "int_open_time_6",     :null => false
+    t.text     "int_close_time_6",    :null => false
+    t.text     "int_open_time_7",     :null => false
+    t.text     "int_close_time_7",    :null => false
+    t.text     "published",           :null => false
+    t.text     "loc",                 :null => false
+    t.text     "int_term_start_date", :null => false
+    t.text     "term",                :null => false
+    t.datetime "term_start_date",     :null => false
+    t.datetime "term_end_date",       :null => false
+    t.text     "int_term_end_date",   :null => false
+  end
+
+  add_index "hours", ["term_start_date", "term_end_date"], :name => "term_dates_idx"
+
+  create_table "int_hours", :force => true do |t|
+    t.integer  "hours_id",       :null => false
+    t.datetime "start_date",     :null => false
+    t.datetime "end_date",       :null => false
+    t.time     "open_time_wk",   :null => false
+    t.time     "open_time_sat",  :null => false
+    t.time     "open_time_sun",  :null => false
+    t.time     "close_time_wk",  :null => false
+    t.time     "close_time_sat", :null => false
+    t.time     "close_time_sun", :null => false
+  end
+
+  add_index "int_hours", ["start_date", "end_date"], :name => "dates_idx"
 
   create_table "reservations", :force => true do |t|
     t.string   "user_onid"

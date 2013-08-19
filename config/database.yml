@@ -3,7 +3,7 @@
 #
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
-development:
+development: &default
   adapter: <%= ENV['ROOMRES_ADAPTER'] || "mysql2" %>
   encoding: utf8
   reconnect: false
@@ -17,22 +17,22 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
-  adapter: <%= ENV['ROOMRES_ADAPTER'] || "mysql2" %>
-  encoding: utf8
-  reconnect: false
+  <<: *default
   database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>
-  pool: 5
-  username: <%= ENV['ROOMRES_DB_USERNAME'] %>
-  password: <%= ENV['ROOMRES_DB_PASSWORD'] %>
-  host: <%= ENV['ROOMRES_DB_HOST'] %>
-  timeout: 20000
 
 production:
-  adapter: <%= ENV['ROOMRES_ADAPTER'] || "mysql2" %>
-  encoding: utf8
-  reconnect: false
+  <<: *default
   database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_production" %>
-  pool: 5
-  username: <%= ENV['ROOMRES_DB_USERNAME'] %>
-  password: <%= ENV['ROOMRES_DB_PASSWORD'] %>
-  host: <%= ENV['ROOMRES_DB_HOST'] %>
+
+drupal_development:
+  <<: *default
+
+drupal_test:
+  <<: *default
+  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>
+
+drupal_production:
+  <<: *default
+  database: <%= "#{ENV['ROOMRES_DRUPAL_DB']}" %>
+  username: <%= ENV['ROOMRES_DRUPAL_DB_USERNAME'] %>
+  password: <%= ENV['ROOMRES_DRUPAL_DB_PASSWORD'] %>
