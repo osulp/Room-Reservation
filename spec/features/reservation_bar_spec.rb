@@ -58,6 +58,7 @@ describe "GET / reservation bars" do
           expect(page).not_to have_selector(".bar-danger")
         end
       end
+
       context "when there are reservations", :focus => true do
         before(:each) do
           Timecop.return
@@ -67,6 +68,31 @@ describe "GET / reservation bars" do
         it "should show the red bar for the reservation" do
           expect(page).to have_selector(".bar-danger")
         end
+        describe "caching", :caching => true do
+          before(:each) do
+            expect(page).to have_selector(".bar-danger", :count => 1)
+          end
+          it "should update the cache when a new reservation is added" do
+            create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
+            visit root_path
+            expect(page).to have_selector(".bar-danger", :count => 2)
+          end
+          it "should update the cache when the time on a current reservation changes", :js => true do
+            reservation = Reservation.first
+            reservation.end_time = reservation.end_time + 2.hours
+            reservation.save
+            current_height = page.evaluate_script("$('.bar-danger').first().height()")
+            visit root_path
+            new_height = page.evaluate_script("$('.bar-danger').first().height()")
+            expect(current_height).not_to eq new_height
+          end
+          it "should update the cache when a reservation is deleted" do
+            Reservation.destroy_all
+            visit root_path
+            expect(page).not_to have_selector(".bar-danger")
+          end
+        end
+
         context "when a bunch of dates are picked", :js => true do
           before(:each) do
             # Add counter for when $.get completes.

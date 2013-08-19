@@ -7,9 +7,7 @@ class EventManager::ReservationManager < EventManager::EventManager
     start_date.upto(end_date) do |date|
       start_time = Time.zone.parse(date.to_s)
       end_time = Time.zone.parse((date+1.day).to_s)
-      puts "Start time: #{start_time.to_i} End Time: #{end_time.to_i}"
       key = self.cache_key(start_time, end_time, reservation.room)
-      puts "Expiring #{key}"
       Rails.cache.delete(key)
     end
   end
