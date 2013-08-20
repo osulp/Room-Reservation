@@ -10,7 +10,7 @@ class Hours::Hour < ActiveRecord::Base
     allHours = where(:loc => "The Valley Library")
     dates.each do |date|
       next unless date.instance_of? Date
-      hours = allHours.select{|x| x.term_start_date.to_date <= date && x.term_end_date.to_date >= date}[0]
+      hours = allHours.select{|x| x.term_start_date.utc.to_date <= date && x.term_end_date.utc.to_date >= date}[0]
       next unless hours
       wDay = date.wday < 5 ? 1 : date.wday
       if date.wday == 0

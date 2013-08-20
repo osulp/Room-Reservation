@@ -10,7 +10,7 @@ class Hours::IntersessionHour < ActiveRecord::Base
     allHours = all
     dates.each do |date|
       next unless date.instance_of? Date
-      hours = allHours.select{|x| x.start_date.to_date <= date && x.end_date.to_date >= date}[0]
+      hours = allHours.select{|x| x.start_date.utc.to_date <= date && x.end_date.utc.to_date >= date}[0]
       next unless hours
       suffix = 'wk'
       if date.wday == 6
