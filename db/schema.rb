@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819231553) do
+ActiveRecord::Schema.define(:version => 20130820151844) do
 
   create_table "filters", :force => true do |t|
     t.string   "name"
@@ -88,5 +88,16 @@ ActiveRecord::Schema.define(:version => 20130819231553) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "special_hours", :force => true do |t|
+    t.integer  "hours_id",                  :null => false
+    t.datetime "start_date",                :null => false
+    t.datetime "end_date",                  :null => false
+    t.time     "open_time",                 :null => false
+    t.time     "close_time",                :null => false
+    t.string   "title",      :limit => 250
+  end
+
+  add_index "special_hours", ["start_date", "end_date"], :name => "dates_idx"
 
 end

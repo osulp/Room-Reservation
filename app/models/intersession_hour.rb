@@ -5,6 +5,7 @@ class IntersessionHour < ActiveRecord::Base
   # @return [Hash<Hash>] Hash where each key is the date with the hours containing a hash with an "open" and "close" key representing the close/open time.
   # @note This function must be named the same in Hour, SpecialHour and IntersessionHour for HourManager to work.
   def self.time_info(dates)
+    dates = Array.wrap(dates)
     result = {}
     allHours = IntersessionHour.all
     dates.each do |date|
@@ -20,8 +21,8 @@ class IntersessionHour < ActiveRecord::Base
       end
       openTime = hours["open_time_#{suffix}"]
       closeTime = hours["close_time_#{suffix}"]
-      openTime = Time.zone.parse("#{date} #{openTime.hour}:#{openTime.min}:#{openTime.sec}").strftime("%l:%M %P")
-      closeTime = Time.zone.parse("#{date} #{closeTime.hour}:#{closeTime.min}:#{closeTime.sec}").strftime("%l:%M %P")
+      openTime = Time.zone.parse("#{date} #{openTime.hour}:#{openTime.min}:#{openTime.sec}").strftime("%l:%M %P").strip
+      closeTime = Time.zone.parse("#{date} #{closeTime.hour}:#{closeTime.min}:#{closeTime.sec}").strftime("%l:%M %P").strip
       result[date] = {'open' => openTime, 'close' => closeTime}
     end
     return result
