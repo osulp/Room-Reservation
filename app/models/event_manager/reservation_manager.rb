@@ -1,10 +1,5 @@
 class EventManager::ReservationManager < EventManager::EventManager
 
-  def initialize(room=nil, reservations=nil)
-    @room = room
-    @reservations = reservations
-  end
-
   # Expires caches that would have to do with this reservation.
   def self.expire_cache(reservation)
     start_date = reservation.start_time.to_date
@@ -34,20 +29,12 @@ class EventManager::ReservationManager < EventManager::EventManager
     end
   end
 
-  def reservations
-    if @reservations
-      return Array.wrap(@reservations[room.id])
-    else
-      return room.reservations
-    end
-  end
-
   def range_reservations(start_time, end_time)
-    reservations.select{|x| x.start_time <= end_time && x.end_time >= start_time}
+    room.reservations.where("start_time <= ? AND end_time >= ?", end_time, start_time)
   end
 
   def get_events
-    events = range_reservations(start_time, end_time).sort_by(&:start_time).map{|x| to_event(x)}
+    events = range_reservations(start_time, end_time).order(:start_time).map{|x| to_event(x)}
   end
 
   def to_event(reservation)

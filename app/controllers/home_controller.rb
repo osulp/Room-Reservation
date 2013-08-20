@@ -21,7 +21,7 @@ class HomeController < ApplicationController
   def load_rooms(calendar)
     @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).all)
     @rooms.each do |room|
-      room.presenter = CalendarPresenter.new(calendar.day.midnight, calendar.day.tomorrow.midnight, *managers(room,calendar))
+      room.presenter = CalendarPresenter.new(calendar.day.midnight, calendar.day.tomorrow.midnight, *managers(room))
     end
     @floors = @rooms.map(&:floor).uniq
   end
@@ -30,16 +30,9 @@ class HomeController < ApplicationController
   def hours_manager
     @hours_manager ||= EventManager::HoursManager.new
   end
-  def reservations(calendar=nil)
-    return nil unless calendar
-    @reservations ||= {}
-    return @reservations[calendar.day] if @reservations.has_key?(calendar.day)
-    @reservations[calendar.day] = Reservation.where("start_time <= ? AND end_time >= ?", calendar.day.tomorrow.midnight, calendar.day.midnight).group_by(&:room_id)
-    return @reservations[calendar.day]
-  end
-  def managers(object,calendar=nil)
+  def managers(object)
     [
-        EventManager::ReservationManager.new(object,reservations(calendar)),
+        EventManager::ReservationManager.new(object),
         hours_manager
     ]
   end
