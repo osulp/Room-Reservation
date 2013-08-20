@@ -1,4 +1,4 @@
-class Hour < ActiveRecord::Base
+class Hours::Hour < ActiveRecord::Base
   establish_connection "drupal_#{Rails.env}"
   # @TODO Move the valley library off to config.
   # @param dates [Array<Date>] Array of dates you want the hours for.
@@ -7,7 +7,7 @@ class Hour < ActiveRecord::Base
   def self.time_info(dates)
     dates = Array.wrap(dates)
     result = {}
-    allHours = Hour.where(:loc => "The Valley Library")
+    allHours = where(:loc => "The Valley Library")
     dates.each do |date|
       next unless date.instance_of? Date
       hours = allHours.select{|x| x.term_start_date.to_date <= date && x.term_end_date.to_date >= date}[0]

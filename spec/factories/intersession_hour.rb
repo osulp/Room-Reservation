@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :intersession_hour do
+  factory :intersession_hour, :class => Hours::IntersessionHour do
     start_date Date.yesterday
     end_date Date.today+10.days
     open_time_wk '07:30:00'

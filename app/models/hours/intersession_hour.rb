@@ -1,4 +1,4 @@
-class IntersessionHour < ActiveRecord::Base
+class Hours::IntersessionHour < ActiveRecord::Base
   establish_connection "drupal_#{Rails.env}"
   self.table_name = 'int_hours'
   # @param dates [Array<Date>] Array of dates you want the hours for.
@@ -7,7 +7,7 @@ class IntersessionHour < ActiveRecord::Base
   def self.time_info(dates)
     dates = Array.wrap(dates)
     result = {}
-    allHours = IntersessionHour.all
+    allHours = all
     dates.each do |date|
       next unless date.instance_of? Date
       hours = allHours.select{|x| x.start_date.to_date <= date && x.end_date.to_date >= date}[0]

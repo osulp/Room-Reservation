@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :hour do
+  factory :hour, :class => Hours::Hour do
     loc "The Valley Library"
     open_time_1 "12:00 am"
     close_time_1 "12:00 am"
