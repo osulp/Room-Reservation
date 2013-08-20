@@ -7,7 +7,7 @@ describe Event do
       it {should be_valid}
     end
     context "when start time is greater than end time" do
-      subject {build(:event, start_time: Time.current.tomorrow.midnight)}
+      subject {build(:event, start_time: Time.current.tomorrow.midnight, end_time: Time.current.midnight)}
       it {should_not be_valid}
     end
     context "when start time is equal to end time" do

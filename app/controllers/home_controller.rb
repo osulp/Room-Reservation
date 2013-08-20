@@ -26,9 +26,14 @@ class HomeController < ApplicationController
     @floors = @rooms.map(&:floor).uniq
   end
 
+
+  def hours_manager
+    @hours_manager ||= EventManager::HoursManager.new
+  end
   def managers(object)
     [
-        EventManager::ReservationManager.new(object)
+        EventManager::ReservationManager.new(object),
+        hours_manager
     ]
   end
 end

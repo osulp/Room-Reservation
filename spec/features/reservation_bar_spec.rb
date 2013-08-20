@@ -7,6 +7,8 @@ describe "GET / reservation bars" do
     # Start Time to be 1:00 AM January 1
     t = Time.local(2013, 1, 1, 1, 0, 0)
     Timecop.travel(t)
+    # Make the hours "always open"
+    create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
   end
   after(:each) do
     Timecop.return
@@ -62,6 +64,7 @@ describe "GET / reservation bars" do
       context "when there are reservations", :focus => true do
         before(:each) do
           Timecop.return
+          create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
           r = create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1)
           visit root_path
         end
