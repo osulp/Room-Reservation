@@ -40,6 +40,7 @@ class CalendarManager
         $('#' + id).html(html)
       $('#loading-spinner').fadeOut()
       window.FilterManager.apply_filters()
+      window.TooltipManager.set_tooltips()
     )
     return
   get_date_from_cookie: ->

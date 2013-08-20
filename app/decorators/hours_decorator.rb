@@ -5,7 +5,7 @@ class HoursDecorator < EventDecorator
   end
 
   def description
-    ""
+    "Closed"
   end
 
 end
