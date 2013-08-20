@@ -27,4 +27,8 @@ class Hours::IntersessionHour < ActiveRecord::Base
     end
     return result
   end
+
+  def self.priority
+    1
+  end
 end

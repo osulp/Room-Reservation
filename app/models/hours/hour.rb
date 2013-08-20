@@ -22,4 +22,8 @@ class Hours::Hour < ActiveRecord::Base
     end
     return result
   end
+
+  def self.priority
+    0
+  end
 end

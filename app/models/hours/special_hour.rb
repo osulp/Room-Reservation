@@ -17,4 +17,8 @@ class Hours::SpecialHour < ActiveRecord::Base
     end
     return result
   end
+
+  def self.priority
+    2
+  end
 end
