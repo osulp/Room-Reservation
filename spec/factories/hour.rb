@@ -12,7 +12,7 @@ FactoryGirl.define do
     open_time_7 "10:00 am"
     close_time_7 "12:15 am"
     term "Spring"
-    term_start_date Date.yesterday
-    term_end_date Date.today+90.days
+    term_start_date {Date.yesterday}
+    term_end_date {Date.today+90.days}
   end
 end

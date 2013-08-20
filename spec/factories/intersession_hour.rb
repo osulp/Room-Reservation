@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :intersession_hour, :class => Hours::IntersessionHour do
-    start_date Date.yesterday
-    end_date Date.today+10.days
+    start_date {Date.yesterday}
+    end_date {Date.today+10.days}
     open_time_wk '07:30:00'
     open_time_sat '01:00:00'
     open_time_sun '13:00:00'
