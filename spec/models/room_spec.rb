@@ -9,6 +9,8 @@ describe Room do
     it {should validate_numericality_of(:floor).only_integer}
     it {should have_many :room_filters}
     it {should have_many(:filters).through(:room_filters)}
+    it {should have_many :cleaning_record_rooms}
+    it {should have_many(:cleaning_records).through(:cleaning_record_rooms)}
   end
 
   describe 'load_reservations_today' do

@@ -11,7 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130820151844) do
+ActiveRecord::Schema.define(:version => 20130822203747) do
+
+  create_table "cleaning_record_rooms", :force => true do |t|
+    t.integer  "cleaning_record_id"
+    t.integer  "room_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "cleaning_record_rooms", ["cleaning_record_id"], :name => "index_cleaning_record_rooms_on_cleaning_record_id"
+  add_index "cleaning_record_rooms", ["room_id"], :name => "index_cleaning_record_rooms_on_room_id"
+
+  create_table "cleaning_records", :force => true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "filters", :force => true do |t|
     t.string   "name"

@@ -5,6 +5,8 @@ class Room < ActiveRecord::Base
   has_many :reservations
   has_many :room_filters
   has_many :filters, :through => :room_filters
+  has_many :cleaning_record_rooms, :dependent => :destroy
+  has_many :cleaning_records, :through => :cleaning_record_rooms
 
   def load_reservations_today day
     end_of_day = day.end_of_day

@@ -33,7 +33,8 @@ class HomeController < ApplicationController
   def managers(object)
     [
         EventManager::ReservationManager.new(object),
-        hours_manager
+        hours_manager,
+        EventManager::CleaningRecordsManager.new(object)
     ]
   end
 end
