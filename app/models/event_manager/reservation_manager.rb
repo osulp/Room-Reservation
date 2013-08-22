@@ -21,9 +21,6 @@ class EventManager::ReservationManager < EventManager::EventManager
   end
 
   def cache_key(start_time, end_time)
-    # TODO: Do some benchmarking when this comes out - it may be more efficient to just blow the whole
-    #       cache away every time a new reservation comes in.
-    #@cache_item ||= range_reservations(start_time, end_time).order("updated_at DESC").first
     @cache_key ||= Rails.cache.fetch(self.class.cache_key(start_time, end_time, room)) do
       self.class.form_cache_key(start_time, end_time, room)
     end
