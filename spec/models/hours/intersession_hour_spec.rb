@@ -4,7 +4,7 @@ describe Hours::IntersessionHour do
   describe "#time_info" do
     describe "#time_info" do
       before(:each) do
-        Timecop.freeze(Date.new(2013,8,19))
+        Timecop.travel(Date.new(2013,8,19))
         @current_term = create(:intersession_hour)
       end
       context "when given a date with no results" do

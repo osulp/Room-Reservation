@@ -4,7 +4,7 @@ describe Hours::SpecialHour do
   subject {Hours::SpecialHour}
   describe "#time_info" do
     before(:each) do
-      Timecop.freeze(Date.new(2013,8,19))
+      Timecop.travel(Date.new(2013,8,19))
       @current_term = create(:special_hour, start_date: Time.current.yesterday.midnight, end_date: Time.current.midnight)
     end
     context "when given a date with no results" do

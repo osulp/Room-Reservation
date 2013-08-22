@@ -4,7 +4,7 @@ describe EventManager::HoursManager do
   describe ".hours" do
     subject {EventManager::HoursManager.new}
     before(:each) do
-      Timecop.freeze(Date.new(2013,8,19))
+      Timecop.travel(Date.new(2013,8,19))
     end
     context "when there are just hours" do
       before(:each) do
@@ -39,7 +39,7 @@ describe EventManager::HoursManager do
     subject {EventManager::HoursManager.new.events_between(Time.current.midnight, Time.current.tomorrow.midnight)}
     context "when the hours are 12:00 to 12:00" do
       before(:each) do
-        Timecop.freeze(Date.new(2013,8,19)) # A Monday
+        Timecop.travel(Date.new(2013,8,19)) # A Monday
         @hours = create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
       end
       it "should return no events" do
@@ -55,7 +55,7 @@ describe EventManager::HoursManager do
     end
     context "when hours are 1:00 PM to 10:00 PM" do
       before(:each) do
-        Timecop.freeze(Date.new(2013,8,19)) # A Monday
+        Timecop.travel(Date.new(2013,8,19)) # A Monday
         @hours = create(:special_hour, open_time: "13:00:00", close_time: "22:00:00")
       end
       it "should return two events" do
@@ -73,7 +73,7 @@ describe EventManager::HoursManager do
     # 1:00 AM to 1:00 AM means "Closed"
     context "when hours are 1:00 AM to 1:00 AM" do
       before(:each) do
-        Timecop.freeze(Date.new(2013,8,19)) # A Monday
+        Timecop.travel(Date.new(2013,8,19)) # A Monday
         @hours = create(:special_hour, open_time: "01:00:00", close_time: "01:00:00")
       end
       it "should return one event" do
@@ -87,7 +87,7 @@ describe EventManager::HoursManager do
     # 12:15 am to x means "Closes at x"
     context "when hours are 12:15 AM to 4:00 PM" do
       before(:each) do
-        Timecop.freeze(Date.new(2013,8,19)) # A Monday
+        Timecop.travel(Date.new(2013,8,19)) # A Monday
         @hours = create(:special_hour, open_time: "00:15:00", close_time: "16:00:00")
       end
       it "should return one event" do
@@ -101,7 +101,7 @@ describe EventManager::HoursManager do
     # x to 12:15 AM means "x - no closing"
     context "when hours are 4:00 PM to 12:15 AM" do
       before(:each) do
-        Timecop.freeze(Date.new(2013,8,19)) # A Monday
+        Timecop.travel(Date.new(2013,8,19)) # A Monday
         @hours = create(:special_hour, open_time: "16:00:00", close_time: "00:15:00")
       end
       it "should return one event" do

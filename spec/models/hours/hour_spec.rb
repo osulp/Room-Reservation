@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Hours::Hour do
   describe "#time_info" do
     before(:each) do
-      Timecop.freeze(Date.new(2013,8,19))
+      Timecop.travel(Date.new(2013,8,19))
       @current_term = create(:hour, open_time_1: "10:00 AM", close_time_1: "10:00 PM", open_time_7: "5:00 AM", close_time_7: "6:00 PM")
     end
     context "when given a date outside the term" do
