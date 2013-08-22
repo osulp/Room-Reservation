@@ -89,6 +89,14 @@ describe "GET / reservation bars" do
             new_height = page.evaluate_script("$('.bar-danger').first().height()")
             expect(current_height).not_to eq new_height
           end
+          it "should update the cache when the time changes to a whole other day", :js => true do
+            reservation = Reservation.first
+            reservation.start_time = reservation.start_time - 48.hours
+            reservation.end_time = reservation.end_time - 48.hours
+            reservation.save
+            visit root_path
+            expect(page).not_to have_selector(".bar-danger")
+          end
           it "should update the cache when a reservation is deleted" do
             Reservation.destroy_all
             visit root_path

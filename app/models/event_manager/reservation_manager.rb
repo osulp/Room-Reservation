@@ -4,10 +4,20 @@ class EventManager::ReservationManager < EventManager::EventManager
   def self.expire_cache(reservation)
     start_date = reservation.start_time.to_date
     end_date = reservation.end_time.to_date
+    expire_range(start_date, end_date, reservation.room)
+    start_date = reservation.start_time_was.try(:to_date)
+    end_date = reservation.end_time_was.try(:to_date)
+    if(start_date && end_date)
+      expire_range(start_date, end_date, reservation.room)
+    end
+  end
+
+
+  def self.expire_range(start_date, end_date, room)
     start_date.upto(end_date) do |date|
       start_time = Time.zone.parse(date.to_s)
       end_time = Time.zone.parse((date+1.day).to_s)
-      key = self.cache_key(start_time, end_time, reservation.room)
+      key = self.cache_key(start_time, end_time, room)
       Rails.cache.delete(key)
     end
   end

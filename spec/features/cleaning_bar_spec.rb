@@ -49,14 +49,25 @@ describe "cleaning bars" do
             expect(page).not_to have_selector(".bar-danger")
           end
         end
-        context "when a cleaning is changed" do
+        context "when a cleaning is changed to another day" do
           before(:each) do
             @cleaning.end_date = Date.yesterday
             @cleaning.save
             visit root_path
+
           end
           it "should update the cache" do
             expect(page).not_to have_selector(".bar-danger")
+          end
+        end
+        context "when a cleaning is changed in the same day", :js => true do
+          it "should update the cache" do
+            @cleaning.end_time = @cleaning.end_time + 2.hours
+            @cleaning.save
+            current_height = page.evaluate_script("$('.bar-danger').first().height()")
+            visit root_path
+            new_height = page.evaluate_script("$('.bar-danger').first().height()")
+            expect(current_height).not_to eq new_height
           end
         end
         context "when a new room is added" do
