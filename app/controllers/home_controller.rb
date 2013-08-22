@@ -13,7 +13,10 @@ class HomeController < ApplicationController
     calendar_hash = {:year => date[0], :month => date[1], :day => date[2]}
     calendar = CalendarManager.new(calendar_hash)
     load_rooms(calendar)
-    render :partial => 'room_list', :locals => {:floors => @floors}
+    etag = Digest::MD5.hexdigest(@rooms.map{|x| x.presenter.cache_key}.join("/"))
+    if stale?(etag: etag)
+      render :partial => 'room_list', :locals => {:floors => @floors}
+    end
   end
 
   private
