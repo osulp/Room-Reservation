@@ -12,13 +12,16 @@
 </head>
 <body>
   <div class="container">
-    <%= render 'common_header' -%>
+    <% cache "Header" do -%>
+      <%= render 'common_header' -%>
+    <% end -%>
 
     <%= render 'flashes' -%>
     <%= yield %>
   </div>
-  <%= render 'common_footer' -%>
+  <% cache "Footer" do -%>
+    <%= render 'common_footer' -%>
+  <% end -%>
   <%= render 'javascript' %>
 </body>
 </html>
-  
