@@ -6,16 +6,8 @@ class CleaningRecord < ActiveRecord::Base
   has_many :cleaning_record_rooms, :dependent => :destroy
   has_many :rooms, :through => :cleaning_record_rooms
 
-  after_save :touch_all_cleaning_record_rooms
-
   private
   def start_date_less_than_or_equal_to_end_date
     errors.add(:start_date, "must be less than or equal to the end date") unless self.start_date && self.end_date && self.start_date <= self.end_date
-  end
-
-  def touch_all_cleaning_record_rooms
-    self.cleaning_record_rooms.includes(:room).each do |x|
-      x.expire_caches(self)
-    end
   end
 end

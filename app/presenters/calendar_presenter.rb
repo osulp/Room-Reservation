@@ -1,10 +1,14 @@
 class CalendarPresenter
   include Enumerable
-  attr_reader :start_time, :end_time
+  attr_reader :start_time, :end_time, :rooms, :floors, :filters
   def initialize(start_time, end_time, *managers)
     @start_time = start_time
     @end_time = end_time
     @managers = managers
+    @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).all)
+    @floors = @rooms.map(&:floor).uniq
+    @filters = Filter.all
+    sort_events_into_rooms
   end
 
   def each
@@ -16,15 +20,12 @@ class CalendarPresenter
 
   def event_collection(force=false)
     return @event_collection unless @event_collection.blank? || force
-    result = Rails.cache.fetch(cache_key) do
-      event_collection = @managers.map{|m| m.events_between(@start_time, @end_time)}
-                                   .flatten
-                                   .sort_by(&:start_time)
-      fix_event_collisions! event_collection
-      event_collection
-    end
-    @event_collection = result
-    return result
+    event_collection = @managers.map{|m| m.events_between(@start_time, @end_time, @rooms)}
+                                 .flatten
+                                 .sort_by(&:start_time)
+    fix_event_collisions! event_collection
+    @event_collection = event_collection
+    return @event_collection
   end
 
   def cache_key
@@ -40,12 +41,22 @@ class CalendarPresenter
 
   protected
 
+  def sort_events_into_rooms
+    all_events = event_collection.group_by(&:room_id)
+    rooms.each do |room|
+      room.events = all_events[room.id] if all_events.has_key?(room.id)
+      room.events = [] if room.events.blank?
+    end
+  end
+
   def fix_event_collisions! (event_collection)
     event_collection.each do |event|
       next unless event.valid?
       fix_event(event)
       event_collection.each do |event_2|
         next if event == event_2
+        # Only fix collisions between events are for the same room.
+        next if event.room_id != event_2.room_id
         next unless event_2.valid?
         collide(event, event_2)
       end

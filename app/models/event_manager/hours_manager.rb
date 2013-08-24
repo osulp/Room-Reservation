@@ -63,21 +63,25 @@ class EventManager::HoursManager < EventManager::EventManager
       unless hours["open"] == special
         start_at = date.at_beginning_of_day
         end_at = string_to_time(date, hours["open"])
-        events << build_event(start_at, end_at)
+        events |= build_event(start_at, end_at)
       end
       unless hours["close"] == special
         start_at = string_to_time(date, hours["close"])
         end_at = (date+1.day).at_beginning_of_day
-        events << build_event(start_at, end_at)
+        events |= build_event(start_at, end_at)
       end
     else
-      events << build_event(start_at, end_at)
+      events |= build_event(start_at, end_at)
     end
     return events
   end
 
   def build_event(start_time, end_time)
-    HoursDecorator.new(Event.new(start_time, end_time, priority))
+    result = []
+    @rooms.each do |room|
+      result << HoursDecorator.new(Event.new(start_time, end_time, priority, nil, room.id))
+    end
+    result
   end
 
   def string_to_time(date, time)

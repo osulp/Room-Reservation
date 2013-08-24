@@ -1,14 +1,15 @@
 class Event
   include ActiveModel::Validations
 
-  attr_accessor :start_time, :end_time, :priority
+  attr_accessor :start_time, :end_time, :priority, :room_id
   attr_reader :payload
   validate :start_time_valid
-  def initialize start_time, end_time, priority, payload = nil
+  def initialize start_time, end_time, priority, payload = nil, room_id = nil
     @start_time = start_time
     @end_time = end_time
     @priority = priority
     @payload = payload
+    @room_id = room_id
   end
 
   def start_time_valid

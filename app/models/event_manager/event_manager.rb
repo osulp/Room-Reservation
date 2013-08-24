@@ -1,11 +1,12 @@
 class EventManager::EventManager
 
-  attr_accessor :room, :start_time, :end_time
-  def initialize(room=nil)
-    @room = room
+  attr_accessor :rooms, :start_time, :end_time
+  def initialize(rooms=nil)
+    @rooms = rooms
   end
 
-  def events_between(start_time, end_time)
+  def events_between(start_time, end_time, rooms=nil)
+    @rooms = rooms if rooms
     @start_time, @end_time = start_time, end_time
     raise "Invalid parameters" unless self.valid?
     return get_events

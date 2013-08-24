@@ -1,6 +1,6 @@
 class RoomDecorator < Draper::Decorator
   delegate_all
-  attr_accessor :presenter
+  attr_accessor :events
 
   def filter_string
     string = ""
