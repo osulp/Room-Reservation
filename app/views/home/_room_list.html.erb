@@ -1,24 +1,26 @@
-<% @presenter.floors.each do |floor| %>
-  <div class="tab-pane <%= floor == 1 ? 'active' : '' %>" id="floor-<%= floor %>">
-    <div class="room-data-wrap">
-      <% @presenter.rooms.select { |r| r.floor == floor }.each do |room| %>
-          <div class="room-data <%= room.filter_string %>">
-            <div class="title"><%= room.name %></div>
-            <div class="room-data-bar progress vertical">
-              <% last_bar_end = 0 %>
-              <% room.events.each do |r| %>
-                <% if r.bar_start > last_bar_end %>
-                  <div class="bar bar-success" style="height: <%= r.bar_start - last_bar_end %>px;" title="Available"></div>
+<% cache ["RoomList",@presenter.cache_key] do %>
+  <% @presenter.floors.each do |floor| %>
+    <div class="tab-pane <%= floor == 1 ? 'active' : '' %>" id="floor-<%= floor %>">
+      <div class="room-data-wrap">
+        <% @presenter.rooms.select { |r| r.floor == floor }.each do |room| %>
+            <div class="room-data <%= room.filter_string %>">
+              <div class="title"><%= room.name %></div>
+              <div class="room-data-bar progress vertical">
+                <% last_bar_end = 0 %>
+                <% room.events.each do |r| %>
+                  <% if r.bar_start > last_bar_end %>
+                    <div class="bar bar-success" style="height: <%= r.bar_start - last_bar_end %>px;" title="Available"></div>
+                  <% end %>
+                  <div class="bar bar-<%= r.color %>" style="height: <%= r.bar_length %>px;" title="<%= r.description %>"></div>
+                  <% last_bar_end = r.bar_end %>
+                <% end -%>
+                <% if 480 > last_bar_end %>
+                  <div class="bar bar-success" style="height: <%= 480 - last_bar_end %>px;" title="Available"></div>
                 <% end %>
-                <div class="bar bar-<%= r.color %>" style="height: <%= r.bar_length %>px;" title="<%= r.description %>"></div>
-                <% last_bar_end = r.bar_end %>
-              <% end -%>
-              <% if 480 > last_bar_end %>
-                <div class="bar bar-success" style="height: <%= 480 - last_bar_end %>px;" title="Available"></div>
-              <% end %>
-            </div>
-        </div>
-      <% end %>
+              </div>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

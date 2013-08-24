@@ -1,6 +1,13 @@
 class CalendarPresenter
   include Enumerable
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
+
+  def self.cached(start_time, end_time, *managers)
+    Rails.cache.fetch("Cached/#{form_cache_key(start_time, end_time, *managers)}") do
+      new(start_time, end_time, *managers)
+    end
+  end
+
   def initialize(start_time, end_time, *managers)
     @start_time = start_time
     @end_time = end_time
@@ -27,16 +34,19 @@ class CalendarPresenter
     @event_collection = event_collection
     return @event_collection
   end
-
-  def cache_key
-    return @key if @key
-    @key = "#{self.class.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
-    @managers.each do |manager|
+  def self.form_cache_key(start_time, end_time, *managers)
+    key = "#{self.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
+    key += Room.order("updated_at DESC").first.try(:cache_key) || ''
+    managers.each do |manager|
       if manager.respond_to? :cache_key
-        @key += "/#{manager.cache_key(start_time, end_time)}"
+        key += "/#{manager.cache_key(start_time, end_time)}"
       end
     end
-    return @key
+    return key
+  end
+
+  def cache_key
+    @cache_key ||= self.class.form_cache_key(start_time, end_time, *@managers)
   end
 
   protected

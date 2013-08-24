@@ -8,6 +8,10 @@ class EventManager::CleaningRecordsManager < EventManager::EventManager
     range_cleaning_records(start_time, end_time).map{|x| to_event(x)}.flatten
   end
 
+  def cache_key(start_time, end_time)
+    "#{self.class}/#{start_time.to_i}/#{end_time.to_i}/#{CleaningRecord.where("start_date <= ? AND end_date >= ?", end_time.to_date, start_time.to_date).order("updated_at DESC").first.try(:cache_key)}"
+  end
+
   private
 
   def range_cleaning_records(start_time, end_time)
