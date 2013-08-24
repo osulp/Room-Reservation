@@ -76,14 +76,20 @@ describe "GET / reservation bars" do
             expect(page).to have_selector(".bar-danger", :count => 1)
           end
           it "should update the cache when a new reservation is added" do
+            puts "Creating a new reservation"
+            Timecop.travel(Time.current+5.seconds)
             create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
+            puts "Created New Reservation"
             visit root_path
             expect(page).to have_selector(".bar-danger", :count => 2)
           end
           it "should update the cache when the time on a current reservation changes", :js => true do
+            Timecop.travel(Time.current+5.seconds)
             reservation = Reservation.first
             reservation.end_time = reservation.end_time + 2.hours
+            puts "Current updated at: #{reservation.updated_at}"
             reservation.save
+            puts "New updated at: #{reservation.updated_at}"
             current_height = page.evaluate_script("$('.bar-danger').first().height()")
             visit root_path
             new_height = page.evaluate_script("$('.bar-danger').first().height()")
@@ -128,3 +134,4 @@ describe "GET / reservation bars" do
     end
   end
 end
+

@@ -6,23 +6,14 @@ describe EventManager::CleaningRecordsManager do
   let(:start_date) {Date.yesterday}
   let(:end_date) {Date.tomorrow}
   let(:end_time) {Time.current.tomorrow.midnight}
-  subject{EventManager::CleaningRecordsManager.new(room)}
-
-  describe "validations" do
-    context "when there is no room" do
-      let(:room) {nil}
-      it {should_not be_valid}
-    end
-    context "when there is a room" do
-      it {should be_valid}
-    end
-  end
+  subject{EventManager::CleaningRecordsManager.new}
 
   describe ".events_between" do
     before(:each) do
       Timecop.travel(Date.new(2013,8,22))
+      @room = create(:room)
     end
-    subject{EventManager::CleaningRecordsManager.new(room).events_between(start_time, end_time)}
+    subject{EventManager::CleaningRecordsManager.new.events_between(start_time, end_time, [@room])}
     context "when there are no cleaning records for that room" do
       it "should return an empty array" do
         expect(subject).to eq []
@@ -32,7 +23,7 @@ describe EventManager::CleaningRecordsManager do
       context "but they're out of range" do
         before(:each) do
           @cleaning = create(:cleaning_record, start_date: Date.yesterday, end_date: Date.yesterday)
-          @cleaning.rooms << room
+          @cleaning.rooms << @room
         end
         it "should return an empty array" do
           expect(subject).to eq []
@@ -41,7 +32,7 @@ describe EventManager::CleaningRecordsManager do
       context "and the date range overlaps" do
         before(:each) do
           @cleaning = create(:cleaning_record, start_date: Date.yesterday, end_date: Date.tomorrow, start_time: Time.current.utc.yesterday.midnight, end_time: Time.current.utc.yesterday.midnight+4.hours)
-          @cleaning.rooms << room
+          @cleaning.rooms << @room
         end
         it "should return one event" do
           expect(subject.length).to eq 1
@@ -49,6 +40,19 @@ describe EventManager::CleaningRecordsManager do
         it "should set the events start and end time appropriately" do
           expect(subject.first.start_time).to eq Time.zone.parse("2013-08-22 00:00:00")
           expect(subject.first.end_time).to eq Time.zone.parse("2013-08-22 04:00:00")
+        end
+        it "should set the event's room id" do
+          expect(subject.first.room_id).to eq @room.id
+        end
+        context "and the cleaning record applies to multiple rooms" do
+          subject{EventManager::CleaningRecordsManager.new.events_between(start_time, end_time, [@room, @room_2])}
+          before(:each) do
+            @room_2 = create(:room)
+            @cleaning.rooms << @room_2
+          end
+          it "should return one event per room" do
+            expect(subject.length).to eq 2
+          end
         end
       end
     end

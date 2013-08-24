@@ -4,25 +4,16 @@ describe EventManager::ReservationManager do
   let(:room) {create(:room)}
   let(:start_time) {Time.current.midnight}
   let(:end_time) {Time.current.tomorrow.midnight}
-  subject{EventManager::ReservationManager.new(room)}
-  describe "validations" do
-    context "when there is no room" do
-      let(:room) {nil}
-      it {should_not be_valid}
-    end
-    context "when there is a room" do
-      it {should be_valid}
-    end
-  end
+  subject{EventManager::ReservationManager.new}
   describe ".events_between" do
     context "when there is no room" do
       let(:room) {nil}
       it "should raise an exception" do
-        expect{subject.events_between(start_time,end_time)}.to raise_error
+        expect{subject.events_between(start_time,end_time, [room])}.not_to raise_error
       end
     end
     context "when there is a room" do
-      subject {EventManager::ReservationManager.new(room).events_between(start_time, end_time)}
+      subject {EventManager::ReservationManager.new.events_between(start_time, end_time, [room])}
       it "should not raise an exception" do
         expect{subject}.not_to raise_error
       end

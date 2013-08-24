@@ -36,7 +36,10 @@ describe EventManager::HoursManager do
   end
 
   describe ".events_between" do
-    subject {EventManager::HoursManager.new.events_between(Time.current.midnight, Time.current.tomorrow.midnight)}
+    subject {EventManager::HoursManager.new.events_between(Time.current.midnight, Time.current.tomorrow.midnight, [@room])}
+    before(:each) do
+      @room = create(:room)
+    end
     context "when the hours are 12:00 to 12:00" do
       before(:each) do
         Timecop.travel(Date.new(2013,8,19)) # A Monday
@@ -82,6 +85,15 @@ describe EventManager::HoursManager do
       it "should close the schedule all day" do
         expect(subject.first.start_time).to eq Time.current.midnight
         expect(subject.first.end_time).to eq Time.current.tomorrow.midnight
+      end
+      context "and there are two rooms" do
+        subject {EventManager::HoursManager.new.events_between(Time.current.midnight, Time.current.tomorrow.midnight, [@room, @room_2])}
+        before(:each) do
+          @room_2 = create(:room)
+        end
+        it "should return one event per room" do
+          expect(subject.length).to eq 2
+        end
       end
     end
     # 12:15 am to x means "Closes at x"

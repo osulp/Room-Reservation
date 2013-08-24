@@ -72,6 +72,13 @@ describe CalendarPresenter do
             result.first.start_time.should == Time.current.midnight
             result.first.end_time.should == Time.current.midnight+3.hours
           end
+          context "and one of the events is for a different room" do
+            let(:event_2) {Event.new(event_2_start, event_2_end, event_2_priority, nil, 5)}
+            it "should not change that event" do
+              result = subject.to_a
+              result.length.should == 2
+            end
+          end
         end
       end
     end

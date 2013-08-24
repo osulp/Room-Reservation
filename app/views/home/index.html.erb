@@ -11,7 +11,7 @@
           </div>
             <div class="tabbable" id="tabs-floor">
               <ul class="nav nav-tabs">
-                <% @floors.each do |floor| %>
+                <% @presenter.floors.each do |floor| %>
                   <li class="<%= floor == 1 ? 'active' : '' %>">
                     <a href="#floor-<%= floor %>" data-toggle="tab"><%= floor.ordinalize %> Floor</a>
                   </li>

@@ -35,6 +35,16 @@ describe "cleaning bars" do
       it "should show a bar" do
         expect(page).to have_selector(".bar-danger", :count => 1)
       end
+      context "and there are multiple rooms that have that cleaning" do
+        before(:each) do
+          @room2 = create(:room)
+          @cleaning.rooms << @room2
+          visit root_path
+        end
+        it "should show two bars" do
+          expect(page).to have_selector(".bar-danger", :count => 2)
+        end
+      end
       describe "caching", :caching => true do
         before(:each) do
           visit root_path
@@ -72,6 +82,7 @@ describe "cleaning bars" do
         end
         context "when a new room is added" do
           before(:each) do
+            Timecop.travel(Time.current + 2.seconds)
             @room2 = create(:room, :floor => 1)
             visit root_path
           end

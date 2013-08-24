@@ -1,43 +1,12 @@
 class EventManager::ReservationManager < EventManager::EventManager
 
-  # Expires caches that would have to do with this reservation.
-  def self.expire_cache(reservation)
-    start_date = reservation.start_time.to_date
-    end_date = reservation.end_time.to_date
-    expire_range(start_date, end_date, reservation.room)
-    start_date = reservation.start_time_was.try(:to_date)
-    end_date = reservation.end_time_was.try(:to_date)
-    if(start_date && end_date)
-      expire_range(start_date, end_date, reservation.room)
-    end
-  end
-
-
-  def self.expire_range(start_date, end_date, room)
-    start_date.upto(end_date) do |date|
-      start_time = Time.zone.parse(date.to_s)
-      end_time = Time.zone.parse((date+1.day).to_s)
-      key = self.cache_key(start_time, end_time, room)
-      Rails.cache.delete(key)
-    end
-  end
-
-  def self.cache_key(start_time, end_time, room)
-    "#{self}/#{start_time.to_i}/#{end_time.to_i}/#{room.cache_key}"
-  end
-
-  def self.form_cache_key(start_time, end_time, room)
-    "#{self.cache_key(start_time, end_time, room)}/#{SecureRandom.hex}"
-  end
-
   def cache_key(start_time, end_time)
-    @cache_key ||= Rails.cache.fetch(self.class.cache_key(start_time, end_time, room)) do
-      self.class.form_cache_key(start_time, end_time, room)
-    end
+
+    "#{self.class}/#{start_time.to_i}/#{end_time.to_i}/#{Reservation.where("start_time <= ? AND end_time >= ?", end_time, start_time).order("updated_at DESC").first.try(:cache_key)}"
   end
 
   def range_reservations(start_time, end_time)
-    room.reservations.where("start_time <= ? AND end_time >= ?", end_time, start_time)
+    Reservation.where("start_time <= ? AND end_time >= ? AND room_id IN (?)", end_time, start_time, rooms)
   end
 
   def get_events
@@ -45,7 +14,7 @@ class EventManager::ReservationManager < EventManager::EventManager
   end
 
   def to_event(reservation)
-    ReservationDecorator.new(Event.new(reservation.start_time-reservation_padding, reservation.end_time+reservation_padding, priority, reservation))
+    ReservationDecorator.new(Event.new(reservation.start_time-reservation_padding, reservation.end_time+reservation_padding, priority, reservation, reservation.room_id))
   end
 
   # @TODO: Move this into configuration
@@ -55,12 +24,6 @@ class EventManager::ReservationManager < EventManager::EventManager
 
   def priority
     0
-  end
-
-  def valid?
-    return false unless room
-    return false unless room.kind_of?(Room)
-    true
   end
 
 end
