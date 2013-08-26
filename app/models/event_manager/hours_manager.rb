@@ -3,20 +3,13 @@ class EventManager::HoursManager < EventManager::EventManager
     @hours ||= {}
     return @hours[date] if @hours.has_key?(date)
     result = {}
-    result = get_drupal_hours(date)
-    @hours[date] = result
-    return @hours[date]
-  end
-
-  def get_drupal_hours(date)
-    result = {}
     self.class.hour_models.each do |hour_model|
       result = hour_model.time_info(date)
       result = result[date] unless result.blank?
       break unless result.blank?
     end
-    result[:rooms] = @rooms unless result.blank?
-    return result
+    @hours[date] = result
+    return @hours[date]
   end
 
   def get_events
@@ -70,27 +63,25 @@ class EventManager::HoursManager < EventManager::EventManager
       unless hours["open"] == special
         start_at = date.at_beginning_of_day
         end_at = string_to_time(date, hours["open"])
-        hours[:rooms].each do |room|
-          events << build_event(start_at, end_at, room)
-        end
+        events |= build_event(start_at, end_at)
       end
       unless hours["close"] == special
         start_at = string_to_time(date, hours["close"])
         end_at = (date+1.day).at_beginning_of_day
-        hours[:rooms].each do |room|
-          events << build_event(start_at, end_at, room)
-        end
+        events |= build_event(start_at, end_at)
       end
     else
-      @rooms.each do |room|
-        events << build_event(start_at, end_at, room)
-      end
+      events |= build_event(start_at, end_at)
     end
     return events
   end
 
-  def build_event(start_time, end_time, room)
-    HoursDecorator.new(Event.new(start_time, end_time, priority, nil, room.id))
+  def build_event(start_time, end_time)
+    result = []
+    @rooms.each do |room|
+      result << HoursDecorator.new(Event.new(start_time, end_time, priority, nil, room.id))
+    end
+    result
   end
 
   def string_to_time(date, time)

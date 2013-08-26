@@ -1,17 +1,19 @@
 class CalendarPresenter
   include Enumerable
-  attr_reader :start_time, :end_time, :floors, :filters
+  attr_reader :start_time, :end_time, :rooms, :floors, :filters
 
-  def self.cached(start_time, end_time)
-    Rails.cache.fetch("Cached/#{form_cache_key(start_time, end_time)}") do
-      new(start_time, end_time)
+  def self.cached(start_time, end_time, *managers)
+    Rails.cache.fetch("Cached/#{form_cache_key(start_time, end_time, *managers)}") do
+      new(start_time, end_time, *managers)
     end
   end
 
-  def initialize(start_time, end_time)
+  def initialize(start_time, end_time, *managers)
     @start_time = start_time
     @end_time = end_time
-    @floors = rooms.map(&:floor).uniq
+    @managers = managers
+    @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).all)
+    @floors = @rooms.map(&:floor).uniq
     @filters = Filter.all
     sort_events_into_rooms
   end
@@ -25,14 +27,14 @@ class CalendarPresenter
 
   def event_collection(force=false)
     return @event_collection unless @event_collection.blank? || force
-    event_collection = managers.map{|m| m.events_between(@start_time, @end_time, rooms)}
+    event_collection = @managers.map{|m| m.events_between(@start_time, @end_time, @rooms)}
                                  .flatten
                                  .sort_by(&:start_time)
     fix_event_collisions! event_collection
     @event_collection = event_collection
     return @event_collection
   end
-  def self.form_cache_key(start_time, end_time)
+  def self.form_cache_key(start_time, end_time, *managers)
     key = "#{self.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
     key += Room.order("updated_at DESC").first.try(:cache_key) || ''
     managers.each do |manager|
@@ -44,31 +46,10 @@ class CalendarPresenter
   end
 
   def cache_key
-    @cache_key ||= self.class.form_cache_key(start_time, end_time)
+    @cache_key ||= self.class.form_cache_key(start_time, end_time, *@managers)
   end
-
-  def rooms
-    @rooms ||= self.class.rooms
-  end
-
 
   protected
-
-  def self.rooms
-    RoomDecorator.decorate_collection(Room.includes(:filters).all)
-  end
-
-  def self.managers
-    [
-        EventManager::ReservationManager.new(rooms),
-        EventManager::HoursManager.new(rooms),
-        EventManager::CleaningRecordsManager.new(rooms)
-    ]
-  end
-
-  def managers
-    @managers ||= self.class.managers
-  end
 
   def sort_events_into_rooms
     all_events = event_collection.group_by(&:room_id)
