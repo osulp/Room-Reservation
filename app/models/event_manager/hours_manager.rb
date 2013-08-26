@@ -2,6 +2,7 @@ class EventManager::HoursManager < EventManager::EventManager
   def hours(date)
     @hours ||= {}
     return @hours[date] if @hours.has_key?(date)
+    result = {}
     result = get_drupal_hours(date)
     @hours[date] = result
     return @hours[date]

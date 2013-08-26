@@ -9,7 +9,7 @@ class EventManager::CleaningRecordsManager < EventManager::EventManager
   end
 
   def cache_key(start_time, end_time)
-    "#{self.class}/#{start_time.to_i}/#{end_time.to_i}/#{range_cleaning_records(start_time, end_time).order("updated_at DESC").first.try(:cache_key)}"
+    "#{self.class}/#{start_time.to_i}/#{end_time.to_i}/#{CleaningRecord.where("start_date <= ? AND end_date >= ?", end_time.to_date, start_time.to_date).order("updated_at DESC").first.try(:cache_key)}"
   end
 
   private
