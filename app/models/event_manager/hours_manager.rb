@@ -19,7 +19,6 @@ class EventManager::HoursManager < EventManager::EventManager
   end
 
   def get_events
-    return @events if @events
     date_start = @start_time.to_date
     date_end = (@end_time-1.minute).to_date
     all_events = []
@@ -28,7 +27,6 @@ class EventManager::HoursManager < EventManager::EventManager
       next if hours["open"] == midnight &&  hours["close"] == midnight
       all_events |= hours_to_events(hours,date)
     end
-    @events = all_events
     all_events
   end
 

@@ -5,7 +5,7 @@ class EventManager::CleaningRecordsManager < EventManager::EventManager
   end
 
   def get_events
-    @events ||= range_cleaning_records(start_time, end_time).map{|x| to_event(x)}.flatten
+    range_cleaning_records(start_time, end_time).map{|x| to_event(x)}.flatten
   end
 
   def cache_key(start_time, end_time)

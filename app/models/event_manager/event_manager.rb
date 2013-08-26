@@ -6,11 +6,10 @@ class EventManager::EventManager
   end
 
   def events_between(start_time, end_time, rooms=nil)
-    return @events if @events
     @rooms = rooms if rooms
     @start_time, @end_time = start_time, end_time
     raise "Invalid parameters" unless self.valid?
-    @events = get_events
+    return get_events
   end
 
 
