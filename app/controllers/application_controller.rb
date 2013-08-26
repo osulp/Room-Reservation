@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :check_developer
 
 
   protected
@@ -13,12 +12,6 @@ class ApplicationController < ActionController::Base
     @current_user
   end
   helper_method :current_user
-
-  def check_developer
-    if current_user && current_user.onid == "terrellt"
-      Rack::MiniProfiler.authorize_request
-    end
-  end
 
   private
 

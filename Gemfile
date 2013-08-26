@@ -27,9 +27,6 @@ gem 'unicorn'
 # Cache digests for rails partials
 gem 'cache_digests'
 
-# Rack Mini Profiler
-gem 'rack-mini-profiler'
-
 group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'
