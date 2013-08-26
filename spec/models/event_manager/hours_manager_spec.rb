@@ -11,7 +11,8 @@ describe EventManager::HoursManager do
         @hours = create(:hour)
       end
       it "should return the hours open and close time for that day" do
-        expect(subject.hours(Date.today)).to eq( {"open" => "12:00 am", "close" => "12:00 am"} )
+        expect(subject.hours(Date.today)["open"]).to eq "12:00 am"
+        expect(subject.hours(Date.today)["close"]).to eq "12:00 am"
       end
     end
     context "when there are intersession hours" do
@@ -20,7 +21,8 @@ describe EventManager::HoursManager do
         @intersession_hours = create(:intersession_hour)
       end
       it "should prioritize the intersession hour times" do
-        expect(subject.hours(Date.today)).to eq({"open" => "7:30 am", "close" => "6:00 pm"})
+        expect(subject.hours(Date.today)["open"]).to eq "7:30 am"
+        expect(subject.hours(Date.today)["close"]).to eq "6:00 pm"
       end
     end
     context "when there are special hours" do
@@ -30,7 +32,8 @@ describe EventManager::HoursManager do
         @special_hours = create(:special_hour)
       end
       it "should prioritize the special hour times" do
-        expect(subject.hours(Date.today)).to eq({"open" => "1:00 pm", "close" => "10:00 pm"})
+        expect(subject.hours(Date.today)["open"]).to eq "1:00 pm"
+        expect(subject.hours(Date.today)["close"]).to eq "10:00 pm"
       end
     end
   end

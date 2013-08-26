@@ -1,15 +1,23 @@
 class EventManager::HoursManager < EventManager::EventManager
-  def hours(date)
+  def hours(date, rooms=[])
     @hours ||= {}
     return @hours[date] if @hours.has_key?(date)
+    result = get_drupal_hours(date, rooms)
+    @hours[date] = result
+    return @hours[date]
+  end
+
+  def get_drupal_hours(date, rooms)
     result = {}
     self.class.hour_models.each do |hour_model|
       result = hour_model.time_info(date)
       result = result[date] unless result.blank?
-      break unless result.blank?
+      unless result.blank?
+        result[:rooms] = rooms
+        break
+      end
     end
-    @hours[date] = result
-    return @hours[date]
+    return result
   end
 
   def get_events
@@ -17,19 +25,19 @@ class EventManager::HoursManager < EventManager::EventManager
     date_end = (@end_time-1.minute).to_date
     all_events = []
     date_start.upto(date_end) do |date|
-      hours = hours(date)
+      hours = hours(date, rooms)
       next if hours["open"] == midnight &&  hours["close"] == midnight
       all_events |= hours_to_events(hours,date)
     end
     all_events
   end
 
-  def cache_key(start_time, end_time)
+  def cache_key(start_time, end_time,rooms=[])
     date_start = start_time.to_date
     date_end = (end_time-1.minute).to_date
     hours_cache_key = ""
     date_start.upto(date_end) do |date|
-      hours = hours(date)
+      hours = hours(date, rooms)
       unless hours.blank?
         hours_cache_key += "/#{hours["open"]}/#{hours["close"]}"
       end
@@ -63,25 +71,27 @@ class EventManager::HoursManager < EventManager::EventManager
       unless hours["open"] == special
         start_at = date.at_beginning_of_day
         end_at = string_to_time(date, hours["open"])
-        events |= build_event(start_at, end_at)
+        hours[:rooms].each do |room|
+          events << build_event(start_at, end_at, room)
+        end
       end
       unless hours["close"] == special
         start_at = string_to_time(date, hours["close"])
         end_at = (date+1.day).at_beginning_of_day
-        events |= build_event(start_at, end_at)
+        hours[:rooms].each do |room|
+          events << build_event(start_at, end_at, room)
+        end
       end
     else
-      events |= build_event(start_at, end_at)
+      rooms.each do |room|
+        events << build_event(start_at, end_at, room)
+      end
     end
     return events
   end
 
-  def build_event(start_time, end_time)
-    result = []
-    @rooms.each do |room|
-      result << HoursDecorator.new(Event.new(start_time, end_time, priority, nil, room.id))
-    end
-    result
+  def build_event(start_time, end_time, room)
+    HoursDecorator.new(Event.new(start_time, end_time, priority, nil, room.id))
   end
 
   def string_to_time(date, time)
