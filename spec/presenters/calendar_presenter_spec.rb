@@ -15,8 +15,11 @@ describe CalendarPresenter do
   let(:event_2_priority) {0}
   let(:event_1) {Event.new(event_1_start, event_1_end,event_1_priority)}
   let(:event_2) { Event.new(event_2_start, event_2_end,event_2_priority)}
-  subject {CalendarPresenter.new(Time.current.midnight, Time.current.tomorrow.midnight, fake_manager)}
+  subject {CalendarPresenter.new(Time.current.midnight, Time.current.tomorrow.midnight)}
   describe ".to_a" do
+    before(:each) do
+      CalendarPresenter.stub(:managers).and_return([fake_manager])
+    end
     context "when two events do not conflict" do
       it "should return the the events one after another with no truncation" do
         result = subject.to_a
