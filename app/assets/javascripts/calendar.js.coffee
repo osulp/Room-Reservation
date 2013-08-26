@@ -38,7 +38,7 @@ class CalendarManager
         id = div.attr('id')
         html = div.html()
         $('#' + id).html(html)
-      $('#loading-spinner').fadeOut()
+      $('#loading-spinner').hide()
       window.FilterManager.apply_filters()
       window.TooltipManager.set_tooltips()
     )
