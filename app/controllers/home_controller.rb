@@ -14,7 +14,9 @@ class HomeController < ApplicationController
       calendar = CalendarManager.new(calendar_hash)
       Rack::MiniProfiler.step "Presenter Generation" do
         @presenter = CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
-        @presenter.event_collection
+        Rack::MiniProfiler.step "Cache Key Generation" do
+          puts "Cache Key: #{@presenter.cache_key}"
+        end
       end
     end
     render :partial => 'room_list', :locals => {:floors => @floors}

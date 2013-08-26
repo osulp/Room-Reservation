@@ -10,7 +10,7 @@ class EventManager::ReservationManager < EventManager::EventManager
   end
 
   def get_events
-    events = range_reservations(start_time, end_time).order(:start_time).map{|x| to_event(x)}
+    @events ||= range_reservations(start_time, end_time).order(:start_time).map{|x| to_event(x)}
   end
 
   def to_event(reservation)
