@@ -10,7 +10,7 @@ class EventDecorator < Draper::Decorator
   end
 
   def bar_end
-    @bar_end ||= convert_to_pixels self.end_time.seconds_since_midnight
+    @bar_end ||= convert_to_pixels (self.end_time-1.second).seconds_since_midnight
   end
 
   def color

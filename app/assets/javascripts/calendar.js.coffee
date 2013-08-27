@@ -17,7 +17,6 @@ class CalendarManager
     this.selected_date(current_date,@datepicker)
     return
   truncate_to_now: =>
-
     current_time = new Date()
     current_hour = current_time.getHours()
     bar_length = current_hour*60*60/180
@@ -33,12 +32,15 @@ class CalendarManager
     $(".bar").each (key, item) =>
       item = $(item)
       start_at = item.offset().top - start_offset
-      end_at = item.height()
+      end_at = item.height()+start_at
+      console.log "Start At: #{start_at} End At: #{end_at} Target Bar Location: #{bar_length} #{item.attr("class")}"
       if start_at < bar_length
         if end_at > bar_length
+          console.log "Making smaller"
           item.height(end_at - bar_length)
         else
-          item.remove()
+          item.data("remove", true)
+    $(".bar").filter(-> $(this).data("remove") == true).remove()
     $(".room-data-bar").height($(".room-data-bar").height()-bar_length)
     hour_elements.hide()
     $("#dayviewTable").data("old-height", $("#dayviewTable").height())
