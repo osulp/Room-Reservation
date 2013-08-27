@@ -14,4 +14,4 @@ input[type="radio"], input[type="checkbox"] { margin: 0px 4px 0px; }
 .time-reference-line:nth-child(odd) { background-color: #EED; }
 #room-time-list { margin-top: 10px; width: 90px; float:left;}
 .room-time { height: 20px; text-align: right; padding: 0 5px;}
-#loading-spinner {background: url('ajax-loader.gif') no-repeat 50% 50%; width:100%; height:100%; position: absolute; top: 0; display: none;}
+#loading-spinner {background: url('ajax-loader.gif') no-repeat 50% 50%; width:100%; height:100%; position: absolute; top: 0; display: none; z-index: 10;}
