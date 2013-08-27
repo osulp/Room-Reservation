@@ -34,10 +34,8 @@ class CalendarManager
       start_offset = item.parent().offset().top
       start_at = item.offset().top - start_offset
       end_at = item.height()+start_at
-      console.log "Start offset: #{start_offset} Start At: #{start_at} End At: #{end_at} Target Bar Location: #{bar_length} #{item.attr("class")}"
       if start_at < bar_length
         if end_at > bar_length
-          console.log "Making smaller"
           item.height(end_at - bar_length)
         else
           item.data("remove", true)
@@ -63,7 +61,6 @@ class CalendarManager
   load_day: (year, month, day) ->
     $('#loading-spinner').fadeIn()
     cookie_requested = this.get_date_from_cookie()
-    console.log("Loading day from cookie #{this.get_date_from_cookie()}")
     $.get("/home/day/#{encodeURIComponent("#{year}-#{month}-#{day}")}", (data) =>
       return unless @date_selected.toString() == [year, month, day].toString()
       new_room_list = $(data)
