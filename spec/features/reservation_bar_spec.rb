@@ -127,6 +127,10 @@ describe "GET / reservation bars" do
             expect(page).to have_selector("body.count-2")
             expect(page).to have_selector(".bar-danger")
           end
+          it "should not have the loading bar shown" do
+            expect(page).to have_selector("body.count-2")
+            expect(page).not_to have_selector("#loading-spinner")
+          end
         end
       end
     end
