@@ -35,6 +35,12 @@ class CalendarPresenter
     return @event_collection
   end
 
+  def self.expire_time(start_time, end_time)
+    key = form_cache_key(start_time, end_time, Room.all)
+    Rails.cache.delete("Cached/#{key}")
+    Rails.cache.delete("cached_key/#{key}")
+  end
+
   def self.form_cache_key(start_time, end_time, rooms)
     key = "#{self.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
     key += Room.order("updated_at DESC").first.try(:cache_key) || ''
@@ -47,7 +53,11 @@ class CalendarPresenter
   end
 
   def cache_key
-    @cache_key ||= self.class.form_cache_key(start_time, end_time, rooms)
+    return @cache_key if @cache_key
+    formed_key = self.class.form_cache_key(start_time, end_time, rooms)
+    @cache_key = Rails.cache.fetch("cached_key/#{formed_key}") do
+      "#{formed_key}/#{SecureRandom.hex}"
+    end
   end
 
   protected
