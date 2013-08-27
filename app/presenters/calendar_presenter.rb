@@ -2,13 +2,13 @@ class CalendarPresenter
   include Enumerable
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
 
-  def self.cached(start_time, end_time, *managers)
-    Rails.cache.fetch("Cached/#{form_cache_key(start_time, end_time, Room.all, *managers)}") do
-      new(start_time, end_time, *managers)
+  def self.cached(start_time, end_time)
+    Rails.cache.fetch("Cached/#{form_cache_key(start_time, end_time, Room.all)}") do
+      new(start_time, end_time)
     end
   end
 
-  def initialize(start_time, end_time, *managers)
+  def initialize(start_time, end_time)
     @start_time = start_time
     @end_time = end_time
     @managers = managers
@@ -34,7 +34,14 @@ class CalendarPresenter
     @event_collection = event_collection
     return @event_collection
   end
-  def self.form_cache_key(start_time, end_time, rooms, *managers)
+
+  def self.expire_time(start_time, end_time)
+    key = form_cache_key(start_time, end_time, Room.all)
+    Rails.cache.delete("Cached/#{key}")
+    Rails.cache.delete("cached_key/#{key}")
+  end
+
+  def self.form_cache_key(start_time, end_time, rooms)
     key = "#{self.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
     key += Room.order("updated_at DESC").first.try(:cache_key) || ''
     managers.each do |manager|
@@ -46,10 +53,26 @@ class CalendarPresenter
   end
 
   def cache_key
-    @cache_key ||= self.class.form_cache_key(start_time, end_time, rooms,*@managers)
+    return @cache_key if @cache_key
+    formed_key = self.class.form_cache_key(start_time, end_time, rooms)
+    @cache_key = Rails.cache.fetch("cached_key/#{formed_key}") do
+      "#{formed_key}/#{SecureRandom.hex}"
+    end
   end
 
   protected
+
+  def self.managers
+    [
+        EventManager::ReservationManager.new,
+        EventManager::HoursManager.new,
+        EventManager::CleaningRecordsManager.new
+    ]
+  end
+
+  def managers
+    @managers ||= self.class.managers
+  end
 
   def sort_events_into_rooms
     all_events = event_collection.group_by(&:room_id)

@@ -88,7 +88,6 @@ describe "cleaning bars" do
         end
         context "when a new room is added" do
           before(:each) do
-            Timecop.travel(Time.current + 2.seconds)
             @room2 = create(:room, :floor => 1)
             visit root_path
           end
