@@ -79,10 +79,10 @@
   background-image: linear-gradient(to right, #149bdf, #0480be);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf', endColorstr='#ff0480be', GradientType=1);
-  -webkit-transition: height 0.6s ease;
-  -moz-transition: height 0.6s ease;
-  -o-transition: height 0.6s ease;
-  transition: height 0.6s ease;
+  -webkit-transition: height 0.01s linear;
+  -moz-transition: height 0.01s linear;
+  -o-transition: height 0.01s linear;
+  transition: height 0.01s linear;
 }
 .progress.vertical.bottom .bar {
   position: absolute;

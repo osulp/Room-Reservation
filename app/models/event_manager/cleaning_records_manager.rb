@@ -17,7 +17,7 @@ class EventManager::CleaningRecordsManager < EventManager::EventManager
   def range_cleaning_records(start_time, end_time)
     return @range_cleaning_records if @range_cleaning_records
     cleaning_record_rooms = CleaningRecordRoom.where(:room_id => rooms.map(&:id)).pluck(:cleaning_record_id)
-    @range_cleaning_records ||= CleaningRecord.where("start_date <= ? AND end_date >= ? AND id IN (?)", end_time.to_date, start_time.to_date, cleaning_record_rooms).includes(:rooms)
+    @range_cleaning_records ||= CleaningRecord.where("start_date <= ? AND end_date >= ? AND id IN (?)", (end_time-1.minute).to_date, start_time.to_date, cleaning_record_rooms).includes(:rooms)
   end
 
   def to_event(cleaning_record)

@@ -71,11 +71,17 @@ describe "cleaning bars" do
           end
         end
         context "when a cleaning is changed in the same day", :js => true do
+          before(:each) do
+            # Disable the truncation for testing.
+            page.execute_script("window.CalendarManager.truncate_to_now = function(){}")
+          end
           it "should update the cache" do
             @cleaning.end_time = @cleaning.end_time + 2.hours
             @cleaning.save
             current_height = page.evaluate_script("$('.bar-danger').first().height()")
             visit root_path
+            # Disable the truncation for testing.
+            page.execute_script("window.CalendarManager.truncate_to_now = function(){}")
             new_height = page.evaluate_script("$('.bar-danger').first().height()")
             expect(current_height).not_to eq new_height
           end

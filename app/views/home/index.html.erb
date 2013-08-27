@@ -20,16 +20,18 @@
               <div class="tab-content" id="dayviewTable">
                 <div class="row-fluid" style="position:absolute">
                   <div class="span0" id="room-time-list">
+                    <% i = 0 %>
                     <% %w(am pm).each do |t| %>
                       <% ([12]+(1..11).to_a).each do |h| %>
-                    <div class="room-time"><%= h %>:00 <%= t %> <i class="icon-chevron-right"></i></div>
+                        <div class="room-time" data-hour='<%= i %>'><%= h %>:00 <%= t %> <i class="icon-chevron-right"></i></div>
+                        <% i += 1 -%>
                       <% end -%>
                     <% end -%>
                   </div>
                   <div class="room-time-reference-line">
                     <div class=""></div>
                     <% (0..23).to_a.each do |h| %>
-                    <div class="time-reference-line"></div>
+                    <div class="time-reference-line" data-hour='<%= h %>'></div>
                     <% end -%>
                   </div>
                   <div id="loading-spinner"></div>

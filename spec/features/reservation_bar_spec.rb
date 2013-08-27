@@ -87,9 +87,7 @@ describe "GET / reservation bars" do
             Timecop.travel(Time.current+5.seconds)
             reservation = Reservation.first
             reservation.end_time = reservation.end_time + 2.hours
-            puts "Current updated at: #{reservation.updated_at}"
             reservation.save
-            puts "New updated at: #{reservation.updated_at}"
             current_height = page.evaluate_script("$('.bar-danger').first().height()")
             visit root_path
             new_height = page.evaluate_script("$('.bar-danger').first().height()")
@@ -112,6 +110,8 @@ describe "GET / reservation bars" do
 
         context "when a bunch of dates are picked", :js => true do
           before(:each) do
+            # Disable the truncation for testing.
+            page.execute_script("window.CalendarManager.truncate_to_now = function(){}")
             # Add counter for when $.get completes.
             page.execute_script("window.load_count = 0")
             page.execute_script("$.get_alt = $.get")
