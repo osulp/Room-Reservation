@@ -76,9 +76,7 @@ describe "GET / reservation bars" do
             expect(page).to have_selector(".bar-danger", :count => 1)
           end
           it "should update the cache when a new reservation is added" do
-            puts "Creating Reservation"
             create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
-            puts "Created Reservation"
             visit root_path
             expect(page).to have_selector(".bar-danger", :count => 2)
           end
