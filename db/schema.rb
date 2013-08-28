@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130828152854) do
+ActiveRecord::Schema.define(:version => 20130828183517) do
 
   create_table "cleaning_record_rooms", :force => true do |t|
     t.integer  "cleaning_record_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20130828152854) do
     t.time     "end_time"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "weekdays"
   end
 
   create_table "filters", :force => true do |t|

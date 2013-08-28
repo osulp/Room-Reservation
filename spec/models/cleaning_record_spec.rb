@@ -14,4 +14,18 @@ describe CleaningRecord do
       expect(subject).not_to be_valid
     end
   end
+  describe ".weekdays" do
+    before(:each) do
+      subject.weekdays = [1,2,3,4]
+      subject.save
+      subject.reload
+    end
+    it "should serialize" do
+      expect(subject.weekdays).to eq [1,2,3,4]
+    end
+    it "should only accept an array" do
+      subject.weekdays = {:bla => 1}
+      expect(subject).not_to be_valid
+    end
+  end
 end
