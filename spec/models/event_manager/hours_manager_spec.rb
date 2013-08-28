@@ -52,6 +52,21 @@ describe EventManager::HoursManager do
         expect(subject).to eq []
       end
     end
+    context "when there are room hours in addition to regular hours" do
+      before(:each) do
+        Timecop.travel(Date.new(2013,8,19)) # A Monday
+        @hours = create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
+        @room_hour = create(:room_hour, start_date: Date.today-1.day, end_date: Date.today+1.day, start_time: "12:00:00", end_time: "14:00:00")
+        @room_hour.rooms << @room
+      end
+      it "should return events for the room hour" do
+        expect(subject.length).to eq 2
+        expect(subject.first.start_time).to eq Time.zone.parse("2013-08-19 00:00:00")
+        expect(subject.first.end_time).to eq Time.zone.parse("2013-08-19 12:00:00")
+        expect(subject.second.start_time).to eq Time.zone.parse("2013-08-19 14:00:00")
+        expect(subject.second.end_time).to eq Time.zone.parse("2013-08-20 00:00:00")
+      end
+    end
     context "when no hours are returned" do
       it "should return one event that lasts the entire period for that day" do
         expect(subject.length).to eq 1

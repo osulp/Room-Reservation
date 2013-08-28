@@ -7,4 +7,6 @@ class Room < ActiveRecord::Base
   has_many :filters, :through => :room_filters
   has_many :cleaning_record_rooms, :dependent => :destroy
   has_many :cleaning_records, :through => :cleaning_record_rooms
+  has_many :room_hour_records, :dependent => :destroy
+  has_many :room_hours, :through => :room_hour_records
 end

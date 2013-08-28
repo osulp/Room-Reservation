@@ -20,13 +20,23 @@ class EventManager::HoursManager < EventManager::EventManager
     return result
   end
 
+  def specific_room_hours
+    return @specific_room_hours if @specific_room_hours
+    @specific_room_hours = applicable_room_hours.group_by(&:room_id)
+  end
+
+  def applicable_room_hours(start=nil, ending=nil)
+    start ||= start_time
+    ending ||= end_time
+    RoomHourRecord.includes(:room, :room_hour).where("room_hours.start_date <= ? AND room_hours.end_date >= ?", (ending-1.minute).to_date, start.to_date)
+  end
+
   def get_events
     date_start = @start_time.to_date
     date_end = (@end_time-1.minute).to_date
     all_events = []
     date_start.upto(date_end) do |date|
       hours = hours(date, rooms)
-      next if hours["open"] == midnight &&  hours["close"] == midnight
       all_events |= hours_to_events(hours,date)
     end
     all_events
@@ -42,7 +52,12 @@ class EventManager::HoursManager < EventManager::EventManager
         hours_cache_key += "/#{hours["open"]}/#{hours["close"]}"
       end
     end
+    hours_cache_key += "/#{room_hour_cache_key(start_time, end_time)}"
     "#{self.class}#{hours_cache_key}"
+  end
+
+  def room_hour_cache_key(start_time, end_time)
+    RoomHour.where("start_date <= ? AND end_date >= ?", (end_time-1.minute).to_date, start_time.to_date).order("updated_at DESC").first.try(:cache_key)
   end
 
   def priority
@@ -67,27 +82,35 @@ class EventManager::HoursManager < EventManager::EventManager
     start_at = date.at_beginning_of_day
     end_at = (date+1.day).at_beginning_of_day
     events = []
-    unless hours.blank? || (hours["open"] == one && hours["close"] == one)
-      unless hours["open"] == special
-        start_at = date.at_beginning_of_day
-        end_at = string_to_time(date, hours["open"])
-        hours[:rooms].each do |room|
+    all_rooms = hours[:rooms] || rooms
+    all_rooms.each do |room|
+      hours = build_room_hours(room) || hours
+      next if hours["open"] == midnight && hours["close"] == midnight
+      unless hours.blank? || (hours["open"] == one && hours["close"] == one)
+        unless hours["open"] == special
+          start_at = date.at_beginning_of_day
+          end_at = string_to_time(date, hours["open"])
           events << build_event(start_at, end_at, room)
         end
-      end
-      unless hours["close"] == special
-        start_at = string_to_time(date, hours["close"])
-        end_at = (date+1.day).at_beginning_of_day
-        hours[:rooms].each do |room|
+        unless hours["close"] == special
+          start_at = string_to_time(date, hours["close"])
+          end_at = (date+1.day).at_beginning_of_day
           events << build_event(start_at, end_at, room)
         end
-      end
-    else
-      rooms.each do |room|
+      else
         events << build_event(start_at, end_at, room)
       end
     end
     return events
+  end
+
+  def build_room_hours(room)
+    room_hours = specific_room_hours[room.id]
+    return nil if room_hours.blank?
+    room_hours = room_hours.first.room_hour
+    open_time = room_hours.start_time.strftime("%l:%M %P")
+    close_time = room_hours.end_time.strftime("%l:%M %P")
+    return {"open" => open_time, "close" => close_time}
   end
 
   def build_event(start_time, end_time, room)

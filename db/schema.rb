@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130822203747) do
+ActiveRecord::Schema.define(:version => 20130828152854) do
 
   create_table "cleaning_record_rooms", :force => true do |t|
     t.integer  "cleaning_record_id"
@@ -100,6 +100,25 @@ ActiveRecord::Schema.define(:version => 20130822203747) do
 
   add_index "room_filters", ["filter_id"], :name => "index_room_filters_on_filter_id"
   add_index "room_filters", ["room_id"], :name => "index_room_filters_on_room_id"
+
+  create_table "room_hour_records", :force => true do |t|
+    t.integer  "room_id"
+    t.integer  "room_hour_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "room_hour_records", ["room_hour_id"], :name => "index_room_hour_records_on_room_hour_id"
+  add_index "room_hour_records", ["room_id"], :name => "index_room_hour_records_on_room_id"
+
+  create_table "room_hours", :force => true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "rooms", :force => true do |t|
     t.string   "name"

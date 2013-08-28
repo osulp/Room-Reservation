@@ -31,6 +31,51 @@ describe "hour bars" do
       it "should create two bars locking down available reservation times to those hours" do
         expect(page).to have_selector(".bar-danger", :count => 2)
       end
+      context "and there are two rooms" do
+        before(:each) do
+          Timecop.travel(Time.current+2.seconds)
+          @room2 = create(:room, :floor => 1)
+          visit root_path
+        end
+        it "should show four bars - two for each room" do
+          expect(page).to have_selector(".bar-danger", :count => 4)
+        end
+        context "and the second room has room specific hours" do
+          before(:each) do
+            @room_hours = create(:room_hour, start_date: Date.today, end_date: Date.today, start_time: "00:00:00", end_time: "00:00:00")
+            @room_hours.rooms << @room2
+            visit root_path
+          end
+          it "should show the room hours for that specific room" do
+            expect(page).to have_selector(".bar-danger", :count => 2)
+          end
+          describe "caching", :caching => true do
+            it "should act the same" do
+              expect(page).to have_selector(".bar-danger", :count => 2)
+            end
+            context "when another room is added to the hours" do
+              before(:each) do
+                @room_hours.rooms << @room1
+                visit root_path
+              end
+              it "should update the page" do
+                expect(page).not_to have_selector(".bar-danger")
+              end
+            end
+            context "when the room hours change" do
+              before(:each) do
+                @room_hours.start_time = "02:00:00"
+                @room_hours.end_time = "03:00:00"
+                @room_hours.save
+                visit root_path
+              end
+              it "should update the page" do
+                expect(page).to have_selector(".bar-danger", :count => 4)
+              end
+            end
+          end
+        end
+      end
       context "and a reservation exists within that timeslot" do
         before(:each) do
           create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1)

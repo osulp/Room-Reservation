@@ -11,6 +11,8 @@ describe Room do
     it {should have_many(:filters).through(:room_filters)}
     it {should have_many :cleaning_record_rooms}
     it {should have_many(:cleaning_records).through(:cleaning_record_rooms)}
+    it {should have_many(:room_hour_records)}
+    it {should have_many(:room_hours).through(:room_hour_records)}
   end
 
 end
