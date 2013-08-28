@@ -106,6 +106,16 @@ describe "cleaning bars" do
             expect(current_height).not_to eq new_height
           end
         end
+        context "when the applied room is removed" do
+          before(:each) do
+            @cleaning.rooms = []
+            @cleaning.save
+            visit root_path
+          end
+          it "should update the cache" do
+            expect(page).not_to have_selector(".bar-danger")
+          end
+        end
         context "when a new room is added" do
           before(:each) do
             Timecop.travel(Time.current+2.seconds)
@@ -114,6 +124,15 @@ describe "cleaning bars" do
           end
           it "should update the cache" do
             expect(page).to have_selector(".room-data-bar", :count => 2)
+          end
+          context "then that room is is added to cleaning" do
+            before(:each) do
+              @cleaning.rooms << @room2
+              visit root_path
+            end
+            it "should update the cache" do
+              expect(page).to have_selector(".bar-danger", :count => 2)
+            end
           end
           context "then a new cleaning is added" do
             before(:each) do

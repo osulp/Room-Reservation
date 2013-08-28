@@ -1,5 +1,5 @@
 class CleaningRecordRoom < ActiveRecord::Base
-  belongs_to :cleaning_record
+  belongs_to :cleaning_record, :touch => true
   belongs_to :room
   validates :cleaning_record, :room, :presence => true
   validate :not_overriding_previous_record
