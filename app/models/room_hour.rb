@@ -6,6 +6,9 @@ class RoomHour < ActiveRecord::Base
   has_many :room_hour_records
   has_many :rooms, :through => :room_hour_records
 
+  after_save :expire_presenter
+  after_destroy :expire_presenter
+
   protected
 
   def start_date_correct
@@ -17,6 +20,15 @@ class RoomHour < ActiveRecord::Base
   def start_time_correct
     if start_time && end_time && start_time > end_time
       errors.add(:start_time, "must be before the end time.")
+    end
+  end
+
+  def expire_presenter
+    start_date = self.start_date
+    end_date = self.end_date
+    start_date.upto(end_date) do |date|
+      time = Time.zone.parse(date.to_s)
+      CalendarPresenter.expire_time(time, time.tomorrow.midnight)
     end
   end
 
