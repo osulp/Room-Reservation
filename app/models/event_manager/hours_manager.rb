@@ -79,26 +79,26 @@ class EventManager::HoursManager < EventManager::EventManager
   end
 
   def hours_to_events(hours,date)
-    start_at = date.at_beginning_of_day
-    end_at = (date+1.day).at_beginning_of_day
+    default_start_at = date.at_beginning_of_day
+    default_end_at = (date+1.day).at_beginning_of_day
     events = []
     all_rooms = hours[:rooms] || rooms
     all_rooms.each do |room|
-      hours = build_room_hours(room) || hours
-      next if hours["open"] == midnight && hours["close"] == midnight
-      unless hours.blank? || (hours["open"] == one && hours["close"] == one)
-        unless hours["open"] == special
+      local_hours = build_room_hours(room) || hours
+      next if local_hours["open"] == midnight && local_hours["close"] == midnight
+      unless local_hours.blank? || (local_hours["open"] == one && local_hours["close"] == one)
+        unless local_hours["open"] == special
           start_at = date.at_beginning_of_day
-          end_at = string_to_time(date, hours["open"])
+          end_at = string_to_time(date, local_hours["open"])
           events << build_event(start_at, end_at, room)
         end
-        unless hours["close"] == special
-          start_at = string_to_time(date, hours["close"])
+        unless local_hours["close"] == special
+          start_at = string_to_time(date, local_hours["close"])
           end_at = (date+1.day).at_beginning_of_day
           events << build_event(start_at, end_at, room)
         end
       else
-        events << build_event(start_at, end_at, room)
+        events << build_event(default_start_at, default_end_at, room)
       end
     end
     return events

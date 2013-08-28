@@ -23,6 +23,26 @@ describe "hour bars" do
     end
   end
   context "when there are hours" do
+    context "and the hours are room specific" do
+      before(:each) do
+        @room_hours = create(:room_hour, start_date: Date.today, end_date: Date.today, start_time: "04:00:00", end_time: "08:00:00")
+        @room_hours.rooms << @room1
+        visit root_path
+      end
+      it "should show the room specific hours" do
+        expect(page).to have_selector(".bar-danger", :count => 2)
+      end
+      context "and there are two rooms" do
+        before(:each) do
+          Timecop.travel(Time.current+2.seconds)
+          @room2 = create(:room, :floor => 1)
+          visit root_path
+        end
+        it "should lock down the second room because it doesn't apply to the overall hours" do
+          expect(page).to have_selector(".bar-danger", :count => 3)
+        end
+      end
+    end
     context "and those hours aren't special" do
       before(:each) do
         create(:special_hour, open_time: "06:00:00", close_time: "14:00:00")
