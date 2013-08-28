@@ -23,7 +23,7 @@ class EventManager::CleaningRecordsManager < EventManager::EventManager
   def to_event(cleaning_record)
     result = []
     cleaning_record.rooms.each do |room|
-      if rooms.include?(room)
+      if rooms.include?(room) && cleaning_record.weekdays.include?(start_time.wday)
         result << CleaningDecorator.new(Event.new(to_time(cleaning_record.start_time, @start_time), to_time(cleaning_record.end_time, (@end_time-1.minute)), priority, cleaning_record, room.id))
       end
     end
