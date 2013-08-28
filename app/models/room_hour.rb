@@ -23,6 +23,10 @@ class RoomHour < ActiveRecord::Base
     end
   end
 
+  # TODO: MAKE THIS BETTER
+  # Right now this is required because cache keys use updated_at, and MySQL only stores updated_at to the second.
+  # This can make saving a room hour that affects a large date range take a LONG time.
+
   def expire_presenter
     start_date = self.start_date
     end_date = self.end_date

@@ -20,6 +20,10 @@ class CleaningRecord < ActiveRecord::Base
     errors.add(:weekdays, "must be an array of weekdays") unless weekdays.kind_of?(Array)
   end
 
+
+  # TODO: MAKE THIS BETTER
+  # Right now this is required because cache keys use updated_at, and MySQL only stores updated_at to the second.
+  # This can make saving a new cleaning record that affects a large date range take a LONG time.
   def expire_presenter
     start_date = self.start_date
     end_date = self.end_date
