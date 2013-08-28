@@ -32,6 +32,16 @@ describe "cleaning bars" do
         @cleaning.save
         visit root_path
       end
+      context "but the cleaning is for a different weekday" do
+        before(:each) do
+          @cleaning.weekdays = [Date.yesterday.wday]
+          @cleaning.save
+          visit root_path
+        end
+        it "should not show any bars" do
+          expect(page).not_to have_selector(".bar-danger")
+        end
+      end
       it "should show a bar" do
         expect(page).to have_selector(".bar-danger", :count => 1)
       end
@@ -53,6 +63,16 @@ describe "cleaning bars" do
         context "when a cleaning is deleted" do
           before(:each) do
             @cleaning.destroy
+            visit root_path
+          end
+          it "should update the cache" do
+            expect(page).not_to have_selector(".bar-danger")
+          end
+        end
+        context "when a cleaning's weekdays are changed" do
+          before(:each) do
+            @cleaning.weekdays = [Date.yesterday.wday]
+            @cleaning.save
             visit root_path
           end
           it "should update the cache" do
