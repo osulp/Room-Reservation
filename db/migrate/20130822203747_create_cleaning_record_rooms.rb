@@ -4,7 +4,7 @@ class CreateCleaningRecordRooms < ActiveRecord::Migration
       t.references :cleaning_record
       t.references :room
 
-      t.timestamps
+      t.timestamps :precision => 6
     end
     add_index :cleaning_record_rooms, :cleaning_record_id
     add_index :cleaning_record_rooms, :room_id

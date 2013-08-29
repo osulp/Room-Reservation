@@ -3,7 +3,7 @@ class CreateFilters < ActiveRecord::Migration
     create_table :filters do |t|
       t.string :name
 
-      t.timestamps
+      t.timestamps :precision => 6
     end
   end
 end

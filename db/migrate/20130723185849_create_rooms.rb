@@ -4,7 +4,7 @@ class CreateRooms < ActiveRecord::Migration
       t.string :name
       t.integer :floor
 
-      t.timestamps
+      t.timestamps :precision => 6
     end
   end
 end

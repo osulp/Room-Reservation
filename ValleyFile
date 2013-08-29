@@ -42,4 +42,4 @@ chefjson = {
     "listen_ports" => ["80","8000"]
   }
 }
-recipes = ["apt","phantomjs","main","main::mysql","main::sendmail","main::rails"]
+recipes = ["apt","phantomjs","main","mariadb::server","main::sendmail","main::rails"]

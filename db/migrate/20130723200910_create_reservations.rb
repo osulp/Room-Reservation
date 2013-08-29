@@ -8,7 +8,7 @@ class CreateReservations < ActiveRecord::Migration
       t.date :end_time
       t.string :description
 
-      t.timestamps
+      t.timestamps :precision => 6
     end
     add_index :reservations, :room_id_id
   end

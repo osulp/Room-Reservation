@@ -6,7 +6,7 @@ class CreateRoomHours < ActiveRecord::Migration
       t.time :start_time
       t.time :end_time
 
-      t.timestamps
+      t.timestamps :precision => 6
     end
   end
 end

@@ -4,7 +4,7 @@ class CreateRoomFilters < ActiveRecord::Migration
       t.references :room
       t.references :filter
 
-      t.timestamps
+      t.timestamps :precision => 6
     end
     add_index :room_filters, :room_id
     add_index :room_filters, :filter_id
