@@ -1,0 +1,2 @@
+module Banner
+end
