@@ -7,13 +7,9 @@ class AvailabilityChecker
     @end_time = end_time
   end
   def available?
-    events.each do |event|
-      return false if event.start_time < end_time && event.end_time > start_time
-    end
+    return false unless events.empty?
     true
   end
-
-  protected
 
   def events
     return @events if @events
@@ -25,6 +21,7 @@ class AvailabilityChecker
       presenter = CalendarPresenter.cached(time, time.tomorrow.midnight)
       @events |= presenter.rooms.find{|room| room.id == self.room.id}.events
     end
+    @events = @events.select{|event| event.end_time > start_time && event.start_time < end_time}
     @events
   end
 end

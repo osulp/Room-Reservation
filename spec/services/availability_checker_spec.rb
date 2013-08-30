@@ -57,6 +57,14 @@ describe AvailabilityChecker do
             expect(subject).not_to be_available
           end
         end
+        context "which overlaps that time slot" do
+          before(:each) do
+            create(:reservation, start_time: Time.current.midnight+2.hours, end_time: Time.current.midnight+6.hours, room: room)
+          end
+          it "should return false" do
+            expect(subject).not_to be_available
+          end
+        end
         context "ending on that time slot" do
           before(:each) do
             # Remove the ten minute buffer that gets added to reservations
