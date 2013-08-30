@@ -36,3 +36,16 @@ drupal_production:
   database: <%= "#{ENV['ROOMRES_DRUPAL_DB']}" %>
   username: <%= ENV['ROOMRES_DRUPAL_DB_USERNAME'] %>
   password: <%= ENV['ROOMRES_DRUPAL_DB_PASSWORD'] %>
+
+banner_development:
+  <<: *default
+
+banner_test:
+  <<: *default
+  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>
+
+banner_production:
+  <<: *default
+  database: <%= "#{ENV['ROOMRES_BANNER_DB']}" %>
+  username: <%= ENV['ROOMRES_BANNER_DB_USERNAME'] %>
+  password: <%= ENV['ROOMRES_BANNER_DB_PASSWORD'] %>
