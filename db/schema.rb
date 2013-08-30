@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130828183517) do
+ActiveRecord::Schema.define(:version => 20130830154644) do
+
+  create_table "BannerLookup", :primary_key => "ID", :force => true do |t|
+    t.string "onid",     :limit => 9,   :null => false
+    t.string "status",   :limit => 30,  :null => false
+    t.string "email",    :limit => 128, :null => false
+    t.string "fullName", :limit => 41,  :null => false
+    t.string "idHash",   :limit => 128, :null => false
+  end
+
+  add_index "BannerLookup", ["idHash"], :name => "idHash"
+  add_index "BannerLookup", ["onid"], :name => "onid"
 
   create_table "cleaning_record_rooms", :force => true do |t|
     t.integer  "cleaning_record_id"
