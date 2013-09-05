@@ -2,7 +2,13 @@ class ReservationController < ApplicationController
   respond_to :json
   include_root_in_json = false
   def current_user_reservations
-    respond_with(Array.wrap(current_user.reservations.where("end_time > ?", Time.current.midnight)))
+    if params.has_key?(:date)
+      date = Time.zone.parse(params[:date])
+      result = current_user.reservations.where("start_time <= ? AND end_time >= ?", date.tomorrow.midnight, date.midnight)
+    else
+      result = current_user.reservations
+    end
+    respond_with(Array.wrap(result))
   end
 
 

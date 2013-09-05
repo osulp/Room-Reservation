@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "cleaning bars" do
+  include VisitWithAfterHook
   before(:each) do
     RubyCAS::Filter.fake("user")
     @room1 = create(:room)
@@ -92,8 +93,8 @@ describe "cleaning bars" do
         end
         context "when a cleaning is changed in the same day", :js => true do
           before(:each) do
-            # Disable the truncation for testing.
-            page.execute_script("window.CalendarManager.truncate_to_now = function(){}")
+            visit root_path
+            expect(page).to have_selector(".bar-danger")
           end
           it "should update the cache" do
             @cleaning.end_time = @cleaning.end_time + 2.hours
@@ -148,4 +149,8 @@ describe "cleaning bars" do
       end
     end
   end
+end
+def after_visit(*args)
+  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
 end

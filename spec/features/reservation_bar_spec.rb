@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "GET / reservation bars" do
+  include VisitWithAfterHook
   before(:each) do
     # Fake a login
     RubyCAS::Filter.fake("bla")
@@ -60,7 +61,6 @@ describe "GET / reservation bars" do
           expect(page).not_to have_selector(".bar-danger")
         end
       end
-
       context "when there are reservations", :focus => true do
         before(:each) do
           Timecop.return
@@ -75,17 +75,18 @@ describe "GET / reservation bars" do
             visit root_path
           end
           it "should display the bar as a different color", :js => true do
-            # Disable the truncation for testing.
-            page.execute_script("window.CalendarManager.truncate_to_now = function(){}")
+            visit root_path
+
             expect(page).to have_selector(".bar-info")
           end
         end
-
         it "should show the red bar for the reservation" do
           expect(page).to have_selector(".bar-danger")
         end
+
         describe "caching", :caching => true do
           before(:each) do
+            visit root_path
             expect(page).to have_selector(".bar-danger", :count => 1)
           end
           it "should update the cache when a new reservation is added" do
@@ -103,17 +104,18 @@ describe "GET / reservation bars" do
             expect(page).to have_selector(".bar-info")
           end
           it "should update the cache when the time on a current reservation changes", :js => true do
+            visit root_path
+            expect(page).to have_selector(".bar-danger")
             reservation = Reservation.first
             reservation.end_time = reservation.end_time + 2.hours
             reservation.save
             current_height = page.evaluate_script("$('.bar-danger').first().height()")
             visit root_path
-            # Disable the truncation for testing.
-            page.execute_script("window.CalendarManager.truncate_to_now = function(){}")
             new_height = page.evaluate_script("$('.bar-danger').first().height()")
             expect(current_height).not_to eq new_height
           end
           it "should update the cache when the time changes to a whole other day", :js => true do
+            visit root_path
             reservation = Reservation.first
             reservation.start_time = reservation.start_time - 48.hours
             reservation.end_time = reservation.end_time - 48.hours
@@ -130,6 +132,7 @@ describe "GET / reservation bars" do
 
         context "when a bunch of dates are picked", :js => true do
           before(:each) do
+            visit root_path
             # Disable the truncation for testing.
             page.execute_script("window.CalendarManager.truncate_to_now = function(){}")
             # Add counter for when $.get completes.
@@ -153,4 +156,9 @@ describe "GET / reservation bars" do
       end
     end
   end
+end
+
+def after_visit(*args)
+  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
 end
