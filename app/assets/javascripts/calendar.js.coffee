@@ -84,6 +84,7 @@ class CalendarManager
         element = $("*[data-id=#{reservation.id}]")
         element.removeClass("bar-danger")
         element.addClass("bar-info")
+        element.attr("data-original-title","Click to Cancel")
     )
     return
   get_date_from_cookie: ->
