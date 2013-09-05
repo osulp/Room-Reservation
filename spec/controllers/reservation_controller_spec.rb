@@ -77,4 +77,71 @@ describe ReservationController do
       end
     end
   end
+
+  describe "availability" do
+    before(:each) do
+      @room = create(:room)
+    end
+    context "when there is nothing blocking availability" do
+      before(:each) do
+        create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+      end
+      it "should return the max available time" do
+        get :availability, :start => Time.current.midnight+2.hours, :room_id => @room.id, :format => :json
+        expect(JSON.parse(response.body)["availability"]).to eq 6.hours
+      end
+    end
+    context "when the hours are blocking availability" do
+      it "should return 0" do
+        get :availability, :start => Time.current.midnight+2.hours, :room_id => @room.id,  :format => :json
+        expect(JSON.parse(response.body)["availability"]).to eq 0
+      end
+    end
+    context "when there is a reservation" do
+      before(:each) do
+        # Free up hours
+        create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+      end
+      context "in the next day" do
+        before(:each) do
+          create(:reservation, :start_time => Time.current.tomorrow.midnight+2.hours, :end_time => Time.current.tomorrow.midnight+4.hours, :room => @room)
+          get :availability, :start => Time.current.midnight+23.hours, :room_id => @room.id, :format => :json
+        end
+        it "should return the number of seconds until that reservation" do
+          expect(JSON.parse(response.body)["availability"]).to eq 3.hours-10.minutes
+        end
+      end
+      context "in the same day" do
+        context "ending before the request" do
+          before(:each) do
+            create(:reservation, :start_time => Time.current.midnight+12.hours, :end_time => Time.current.midnight+14.hours-10.minutes, :room => @room)
+            get :availability, :start => Time.current.midnight+14.hours, :room_id => @room.id, :format => :json
+          end
+          it "should return the max availability" do
+            expect(JSON.parse(response.body)["availability"]).to eq 6.hours
+          end
+        end
+        context "ending inside the request" do
+          before(:each) do
+            create(:reservation, :start_time => Time.current.midnight+12.hours, :end_time => Time.current.midnight+14.hours-10.minutes, :room => @room)
+            get :availability, :start => Time.current.midnight+13.hours, :room_id => @room.id, :format => :json
+          end
+          it "should return 0 seconds" do
+            expect(JSON.parse(response.body)["availability"]).to eq 0
+          end
+        end
+      end
+      context "from the previous day" do
+        context "ending inside the request" do
+          before(:each) do
+            create(:reservation, :start_time => Time.current.midnight-2.hours, :end_time => Time.current.midnight+6.hours, :room => @room)
+            get :availability, :start => Time.current.midnight+4.hours, :room_id => @room.id, :format => :json
+          end
+          it "should return 0 seconds" do
+            expect(JSON.parse(response.body)["availability"]).to eq 0
+          end
+        end
+      end
+    end
+  end
 end

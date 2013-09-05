@@ -5,4 +5,5 @@ RoomReservation::Application.routes.draw do
   get "/login", :to => 'sessions#new'
   get "/logout", :to => 'sessions#logout'
   get "/reservations", :to => 'reservation#current_user_reservations', :as => :current_user_reservations
+  get "/availability/:room_id/:start", :to => 'reservation#availability', :as => :availability
 end
