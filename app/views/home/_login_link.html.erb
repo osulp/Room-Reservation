@@ -1,6 +1,7 @@
 <% if current_user.nil? %>
   <%= link_to "Login", login_path %> to make a reservation.
 <% else %>
+  <%= raw current_user.tag %>
   <p><strong>Logged in as:</strong><br />
     <%= current_user.onid %> (Reservations) <%= link_to "Logout", logout_path %></p>
 <% end %>

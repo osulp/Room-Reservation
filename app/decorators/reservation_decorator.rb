@@ -4,4 +4,10 @@ class ReservationDecorator < EventDecorator
     return 'danger'
   end
 
+  def data_hash
+    {
+        :id => self.id
+    }
+  end
+
 end

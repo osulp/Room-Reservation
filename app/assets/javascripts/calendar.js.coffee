@@ -11,6 +11,7 @@ class CalendarManager
     @datepicker.datepicker("setDate","#{cached_date[1]}/#{cached_date[2]}/#{cached_date[0]}")
     @date_selected = [cached_date[0], cached_date[1], cached_date[2]]
     this.truncate_to_now()
+    this.color_reservations()
   go_to_today: =>
     @datepicker.datepicker("setDate","+0")
     current_date = @datepicker.datepicker("getDate")
@@ -73,6 +74,16 @@ class CalendarManager
       window.FilterManager.apply_filters()
       window.TooltipManager.set_tooltips()
       this.truncate_to_now()
+      this.color_reservations()
+    )
+    return
+  color_reservations: ->
+    $.getJSON("/reservations", (reservations) =>
+      console.log(reservations)
+      for reservation in reservations
+        element = $("*[data-id=#{reservation.id}]")
+        element.removeClass("bar-danger")
+        element.addClass("bar-info")
     )
     return
   get_date_from_cookie: ->

@@ -11,7 +11,7 @@
                   <% if r.bar_start > last_bar_end %>
                     <div class="bar bar-success" style="height: <%= r.bar_start - last_bar_end %>px;" title="Available"></div>
                   <% end %>
-                  <div class="bar bar-<%= r.color %>" style="height: <%= r.bar_length %>px;" title="<%= r.description %>"></div>
+                  <%= raw r.bar %>
                   <% last_bar_end = r.bar_end %>
                 <% end -%>
                 <% if 480 > last_bar_end.to_i+1 %>

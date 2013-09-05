@@ -8,4 +8,8 @@ class User < OpenStruct
   def banner_record
     @banner_record ||= BannerRecord.where(:onid => self.onid).first
   end
+
+  def reservations
+    Reservation.where(:user_onid => onid)
+  end
 end

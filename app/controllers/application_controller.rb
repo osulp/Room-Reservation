@@ -7,7 +7,9 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if @current_user
     unless current_user_username.blank?
-      @current_user = User.new(current_user_username, current_user_extra_attributes)
+      @current_user = UserDecorator.new(User.new(current_user_username, current_user_extra_attributes))
+    else
+      @current_user = NullObject.new
     end
     @current_user
   end

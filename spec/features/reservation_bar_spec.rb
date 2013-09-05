@@ -68,6 +68,19 @@ describe "GET / reservation bars" do
           r = create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1)
           visit root_path
         end
+        context "and the reservation is for the user" do
+          before(:each) do
+            Reservation.destroy_all
+            create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1, :user_onid => "bla")
+            visit root_path
+          end
+          it "should display the bar as a different color", :js => true do
+            # Disable the truncation for testing.
+            page.execute_script("window.CalendarManager.truncate_to_now = function(){}")
+            expect(page).to have_selector(".bar-info")
+          end
+        end
+
         it "should show the red bar for the reservation" do
           expect(page).to have_selector(".bar-danger")
         end
@@ -79,6 +92,15 @@ describe "GET / reservation bars" do
             create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
             visit root_path
             expect(page).to have_selector(".bar-danger", :count => 2)
+          end
+          it "should update the cache when the reservation switches to be owned by them", :js => true do
+            r = create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
+            visit root_path
+            expect(page).not_to have_selector(".bar-info")
+            r.user_onid = "bla"
+            r.save
+            visit root_path
+            expect(page).to have_selector(".bar-info")
           end
           it "should update the cache when the time on a current reservation changes", :js => true do
             reservation = Reservation.first
