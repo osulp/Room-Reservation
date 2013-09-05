@@ -21,7 +21,7 @@ class ReservationController < ApplicationController
       available_time = availability_checker.events.first.start_time - start_time
       available_time = 0 if available_time < 0
     end
-    respond_with({:availability => available_time})
+    respond_with({:availability => available_time.to_i})
   end
 
 
