@@ -10,7 +10,8 @@ class AvailableDecorator < EventDecorator
 
   def data_hash
     {
-        start: (start_time).to_s
+        start: (start_time).to_s,
+        end: (end_time).to_s
     }
   end
 
