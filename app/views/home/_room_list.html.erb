@@ -6,17 +6,9 @@
             <div class="room-data <%= room.filter_string %>">
               <div class="title"><%= room.name %></div>
               <div class="room-data-bar progress vertical">
-                <% last_bar_end = 0 %>
-                <% room.events.each do |r| %>
-                  <% if r.bar_start > last_bar_end %>
-                    <div class="bar bar-success" style="height: <%= r.bar_start - last_bar_end %>px;" title="Available"></div>
-                  <% end %>
+                <% room.decorated_events.each do |r| %>
                   <%= raw r.bar %>
-                  <% last_bar_end = r.bar_end %>
                 <% end -%>
-                <% if 480 > last_bar_end.to_i+1 %>
-                  <div class="bar bar-success" style="height: <%= 480 - last_bar_end %>px;" title="Available"></div>
-                <% end %>
               </div>
           </div>
         <% end %>

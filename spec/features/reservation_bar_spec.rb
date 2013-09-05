@@ -59,6 +59,7 @@ describe "GET / reservation bars" do
       context "when there are no reservations" do
         it "should not show any red bars" do
           expect(page).not_to have_selector(".bar-danger")
+          expect(page).to have_selector(".bar-success")
         end
       end
       context "when there are reservations", :focus => true do
@@ -82,6 +83,7 @@ describe "GET / reservation bars" do
         end
         it "should show the red bar for the reservation" do
           expect(page).to have_selector(".bar-danger")
+          expect(page).to have_selector(".bar-success",:count => 2)
         end
 
         describe "caching", :caching => true do
@@ -129,7 +131,6 @@ describe "GET / reservation bars" do
             expect(page).not_to have_selector(".bar-danger")
           end
         end
-
         context "when a bunch of dates are picked", :js => true do
           before(:each) do
             visit root_path
