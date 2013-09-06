@@ -56,6 +56,9 @@ class ReservationPopupManager
     if(end-start < 1)
       event.preventDefault()
       return
+    # Force end back if it goes too far
+    if end > @slider_element.slider("option","max")
+      @slider_element.slider("values",1,@slider_element.slider("option","max"))
     # Force the other slider closer if they get past the maximum reservation time.
     if(end-start > max_reservation)
       if @slider_element.slider("values",0) != start
