@@ -81,6 +81,7 @@ class CalendarManager
       window.TooltipManager.set_tooltips()
       this.truncate_to_now()
       this.color_reservations("#{year}-#{month}-#{day}")
+      window.ReservationPopupManager.popup.hide()
     )
     return
   color_reservations: (date)->
