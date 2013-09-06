@@ -7,8 +7,14 @@ class ReservationPopupManager
     $("body").on("click", ".bar-success", (event)->
       element = $(this)
       room_element = element.parent().parent()
+      # Truncate start/end times to 10 minute mark.
       start_time = new Date(element.data("start"))
+      start_time.setSeconds(0)
+      start_time.setMinutes(Math.ceil(start_time.getMinutes()/10)*10)
       end_time = new Date(element.data("end"))
+      end_time.setSeconds(0)
+      end_time.setMinutes(Math.ceil(end_time.getMinutes()/10)*10)
+      # Set up popup.
       master.position_popup(event.pageX, event.pageY)
       master.populate_reservation_popup(room_element, start_time, end_time)
     )
