@@ -38,6 +38,11 @@ class CalendarManager
       end_at = item.height()+start_at
       if start_at < bar_length
         if end_at > bar_length
+          if(item.data("start")?)
+            new_time = new Date(current_time.getTime())
+            new_time.setSeconds(0)
+            new_time.setMinutes(Math.ceil(new_time.getMinutes()/10)*10)
+            item.data("start",new_time.toString())
           item.height(end_at - bar_length)
         else
           item.data("remove", true)
