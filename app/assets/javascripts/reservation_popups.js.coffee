@@ -58,13 +58,15 @@ class ReservationPopupManager
       return
     # Force end back if it goes too far
     if end > @slider_element.slider("option","max")
-      @slider_element.slider("values",1,@slider_element.slider("option","max"))
+      end = @slider_element.slider("option","max")
     # Force the other slider closer if they get past the maximum reservation time.
     if(end-start > max_reservation)
       if @slider_element.slider("values",0) != start
         @slider_element.slider("values",1,start+max_reservation)
+        end = start+max_reservation
       else
         @slider_element.slider("values",0,end-max_reservation)
+        start = end-max_reservation
     start_time = this.form_time_string(new Date(@start_time.getTime() + start*10*60*1000))
     end_time = this.form_time_string(new Date(@start_time.getTime() + end*10*60*1000))
     $("#time-range-label #start-time").text(start_time)
