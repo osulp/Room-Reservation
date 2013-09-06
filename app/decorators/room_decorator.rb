@@ -10,10 +10,10 @@ class RoomDecorator < Draper::Decorator
     string.strip
   end
 
-  def decorated_events
+  def decorated_events(base_time)
     return @decorated_events if @decorated_events
     @decorated_events = []
-    last_start_time = Time.current.midnight.seconds_since_midnight
+    last_start_time = base_time.midnight.seconds_since_midnight
     events.each do |event|
       if event.start_time.seconds_since_midnight > last_start_time
         start_time = event.start_time.midnight+last_start_time.seconds
@@ -24,8 +24,8 @@ class RoomDecorator < Draper::Decorator
       @decorated_events << event
     end
     if events.length == 0 || last_start_time != 0
-      start_time = Time.current.midnight+last_start_time.seconds
-      end_time = Time.current.tomorrow.midnight
+      start_time = base_time.midnight+last_start_time.seconds
+      end_time = base_time.tomorrow.midnight
       @decorated_events << build_available_decorator(start_time, end_time)
     end
     return @decorated_events
