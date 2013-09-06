@@ -51,7 +51,7 @@ class ReservationPopupManager
   slid: (event, ui) =>
     start = ui.values[0]
     end = ui.values[1]
-    max_reservation = @max_reservation/60/10-1
+    max_reservation = @max_reservation/60/10
     # Don't allow less than 10 minutes.
     if(end-start < 1)
       event.preventDefault()
