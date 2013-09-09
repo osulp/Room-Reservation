@@ -14,6 +14,19 @@ describe Reserver do
     before(:each) do
       create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
     end
+    it {should be_valid}
+    context "when the duration is greater than what the user can have" do
+      let(:end_time) {start_time + 4.hours}
+      context "and the reserver is not an admin" do
+        it "should be invalid" do
+          expect(subject).not_to be_valid
+        end
+      end
+      context "and the reserver is an admin" do
+        # TODO: Write this test after the admin system is in.
+        it "should be valid"
+      end
+    end
     context "when the given start time is greater than the end time" do
       let(:start_time) {end_time + 2.hours}
       it "should be invalid" do
