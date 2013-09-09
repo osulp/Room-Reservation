@@ -79,6 +79,7 @@ class CalendarPresenter
     rooms.each do |room|
       room.events = all_events[room.id] if all_events.has_key?(room.id)
       room.events = [] if room.events.blank?
+      room.decorated_events
     end
   end
 
