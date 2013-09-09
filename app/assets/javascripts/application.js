@@ -18,4 +18,5 @@
 //= require bootstrap
 //= require bootstrap.calendar
 //= require jquery.cookie
+//= require local_iso
 //= require_tree .
