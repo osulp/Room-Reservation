@@ -1,4 +1,4 @@
-class ReservationController < ApplicationController
+class ReservationsController < ApplicationController
   respond_to :json
   include_root_in_json = false
   def current_user_reservations
@@ -22,6 +22,23 @@ class ReservationController < ApplicationController
       available_time = 0 if available_time < 0
     end
     respond_with({:availability => available_time.to_i})
+  end
+
+  def create
+    reserver = Reserver.from_params(params)
+    if reserver.save
+      respond_to do |format|
+        format.json do
+          render :json => reserver.reservation
+        end
+      end
+    else
+      respond_to do |format|
+        format.json do
+          render :json => {:errors => reserver.errors.full_messages}
+        end
+      end
+    end
   end
 
 

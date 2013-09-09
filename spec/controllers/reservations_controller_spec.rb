@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ReservationController do
+describe ReservationsController do
   before(:each) do
     Timecop.travel(Date.new(2013,9,5))
   end
