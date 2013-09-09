@@ -62,4 +62,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'timecop'
+  gem 'capybara-screenshot'
 end
