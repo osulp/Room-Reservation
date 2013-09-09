@@ -55,7 +55,7 @@ class ReservationPopupManager
     $("#reservation-popup #room-name").text(room_name)
     $("#reservation-popup #reservation_room_id").val(room_id)
     $("#reservation-popup #reservation_start_time").val(start_time)
-    $.getJSON("/availability/#{room_id}/#{encodeURIComponent(end_time.toISOString()).split(".")[0]}.json", (result) =>
+    $.getJSON("/availability/#{room_id}/#{encodeURIComponent(end_time.toISOString()).split(".")[0]+"z"}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability)
     )
