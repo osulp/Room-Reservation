@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def require_login
+    redirect_to login_path if current_user.nil?
+  end
+
   private
 
   def current_user_username

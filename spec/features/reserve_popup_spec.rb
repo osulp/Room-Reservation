@@ -26,11 +26,34 @@ describe 'reserve popup' do
       it "should show the reservation popup" do
         expect(page).to have_selector("#reservation-popup", :visible => true)
       end
+      describe "clicking outside the popup" do
+        before(:each) do
+          expect(page).to have_selector("#reservation-popup", :visible => true)
+          find("body").trigger("click")
+        end
+        it "should hide the popup" do
+          expect(page).not_to have_selector("#reservation-popup")
+        end
+      end
       context "and they have no banner record" do
         it "should default to a 3 hour time range" do
           within("#reservation-popup") do
             expect(find("#start-time")).to have_content("12:00 AM")
             expect(find("#end-time")).to have_content("3:00 AM")
+          end
+        end
+        describe "clicking yes" do
+          before(:each) do
+            within("#reservation-popup") do
+              fill_in "reservation_description", :with => "Testing"
+              click_link "Yes"
+            end
+          end
+
+          it "should show a confirmation message" do
+            within("#reservation-popup") do
+              expect(page).to have_content("Your reservation has been made! Check your ONID email for details.")
+            end
           end
         end
       end

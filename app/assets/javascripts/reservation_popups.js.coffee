@@ -22,9 +22,22 @@ class ReservationPopupManager
       window.start_time = start_time
     )
     @popup.click (event) ->
-      event.stopPropagation()
+      event.stopPropagation() unless $(event.target).data("remote")?
     $("body").click (event) =>
-      @popup.hide()
+      this.hide_popup() unless $(event.target).data("remote")?
+    # Bind to the form submission link
+    $("#data")
+  prepare_parameters: (event, xhr, settings) ->
+    console.log event
+    console.log xhr
+    console.log settings
+    form_id = $(this).attr("data-form")
+    attributes = $("##{form_id}").serialize()
+    event.data = "#{attributes}"
+  hide_popup: ->
+    @popup.hide()
+    @popup.children(".popup-content").show()
+    @popup.children(".popup-message").hide()
   parse_date_string: (date) ->
     result = date.split("-")
     result.pop() if result.length > 3
@@ -34,7 +47,7 @@ class ReservationPopupManager
     @popup.offset({top: y, left: x+10})
     @popup.hide()
   populate_reservation_popup: (room_element, start_time, end_time) ->
-    @popup.hide()
+    this.hide_popup()
     room_id = room_element.data("room-id")
     room_name = room_element.data("room-name")
     max_reservation = $("#user-info").data("max-reservation")
@@ -80,8 +93,12 @@ class ReservationPopupManager
       else
         @slider_element.slider("values",0,end-max_reservation)
         start = end-max_reservation
-    start_time = this.form_time_string(new Date(@start_time.getTime() + start*10*60*1000))
-    end_time = this.form_time_string(new Date(@start_time.getTime() + end*10*60*1000))
+    start_time_object = new Date(@start_time.getTime() + start*10*60*1000)
+    end_time_object = new Date(@start_time.getTime() + end*10*60*1000)
+    start_time = this.form_time_string(start_time_object)
+    end_time = this.form_time_string(end_time_object)
+    $("#reservation_start_time").val(start_time_object.toISOString())
+    $("#reservation_end_time").val(end_time_object.toISOString())
     $("#time-range-label #start-time").text(start_time)
     $("#time-range-label #end-time").text(end_time)
   form_time_string: (date) ->

@@ -14,6 +14,11 @@ describe Reserver do
     before(:each) do
       create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
     end
+    it {should validate_presence_of :start_time}
+    it {should validate_presence_of :end_time}
+    it {should validate_presence_of :room}
+    it {should validate_presence_of :reserver}
+    it {should validate_presence_of :reserved_for}
     it {should be_valid}
     context "when the duration is greater than what the user can have" do
       let(:end_time) {start_time + 4.hours}

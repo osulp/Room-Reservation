@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
   respond_to :json
   include_root_in_json = false
+  before_filter :require_login, :only => :create
   def current_user_reservations
     if params.has_key?(:date)
       date = Time.zone.parse(params[:date])
@@ -25,6 +26,7 @@ class ReservationsController < ApplicationController
   end
 
   def create
+    params["reservation_reserver_onid"] = current_user.onid
     reserver = Reserver.from_params(params)
     if reserver.save
       respond_to do |format|

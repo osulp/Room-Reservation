@@ -1,4 +1,13 @@
 @import "bootstrap/mixins";
+input.restlink {
+  border: 0;
+  background: #fff;
+  color: #236cb0;
+  cursor: pointer;
+}
+input.restlink:hover {
+  text-decoration: underline;
+}
 #reservation-popup {
   border: 1px solid black;
   display: inline-block;

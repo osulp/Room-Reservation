@@ -78,6 +78,17 @@ describe ReservationsController do
     end
   end
 
+  describe "create" do
+    context "when a user is not logged in" do
+      before(:each) do
+        post :create
+      end
+      it "should redirect" do
+        expect(response).to redirect_to(login_path)
+      end
+    end
+  end
+
   describe "availability" do
     before(:each) do
       @room = create(:room)
