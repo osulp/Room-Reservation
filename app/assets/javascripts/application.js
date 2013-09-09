@@ -16,7 +16,6 @@
 //= require jquery.ui.datepicker
 //= require jquery.ui.slider
 //= require bootstrap
-//= require bootstrap.calendar
 //= require jquery.cookie
 //= require local_iso
 //= require_tree .
