@@ -21,7 +21,7 @@ describe 'reserve popup' do
     end
     context "when a green bar is clicked" do
       before(:each) do
-        find(".bar-success").click
+        find(".bar-success").trigger('click')
       end
       it "should show the reservation popup" do
         expect(page).to have_selector("#reservation-popup", :visible => true)
