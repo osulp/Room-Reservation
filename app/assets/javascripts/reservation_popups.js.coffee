@@ -8,20 +8,27 @@ class ReservationPopupManager
       element = $(this)
       room_element = element.parent().parent()
       # Truncate start/end times to 10 minute mark.
-      start_time = new Date(element.data("start"))
+      start_time = new Date(master.parse_date_string(element.data("start")))
+      start_time.setTime(start_time.getTime() + start_time.getTimezoneOffset()*60*1000)
       start_time.setSeconds(0)
       start_time.setMinutes(Math.ceil(start_time.getMinutes()/10)*10)
-      end_time = new Date(element.data("end"))
+      end_time = new Date(master.parse_date_string(element.data("end")))
+      end_time.setTime(end_time.getTime() + end_time.getTimezoneOffset()*60*1000)
       end_time.setSeconds(0)
       end_time.setMinutes(Math.ceil(end_time.getMinutes()/10)*10)
       # Set up popup.
       master.position_popup(event.pageX, event.pageY)
       master.populate_reservation_popup(room_element, start_time, end_time)
+      window.start_time = start_time
     )
     @popup.click (event) ->
       event.stopPropagation()
     $("body").click (event) =>
       @popup.hide()
+  parse_date_string: (date) ->
+    result = date.split("-")
+    result.pop() if result.length > 3
+    result.join("-")
   position_popup: (x, y)->
     @popup.show()
     @popup.offset({top: y, left: x+10})
@@ -31,10 +38,11 @@ class ReservationPopupManager
     room_id = room_element.data("room-id")
     room_name = room_element.data("room-name")
     max_reservation = $("#user-info").data("max-reservation")
+    return if !max_reservation?
     $("#reservation-popup #room-name").text(room_name)
     $("#reservation-popup #reservation_room_id").val(room_id)
     $("#reservation-popup #reservation_start_time").val(start_time)
-    $.getJSON("/availability/#{room_id}/#{encodeURIComponent(end_time.toString())}", (result) =>
+    $.getJSON("/availability/#{room_id}/#{encodeURIComponent(end_time.toISOString()).split(".")[0]}.json", (result) =>
       availability = result.availability
       console.log(availability)
       this.build_slider(start_time, end_time, max_reservation, availability)

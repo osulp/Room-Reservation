@@ -7,7 +7,7 @@ class UserDecorator < Draper::Decorator
 
   # TODO: Change this.
   def max_reservation_time
-    6.hours
+    3.hours
   end
 
   private
