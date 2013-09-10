@@ -32,4 +32,20 @@ input.restlink:hover {
       text-align: center;
     }
   }
+  .popup-content-errors {
+    border: 2px solid red;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+    display: none;
+  }
+  .reservation_description {
+    margin-bottom: 10px;
+    .controls {
+      text-align: center;
+    }
+  }
+  .popup-button {
+
+  }
 }

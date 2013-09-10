@@ -48,7 +48,7 @@ describe 'reserve popup' do
           context "when everything is valid" do
             before(:each) do
               fill_in "reservation_description", :with => "Testing"
-              click_button "Yes"
+              click_button "Reserve"
             end
             it "should show a confirmation message" do
               within("#reservation-popup") do
@@ -80,7 +80,7 @@ describe 'reserve popup' do
               page.execute_script("$('#reservation_user_onid').val('other_user');")
               within("#reservation-popup") do
                 fill_in "reservation_description", :with => "Testing"
-                click_button "Yes"
+                click_button "Reserve"
               end
             end
             it "should display the error" do
@@ -100,7 +100,7 @@ describe 'reserve popup' do
               page.execute_script("$('#reservation_room_id').val('9');")
               within("#reservation-popup") do
                 fill_in "reservation_description", :with => "Testing"
-                click_button "Yes"
+                click_button "Reserve"
               end
             end
             it "should display the error" do

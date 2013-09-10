@@ -45,6 +45,7 @@ class ReservationPopupManager
     if errors["errors"]?
       errors = errors["errors"]
       @popup.find(".popup-content-errors").html(errors.join("<br>"))
+      @popup.find(".popup-content-errors").show()
   display_loading: (xhr, settings) =>
     @popup.children(".popup-content").hide()
     @popup.children(".popup-message").show()
@@ -57,6 +58,7 @@ class ReservationPopupManager
     @popup.children(".popup-content").show()
     @popup.children(".popup-message").hide()
     @popup.find(".popup-content-errors").html("")
+    @popup.find(".popup-content-errors").hide()
   parse_date_string: (date) ->
     result = date.split("-")
     result.pop() if result.length > 3

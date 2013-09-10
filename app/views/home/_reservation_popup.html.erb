@@ -15,7 +15,9 @@
         </div>
       </div>
       <%= f.input :description, :label => "Group or description (optional):" %>
-      <strong>Reserve this room?</strong> <%= f.submit "Yes", :class => "restlink" %> &nbsp; No
+      <div class="popup-button">
+         <%= f.submit "Reserve", :class => "restlink" %>
+      </div>
     <% end %>
   </div>
   <div class="popup-message"></div>
