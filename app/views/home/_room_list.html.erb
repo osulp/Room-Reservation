@@ -1,7 +1,7 @@
 <% cache ["RoomList",@presenter.cache_key] do %>
   <% @presenter.floors.each do |floor| %>
     <div class="tab-pane <%= floor == 1 ? 'active' : '' %>" id="floor-<%= floor %>">
-      <div class="room-data-wrap">
+      <div class="room-data-wrap" data-start="<%= @presenter.start_time.iso8601 %>">
         <% @presenter.rooms.select { |r| r.floor == floor }.each do |room| %>
             <div class="room-data <%= room.filter_string %>" data-room-id="<%= room.id %>" data-room-name="<%= room.name%>">
               <div class="title"><%= room.name %></div>

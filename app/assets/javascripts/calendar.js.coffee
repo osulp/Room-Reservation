@@ -19,8 +19,10 @@ class CalendarManager
     this.selected_date(current_date,@datepicker)
     return
   truncate_to_now: =>
+    start_time = new Date($(".room-data-wrap").data("start"))
     current_time = new Date()
-    current_hour = current_time.getHours()
+    difference = current_time - start_time
+    current_hour = Math.floor(difference/1000/60/60)
     bar_length = current_hour*60*60/180
     hour_elements = $(".tab-content div").filter( -> $(this).data("hour") < current_hour)
     hour_elements.show()
