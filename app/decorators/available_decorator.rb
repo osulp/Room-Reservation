@@ -5,7 +5,7 @@ class AvailableDecorator < EventDecorator
   end
 
   def description
-    return 'Available'
+    return 'Click to Reserve'
   end
 
   def data_hash

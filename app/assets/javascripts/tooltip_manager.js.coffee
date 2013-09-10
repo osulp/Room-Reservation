@@ -9,3 +9,5 @@ class TooltipManager
       placement: 'right',
       container: 'body'
     });
+    if($("#user-info").length == 0)
+      $(".bar-success").attr("data-original-title", "Login to Reserve")

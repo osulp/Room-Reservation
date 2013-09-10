@@ -1,0 +1,18 @@
+#legend {
+  text-align: center;
+  font-size: 125%;
+  .legend-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+  .success {
+    background-color: #57a957;
+  }
+  .danger {
+    background-color: #c43c35;
+  }
+  .info {
+    background-color: #339bb9;
+  }
+}
