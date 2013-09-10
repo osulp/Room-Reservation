@@ -47,6 +47,7 @@ describe 'reserve popup' do
         describe "clicking yes" do
           context "when everything is valid" do
             before(:each) do
+              Reservation.destroy_all
               fill_in "reservation_description", :with => "Testing"
               click_button "Reserve"
             end
@@ -71,6 +72,34 @@ describe 'reserve popup' do
               end
               it "should update the view to display the new reservation" do
                 expect(page).to have_selector(".bar-info", :count => 1)
+              end
+            end
+          end
+          context "when the user already has a reservation for that day" do
+            before(:each) do
+              create(:reservation, :user_onid => "fakeuser")
+            end
+            context "when the application is configured to allow multiple reservations a day" do
+              before(:each) do
+                APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(0)
+                within("#reservation-popup") do
+                  click_button "Reserve"
+                end
+              end
+              it "should create a reservation" do
+                expect(page).to have_content("Your reservation has been made!")
+                expect(Reservation.scoped.length).to eq 2
+              end
+            end
+            context "when the app is configured to allow 1 reservation a day" do
+              before(:each) do
+                APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(1)
+                within("#reservation-popup") do
+                  click_button "Reserve"
+                end
+              end
+              it "should throw an error" do
+                expect(page).to have_content("You can only make 1 reservations per day.")
               end
             end
           end

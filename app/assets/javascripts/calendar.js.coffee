@@ -32,7 +32,6 @@ class CalendarManager
     hour_elements.show()
     $("div").filter( -> $(this).data("old-height")?).each (key, item) ->
       $(this).height($(this).data("old-height"))
-    console.log(current_time - start_time)
     return if current_time < start_time || (current_time - start_time) > 24*60*60*1000
     $(".tab-pane").show()
     $(".room-data").each (key, item) =>
