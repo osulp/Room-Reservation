@@ -41,10 +41,14 @@ class CalendarManager
       if start_at < bar_length
         if end_at > bar_length
           if(item.data("start")?)
+            console.log(current_hour)
             new_time = new Date(current_time.getTime())
+            new_time.setHours(0)
             new_time.setSeconds(0)
             new_time.setMinutes(Math.ceil(new_time.getMinutes()/10)*10)
+            new_time.setTime(new_time.getTime() + current_hour*60*60*1000)
             item.data("start",new_time.toLocalISOString())
+            item.attr("data-start", new_time.toLocalISOString())
           item.height(end_at - bar_length)
         else
           item.data("remove", true)
