@@ -28,7 +28,7 @@ class ReservationsController < ApplicationController
   def create
     params["reservation"]["reserver_onid"] = current_user.onid
     reserver = Reserver.from_params(params)
-    if reserver.save
+    if reserver.save && reserver.persisted?
       respond_to do |format|
         format.json do
           render :json => reserver.reservation
@@ -37,7 +37,7 @@ class ReservationsController < ApplicationController
     else
       respond_to do |format|
         format.json do
-          render :json => {:errors => reserver.errors.full_messages | Array.wrap(reserver.try(:reservation).try(:errors).try(:full_messages))}
+          render :json => {:errors => reserver.errors.full_messages | Array.wrap(reserver.try(:reservation).try(:errors).try(:full_messages))}, :status => :unprocessable_entity
         end
       end
     end

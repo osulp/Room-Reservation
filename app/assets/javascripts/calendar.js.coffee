@@ -53,6 +53,9 @@ class CalendarManager
     $("#dayviewTable").height($("#dayviewTable").height() - bar_length)
     $(".tab-pane").attr("style",null)
     return
+  refresh_view: ->
+    current_date = @datepicker.datepicker("getDate")
+    this.selected_date(current_date,@datepicker)
   selected_date: (dateText, inst) =>
     date = @datepicker.datepicker("getDate")
     @date_selected = [date.getFullYear(), date.getMonth()+1, date.getDate()]
@@ -81,7 +84,7 @@ class CalendarManager
       window.TooltipManager.set_tooltips()
       this.truncate_to_now()
       this.color_reservations("#{year}-#{month}-#{day}")
-      window.ReservationPopupManager.popup.hide()
+      window.ReservationPopupManager.hide_popup()
     )
     return
   color_reservations: (date)->

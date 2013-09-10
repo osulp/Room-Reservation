@@ -6,8 +6,9 @@ class Reserver
   validate :room_is_persisted
   validate :time_is_available
   validate :duration_correct
+  validate :authorized_to_reserve
 
-  attr_accessor :reserver, :reserved_for, :room, :start_time, :end_time
+  attr_accessor :reserver, :reserved_for, :room, :start_time, :end_time, :description
   attr_reader :reservation
 
   def self.from_params(params)
@@ -15,17 +16,19 @@ class Reserver
     self.new(
         User.new(reservation_params[:reserver_onid]),
         User.new(reservation_params[:user_onid]),
-        Room.find(reservation_params[:room_id]),
+        Room.where(:id => reservation_params[:room_id]).first,
         Time.zone.parse(reservation_params[:start_time]),
-        Time.zone.parse(reservation_params[:end_time])
+        Time.zone.parse(reservation_params[:end_time]),
+        reservation_params[:description]
     )
   end
-  def initialize(reserver, reserved_for, room, start_time, end_time)
+  def initialize(reserver, reserved_for, room, start_time, end_time, description=nil)
     @reserver = UserDecorator.new(reserver)
     @reserved_for = UserDecorator.new(reserved_for)
     @room = room
     @start_time = start_time
     @end_time = end_time
+    @description = description
   end
 
   def save
@@ -35,11 +38,21 @@ class Reserver
                                    :reserver_onid => reserver.onid,
                                    :room => room,
                                    :start_time => start_time,
-                                   :end_time => end_time)
+                                   :end_time => end_time,
+                                   :description => description)
     @reservation.save
   end
 
+  def persisted?
+    @reservation.persisted?
+  end
+
   private
+
+  def authorized_to_reserve
+    return if !reserved_for || !reserver
+    errors.add(:base, "You are not authorized to reserve on behalf of #{reserved_for.onid}") if reserved_for.onid.downcase != reserver.onid.downcase
+  end
 
   def duration_correct
     return if !end_time || !start_time || !reserved_for
@@ -52,7 +65,7 @@ class Reserver
   end
 
   def room_is_persisted
-    errors.add(:room, "must be persisted") if room && !room.persisted?
+    errors.add(:base, "The requested room does not exist.") if !room || !room.persisted?
   end
 
   def time_is_available

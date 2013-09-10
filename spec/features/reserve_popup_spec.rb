@@ -8,8 +8,10 @@ describe 'reserve popup' do
   end
   let(:banner_record) {nil}
   context "when the user is logged in", :js => true do
-    before(:each) do
+    before(:all) do
       Timecop.return
+    end
+    before(:each) do
       RubyCAS::Filter.fake("fakeuser")
       create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       banner_record
@@ -43,16 +45,71 @@ describe 'reserve popup' do
           end
         end
         describe "clicking yes" do
-          before(:each) do
-            within("#reservation-popup") do
+          context "when everything is valid" do
+            before(:each) do
               fill_in "reservation_description", :with => "Testing"
-              click_link "Yes"
+              click_button "Yes"
+            end
+            it "should show a confirmation message" do
+              within("#reservation-popup") do
+                expect(page).to have_content("Your reservation has been made! Check your ONID email for details.")
+              end
+            end
+            it "should show a loading message" do
+              within("#reservation-popup") do
+                expect(page).to have_content("Reserving...")
+              end
+            end
+            context "when the reservation succeeds" do
+              it "should create a reservation" do
+                expect(page).to have_selector(".bar-info", :count => 1)
+                expect(Reservation.scoped.length).to eq 1
+              end
+              it "should set the reservation's description" do
+                expect(page).to have_selector(".bar-info", :count => 1)
+                expect(Reservation.first.description).to eq "Testing"
+              end
+              it "should update the view to display the new reservation" do
+                expect(page).to have_selector(".bar-info", :count => 1)
+              end
             end
           end
-
-          it "should show a confirmation message" do
-            within("#reservation-popup") do
-              expect(page).to have_content("Your reservation has been made! Check your ONID email for details.")
+          context "when the reservation is invalid" do
+            before(:each) do
+              # Reset reservation_user_onid to another user
+              page.execute_script("$('#reservation_user_onid').val('other_user');")
+              within("#reservation-popup") do
+                fill_in "reservation_description", :with => "Testing"
+                click_button "Yes"
+              end
+            end
+            it "should display the error" do
+              within("#reservation-popup") do
+                expect(page).to have_content("You are not authorized to reserve on behalf of")
+              end
+            end
+            it "should not hide the popup form" do
+              within("#reservation-popup") do
+                expect(page).to have_selector(".popup-content")
+              end
+            end
+          end
+          context "when the room ID doesn't exist" do
+            before(:each) do
+              # Reset reservation_room_id to a non-existent
+              page.execute_script("$('#reservation_room_id').val('9');")
+              within("#reservation-popup") do
+                fill_in "reservation_description", :with => "Testing"
+                click_button "Yes"
+              end
+            end
+            it "should display the error" do
+              within("#reservation-popup") do
+                expect(page).to have_content("The requested room does not exist")
+              end
+            end
+            it "should not create a reservation" do
+              expect(Reservation.scoped.length).to eq 0
             end
           end
         end

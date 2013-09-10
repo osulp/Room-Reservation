@@ -87,7 +87,7 @@ GEM
       compass (>= 0.12.2, < 0.14)
     coolline (0.4.2)
     dalli (2.6.4)
-    database_cleaner (1.0.1)
+    database_cleaner (1.1.1)
     debug_inspector (0.0.2)
     debugger (1.6.1)
       columnize (>= 0.3.1)

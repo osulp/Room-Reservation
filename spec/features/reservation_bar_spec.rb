@@ -62,7 +62,7 @@ describe "GET / reservation bars" do
           expect(page).to have_selector(".bar-success")
         end
       end
-      context "when there are reservations", :focus => true do
+      context "when there are reservations" do
         before(:each) do
           Timecop.return
           create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")

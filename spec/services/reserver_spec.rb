@@ -5,7 +5,7 @@ describe Reserver do
     Timecop.travel(Date.new(2013,8,29))
   end
   let(:user) {User.new("user")}
-  let(:reserver) {User.new("reserver")}
+  let(:reserver) {User.new("user")}
   let(:room) {FactoryGirl.create(:room)}
   let(:start_time) {Time.current.midnight+12.hours}
   let(:end_time) {Time.current.midnight+14.hours+10.minutes}
@@ -30,6 +30,19 @@ describe Reserver do
       context "and the reserver is an admin" do
         # TODO: Write this test after the admin system is in.
         it "should be valid"
+      end
+    end
+    context "when the reserver is not the same as the reserved_for" do
+      let(:user) {User.new("user")}
+      let(:reserver) {User.new("reserver")}
+      context "and the reserver is an admin" do
+        # TODO: Write this test after the admin system is in.
+        it "should be valid"
+      end
+      context "and the reserver is not an admin" do
+        it "should be invalid" do
+          expect(subject).not_to be_valid
+        end
       end
     end
     context "when the given start time is greater than the end time" do

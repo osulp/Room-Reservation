@@ -25,19 +25,38 @@ class ReservationPopupManager
       event.stopPropagation() unless $(event.target).data("remote")?
     $("body").click (event) =>
       this.hide_popup() unless $(event.target).data("remote")?
-    # Bind to the form submission link
-    $("#data")
-  prepare_parameters: (event, xhr, settings) ->
-    console.log event
-    console.log xhr
-    console.log settings
-    form_id = $(this).attr("data-form")
-    attributes = $("##{form_id}").serialize()
-    event.data = "#{attributes}"
+    # Bind Form
+    master.prepare_form()
+  prepare_form: ->
+    form = $("#new_reservation")
+    form.on("ajax:beforeSend", this.display_loading)
+    form.on("ajax:success", this.display_success_message)
+    form.on("ajax:error", this.display_error_message)
+  display_success_message: (event, data, status, xhr) =>
+    @popup.children(".popup-content").hide()
+    @popup.children(".popup-message").show()
+    @popup.children(".popup-message").text("Your reservation has been made! Check your ONID email for details.")
+    @ignore_popup_hide = true
+    window.CalendarManager.refresh_view()
+  display_error_message: (event, xhr, status, error) =>
+    errors = xhr.responseJSON
+    @popup.children(".popup-message").hide()
+    @popup.children(".popup-content").show()
+    if errors["errors"]?
+      errors = errors["errors"]
+      @popup.find(".popup-content-errors").html(errors.join("<br>"))
+  display_loading: (xhr, settings) =>
+    @popup.children(".popup-content").hide()
+    @popup.children(".popup-message").show()
+    @popup.children(".popup-message").text("Reserving...")
   hide_popup: ->
+    if @ignore_popup_hide
+      @ignore_popup_hide = false
+      return
     @popup.hide()
     @popup.children(".popup-content").show()
     @popup.children(".popup-message").hide()
+    @popup.find(".popup-content-errors").html("")
   parse_date_string: (date) ->
     result = date.split("-")
     result.pop() if result.length > 3
@@ -97,8 +116,16 @@ class ReservationPopupManager
     end_time_object = new Date(@start_time.getTime() + end*10*60*1000)
     start_time = this.form_time_string(start_time_object)
     end_time = this.form_time_string(end_time_object)
-    $("#reservation_start_time").val(start_time_object.toISOString())
-    $("#reservation_end_time").val(end_time_object.toISOString())
+    # Hack to remove timezone information.
+    start_time_object = start_time_object.toLocalISOString().split("-")
+    start_time_object.pop()
+    start_time_object = start_time_object.join("-")
+    end_time_object = end_time_object.toLocalISOString().split("-")
+    end_time_object.pop()
+    end_time_object = end_time_object.join("-")
+    $("#reservation_start_time").val(start_time_object)
+    $("#reservation_end_time").val(end_time_object)
+    # Set labels
     $("#time-range-label #start-time").text(start_time)
     $("#time-range-label #end-time").text(end_time)
   form_time_string: (date) ->
