@@ -9,7 +9,7 @@
         <%= label_tag 'end_time', 'End: ', :style => "display: inline;"%><span class="end-time"></span>
       </div>
     </div>
-    <span class="cancellation-message">Cancel</span>
+    <span class="cancellation-message"><%= link_to "Cancel", reservation_path(1), :method => :delete, :remote => true %></span>
   </div>
   <div class="popup-message"></div>
 </div>

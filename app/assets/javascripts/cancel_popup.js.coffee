@@ -7,6 +7,8 @@ class CancelPopupManager
     $("body").on("click", ".bar-info", (event)->
       element = $(this)
       room_element = element.parent().parent()
+      master.reservation_id = element.data("id")
+      return unless master.reservation_id?
       # Truncate start/end times to 10 minute mark.
       @start_time = new Date(master.parse_date_string(element.data("start")))
       @start_time.setTime(@start_time.getTime() + @start_time.getTimezoneOffset()*60*1000)
@@ -23,12 +25,19 @@ class CancelPopupManager
       this.hide_popup() unless $(event.target).data("remote")?
     # Bind popup closers
     this.bind_popup_closers()
+    # Bind Ajax Events
+    this.bind_ajax_events()
   bind_popup_closers: ->
     master = this
     @popup.find(".close-popup a").click((event) =>
       event.preventDefault()
       master.hide_popup()
     )
+  bind_ajax_events: ->
+    link = $("#cancel-popup .cancellation-message a")
+    link.on("ajax:beforeSend", this.display_loading)
+    link.on("ajax:success", this.display_success_message)
+    link.on("ajax:error", this.display_error_message)
   display_success_message: (event, data, status, xhr) =>
     @popup.children(".popup-content").hide()
     @popup.children(".popup-message").show()
@@ -65,6 +74,7 @@ class CancelPopupManager
     @popup.offset({top: y, left: x+10})
     @popup.hide()
   populate_cancel_popup: (room_element, start_time, end_time) ->
+    $(".popup").hide()
     this.hide_popup()
     room_id = room_element.data("room-id")
     room_name = room_element.data("room-name")
@@ -72,6 +82,14 @@ class CancelPopupManager
     $("#cancel-popup .reservation_room_id").val(room_id)
     $("#cancel-popup .start-time").text(this.form_time_string(start_time))
     $("#cancel-popup .end-time").text(this.form_time_string(end_time))
+    link = $("#cancel-popup .cancellation-message a")
+    # Populate the correct link from the reservation that was clicked.
+    current_link = link.attr("href")
+    current_link = current_link.split("/")
+    current_link.pop()
+    current_link.push(@reservation_id)
+    current_link = current_link.join("/")
+    link.attr("href", current_link)
     @popup.show()
   form_time_string: (date) ->
     meridian = "AM"

@@ -75,6 +75,7 @@ class ReservationPopupManager
     @popup.offset({top: y, left: x+10})
     @popup.hide()
   populate_reservation_popup: (room_element, start_time, end_time) ->
+    $(".popup").hide()
     this.hide_popup()
     room_id = room_element.data("room-id")
     room_name = room_element.data("room-name")

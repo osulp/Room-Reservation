@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130830154644) do
+ActiveRecord::Schema.define(:version => 20130913184701) do
 
   create_table "BannerLookup", :primary_key => "ID", :force => true do |t|
     t.string "onid",     :limit => 9,   :null => false
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20130830154644) do
     t.string   "description"
     t.datetime "created_at",    :limit => 6, :null => false
     t.datetime "updated_at",    :limit => 6, :null => false
+    t.datetime "deleted_at"
   end
 
   add_index "reservations", ["room_id"], :name => "index_reservations_on_room_id_id"

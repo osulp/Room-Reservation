@@ -27,6 +27,9 @@ gem 'unicorn'
 # Cache digests for rails partials
 gem 'cache_digests'
 
+# Paranoia to simply hide deleted records
+gem 'paranoia', '~> 1.0'
+
 group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'

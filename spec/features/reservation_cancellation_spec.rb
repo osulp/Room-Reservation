@@ -13,7 +13,9 @@ describe 'cancelling a reservation', :focus => true do
       create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       banner_record
       @room = create(:room)
-      create(:reservation, start_time: Time.current.midnight+12.hours, end_time: Time.current.midnight+14.hours, user_onid: "fakeuser", room: @room)
+      @start_time = Time.current+1.hours
+      @end_time = Time.current+2.hours
+      create(:reservation, start_time: @start_time, end_time: @end_time, user_onid: "fakeuser", room: @room)
       visit root_path
       expect(page).to have_selector(".bar-info")
     end
@@ -31,6 +33,30 @@ describe 'cancelling a reservation', :focus => true do
       end
     end
     it_should_behave_like "a popup", ".bar-info", "#cancel-popup"
+    describe "clicking cancel" do
+      before(:each) do
+        find(".bar-info").click
+        click_link("Cancel")
+      end
+      it "should display a success message" do
+        within("#cancel-popup") do
+          expect(page).to have_content("This reservation has been cancelled!")
+        end
+      end
+      it "should delete the reservation" do
+        expect(page).to have_content("This reservation has been cancelled!")
+        expect(Reservation.scoped.size).to eq 0
+      end
+      describe "then clicking to reserve again" do
+        before(:each) do
+          expect(page).to have_content("This reservation has been cancelled!")
+          find(".bar-success").click
+        end
+        it "should hide the cancel popup" do
+          expect(page).not_to have_selector("#cancel-popup")
+        end
+      end
+    end
     context "when the reservation is clicked" do
       before(:each) do
         find(".bar-info").click
@@ -47,12 +73,12 @@ describe 'cancelling a reservation', :focus => true do
       end
       it "should display the start time" do
         within("#cancel-popup") do
-          expect(page).to have_content("12:00 PM")
+          expect(page).to have_content(@start_time.strftime("%l:%M %p"))
         end
       end
       it "should display the end time" do
         within("#cancel-popup") do
-          expect(page).to have_content("2:00 PM")
+          expect(page).to have_content(@end_time.strftime("%l:%M %p"))
         end
       end
     end
