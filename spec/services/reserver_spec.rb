@@ -5,7 +5,7 @@ describe Reserver do
     Timecop.travel(Date.new(2013,8,29))
   end
   let(:user) {User.new("user")}
-  let(:reserver) {User.new("reserver")}
+  let(:reserver) {User.new("user")}
   let(:room) {FactoryGirl.create(:room)}
   let(:start_time) {Time.current.midnight+12.hours}
   let(:end_time) {Time.current.midnight+14.hours+10.minutes}
@@ -13,6 +13,37 @@ describe Reserver do
   describe "validations" do
     before(:each) do
       create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
+    end
+    it {should validate_presence_of :start_time}
+    it {should validate_presence_of :end_time}
+    it {should validate_presence_of :room}
+    it {should validate_presence_of :reserver}
+    it {should validate_presence_of :reserved_for}
+    it {should be_valid}
+    context "when the duration is greater than what the user can have" do
+      let(:end_time) {start_time + 4.hours}
+      context "and the reserver is not an admin" do
+        it "should be invalid" do
+          expect(subject).not_to be_valid
+        end
+      end
+      context "and the reserver is an admin" do
+        # TODO: Write this test after the admin system is in.
+        it "should be valid"
+      end
+    end
+    context "when the reserver is not the same as the reserved_for" do
+      let(:user) {User.new("user")}
+      let(:reserver) {User.new("reserver")}
+      context "and the reserver is an admin" do
+        # TODO: Write this test after the admin system is in.
+        it "should be valid"
+      end
+      context "and the reserver is not an admin" do
+        it "should be invalid" do
+          expect(subject).not_to be_valid
+        end
+      end
     end
     context "when the given start time is greater than the end time" do
       let(:start_time) {end_time + 2.hours}

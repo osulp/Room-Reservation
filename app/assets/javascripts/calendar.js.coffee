@@ -19,14 +19,20 @@ class CalendarManager
     this.selected_date(current_date,@datepicker)
     return
   truncate_to_now: =>
+    start_time = new Date($(".room-data-wrap").data("start"))
     current_time = new Date()
-    current_hour = current_time.getHours()
+    compare_time = new Date(start_time.getTime())
+    compare_time.setDate(current_time.getDate())
+    compare_time.setMonth(current_time.getMonth())
+    compare_time.setFullYear(current_time.getFullYear())
+    difference = current_time - compare_time
+    current_hour = Math.floor(difference/1000/60/60)
     bar_length = current_hour*60*60/180
     hour_elements = $(".tab-content div").filter( -> $(this).data("hour") < current_hour)
     hour_elements.show()
     $("div").filter( -> $(this).data("old-height")?).each (key, item) ->
       $(this).height($(this).data("old-height"))
-    return unless [current_time.getFullYear(), current_time.getMonth()+1, current_time.getDate()].toString() == @date_selected.toString()
+    return if current_time < start_time || (current_time - start_time) > 24*60*60*1000
     $(".tab-pane").show()
     $(".room-data").each (key, item) =>
       $(item).data("old-height", $(item).height())
@@ -38,6 +44,14 @@ class CalendarManager
       end_at = item.height()+start_at
       if start_at < bar_length
         if end_at > bar_length
+          if(item.data("start")?)
+            new_time = new Date(current_time.getTime())
+            new_time.setHours(0)
+            new_time.setSeconds(0)
+            new_time.setMinutes(Math.ceil(new_time.getMinutes()/10)*10)
+            new_time.setTime(new_time.getTime() + current_hour*60*60*1000)
+            item.data("start",new_time.toLocalISOString())
+            item.attr("data-start", new_time.toLocalISOString())
           item.height(end_at - bar_length)
         else
           item.data("remove", true)
@@ -48,6 +62,9 @@ class CalendarManager
     $("#dayviewTable").height($("#dayviewTable").height() - bar_length)
     $(".tab-pane").attr("style",null)
     return
+  refresh_view: ->
+    current_date = @datepicker.datepicker("getDate")
+    this.selected_date(current_date,@datepicker)
   selected_date: (dateText, inst) =>
     date = @datepicker.datepicker("getDate")
     @date_selected = [date.getFullYear(), date.getMonth()+1, date.getDate()]
@@ -76,6 +93,7 @@ class CalendarManager
       window.TooltipManager.set_tooltips()
       this.truncate_to_now()
       this.color_reservations("#{year}-#{month}-#{day}")
+      window.ReservationPopupManager.hide_popup()
     )
     return
   color_reservations: (date)->

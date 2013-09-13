@@ -1,0 +1,25 @@
+<div class="popup" id="reservation-popup">
+  <div class="close-popup"><%= link_to "X", "#" %></div>
+  <div class="popup-content">
+    <div class="popup-content-errors"></div>
+    <%= simple_form_for @reservation, :remote => true, :format => :json do |f| %>
+      <%= f.input :room_id, :as => :hidden %>
+      <%= f.input :user_onid, :as => :hidden %>
+      <%= f.input :start_time, :as => :hidden %>
+      <%= f.input :end_time, :as => :hidden %>
+      <%= label_tag 'room_name', 'Room: ', :style => "display: inline;"%> <span id="room-name"></span><br/>
+      <%= label_tag 'range', 'Time Range: ' %>
+      <div id="time-range">
+        <div id="reservation-slider"></div>
+        <div id="time-range-label">
+          <span id="start-time"></span> - <span id="end-time"></span>
+        </div>
+      </div>
+      <%= f.input :description, :label => "Group or description (optional):" %>
+      <div class="popup-button">
+         <%= f.submit "Reserve", :class => "restlink" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="popup-message"></div>
+</div>

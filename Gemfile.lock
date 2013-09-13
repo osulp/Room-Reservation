@@ -67,6 +67,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (0.3.13)
+      capybara (>= 1.0, < 3)
     chunky_png (1.2.8)
     coderay (1.0.9)
     coffee-rails (3.2.2)
@@ -85,7 +87,7 @@ GEM
       compass (>= 0.12.2, < 0.14)
     coolline (0.4.2)
     dalli (2.6.4)
-    database_cleaner (1.0.1)
+    database_cleaner (1.1.1)
     debug_inspector (0.0.2)
     debugger (1.6.1)
       columnize (>= 0.3.1)
@@ -305,6 +307,7 @@ DEPENDENCIES
   bootstrap-sass
   cache_digests
   capybara
+  capybara-screenshot
   coffee-rails
   compass-rails
   dalli
