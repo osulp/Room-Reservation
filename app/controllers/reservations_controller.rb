@@ -1,7 +1,7 @@
 class ReservationsController < ApplicationController
   respond_to :json
   include_root_in_json = false
-  before_filter :require_login, :only => :create
+  before_filter :require_login, :only => [:create, :destroy]
   def current_user_reservations
     if params.has_key?(:date)
       date = Time.zone.parse(params[:date])
@@ -38,6 +38,25 @@ class ReservationsController < ApplicationController
       respond_to do |format|
         format.json do
           render :json => {:errors => reserver.errors.full_messages | Array.wrap(reserver.try(:reservation).try(:errors).try(:full_messages))}, :status => :unprocessable_entity
+        end
+      end
+    end
+  end
+
+  def destroy
+    reservation = Reservation.find(params[:id])
+    canceller = Canceller.new(reservation, current_user)
+    result = canceller.save
+    if result
+      respond_to do |format|
+        format.json do
+          render :json => result
+        end
+      end
+    else
+      respond_to do |format|
+        format.json do
+          render :json => {:errors => canceller.errors.full_messages | Array.wrap(canceller.try(:reservation).try(:errors).try(:full_messages))}, :status => :unprocessable_entity
         end
       end
     end

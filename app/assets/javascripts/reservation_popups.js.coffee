@@ -19,7 +19,6 @@ class ReservationPopupManager
       # Set up popup.
       master.position_popup(event.pageX, event.pageY)
       master.populate_reservation_popup(room_element, start_time, end_time)
-      window.start_time = start_time
     )
     @popup.click (event) ->
       event.stopPropagation() unless $(event.target).data("remote")?
@@ -76,6 +75,7 @@ class ReservationPopupManager
     @popup.offset({top: y, left: x+10})
     @popup.hide()
   populate_reservation_popup: (room_element, start_time, end_time) ->
+    $(".popup").hide()
     this.hide_popup()
     room_id = room_element.data("room-id")
     room_name = room_element.data("room-name")
@@ -136,8 +136,8 @@ class ReservationPopupManager
     $("#reservation_start_time").val(start_time_object)
     $("#reservation_end_time").val(end_time_object)
     # Set labels
-    $("#time-range-label #start-time").text(start_time)
-    $("#time-range-label #end-time").text(end_time)
+    $("#reservation-popup .time-range-label .start-time").text(start_time)
+    $("#reservation-popup .time-range-label .end-time").text(end_time)
   form_time_string: (date) ->
     meridian = "AM"
     hours = date.getHours()

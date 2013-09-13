@@ -1,5 +1,7 @@
 class Reservation < ActiveRecord::Base
+  acts_as_paranoid
   belongs_to :room
+  before_destroy :touch
   attr_accessible :description, :end_time, :reserver_onid, :start_time, :user_onid, :room
   validates :end_time, :start_time, :reserver_onid, :user_onid, :room, presence: true
 

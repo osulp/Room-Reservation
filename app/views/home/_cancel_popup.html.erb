@@ -1,0 +1,15 @@
+<div class="popup" id="cancel-popup">
+  <div class="close-popup"><%= link_to "X", "#" %></div>
+  <div class="popup-content">
+    <div class="popup-content-errors"></div>
+    <%= label_tag 'room_name', 'Room: ', :style => "display: inline;"%> <span class="room-name"></span><br/>
+    <div class="time-range">
+      <div class="time-range-label">
+        <%= label_tag 'start_time', 'Start: ', :style => "display: inline;"%><span class="start-time"></span><br/>
+        <%= label_tag 'end_time', 'End: ', :style => "display: inline;"%><span class="end-time"></span>
+      </div>
+    </div>
+    <span class="cancellation-message"><%= link_to "Cancel", reservation_path(1), :method => :delete, :remote => true %></span>
+  </div>
+  <div class="popup-message"></div>
+</div>

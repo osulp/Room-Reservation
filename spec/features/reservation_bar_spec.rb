@@ -126,7 +126,8 @@ describe "GET / reservation bars" do
             expect(page).not_to have_selector(".bar-danger")
           end
           it "should update the cache when a reservation is deleted" do
-            Reservation.destroy_all
+            expect(page).to have_selector(".bar-danger")
+            Reservation.first.destroy
             visit root_path
             expect(page).not_to have_selector(".bar-danger")
           end
