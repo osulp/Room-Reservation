@@ -44,7 +44,7 @@ class CalendarManager
       end_at = item.height()+start_at
       if start_at < bar_length
         if end_at > bar_length
-          if(item.data("start")?)
+          if(item.data("start")? && item.hasClass("bar-success"))
             new_time = new Date(current_time.getTime())
             new_time.setHours(0)
             new_time.setSeconds(0)

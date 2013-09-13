@@ -1,0 +1,15 @@
+#cancel-popup {
+  width: 250px;
+  .cancellation-message {
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+  }
+  .time-range-label {
+    text-align: left;
+    span {
+      font-weight: normal;
+    }
+  }
+}

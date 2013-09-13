@@ -6,7 +6,9 @@ class ReservationDecorator < EventDecorator
 
   def data_hash
     {
-        :id => self.id
+        :id => self.id,
+        start: (payload.start_time).iso8601.to_s,
+        end: (payload.end_time).iso8601.to_s
     }
   end
 
