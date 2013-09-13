@@ -6,7 +6,7 @@ shared_examples "a popup" do |initiator, selector|
   end
   context "when the initiator is clicked" do
     before(:each) do
-      find(initiator).click
+      find(initiator).trigger('click')
     end
     it "should show the cancellation popup" do
       expect(page).to have_selector(selector, :visible => true)

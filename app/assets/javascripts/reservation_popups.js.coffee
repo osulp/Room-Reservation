@@ -69,7 +69,7 @@ class ReservationPopupManager
   parse_date_string: (date) ->
     result = date.split("-")
     result.pop() if result.length > 3
-    result.join("-")
+    "#{result.join("-")}-00:00"
   position_popup: (x, y)->
     @popup.show()
     @popup.offset({top: y, left: x+10})

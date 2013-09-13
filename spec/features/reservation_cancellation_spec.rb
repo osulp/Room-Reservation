@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cancelling a reservation', :focus => true do
+describe 'cancelling a reservation' do
   include VisitWithAfterHook
   # TODO: Test this. Can't think of a good way to do it - The gateway filter would break things.
   let(:banner_record) {nil}
