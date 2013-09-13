@@ -27,11 +27,19 @@ class ReservationPopupManager
       this.hide_popup() unless $(event.target).data("remote")?
     # Bind Form
     master.prepare_form()
+    # Bind popup closers
+    this.bind_popup_closers()
   prepare_form: ->
     form = $("#new_reservation")
     form.on("ajax:beforeSend", this.display_loading)
     form.on("ajax:success", this.display_success_message)
     form.on("ajax:error", this.display_error_message)
+  bind_popup_closers: ->
+    master = this
+    @popup.find(".close-popup a").click((event) =>
+      event.preventDefault()
+      master.hide_popup()
+    )
   display_success_message: (event, data, status, xhr) =>
     @popup.children(".popup-content").hide()
     @popup.children(".popup-message").show()

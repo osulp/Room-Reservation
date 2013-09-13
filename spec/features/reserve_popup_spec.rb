@@ -28,6 +28,17 @@ describe 'reserve popup' do
       it "should show the reservation popup" do
         expect(page).to have_selector("#reservation-popup", :visible => true)
       end
+      describe "Clicking the X", :force => true do
+        before(:each) do
+          expect(page).to have_selector("#reservation-popup", :visible => true)
+          within("#reservation-popup") do
+            click_link("X")
+          end
+        end
+        it "should hide the popup" do
+          expect(page).not_to have_selector("#reservation-popup")
+        end
+      end
       describe "clicking outside the popup" do
         before(:each) do
           expect(page).to have_selector("#reservation-popup", :visible => true)
