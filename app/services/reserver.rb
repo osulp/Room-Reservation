@@ -3,6 +3,7 @@ class Reserver
 
   validates :start_time, :end_time, :room, :reserver, :reserved_for, :presence => true
   validate :start_time_less_than_end_time
+  validate :reservation_not_in_past
   validate :room_is_persisted
   validate :time_is_available
   validate :duration_correct
@@ -81,6 +82,11 @@ class Reserver
     checker = AvailabilityChecker.new(room, start_time, end_time)
     return if !room || !start_time || !end_time
     errors.add(:base, "The requested time slot is not available for reservation") unless checker.available?
+  end
+
+  def reservation_not_in_past
+    return if !start_time
+    errors.add(:base, "You may not make reservations in the past.") unless start_time >= Time.current
   end
 
 end
