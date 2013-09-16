@@ -35,6 +35,7 @@ describe 'reserve popup' do
             before(:each) do
               Reservation.destroy_all
               fill_in "reservation_description", :with => "Testing"
+              set_reservation_time
               click_button "Reserve"
             end
             it "should show a confirmation message" do
@@ -68,9 +69,11 @@ describe 'reserve popup' do
             context "when the application is configured to allow multiple reservations a day" do
               before(:each) do
                 APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(0)
-                within("#reservation-popup") do
-                  click_button "Reserve"
-                end
+                # Need to wait for AJAX to finish changing the start/end time - there's likely a better way to do this.
+                # TODO: Fix this.
+                sleep(1)
+                set_reservation_time
+                click_button "Reserve"
               end
               it "should create a reservation" do
                 expect(page).to have_content("Your reservation has been made!")
@@ -154,6 +157,14 @@ describe 'reserve popup' do
       end
     end
   end
+end
+
+def set_reservation_time
+  # Set start and end time to a valid time.
+  start_time = (Time.current+1.hour).iso8601.split("-")[0..-2].join("-")
+  end_time = (Time.current+1.hour+10.minutes).iso8601.split("-")[0..-2].join("-")
+  page.execute_script("$('#reservation_start_time').val('#{start_time}');")
+  page.execute_script("$('#reservation_end_time').val('#{end_time}');")
 end
 def after_visit(*args)
   page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]

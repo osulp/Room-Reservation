@@ -45,6 +45,13 @@ describe Reserver do
         end
       end
     end
+    context "when the reservation starts in the past" do
+      let(:start_time){ Time.current.midnight-4.hours }
+      let(:end_time){ Time.current.midnight-2.hours }
+      it "should be invalid" do
+        expect(subject).not_to be_valid
+      end
+    end
     context "when the given start time is greater than the end time" do
       let(:start_time) {end_time + 2.hours}
       it "should be invalid" do
