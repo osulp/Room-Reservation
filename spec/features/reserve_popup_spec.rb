@@ -172,3 +172,4 @@ def after_visit(*args)
   expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
   expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
 end
+

@@ -126,10 +126,13 @@ describe "GET / reservation bars" do
             expect(page).not_to have_selector(".bar-danger")
           end
           it "should update the cache when a reservation is deleted" do
-            expect(page).to have_selector(".bar-danger")
-            Reservation.first.destroy
+            r = create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
+            r2 = create(:reservation, :start_time => Time.current.midnight+8.hours, :end_time => Time.current.midnight+10.hours, :room => @room1)
             visit root_path
-            expect(page).not_to have_selector(".bar-danger")
+            expect(page).to have_selector(".bar-danger", :count => 3)
+            Reservation.all[1].destroy
+            visit root_path
+            expect(page).to have_selector(".bar-danger", :count => 2)
           end
         end
         context "when a bunch of dates are picked", :js => true do

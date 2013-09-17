@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "hour bars" do
   before(:each) do
     RubyCAS::Filter.fake("user")
-    @room1 = create(:room)
+    @room1 = create(:room, :floor => 1)
   end
   context "when there are no hours" do
     before(:each) do
@@ -160,6 +160,26 @@ describe "hour bars" do
         @r.destroy
         visit root_path
         expect(page).to have_selector(".bar-danger", :count => 1)
+      end
+    end
+    context "when there are room hours" do
+      before(:each) do
+        @hour = create(:room_hour, start_date: Date.yesterday, end_date: Date.tomorrow, start_time: "10:00:00", end_time: "12:00:00")
+        @hour.rooms << @room1
+        @hour2 = create(:room_hour, start_date: Date.yesterday, end_date: Date.tomorrow, start_time: "10:00:00", end_time: "12:00:00")
+        @room2 = create(:room, :floor => 1)
+        @hour2.rooms << @room2
+        visit root_path
+        expect(page).to have_selector(".bar-danger", :count => 4)
+      end
+      context "and a room hour is deleted" do
+        before(:each) do
+          @hour.destroy
+          visit root_path
+        end
+        it "should update the cache" do
+          expect(page).to have_selector(".bar-danger", :count => 3)
+        end
       end
     end
   end

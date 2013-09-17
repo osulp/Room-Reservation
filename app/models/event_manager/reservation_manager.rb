@@ -2,7 +2,11 @@ class EventManager::ReservationManager < EventManager::EventManager
 
   def cache_key(start_time, end_time,rooms=[])
 
-    "#{self.class}/#{start_time.to_i}/#{end_time.to_i}/#{Reservation.where("start_time <= ? AND end_time >= ?", end_time, start_time).order("updated_at DESC").first.try(:cache_key)}"
+    "#{self.class}/#{start_time.to_i}/#{end_time.to_i}/#{reservation_cache_key(start_time, end_time)}"
+  end
+
+  def reservation_cache_key(start_time, end_time)
+    Reservation.with_deleted.where("start_time <= ? AND end_time >= ?", end_time, start_time).order("updated_at DESC").first.try(:cache_key)
   end
 
   def range_reservations(start_time, end_time)

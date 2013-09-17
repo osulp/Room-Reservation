@@ -28,38 +28,15 @@ class ReservationsController < ApplicationController
   def create
     params["reservation"]["reserver_onid"] = current_user.onid
     reserver = Reserver.from_params(params)
-    if reserver.save && reserver.persisted?
-      respond_to do |format|
-        format.json do
-          render :json => reserver.reservation
-        end
-      end
-    else
-      respond_to do |format|
-        format.json do
-          render :json => {:errors => reserver.errors.full_messages | Array.wrap(reserver.try(:reservation).try(:errors).try(:full_messages))}, :status => :unprocessable_entity
-        end
-      end
-    end
+    reserver.save
+    respond_with(reserver, :location => root_path, :location => root_path, :responder => JsonResponder)
   end
 
   def destroy
     reservation = Reservation.find(params[:id])
     canceller = Canceller.new(reservation, current_user)
-    result = canceller.save
-    if result
-      respond_to do |format|
-        format.json do
-          render :json => result
-        end
-      end
-    else
-      respond_to do |format|
-        format.json do
-          render :json => {:errors => canceller.errors.full_messages | Array.wrap(canceller.try(:reservation).try(:errors).try(:full_messages))}, :status => :unprocessable_entity
-        end
-      end
-    end
+    canceller.save
+    respond_with(canceller, :location => root_path, :responder => JsonResponder)
   end
 
 

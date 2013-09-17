@@ -129,4 +129,12 @@ describe Reserver do
       end
     end
   end
+  describe ".to_json" do
+    before(:each) do
+      subject.save
+    end
+    it "should delegate to reservation" do
+      expect(subject.to_json).to eq subject.reservation.to_json
+    end
+  end
 end

@@ -9,9 +9,12 @@ class Reserver
   validate :duration_correct
   validate :authorized_to_reserve
   validate :concurrency_limit
+  validate :append_reservation_errors
 
   attr_accessor :reserver, :reserved_for, :room, :start_time, :end_time, :description
   attr_reader :reservation
+
+  delegate :as_json, :to => :reservation
 
   def self.from_params(params)
     reservation_params = params[:reservation]
@@ -87,6 +90,15 @@ class Reserver
   def reservation_not_in_past
     return if !start_time
     errors.add(:base, "You may not make reservations in the past.") unless start_time >= Time.current
+  end
+
+  def append_reservation_errors
+    return if !reservation
+    unless reservation.valid?
+      reservation.errors.full_messages.each do |msg|
+        self.errors.add(:base, msg)
+      end
+    end
   end
 
 end

@@ -49,7 +49,7 @@ class ReservationPopupManager
     errors = xhr.responseJSON
     @popup.children(".popup-message").hide()
     @popup.children(".popup-content").show()
-    if errors["errors"]?
+    if errors?["errors"]?
       errors = errors["errors"]
       @popup.find(".popup-content-errors").html(errors.join("<br>"))
       @popup.find(".popup-content-errors").show()

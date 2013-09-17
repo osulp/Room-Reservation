@@ -63,11 +63,17 @@ describe "cleaning bars" do
         end
         context "when a cleaning is deleted" do
           before(:each) do
+            @cleaning2 = create(:cleaning_record, start_date: Date.yesterday, end_date: Date.today)
+            @room2 = create(:room)
+            @cleaning2.rooms << @room2
+            @cleaning2.save
+            visit root_path
+            expect(page).to have_selector(".bar-danger", :count => 2)
             @cleaning.destroy
             visit root_path
           end
           it "should update the cache" do
-            expect(page).not_to have_selector(".bar-danger")
+            expect(page).to have_selector(".bar-danger", :count => 1)
           end
         end
         context "when a cleaning's weekdays are changed" do

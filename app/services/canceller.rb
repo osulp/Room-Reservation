@@ -5,6 +5,8 @@ class Canceller
   validate :reservation_owned_by_user
   validate :reservation_not_over
 
+  delegate :as_json, :to => :reservation
+
   def initialize(reservation, cancelling_user)
     self.reservation = reservation
     self.cancelling_user = cancelling_user

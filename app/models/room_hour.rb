@@ -1,9 +1,12 @@
 class RoomHour < ActiveRecord::Base
+  acts_as_paranoid
+  before_destroy :touch
+
   attr_accessible :end_date, :end_time, :start_date, :start_time
   validates :start_date, :end_date, :start_time, :end_time, :presence => true
   validate :start_date_correct
   validate :start_time_correct
-  has_many :room_hour_records
+  has_many :room_hour_records, :dependent => :destroy
   has_many :rooms, :through => :room_hour_records
 
   protected

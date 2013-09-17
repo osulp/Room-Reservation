@@ -57,7 +57,7 @@ class EventManager::HoursManager < EventManager::EventManager
   end
 
   def room_hour_cache_key(start_time, end_time)
-    RoomHour.where("start_date <= ? AND end_date >= ?", (end_time-1.minute).to_date, start_time.to_date).order("updated_at DESC").first.try(:cache_key)
+    RoomHour.with_deleted.where("start_date <= ? AND end_date >= ?", (end_time-1.minute).to_date, start_time.to_date).order("updated_at DESC").first.try(:cache_key)
   end
 
   def priority

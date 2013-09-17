@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130913184701) do
+ActiveRecord::Schema.define(:version => 20130917171843) do
 
   create_table "BannerLookup", :primary_key => "ID", :force => true do |t|
     t.string "onid",     :limit => 9,   :null => false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20130913184701) do
     t.datetime "created_at", :limit => 6, :null => false
     t.datetime "updated_at", :limit => 6, :null => false
     t.string   "weekdays"
+    t.datetime "deleted_at"
   end
 
   create_table "filters", :force => true do |t|
@@ -131,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20130913184701) do
     t.time     "end_time"
     t.datetime "created_at", :limit => 6, :null => false
     t.datetime "updated_at", :limit => 6, :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "rooms", :force => true do |t|
