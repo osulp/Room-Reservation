@@ -95,7 +95,6 @@ class CalendarManager
       this.color_reservations("#{year}-#{month}-#{day}")
       window.ReservationPopupManager.hide_popup()
       window.CancelPopupManager.hide_popup()
-      $(".popup").hide()
     )
     return
   color_reservations: (date)->
