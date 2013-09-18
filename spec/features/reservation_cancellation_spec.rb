@@ -50,7 +50,7 @@ describe 'cancelling a reservation' do
       describe "then clicking to reserve again" do
         before(:each) do
           expect(page).to have_content("This reservation has been cancelled!")
-          find(".bar-success").click
+          find(".bar-success").trigger('click')
         end
         it "should hide the cancel popup" do
           expect(page).not_to have_selector("#cancel-popup")
