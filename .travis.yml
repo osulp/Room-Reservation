@@ -1,0 +1,12 @@
+# Ruby Configuration
+language: ruby
+rvm:
+  - 1.9.3
+
+# Define database configuration
+services:
+  - postgresql
+env:
+  - ROOMRES_ADAPTER=postgresql ROOMRES_DB_PREFIX=roomres ROOMRES_DB_USERNAME=travis ROOMRES_DB_HOST=127.0.0.1
+before_script:
+  - psql -c 'create database roomres_test;' -U postgres
