@@ -1,0 +1,24 @@
+users:
+  reservation_times:
+    default: 180
+reservations:
+  max_concurrent_reservations: 0
+deployment:
+  repository:
+  deploy_to:
+  branch: master
+  stages:
+    - staging
+  staging:
+    user:
+    branch: master
+    hosts:
+      web: example.example.com
+      app: example.example.com
+      db:  example.example.com
+    god:
+      app_path:   config/god.conf
+      sites_path: /usr/local/god/site-conf
+    default_environment:
+      PATH: rbenv_path_information:$PATH
+      PKG_CONFIG_PATH: /usr/local/lib/pkgconfig:/usr/lib/pkgconfig

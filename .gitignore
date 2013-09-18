@@ -28,3 +28,8 @@ vendor/bundler_gems
 .idea
 .project
 .metadata
+
+# Ignore production configuration files
+config/config.yml
+config/unicorn.rb
+config/god.conf

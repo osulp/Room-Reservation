@@ -14,9 +14,9 @@ if defined?(Bundler)
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
-
 module RoomReservation
   class Application < Rails::Application
+    application_config = YAML.load_file('config/config.yml')|| {}
     config.active_record.default_timezone = :utc
 
     config.generators do |generate|
@@ -77,8 +77,8 @@ module RoomReservation
     config.assets.version = '1.0'
 
     # Configure CAS
-    config.rubycas.cas_base_url = 'https://login.oregonstate.edu/cas'
-    config.rubycas.validate_url = 'https://login.oregonstate.edu/cas/samlValidate'
-    config.rubycas.cas_destination_logout_param_name = "url"
+    config.rubycas.cas_base_url = application_config["rubycas"]["cas_base_url"]
+    config.rubycas.validate_url = application_config["rubycas"]["validate_url"]
+    config.rubycas.cas_destination_logout_param_name = application_config["rubycas"]["cas_destination_logout_param_name"]
   end
 end
