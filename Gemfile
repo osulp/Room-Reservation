@@ -64,7 +64,7 @@ group :test do
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'shoulda-matchers'
-  gem 'simplecov', require: false
   gem 'timecop'
   gem 'capybara-screenshot'
+  gem 'coveralls', require: false
 end
