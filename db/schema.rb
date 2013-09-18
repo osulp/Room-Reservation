@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(:version => 20130917171843) do
     t.string "idHash",   :limit => 128, :null => false
   end
 
-  add_index "BannerLookup", ["idHash"], :name => "idHash"
-  add_index "BannerLookup", ["onid"], :name => "onid"
+  add_index "BannerLookup", ["idHash"], :name => "index_BannerLookup_on_idHash"
+  add_index "BannerLookup", ["onid"], :name => "index_BannerLookup_on_onid"
 
   create_table "cleaning_record_rooms", :force => true do |t|
     t.integer  "cleaning_record_id"
@@ -60,22 +60,22 @@ ActiveRecord::Schema.define(:version => 20130917171843) do
     t.text     "close_time_6",        :null => false
     t.text     "open_time_7",         :null => false
     t.text     "close_time_7",        :null => false
-    t.text     "int_open_time_1",     :null => false
-    t.text     "int_close_time_1",    :null => false
-    t.text     "int_open_time_6",     :null => false
-    t.text     "int_close_time_6",    :null => false
-    t.text     "int_open_time_7",     :null => false
-    t.text     "int_close_time_7",    :null => false
+    t.text     "int_open_time_1"
+    t.text     "int_close_time_1"
+    t.text     "int_open_time_6"
+    t.text     "int_close_time_6"
+    t.text     "int_open_time_7"
+    t.text     "int_close_time_7"
     t.text     "published",           :null => false
     t.text     "loc",                 :null => false
-    t.text     "int_term_start_date", :null => false
+    t.text     "int_term_start_date"
     t.text     "term",                :null => false
     t.datetime "term_start_date",     :null => false
     t.datetime "term_end_date",       :null => false
-    t.text     "int_term_end_date",   :null => false
+    t.text     "int_term_end_date"
   end
 
-  add_index "hours", ["term_start_date", "term_end_date"], :name => "term_dates_idx"
+  add_index "hours", ["term_start_date", "term_end_date"], :name => "index_hours_on_term_start_date_and_term_end_date"
 
   create_table "int_hours", :force => true do |t|
     t.integer  "hours_id",       :null => false
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20130917171843) do
     t.time     "close_time_sun", :null => false
   end
 
-  add_index "int_hours", ["start_date", "end_date"], :name => "dates_idx"
+  add_index "int_hours", ["start_date", "end_date"], :name => "index_int_hours_on_start_date_and_end_date"
 
   create_table "reservations", :force => true do |t|
     t.string   "user_onid"
@@ -151,6 +151,6 @@ ActiveRecord::Schema.define(:version => 20130917171843) do
     t.string   "title",      :limit => 250
   end
 
-  add_index "special_hours", ["start_date", "end_date"], :name => "dates_idx"
+  add_index "special_hours", ["start_date", "end_date"], :name => "index_special_hours_on_start_date_and_end_date"
 
 end

@@ -69,7 +69,7 @@ class ReservationPopupManager
   parse_date_string: (date) ->
     result = date.split("-")
     result.pop() if result.length > 3
-    "#{result.join("-")}-00:00"
+    "#{result.join("-").replace("Z","")}-00:00"
   position_popup: (x, y)->
     @popup.show()
     @popup.offset({top: y, left: x+10})
@@ -128,11 +128,13 @@ class ReservationPopupManager
     end_time = this.form_time_string(end_time_object)
     # Hack to remove timezone information.
     start_time_object = start_time_object.toLocalISOString().split("-")
-    start_time_object.pop()
+    start_time_object.pop() if start_time_object.length > 3
     start_time_object = start_time_object.join("-")
+    start_time_object = start_time_object.replace("Z","")
     end_time_object = end_time_object.toLocalISOString().split("-")
-    end_time_object.pop()
+    end_time_object.pop() if end_time_object.length > 3
     end_time_object = end_time_object.join("-")
+    end_time_object = end_time_object.replace("Z","")
     $("#reservation_start_time").val(start_time_object)
     $("#reservation_end_time").val(end_time_object)
     # Set labels

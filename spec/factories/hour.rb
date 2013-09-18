@@ -14,5 +14,6 @@ FactoryGirl.define do
     term "Spring"
     term_start_date {Date.yesterday}
     term_end_date {Date.today+90.days}
+    published true
   end
 end

@@ -48,15 +48,15 @@ group :development do
   gem 'jazz_hands'
   gem 'meta_request'
   gem 'binding_of_caller'
+  gem 'spring'
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'better_errors'
 end
 
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
-  gem 'spring'
-  gem 'guard'
-  gem 'guard-rspec'
-  gem 'better_errors'
 end
 
 group :test do

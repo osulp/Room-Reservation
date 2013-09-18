@@ -2,11 +2,17 @@
 language: ruby
 rvm:
   - 1.9.3
-
+bundler_args: --without development
 # Define database configuration
 services:
   - postgresql
+  - memcached
 env:
   - ROOMRES_ADAPTER=postgresql ROOMRES_DB_PREFIX=roomres ROOMRES_DB_USERNAME=travis ROOMRES_DB_HOST=127.0.0.1
 before_script:
   - psql -c 'create database roomres_test;' -U postgres
+  - cp config/config.example.yml config/config.yml
+script:
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec spec/
