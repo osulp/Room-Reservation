@@ -24,9 +24,9 @@ set :shared_children, shared_children + %w{pids sockets tmp}
 # if you want to clean up old releases on each deploy uncomment this:
 after 'deploy:restart', 'deploy:cleanup'
 
+after 'deploy:finalize_update', 'deploy:symlink_config'
 after 'deploy:update_code', 'deploy:migrate'
 after 'deploy:restart', 'deploy:cleanup'
-after 'deploy:update_code', 'deploy:symlink_config'
 
 namespace :deploy do
   desc "Symlinks required configuration files"
