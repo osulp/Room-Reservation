@@ -1,6 +1,7 @@
 Valley Library Room Reservation System
 ============================
 [![Build Status](https://travis-ci.org/osulp/Room-Reservation.png)](https://travis-ci.org/osulp/Room-Reservation)
+[![Coverage Status](https://coveralls.io/repos/osulp/Room-Reservation/badge.png?branch=develop)](https://coveralls.io/r/osulp/Room-Reservation?branch=develop)
 
 This repository contains the source code for the Room Reservation system which will be in use at the Oregon State
 University Libraries & Press' Valley Library.
