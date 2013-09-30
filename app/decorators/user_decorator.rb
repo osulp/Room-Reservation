@@ -16,6 +16,10 @@ class UserDecorator < Draper::Decorator
     return @max_reservation_time
   end
 
+  def nil?
+    object.onid.nil?
+  end
+
   private
 
   def default_reservation_time
