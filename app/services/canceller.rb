@@ -15,7 +15,6 @@ class Canceller
   def save
     return false unless valid?
     return reservation.destroy
-    true
   end
 
   protected

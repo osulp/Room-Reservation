@@ -35,12 +35,6 @@ class CalendarPresenter
     return @event_collection
   end
 
-  def self.expire_time(start_time, end_time)
-    key = form_cache_key(start_time, end_time, Room.all)
-    Rails.cache.delete("Cached/#{key}")
-    Rails.cache.delete("cached_key/#{key}")
-  end
-
   def self.form_cache_key(start_time, end_time, rooms)
     key = "#{self.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
     key += Room.order("updated_at DESC").first.try(:cache_key) || ''
