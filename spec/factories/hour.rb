@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :hour, :class => Hours::Hour do
-    loc "The Valley Library"
+    loc APP_CONFIG["hours"]["key_name"]
     open_time_1 "12:00 am"
     close_time_1 "12:00 am"
     open_time_5 "12:15 am"
