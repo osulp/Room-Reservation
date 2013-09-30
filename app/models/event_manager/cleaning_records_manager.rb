@@ -9,10 +9,14 @@ class EventManager::CleaningRecordsManager < EventManager::EventManager
   end
 
   def cache_key(start_time, end_time,rooms=[])
-    "#{self.class}/#{start_time.to_i}/#{end_time.to_i}/#{CleaningRecord.with_deleted.where("start_date <= ? AND end_date >= ?", end_time.to_date, start_time.to_date).order("updated_at DESC").first.try(:cache_key)}"
+    "#{self.class}/#{start_time.to_i}/#{end_time.to_i}/#{cleaning_record_cache_key(start_time, end_time)}"
   end
 
   private
+
+  def cleaning_record_cache_key(start_time, end_time)
+    CleaningRecord.with_deleted.where("start_date <= ? AND end_date >= ?", end_time.to_date, start_time.to_date).order("updated_at DESC").first.try(:cache_key)
+  end
 
   def range_cleaning_records(start_time, end_time)
     return @range_cleaning_records if @range_cleaning_records

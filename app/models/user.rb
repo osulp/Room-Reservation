@@ -18,7 +18,7 @@ class User < OpenStruct
   end
 
   def nil?
-    onid.nil?
+    onid.blank?
   end
 
   private
