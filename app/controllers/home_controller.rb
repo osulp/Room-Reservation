@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   before_filter RubyCAS::GatewayFilter, :only => :index
-  layout Proc.new { |controller| controller.request.xhr? ? nil : "application" }
   def index
     calendar = CalendarManager.new(cookies)
     @time_range = (calendar.day.midnight..calendar.day.tomorrow.midnight)
