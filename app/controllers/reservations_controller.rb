@@ -3,11 +3,10 @@ class ReservationsController < ApplicationController
   include_root_in_json = false
   before_filter :require_login, :only => [:create, :destroy]
   def current_user_reservations
-    if params.has_key?(:date)
+    result = current_user.reservations
+    if params[:date]
       date = Time.zone.parse(params[:date])
-      result = current_user.reservations.where("start_time <= ? AND end_time >= ?", date.tomorrow.midnight, date.midnight)
-    else
-      result = current_user.reservations
+      result = result.where("start_time <= ? AND end_time >= ?", date.tomorrow.midnight, date.midnight)
     end
     respond_with(Array.wrap(result))
   end
