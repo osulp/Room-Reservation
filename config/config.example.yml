@@ -3,6 +3,8 @@ users:
     default: 180
 reservations:
   max_concurrent_reservations: 0
+hours:
+  key_name: 'Testing'
 deployment:
   repository:
   deploy_to:

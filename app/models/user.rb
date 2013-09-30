@@ -12,4 +12,31 @@ class User < OpenStruct
   def reservations
     Reservation.where(:user_onid => onid)
   end
+
+  def max_reservation_time
+    @max_reservation_time ||= calculate_max_reservation_time
+  end
+
+  def nil?
+    onid.blank?
+  end
+
+  private
+
+  def calculate_max_reservation_time
+    if banner_record && banner_record.status
+      result = reservation_times[banner_record.status.downcase] if reservation_times.has_key?(banner_record.status.downcase)
+    end
+    result ||= default_reservation_time
+    result.to_i*60
+  end
+
+  def default_reservation_time
+    APP_CONFIG["users"]["reservation_times"]["default"]
+  end
+
+  def reservation_times
+    APP_CONFIG["users"]["reservation_times"]
+  end
+
 end

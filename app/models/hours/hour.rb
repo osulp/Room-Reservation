@@ -1,13 +1,12 @@
 class Hours::Hour < ActiveRecord::Base
   establish_connection "drupal_#{Rails.env}"
-  # @TODO Move the valley library off to config.
   # @param dates [Array<Date>] Array of dates you want the hours for.
   # @return [Hash<Hash>] Hash where each key is the date with the hours containing a hash with an "open" and "close" key representing the close/open time.
   # @note This function must be named the same in Hour, SpecialHour and IntersessionHour for HourManager to work.
   def self.time_info(dates)
     dates = Array.wrap(dates)
     result = {}
-    allHours = where(:loc => "The Valley Library")
+    allHours = where(:loc => APP_CONFIG["hours"]["key_name"])
     dates.each do |date|
       next unless date.instance_of? Date
       hours = allHours.select{|x| x.term_start_date.utc.to_date <= date && x.term_end_date.utc.to_date >= date}[0]
