@@ -51,7 +51,7 @@ describe 'reserve popup' do
             context "when the reservation succeeds" do
               it "should create a reservation" do
                 expect(page).to have_selector(".bar-info", :count => 1)
-                expect(Reservation.scoped.length).to eq 1
+                expect(Reservation.all.length).to eq 1
               end
               it "should set the reservation's description" do
                 expect(page).to have_selector(".bar-info", :count => 1)
@@ -77,7 +77,7 @@ describe 'reserve popup' do
               end
               it "should create a reservation" do
                 expect(page).to have_content("Your reservation has been made!")
-                expect(Reservation.scoped.length).to eq 2
+                expect(Reservation.all.length).to eq 2
               end
             end
             context "when the app is configured to allow 1 reservation a day" do
@@ -127,7 +127,7 @@ describe 'reserve popup' do
               end
             end
             it "should not create a reservation" do
-              expect(Reservation.scoped.length).to eq 0
+              expect(Reservation.all.length).to eq 0
             end
           end
         end

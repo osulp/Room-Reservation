@@ -106,11 +106,11 @@ describe Reserver do
         subject.save
       end
       it "should create a new reservation" do
-        expect(Reservation.scoped.size).to eq 1
+        expect(Reservation.all.size).to eq 1
       end
       it "should be idempotent" do
         subject.save
-        expect(Reservation.scoped.size).to eq 1
+        expect(Reservation.all.size).to eq 1
       end
       describe "reservation" do
         before(:each) do
