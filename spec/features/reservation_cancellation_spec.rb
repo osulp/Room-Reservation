@@ -45,7 +45,7 @@ describe 'cancelling a reservation' do
       end
       it "should delete the reservation" do
         expect(page).to have_content("This reservation has been cancelled!")
-        expect(Reservation.scoped.size).to eq 0
+        expect(Reservation.all.size).to eq 0
       end
       describe "then clicking to reserve again" do
         before(:each) do

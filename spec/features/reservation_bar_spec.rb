@@ -86,28 +86,33 @@ describe "GET / reservation bars" do
           expect(page).to have_selector(".bar-success",:count => 2)
         end
 
-        describe "caching", :caching => true do
-          let(:receive_count) {2}
+        describe "caching", :caching => true  do
           before(:each) do
             Rails.cache.clear
-            CalendarPresenter.should_receive(:new).exactly(receive_count).times.and_call_original
             visit root_path
             expect(page).to have_selector(".bar-danger", :count => 1)
           end
           context "when the page is visited again" do
-            let(:receive_count) {1}
+            before(:each) do
+              CalendarPresenter.should_receive(:new).exactly(1).times.and_call_original
+              create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
+              visit root_path
+              expect(page).to have_selector(".bar-danger", :count => 2)
+              visit root_path
+            end
             it "should use a cache" do
               visit root_path
               expect(page).to have_selector(".bar-danger")
             end
           end
-          it "should update the cache when a new reservation is added" do
-            create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
-            visit root_path
-            expect(page).to have_selector(".bar-danger", :count => 2)
+          context "when a new reservation is added" do
+            it "should update the cache when a new reservation is added" do
+              create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
+              visit root_path
+              expect(page).to have_selector(".bar-danger", :count => 2)
+            end
           end
           context "when the reservation switches to be owned by them" do
-            let(:receive_count) {3}
             it "should update the cache", :js => true do
               r = create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
               visit root_path
@@ -141,7 +146,6 @@ describe "GET / reservation bars" do
             expect(page).not_to have_selector(".bar-danger")
           end
           context "when a reservation is deleted" do
-            let(:receive_count) {3}
             it "should update the cache" do
               r = create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
               r2 = create(:reservation, :start_time => Time.current.midnight+8.hours, :end_time => Time.current.midnight+10.hours, :room => @room1)
@@ -180,8 +184,8 @@ describe "GET / reservation bars" do
     end
   end
 end
-
 def after_visit(*args)
+  expect(page).to have_content("Today") if example.metadata[:js]
   page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
   page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
 end

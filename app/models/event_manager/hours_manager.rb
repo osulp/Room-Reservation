@@ -28,7 +28,7 @@ class EventManager::HoursManager < EventManager::EventManager
   def applicable_room_hours(start=nil, ending=nil)
     start ||= start_time
     ending ||= end_time
-    RoomHourRecord.includes(:room, :room_hour).where("room_hours.start_date <= ? AND room_hours.end_date >= ?", (ending-1.minute).to_date, start.to_date)
+    RoomHourRecord.includes(:room, :room_hour).where("room_hours.start_date <= ? AND room_hours.end_date >= ?", (ending-1.minute).to_date, start.to_date).references(:room_hours)
   end
 
   def get_events

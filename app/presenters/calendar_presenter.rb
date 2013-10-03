@@ -12,7 +12,7 @@ class CalendarPresenter
     @start_time = start_time
     @end_time = end_time
     @managers = managers
-    @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).all)
+    @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).load)
     @floors = @rooms.map(&:floor).uniq
     @filters = Filter.all
     sort_events_into_rooms

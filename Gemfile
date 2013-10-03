@@ -4,10 +4,10 @@ source 'https://rubygems.org'
 gem 'jquery-rails'
 gem 'mysql2'
 gem 'pg'
-gem 'rails', '~> 3.2.12'
+gem 'rails', '~> 4.0.0'
 gem 'simple_form'
 gem 'yard'
-gem 'active_model_serializers', '~> 0.7.0'
+gem 'active_model_serializers', '~> 0.8.0'
 
 # Draper for decoration
 gem 'draper'
@@ -29,18 +29,19 @@ gem 'unicorn'
 gem 'cache_digests'
 
 # Paranoia to simply hide deleted records
-gem 'paranoia', '~> 1.0'
+gem 'paranoia', '~> 2.0'
 
-group :assets do
-  gem 'coffee-rails'
-  gem 'sass-rails'
-  gem 'uglifier'
-  gem 'execjs'
-  gem 'therubyracer'
-  gem 'jquery-ui-rails'
-  gem 'bootstrap-sass'
-  gem 'compass-rails'
-end
+gem 'coffee-rails'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'execjs'
+gem 'therubyracer'
+gem 'jquery-ui-rails'
+gem 'bootstrap-sass'
+gem "compass-rails", "~> 2.0.alpha.0"
+
+# protected_attributes until we update
+gem 'protected_attributes'
 
 group :development do
   #gem 'better_errors'

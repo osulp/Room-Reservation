@@ -51,7 +51,7 @@ describe Canceller do
         expect(subject.save).not_to eq false
       end
       it "should delete the reservation" do
-        expect(Reservation.scoped.size).to eq 0
+        expect(Reservation.all.size).to eq 0
       end
       it "should not REALLY delete the reservation" do
         expect(Reservation.find_by_sql("select * from reservations").length).to eq 1
