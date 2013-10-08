@@ -1,285 +1,397 @@
-      <div class="utilitybg"></div>
-      <div id="titlebar">
-        <div class="utility">
-          <ul>
-            <li id="askus">
-              <a href="http://osulibrary.oregonstate.edu/reference">Ask Us</a>
+<div id="header" class="row-fluid">
+  <h1>
+    <a href="/">OSU Libraries</a>
+  </h1>
+</div>
+<ul id="mobile-menu">
+  <li id="mobile-main-menu">
+    <ul class="menu">
+      <li class="first leaf">
+        <a href="/" title="" class="active">Home</a>
+      </li>
+      <li class="expanded">
+        <a href="/find-it" title="">Find It</a>
+        <ul class="menu">
+          <li class="first collapsed">
+            <span title="" class="nolink">Search Tools</span>
+          </li>
+          <li class="collapsed">
+            <span title="" class="nolink">Services</span>
+          </li>
+          <li class="last collapsed">
+            <span title="" class="nolink">Help</span>
+          </li>
+        </ul>
+      </li>
+      <li class="expanded">
+        <a href="/in-the-library" title="">In the Library</a>
+        <ul class="menu">
+          <li class="first collapsed">
+            <span title="" class="nolink">Services</span>
+          </li>
+          <li class="collapsed">
+            <span title="" class="nolink">Equipment</span>
+          </li>
+          <li class="last collapsed">
+            <span title="" class="nolink">Spaces</span>
+          </li>
+        </ul>
+      </li>
+      <li class="last expanded">
+        <a href="/about" title="">About</a>
+        <ul class="menu">
+          <li class="first collapsed">
+            <span title="" class="nolink">The Valley Library</span>
+          </li>
+          <li class="collapsed">
+            <span title="" class="nolink">OSU Libraries</span>
+          </li>
+          <li class="collapsed">
+            <span title="" class="nolink">Unique @ OSU</span>
+          </li>
+          <li class="last leaf">
+            <a href="/news/messenger" title="official newsletter for OSU Libraries">The Messenger</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<!-- Main menu navbar -->
+<div id="main-menu">
+  <div class="region region-nav">
+    <div id="block-block-31" class="block block-block">
+      <div class="content">
+        <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+          <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li class="ui-state-default ui-corner-top active">
+              <a href="#1Search" class="onesearch" data-toggle="tab">
+                <span>1Search</span>
+              </a>
             </li>
-            <li>
-              <a href="http://oasis.oregonstate.edu/screens/accesrec.html">My Account</a>
+            <li class="ui-state-default ui-corner-top">
+              <a href="#books-media" class="books" data-toggle="tab">
+                <span>Books &amp; Media</span>
+              </a>
             </li>
-            <li id="gift">
-              <a href="http://osulibrary.oregonstate.edu/giving">Make a Gift</a>
+            <li class="last ui-state-default ui-corner-top">
+              <a href="#site-search" class="site" data-toggle="tab">
+                <span>Website</span>
+              </a>
             </li>
           </ul>
+          <div class="tab-content">
+            <div id="1Search" class="ui-tabs-panel ui-widget-content ui-corner-bottom tab-pane active">
+              <form method="get" action="http://oregonstate.summon.serialssolutions.com/search/results">
+                <fieldset>
+                  <label>
+                    <input type="text" name="q" maxlength="256" accesskey="s" value="Articles, Books, eCollections" onfocus="if(value=='Articles, Books, eCollections'){value=''};this.style.color='black'">
+                  </label>
+                  <!--<input class="gobtn" type="image" src="/sites/all/themes/osu_confident/images/osul_images/gogray.gif" alt="Go button" />-->
+                  <input class="icon-search word-hide form-submit" type="submit">
+                </fieldset>
+              </form>
+            </div>
+            <div id="books-media" class="ui-tabs-panel ui-widget-content ui-corner-bottom tab-pane">
+              <form method="get" action="http://oasis.oregonstate.edu/search/">
+                <fieldset>
+                  <label>
+                    <input type="hidden" name="searchtype" value="X">
+                    <input type="text" name="searcharg" maxlength="256" accesskey="s" value="Search the catalog" onfocus="if(value=='Search the catalog'){value=''};this.style.color='black'">
+                  </label>
+                  <input type="hidden" name="searchscope" value="13">
+                  <input class="icon-search word-hide form-submit" type="submit">
+                </fieldset>
+              </form>
+            </div>
+            <div id="site-search" class="ui-tabs-panel ui-widget-content ui-corner-bottom tab-pane">
+              <form action="/" method="post" id="google-appliance-block-form" accept-charset="UTF-8">
+                <div>
+                  <div class="container-inline">
+                    <h2 class="element-invisible">Search Google Appliance</h2>
+                    <div class="form-item form-type-textfield form-item-search-keys">
+                      <label class="element-invisible" for="edit-search-keys">Enter the terms you wish to search for. </label>
+                      <input onfocus="if(this.value=='Search this site') {value='';};this.style.color='black'" type="text" id="edit-search-keys" name="search_keys" value="Search this site" size="15" maxlength="128" class="form-text">
+                    </div>
+                    <div class="form-wrapper" id="edit-actions">
+                      <input class="icon-search word-hide form-submit" type="submit" id="edit-submit" name="op" value="Search">
+                    </div>
+                    <input type="hidden" name="form_build_id" value="form-R2wX9QEJnlV36cIVKU7GMUloDgDJ2GDC5EGvlL0dJOE">
+                    <input type="hidden" name="form_id" value="google_appliance_block_form">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <a class="osulink" href="http://oregonstate.edu"></a>
-        <a class="librarylink" href="http://osulibrary.oregonstate.edu"></a>
       </div>
-
-      <div id="nav">
-        <ul id="menu">
-          <li>
-            <h2>
-              <a href="http://osulibrary.oregonstate.edu">Home</a>
+    </div>
+    <div id="block-megamenu-menu-menu-osul" class="block block-megamenu">
+      <div class="content">
+        <ul id="megamenu-menu-menu-osul" class="megamenu-menu columnar megamenu-skin-osul">
+          <li id="megamenu-mlid-182036" class="megamenu-parent megamenu-parent-0 odd half-1 leaf-0 first menu-182036  first active">
+            <h2 class="megamenu-parent-title">
+              <a href="/" class="active">Home</a>
             </h2>
           </li>
-          <li>
-            <h2>
-              <a href="http://osulibrary.oregonstate.edu/find-it">Find It</a>
+          <li id="megamenu-mlid-182041" class="megamenu-parent megamenu-parent-1 even half-1 leaf-1 menu-182041">
+            <h2 class="megamenu-parent-title">
+              <a href="/find-it">Find It</a>
             </h2>
-            <ul>
-              <li>
-                <h3>Search Tools</h3>
-                <ul>
-                  <li>
+            <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 624px;">
+              <li id="megamenu-mlid-182051" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">Search Tools</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-182046" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
                     <a href="http://oregonstate.summon.serialssolutions.com/search?s.q=">1Search</a>
                   </li>
-                  <li>
-                    <a href="http://oasis.oregonstate.edu/">Catalog</a>
+                  <li id="megamenu-mlid-182056" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
+                    <a href="http://oasis.oregonstate.edu/">Library Catalog</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-232831" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
                     <a href="http://summit.worldcat.org/">Summit/Worldcat</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/research-databases">Databases</a>
+                  <li id="megamenu-mlid-182061" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
+                    <a href="/research-databases">Databases</a>
                   </li>
-                  <li>
-                    <a href="http://ica.library.oregonstate.edu/subject-guide/1351-Ebooks-for-eReaders">E-books</a>
+                  <li id="megamenu-mlid-182116" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
+                    <a href="http://ica.library.oregonstate.edu/subject-guide/1471-OSU-Libraries-Ebooks">E-books</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-182066" class="megamenu-item megamenu-item-5 even half-2 leaf-5 last  last">
                     <a href="http://mw8xt6bj7r.search.serialssolutions.com/">E-journals</a>
                   </li>
                 </ul>
               </li>
-              <li>
-                <h3>Services</h3>
-                <ul>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/reserves">Course Reserves</a>
+              <li id="megamenu-mlid-228296" class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 ">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">Services</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-182071" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
+                    <a href="/reserves">Course Reserves</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/ill">Interlibrary Loan</a>
+                  <li id="megamenu-mlid-183596" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
+                    <a href="https://osulibrary.oregonstate.edu/ill">Interlibrary Loan</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/scan-deliver">Scan &amp; Deliver</a>
+                  <li id="megamenu-mlid-228926" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 ">
+                    <a href="/scan-deliver">Scan &amp; Deliver</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/summit">Summit Borrowing</a>
+                  <li id="megamenu-mlid-230251" class="megamenu-item megamenu-item-3 even half-2 leaf-3 last  last">
+                    <a href="/summit">Summit Borrowing</a>
                   </li>
                 </ul>
               </li>
-              <li>
-                <h3>Help</h3>
-                <ul>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/reference">Ask a Librarian</a>
+              <li id="megamenu-mlid-228301" class="megamenu-slot megamenu-slot-2 odd half-2 leaf-2 last  last">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">Help</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-228321" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
+                    <a href="/reference">Ask a Librarian</a>
                   </li>
-                  <li>
-                    <a href="http://ica.library.oregonstate.edu/course-guides/">Course Guides</a>
+                  <li id="megamenu-mlid-228311" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
+                    <a href="http://guides.library.oregonstate.edu">Research Guides</a>
                   </li>
-                  <li>
-                    <a href="http://ica.library.oregonstate.edu/subject-guides/">Subject/Discipline Guides</a>
-                  </li>
-                  <li>
+                  <li id="megamenu-mlid-228316" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 last  last">
                     <a href="http://ica.library.oregonstate.edu/tutorials/">Tutorials</a>
                   </li>
                 </ul>
               </li>
             </ul>
           </li>
-          <li>
-            <h2>
-              <a href="http://osulibrary.oregonstate.edu/in-the-library">In the Library</a>
+          <li id="megamenu-mlid-182161" class="megamenu-parent megamenu-parent-2 odd half-2 leaf-2 menu-182161">
+            <h2 class="megamenu-parent-title">
+              <a href="/in-the-library">In the Library</a>
             </h2>
-            <ul>
-              <li>
-                <h3>Services</h3>
-                <ul>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/borrowing">Borrowing</a>
+            <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 624px;">
+              <li id="megamenu-mlid-183581" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">Services</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-183471" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
+                    <a href="/borrowing">Borrowing</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-183586" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
                     <a href="http://oregonstate.edu/is/mediaservices/sms/">Student Multimedia Services</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-183591" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
                     <a href="http://oregonstate.edu/childcare/ourlittlevillage">Child Care</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/accessibility-services">Accessibility Services</a>
+                  <li id="megamenu-mlid-183606" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
+                    <a href="/accessibility-services">Accessibility Services</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-239866" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 last  last">
                     <a href="http://oregonstate.edu/is/tss/och">OSU Computer Helpdesk</a>
                   </li>
                 </ul>
               </li>
-              <li>
-                <h3>Equipment</h3>
-                <ul>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/computers">Computers</a>
+              <li id="megamenu-mlid-183476" class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 ">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">Equipment</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-183561" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
+                    <a href="/computers">Computers</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/laptops">Laptops</a>
+                  <li id="megamenu-mlid-183481" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
+                    <a href="/laptops">Laptops</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/lockers">Lockers</a>
+                  <li id="megamenu-mlid-183486" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
+                    <a href="/lockers">Lockers</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/copiers">Copiers</a>
+                  <li id="megamenu-mlid-183556" class="megamenu-item megamenu-item-3 even half-1 leaf-3 ">
+                    <a href="/copiers">Copiers</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/printers">Printers</a>
+                  <li id="megamenu-mlid-183551" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
+                    <a href="/printers">Printers</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/kindles">Kindles</a>
+                  <li id="megamenu-mlid-183491" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
+                    <a href="/kindle">Kindles</a>
+                  </li>
+                  <li id="megamenu-mlid-239966" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last">
+                    <a href="/tablets">Tablets</a>
                   </li>
                 </ul>
               </li>
-              <li>
-                <h3>Spaces</h3>
-                <ul>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/study-rooms">Study Rooms</a>
+              <li id="megamenu-mlid-183496" class="megamenu-slot megamenu-slot-2 odd half-2 leaf-2 last  last">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">Spaces</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-183541" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
+                    <a href="/study-rooms">Study Rooms</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/classrooms">Classrooms</a>
+                  <li id="megamenu-mlid-183576" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
+                    <a href="/classrooms">Classrooms</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/floormaps">Floormaps</a>
+                  <li id="megamenu-mlid-183951" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
+                    <a href="/floormaps">Floormaps</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/learning-commons">Learning Commons</a>
+                  <li id="megamenu-mlid-183566" class="megamenu-item megamenu-item-3 even half-1 leaf-3 ">
+                    <a href="/learning-commons">Learning Commons</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/clc">Collaborative Learning Center</a>
+                  <li id="megamenu-mlid-183571" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
+                    <a href="/clc">Collaborative Learning Center</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/research-rooms">Research Rooms</a>
+                  <li id="megamenu-mlid-183546" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
+                    <a href="/research-rooms">Research Rooms</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-183601" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last">
                     <a href="http://webcam.oregonstate.edu/java2/">Java II</a>
                   </li>
                 </ul>
               </li>
             </ul>
           </li>
-          <li>
-            <h2>
-              <a href="http://osulibrary.oregonstate.edu/about">About</a>
+          <li id="megamenu-mlid-182176" class="megamenu-parent megamenu-parent-3 even half-2 leaf-3 last menu-182176  last">
+            <h2 class="megamenu-parent-title">
+              <a href="/about">About</a>
             </h2>
-            <ul>
-              <li>
-                <h3>About Valley Library</h3>
-                <ul>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/about/valley">About the Valley Library</a>
+            <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 648px;">
+              <li id="megamenu-mlid-185241" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">The Valley Library</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-239721" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
+                    <a href="/about/valley">About The Valley Library</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/hours">Hours</a>
+                  <li id="megamenu-mlid-184026" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
+                    <a href="/hours">Hours</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/policies">Policies</a>
+                  <li id="megamenu-mlid-229071" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
+                    <a href="/policies">Policies</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/visit">Visiting</a>
+                  <li id="megamenu-mlid-185251" class="megamenu-item megamenu-item-3 even half-1 leaf-3 ">
+                    <a href="/visit">Visiting</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/jobs">Jobs</a>
+                  <li id="megamenu-mlid-185311" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
+                    <a href="/nwart">Northwest Art Exhibit</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/nwart">Northwest Art Exhibit</a>
+                  <li id="megamenu-mlid-185321" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
+                    <a href="/social-media-directory">Social Media Directory</a>
                   </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/social-media-directory">Social Media Directory</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <h3>About OSU Libraries</h3>
-                <ul>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/about/OSU-Libraries">About OSU Libraries</a>
-                  </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/staff/directory">Staff Directory</a>
-                  </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/administration">Administration</a>
-                  </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/collections">Collections</a>
-                  </li>
-                  <li>
-                    <a href="http://osulibrary.oregonstate.edu/departments">Departments</a>
-                  </li>
-                  <li>
-                    <a href="http://cascades.library.oregonstate.edu/">Cascades Campus Library</a>
-                  </li>
-                  <li>
-                    <a href="http://guin.library.oregonstate.edu/">Guin Library</a>
+                  <li id="megamenu-mlid-240801" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last">
+                    <a href="/jobs">Jobs</a>
                   </li>
                 </ul>
               </li>
-              <li>
-                <h3>Unique @ OSU</h3>
-                <ul>
-                  <li>
-                    <a href="http://oregondigital.org/">Digital Collections</a>
+              <li id="megamenu-mlid-185256" class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 ">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">OSU Libraries</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-239881" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
+                    <a href="/civility">Civility Campaign</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-239716" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
+                    <a href="/about">About OSU Libraries</a>
+                  </li>
+                  <li id="megamenu-mlid-185246" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
+                    <a href="/staff/directory">Staff Directory</a>
+                  </li>
+                  <li id="megamenu-mlid-185271" class="megamenu-item megamenu-item-3 even half-1 leaf-3 ">
+                    <a href="/administration">Administration</a>
+                  </li>
+                  <li id="megamenu-mlid-239711" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
+                    <a href="/collections">Collections</a>
+                  </li>
+                  <li id="megamenu-mlid-185316" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
+                    <a href="/departments">Departments</a>
+                  </li>
+                  <li id="megamenu-mlid-185261" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 ">
+                    <a href="http://blogs.oregonstate.edu/cascadeslibrary/">Cascades Campus Library</a>
+                  </li>
+                  <li id="megamenu-mlid-185266" class="megamenu-item megamenu-item-7 even half-2 leaf-7 last  last">
+                    <a href="http://guin.library.oregonstate.edu">Guin Library</a>
+                  </li>
+                </ul>
+              </li>
+              <li id="megamenu-mlid-185276" class="megamenu-slot megamenu-slot-2 odd half-2 leaf-2 ">
+                <h3 class="megamenu-slot-title">
+                  <span class="nolink">Unique @ OSU</span>
+                </h3>
+                <ul class="megamenu-items ">
+                  <li id="megamenu-mlid-185281" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
+                    <a href="http://oregondigital.org">Digital Collections</a>
+                  </li>
+                  <li id="megamenu-mlid-239816" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
                     <a href="http://cdss.library.oregonstate.edu/">Center for Digital Scholarship</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-185296" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
                     <a href="http://ir.library.oregonstate.edu/dspace/">ScholarsArchive</a>
                   </li>
-                  <li>
-                    <a href="http://oregonexplorer.info/">Oregon Explorer</a>
+                  <li id="megamenu-mlid-185286" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
+                    <a href="http://oregonexplorer.info">Oregon Explorer</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-185301" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
                     <a href="http://scarc.library.oregonstate.edu/">Special Collections &amp; Archives Research Center</a>
                   </li>
-                  <li>
+                  <li id="megamenu-mlid-185291" class="megamenu-item megamenu-item-5 even half-2 leaf-5 last  last">
                     <a href="http://osupress.oregonstate.edu/">OSU Press</a>
                   </li>
                 </ul>
               </li>
-              <li class="bottom">
-                <a href="http://osulibrary.oregonstate.edu/news/messenger">The Messenger</a>
-                <span> - official newsletter for OSU Libraries</span>
+              <li id="megamenu-mlid-185326" class="megamenu-slot megamenu-slot-3 even half-2 leaf-3 last  last" style="">
+                <h3 class="megamenu-slot-title">
+                  <a href="/news/messenger">The Messenger</a>
+                </h3>
               </li>
             </ul>
           </li>
         </ul>
-        <div id="searchTabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-          <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-            <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active ui-state-focus">
-              <a id="onesb" href="#onesearch">Search</a>
-            </li>
-            <li class="ui-state-default ui-corner-top">
-              <a id="bmsb" href="#booksmedia">Books &amp; Media</a>
-            </li>
-            <li class="ui-state-default ui-corner-top">
-              <a id="wssb" href="#websearch">Website</a>
-            </li>
-          </ul>
-          <div id="onesearch" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-            <form method="get" action="http://oregonstate.summon.serialssolutions.com/search/results">
-              <input type="text" onfocus="if(value=='1Search: Articles, Books, eCollections'){value=''};this.style.color='black'" value="1Search: Articles, Books, eCollections" accesskey="s" maxlength="256" name="q" style="color: black;">
-              <input type="image" alt="Go button" src="https://osulibrary.oregonstate.edu/sites/all/themes/osu_confident/images/osul_images/gogray.gif" class="gobtn">
-            </form>
-          </div>
-          <div id="booksmedia" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
-            <form method="get" action="http://oasis.oregonstate.edu/search/">
-              <input type="hidden" value="X" name="searchtype">
-              <input type="text" onfocus="if(value=='Search the catalog'){value=''};this.style.color='black'" value="Search the catalog" accesskey="s" maxlength="256" name="searcharg" style="color: black;">
-              <input type="hidden" value="13" name="searchscope">
-              <input type="image" alt="Go button" src="https://osulibrary.oregonstate.edu/sites/all/themes/osu_confident/images/osul_images/gogray.gif" class="gobtn">
-            </form>
-          </div>
-          <div id="websearch" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
-            <input type="text" class="form-text" onfocus="if(this.value=='Search this site') {value='';};this.style.color='black'" value="Search this site" id="wsearch" name="keys" maxlength="255" style="color: black;">
-            <input type="image" alt="Go button" src="https://osulibrary.oregonstate.edu/sites/all/themes/osu_confident/images/osul_images/gogray.gif" class="form-submit gobtn" id="edit-submit-1" onclick="osuSearch()">
-          </div>
-        </div>
       </div>
+    </div>
+  </div>
+</div>
+<!-- /#main-menu -->
+<!-- Messages and breadcrumbs -->
+<div id="messages"></div>
+<!-- messages -->
+<!-- Full width top region -->
+<!-- Now divide into main column and right sidebar -->
+<!-- /main-body-row -->
+<!-- Full width above footer -->
