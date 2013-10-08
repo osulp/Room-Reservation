@@ -6,13 +6,15 @@
     height: 20px;
     display: inline-block;
   }
-  .success {
-    background-color: #57a957;
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+  #legend {
+    font-size: 1em;
   }
-  .danger {
-    background-color: #c43c35;
-  }
-  .info {
-    background-color: #339bb9;
+}
+@media (max-width: 679px) {
+  #legend {
+    font-size: 1em;
   }
 }
