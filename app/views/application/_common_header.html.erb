@@ -1,16 +1,16 @@
 <div id="header" class="row-fluid">
   <h1>
-    <a href="/">OSU Libraries</a>
+    <a href="<%= APP_CONFIG['baseurl'] %>/">OSU Libraries</a>
   </h1>
 </div>
 <ul id="mobile-menu">
   <li id="mobile-main-menu">
     <ul class="menu">
       <li class="first leaf">
-        <a href="/" title="" class="active">Home</a>
+        <a href="<%= APP_CONFIG['baseurl'] %>/" title="" class="active">Home</a>
       </li>
       <li class="expanded">
-        <a href="/find-it" title="">Find It</a>
+        <a href="<%= APP_CONFIG['baseurl'] %>/find-it" title="">Find It</a>
         <ul class="menu">
           <li class="first collapsed">
             <span title="" class="nolink">Search Tools</span>
@@ -24,7 +24,7 @@
         </ul>
       </li>
       <li class="expanded">
-        <a href="/in-the-library" title="">In the Library</a>
+        <a href="<%= APP_CONFIG['baseurl'] %>/in-the-library" title="">In the Library</a>
         <ul class="menu">
           <li class="first collapsed">
             <span title="" class="nolink">Services</span>
@@ -38,7 +38,7 @@
         </ul>
       </li>
       <li class="last expanded">
-        <a href="/about" title="">About</a>
+        <a href="<%= APP_CONFIG['baseurl'] %>/about" title="">About</a>
         <ul class="menu">
           <li class="first collapsed">
             <span title="" class="nolink">The Valley Library</span>
@@ -50,7 +50,7 @@
             <span title="" class="nolink">Unique @ OSU</span>
           </li>
           <li class="last leaf">
-            <a href="/news/messenger" title="official newsletter for OSU Libraries">The Messenger</a>
+            <a href="<%= APP_CONFIG['baseurl'] %>/news/messenger" title="official newsletter for OSU Libraries">The Messenger</a>
           </li>
         </ul>
       </li>
@@ -105,7 +105,7 @@
               </form>
             </div>
             <div id="site-search" class="ui-tabs-panel ui-widget-content ui-corner-bottom tab-pane">
-              <form action="/" method="post" id="google-appliance-block-form" accept-charset="UTF-8">
+              <form action="<%= APP_CONFIG['baseurl'] %>/" method="post" id="google-appliance-block-form" accept-charset="UTF-8">
                 <div>
                   <div class="container-inline">
                     <h2 class="element-invisible">Search Google Appliance</h2>
@@ -116,7 +116,6 @@
                     <div class="form-wrapper" id="edit-actions">
                       <input class="icon-search word-hide form-submit" type="submit" id="edit-submit" name="op" value="Search">
                     </div>
-                    <input type="hidden" name="form_build_id" value="form-R2wX9QEJnlV36cIVKU7GMUloDgDJ2GDC5EGvlL0dJOE">
                     <input type="hidden" name="form_id" value="google_appliance_block_form">
                   </div>
                 </div>
@@ -131,12 +130,12 @@
         <ul id="megamenu-menu-menu-osul" class="megamenu-menu columnar megamenu-skin-osul">
           <li id="megamenu-mlid-182036" class="megamenu-parent megamenu-parent-0 odd half-1 leaf-0 first menu-182036  first active">
             <h2 class="megamenu-parent-title">
-              <a href="/" class="active">Home</a>
+              <a href="<%= APP_CONFIG['baseurl'] %>/" class="active">Home</a>
             </h2>
           </li>
           <li id="megamenu-mlid-182041" class="megamenu-parent megamenu-parent-1 even half-1 leaf-1 menu-182041">
             <h2 class="megamenu-parent-title">
-              <a href="/find-it">Find It</a>
+              <a href="<%= APP_CONFIG['baseurl'] %>/find-it">Find It</a>
             </h2>
             <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 624px;">
               <li id="megamenu-mlid-182051" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
@@ -154,7 +153,7 @@
                     <a href="http://summit.worldcat.org/">Summit/Worldcat</a>
                   </li>
                   <li id="megamenu-mlid-182061" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
-                    <a href="/research-databases">Databases</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/research-databases">Databases</a>
                   </li>
                   <li id="megamenu-mlid-182116" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
                     <a href="http://ica.library.oregonstate.edu/subject-guide/1471-OSU-Libraries-Ebooks">E-books</a>
@@ -170,16 +169,16 @@
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-182071" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="/reserves">Course Reserves</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/reserves">Course Reserves</a>
                   </li>
                   <li id="megamenu-mlid-183596" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
                     <a href="https://osulibrary.oregonstate.edu/ill">Interlibrary Loan</a>
                   </li>
                   <li id="megamenu-mlid-228926" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 ">
-                    <a href="/scan-deliver">Scan &amp; Deliver</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/scan-deliver">Scan &amp; Deliver</a>
                   </li>
                   <li id="megamenu-mlid-230251" class="megamenu-item megamenu-item-3 even half-2 leaf-3 last  last">
-                    <a href="/summit">Summit Borrowing</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/summit">Summit Borrowing</a>
                   </li>
                 </ul>
               </li>
@@ -189,7 +188,7 @@
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-228321" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="/reference">Ask a Librarian</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/reference">Ask a Librarian</a>
                   </li>
                   <li id="megamenu-mlid-228311" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
                     <a href="http://guides.library.oregonstate.edu">Research Guides</a>
@@ -203,7 +202,7 @@
           </li>
           <li id="megamenu-mlid-182161" class="megamenu-parent megamenu-parent-2 odd half-2 leaf-2 menu-182161">
             <h2 class="megamenu-parent-title">
-              <a href="/in-the-library">In the Library</a>
+              <a href="<%= APP_CONFIG['baseurl'] %>/in-the-library">In the Library</a>
             </h2>
             <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 624px;">
               <li id="megamenu-mlid-183581" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
@@ -212,7 +211,7 @@
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-183471" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="/borrowing">Borrowing</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/borrowing">Borrowing</a>
                   </li>
                   <li id="megamenu-mlid-183586" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
                     <a href="http://oregonstate.edu/is/mediaservices/sms/">Student Multimedia Services</a>
@@ -221,7 +220,7 @@
                     <a href="http://oregonstate.edu/childcare/ourlittlevillage">Child Care</a>
                   </li>
                   <li id="megamenu-mlid-183606" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
-                    <a href="/accessibility-services">Accessibility Services</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/accessibility-services">Accessibility Services</a>
                   </li>
                   <li id="megamenu-mlid-239866" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 last  last">
                     <a href="http://oregonstate.edu/is/tss/och">OSU Computer Helpdesk</a>
@@ -234,25 +233,25 @@
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-183561" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="/computers">Computers</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/computers">Computers</a>
                   </li>
                   <li id="megamenu-mlid-183481" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="/laptops">Laptops</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/laptops">Laptops</a>
                   </li>
                   <li id="megamenu-mlid-183486" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
-                    <a href="/lockers">Lockers</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/lockers">Lockers</a>
                   </li>
                   <li id="megamenu-mlid-183556" class="megamenu-item megamenu-item-3 even half-1 leaf-3 ">
-                    <a href="/copiers">Copiers</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/copiers">Copiers</a>
                   </li>
                   <li id="megamenu-mlid-183551" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
-                    <a href="/printers">Printers</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/printers">Printers</a>
                   </li>
                   <li id="megamenu-mlid-183491" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
-                    <a href="/kindle">Kindles</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/kindle">Kindles</a>
                   </li>
                   <li id="megamenu-mlid-239966" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last">
-                    <a href="/tablets">Tablets</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/tablets">Tablets</a>
                   </li>
                 </ul>
               </li>
@@ -262,22 +261,22 @@
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-183541" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="/study-rooms">Study Rooms</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/study-rooms">Study Rooms</a>
                   </li>
                   <li id="megamenu-mlid-183576" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="/classrooms">Classrooms</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/classrooms">Classrooms</a>
                   </li>
                   <li id="megamenu-mlid-183951" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
-                    <a href="/floormaps">Floormaps</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/floormaps">Floormaps</a>
                   </li>
                   <li id="megamenu-mlid-183566" class="megamenu-item megamenu-item-3 even half-1 leaf-3 ">
-                    <a href="/learning-commons">Learning Commons</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/learning-commons">Learning Commons</a>
                   </li>
                   <li id="megamenu-mlid-183571" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
-                    <a href="/clc">Collaborative Learning Center</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/clc">Collaborative Learning Center</a>
                   </li>
                   <li id="megamenu-mlid-183546" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
-                    <a href="/research-rooms">Research Rooms</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/research-rooms">Research Rooms</a>
                   </li>
                   <li id="megamenu-mlid-183601" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last">
                     <a href="http://webcam.oregonstate.edu/java2/">Java II</a>
@@ -288,7 +287,7 @@
           </li>
           <li id="megamenu-mlid-182176" class="megamenu-parent megamenu-parent-3 even half-2 leaf-3 last menu-182176  last">
             <h2 class="megamenu-parent-title">
-              <a href="/about">About</a>
+              <a href="<%= APP_CONFIG['baseurl'] %>/about">About</a>
             </h2>
             <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 648px;">
               <li id="megamenu-mlid-185241" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
@@ -297,25 +296,25 @@
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-239721" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="/about/valley">About The Valley Library</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/about/valley">About The Valley Library</a>
                   </li>
                   <li id="megamenu-mlid-184026" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="/hours">Hours</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/hours">Hours</a>
                   </li>
                   <li id="megamenu-mlid-229071" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
-                    <a href="/policies">Policies</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/policies">Policies</a>
                   </li>
                   <li id="megamenu-mlid-185251" class="megamenu-item megamenu-item-3 even half-1 leaf-3 ">
-                    <a href="/visit">Visiting</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/visit">Visiting</a>
                   </li>
                   <li id="megamenu-mlid-185311" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
-                    <a href="/nwart">Northwest Art Exhibit</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/nwart">Northwest Art Exhibit</a>
                   </li>
                   <li id="megamenu-mlid-185321" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
-                    <a href="/social-media-directory">Social Media Directory</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/social-media-directory">Social Media Directory</a>
                   </li>
                   <li id="megamenu-mlid-240801" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last">
-                    <a href="/jobs">Jobs</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/jobs">Jobs</a>
                   </li>
                 </ul>
               </li>
@@ -325,22 +324,22 @@
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-239881" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="/civility">Civility Campaign</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/civility">Civility Campaign</a>
                   </li>
                   <li id="megamenu-mlid-239716" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="/about">About OSU Libraries</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/about">About OSU Libraries</a>
                   </li>
                   <li id="megamenu-mlid-185246" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
-                    <a href="/staff/directory">Staff Directory</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/staff/directory">Staff Directory</a>
                   </li>
                   <li id="megamenu-mlid-185271" class="megamenu-item megamenu-item-3 even half-1 leaf-3 ">
-                    <a href="/administration">Administration</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/administration">Administration</a>
                   </li>
                   <li id="megamenu-mlid-239711" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
-                    <a href="/collections">Collections</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/collections">Collections</a>
                   </li>
                   <li id="megamenu-mlid-185316" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
-                    <a href="/departments">Departments</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/departments">Departments</a>
                   </li>
                   <li id="megamenu-mlid-185261" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 ">
                     <a href="http://blogs.oregonstate.edu/cascadeslibrary/">Cascades Campus Library</a>
@@ -377,7 +376,7 @@
               </li>
               <li id="megamenu-mlid-185326" class="megamenu-slot megamenu-slot-3 even half-2 leaf-3 last  last" style="">
                 <h3 class="megamenu-slot-title">
-                  <a href="/news/messenger">The Messenger</a>
+                  <a href="<%= APP_CONFIG['baseurl'] %>/news/messenger">The Messenger</a>
                 </h3>
               </li>
             </ul>
