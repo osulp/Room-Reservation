@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.tabs
 //= require jquery.ui.datepicker
 //= require jquery.ui.slider
 //= require bootstrap

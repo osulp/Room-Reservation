@@ -11,10 +11,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% cache "Tophat" do -%>
+    <%= render 'common_tophat' -%>
+  <% end -%>
   <div class="container">
+    <div id="common-header" class="_osul">
     <% cache "Header" do -%>
       <%= render 'common_header' -%>
     <% end -%>
+    </div>
 
     <%= render 'flashes' -%>
     <%= yield %>

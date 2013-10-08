@@ -6,7 +6,7 @@
   &.ui-widget-content {
     background: transparent;
   }
-  // *** Title Bar *** //
+  /*** Title Bar ***/
   .ui-widget-header {
     background: #561F4B;
     color: white;
@@ -22,7 +22,7 @@
     font-family: Helvetica, arial, sans-serif;
     white-space: normal;
   }
-  //**** Datepicker Buttons ****//
+  /**** Datepicker Buttons ****/
   .ui-datepicker-button {
     margin-top: 4px;
     width: 32px;
@@ -68,8 +68,11 @@
       border: 1px solid #AAA;
       @include box-shadow(0 1px 1px rgba(0, 0, 0, 0.075) inset);
     }
+    th {
+      span {font-size: 12px;}
+    }
     td {
-      a {
+      a, span {
         font-size: 12px !important;
       }
       a.ui-state-default {
@@ -112,7 +115,6 @@
       font-weight: bold;
       opacity: 1;
       font-size: 12px;
-      font-family: Helvetica, arial, sans-serif;
     }
   }
 }

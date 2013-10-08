@@ -71,6 +71,9 @@ module RoomReservation
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.assets.paths << "#{Rails.root}/app/assets/osul"
+
+
     # Configure CAS
     config.rubycas.cas_base_url = application_config["rubycas"]["cas_base_url"]
     config.rubycas.validate_url = application_config["rubycas"]["validate_url"]
