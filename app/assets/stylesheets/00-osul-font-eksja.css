@@ -1,0 +1,7 @@
+@font-face{font-family:'EksjaExtremesRegular';
+  src: url(fonts/Eksja-regular-webfont.eot);
+  src:local('☺'),
+  url(fonts/Eksja-regular-webfont.woff) format('woff'),
+  url(fonts/Eksja-regular-webfont.ttf) format('truetype'),
+  url(fonts/Eksja-regular-webfont.svg#webfont) format('svg');
+  font-weight:normal;font-style:normal;}
