@@ -25,6 +25,26 @@ describe "calendar", :js => true do
           expect(page).to have_selector('.bar-danger', :count => 1)
         end
       end
+      context "and you have a cookie set for a past day" do
+        context "and you are not an admin" do
+          before(:each) do
+            create(:special_hour, start_date: 4.days.ago, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
+            create(:reservation, :start_time => Time.current.midnight-2.days, :end_time => Time.current.midnight-2.days+1.hour)
+            current_day = Time.current-2.days
+            browser = page.driver
+            browser.set_cookie('day', current_day.day.to_s)
+            browser.set_cookie('month', current_day.month.to_s)
+            browser.set_cookie('year', current_day.year.to_s)
+            visit root_path
+          end
+          it "should not show the past day" do
+            expect(page).not_to have_selector(".bar-danger")
+          end
+        end
+        context "and you are an admin" do
+          it "should show the past day"
+        end
+      end
       context "and you have a cookie set for a future day" do
         before(:each) do
           create(:special_hour, start_date: 4.days.ago, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
