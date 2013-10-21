@@ -22,11 +22,11 @@ describe Canceller do
       end
     end
     context "when the canceller is an admin" do
-      # Implement with admin system
       before(:each) do
         create(:role, :role => "admin", :onid => "fakeuser")
       end
       context "when the reservation isn't owned by the user" do
+        let(:reservation) {create(:reservation, :user_onid => "bla", start_time: Time.current+2.hours, end_time: Time.current+3.hours)}
         it "should be valid" do
           expect(subject).to be_valid
         end

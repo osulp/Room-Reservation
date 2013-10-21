@@ -20,6 +20,7 @@ class Canceller
   protected
 
   def reservation_owned_by_user
+    return if cancelling_user && cancelling_user.admin?
     errors.add(:base, "Unauthorized for cancellation of this reservation") if reservation.user_onid != cancelling_user.onid
   end
 
