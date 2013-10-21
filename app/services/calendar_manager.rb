@@ -2,9 +2,8 @@ class CalendarManager
   attr_reader :day
 
   def self.from_string(date_string)
-    date = date_string.split("-")
-    raise "Invalid date given" if date.length != 3
-    return self.new({:year => date[0], :month => date[1], :day => date[2]})
+    date = date_string.to_date
+    return self.new({:year => date.year, :month => date.month, :day => date.day})
   end
 
   def initialize(opts={})
