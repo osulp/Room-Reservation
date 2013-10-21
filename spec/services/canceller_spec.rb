@@ -27,7 +27,9 @@ describe Canceller do
         create(:role, :role => "admin", :onid => "fakeuser")
       end
       context "when the reservation isn't owned by the user" do
-        it "should be valid"
+        it "should be valid" do
+          expect(subject).to be_valid
+        end
       end
     end
     context "when the reservation is in the past" do

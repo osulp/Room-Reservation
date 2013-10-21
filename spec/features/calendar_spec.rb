@@ -45,7 +45,9 @@ describe "calendar", :js => true do
           before(:each) do
             create(:role, :role => "admin", :onid => "fakeuser")
           end
-          it "should show the past day"
+          it "should show the past day" do
+            expect(page).to have_selector(".bar-danger")
+          end
         end
       end
       context "and you have a cookie set for a future day" do
@@ -68,7 +70,9 @@ describe "calendar", :js => true do
       before(:each) do
         create(:role, :role => "admin", :onid => "fakeuser")
       end
-      it "should let you go back in time"
+      it "should let you go back in time" do
+        expect(page).not_to have_selector("*[data-handler=prev]")
+      end
     end
   end
 end
