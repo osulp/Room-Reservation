@@ -57,18 +57,18 @@ class Reserver
   # TODO: Evaluate this - what if they have a reservation on the second day when this crosses midnight?
   def concurrency_limit
     max_concurrent = APP_CONFIG["reservations"]["max_concurrent_reservations"].to_i
-    return if !reserved_for || !reserver || max_concurrent == 0
+    return if !reserved_for || !reserver || max_concurrent == 0 || reserver.admin?
     current_reservations = reserved_for.reservations.where("start_time <= ? AND end_time >= ?", start_time.tomorrow.midnight, start_time.midnight).size
     errors.add(:base, "You can only make #{max_concurrent} reservations per day.") if current_reservations >= max_concurrent
   end
 
   def authorized_to_reserve
-    return if !reserved_for || !reserver
+    return if !reserved_for || !reserver || reserver.admin?
     errors.add(:base, "You are not authorized to reserve on behalf of #{reserved_for.onid}") if reserved_for.onid.downcase != reserver.onid.downcase
   end
 
   def duration_correct
-    return if !end_time || !start_time || !reserved_for
+    return if !end_time || !start_time || !reserved_for || !reserver || reserver.admin?
     duration = end_time - start_time
     errors.add(:base, "The reservation can not be for more than #{(reserved_for.max_reservation_time/60/60).to_i} hours") if duration > reserved_for.max_reservation_time
   end
@@ -88,7 +88,7 @@ class Reserver
   end
 
   def reservation_not_in_past
-    return if !start_time
+    return if !start_time || !reserver || reserver.admin?
     errors.add(:base, "You may not make reservations in the past.") unless start_time >= Time.current
   end
 

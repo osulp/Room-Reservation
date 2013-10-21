@@ -28,16 +28,24 @@ describe Reserver do
         end
       end
       context "and the reserver is an admin" do
-        # TODO: Write this test after the admin system is in.
-        it "should be valid"
+        before(:each) do
+          create(:role, :role => "admin", :onid => reserver.onid)
+        end
+        it "should be valid" do
+          expect(subject).to be_valid
+        end
       end
     end
     context "when the reserver is not the same as the reserved_for" do
       let(:user) {User.new("user")}
       let(:reserver) {User.new("reserver")}
       context "and the reserver is an admin" do
-        # TODO: Write this test after the admin system is in.
-        it "should be valid"
+        before(:each) do
+          create(:role, :role => "admin", :onid => reserver.onid)
+        end
+        it "should be valid" do
+          expect(subject).to be_valid
+        end
       end
       context "and the reserver is not an admin" do
         it "should be invalid" do

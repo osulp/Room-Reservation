@@ -9,6 +9,11 @@ class UserDecorator < Draper::Decorator
     object.nil?
   end
 
+  def min_date
+    return '' if object.admin?
+    0
+  end
+
   private
 
   def data_hash
