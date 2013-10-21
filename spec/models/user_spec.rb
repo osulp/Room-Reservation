@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe User do
+  subject {User.new("bla")}
   describe "initialization" do
     context "when passed just an onid" do
-      subject {User.new("bla")}
       it "should create a user object" do
         expect(subject).to be_kind_of(User)
       end
@@ -22,7 +22,6 @@ describe User do
     end
   end
   describe ".banner_record" do
-    subject {User.new("bla")}
     context "when there is no banner record for that ONID" do
       it "should return nil" do
         expect(subject.banner_record).to be_nil
@@ -40,6 +39,21 @@ describe User do
         BannerRecord.should_receive(:where).once.and_call_original
         subject.banner_record
         subject.banner_record
+      end
+    end
+  end
+  describe "#admin?" do
+    context "when they are not an admin" do
+      it "should return false" do
+        expect(subject.admin?).to be_false
+      end
+    end
+    context "when they are an admin" do
+      before(:each) do
+        create(:role, :onid => subject.onid, :role => "admin")
+      end
+      it "should return true" do
+        expect(subject.admin?).to be_true
       end
     end
   end

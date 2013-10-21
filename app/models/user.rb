@@ -21,6 +21,10 @@ class User < OpenStruct
     onid.blank?
   end
 
+  def admin?
+    Role.where(:role => :admin, :onid => onid).size > 0
+  end
+
   private
 
   def calculate_max_reservation_time
