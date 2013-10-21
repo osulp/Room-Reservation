@@ -42,6 +42,9 @@ describe "calendar", :js => true do
           end
         end
         context "and you are an admin" do
+          before(:each) do
+            create(:role, :role => "admin", :onid => "fakeuser")
+          end
           it "should show the past day"
         end
       end
@@ -62,6 +65,9 @@ describe "calendar", :js => true do
       end
     end
     context "when you are an admin" do
+      before(:each) do
+        create(:role, :role => "admin", :onid => "fakeuser")
+      end
       it "should let you go back in time"
     end
   end

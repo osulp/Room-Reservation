@@ -28,6 +28,9 @@ describe Reserver do
         end
       end
       context "and the reserver is an admin" do
+        before(:each) do
+          create(:role, :role => "admin", :onid => reserver.onid)
+        end
         # TODO: Write this test after the admin system is in.
         it "should be valid"
       end
@@ -36,6 +39,9 @@ describe Reserver do
       let(:user) {User.new("user")}
       let(:reserver) {User.new("reserver")}
       context "and the reserver is an admin" do
+        before(:each) do
+          create(:role, :role => "admin", :onid => reserver.onid)
+        end
         # TODO: Write this test after the admin system is in.
         it "should be valid"
       end

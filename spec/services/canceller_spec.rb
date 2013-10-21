@@ -23,6 +23,9 @@ describe Canceller do
     end
     context "when the canceller is an admin" do
       # Implement with admin system
+      before(:each) do
+        create(:role, :role => "admin", :onid => "fakeuser")
+      end
       context "when the reservation isn't owned by the user" do
         it "should be valid"
       end
