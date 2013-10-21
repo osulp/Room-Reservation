@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917171843) do
+ActiveRecord::Schema.define(version: 20131021230906) do
 
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
@@ -104,6 +104,16 @@ ActiveRecord::Schema.define(version: 20130917171843) do
   end
 
   add_index "reservations", ["room_id"], name: "index_reservations_on_room_id_id", using: :btree
+
+  create_table "roles", force: true do |t|
+    t.string   "onid"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["onid"], name: "index_roles_on_onid", using: :btree
+  add_index "roles", ["role"], name: "index_roles_on_role", using: :btree
 
   create_table "room_filters", force: true do |t|
     t.integer  "room_id"
