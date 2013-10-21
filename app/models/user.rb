@@ -22,6 +22,7 @@ class User < OpenStruct
   end
 
   def admin?
+    return false if onid.blank?
     Role.where(:role => :admin, :onid => onid).size > 0
   end
 

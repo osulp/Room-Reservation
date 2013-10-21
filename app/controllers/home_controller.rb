@@ -18,7 +18,7 @@ class HomeController < ApplicationController
   def get_calendar(date)
     calendar = CalendarManager.new(date)
     current_day = Time.current.midnight
-    if calendar.day < current_day.to_date
+    if calendar.day < current_day.to_date && !current_user.admin?
       calendar = CalendarManager.new({:day => current_day.day, :month => current_day.month, :year => current_day.year})
     end
     return calendar
