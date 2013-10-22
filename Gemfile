@@ -44,7 +44,7 @@ gem "compass-rails", "~> 2.0.alpha.0"
 gem 'protected_attributes'
 
 # Old Asset Precompile Behavior for Stylesheets
-gem "non-stupid-digest-assets"
+gem "sprockets-digest-assets-fix"
 
 group :development do
   #gem 'better_errors'
