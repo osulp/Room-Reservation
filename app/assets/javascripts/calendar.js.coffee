@@ -107,8 +107,9 @@ class CalendarManager
     )
     return
   get_date_from_cookie: ->
-    return [parseInt($.cookie('year')), parseInt($.cookie('month')),parseInt($.cookie('day'))]
+    result = $.cookie('date')
+    result = "0-0-0" if !result?
+    result = result.split('-')
+    return [parseInt(result[0]),parseInt(result[1]), parseInt(result[2])]
   update_cookie: (year, month, day) ->
-    $.cookie('year', year, { expires: 30 })
-    $.cookie('month', month, { expires: 30 })
-    $.cookie('day', day, { expires: 30 })
+    $.cookie('date', "#{year}-#{month}-#{day}", {expires: 30})
