@@ -98,6 +98,32 @@ describe Reserver do
         end
       end
     end
+    context "when there is another reservation for midnight the next day" do
+      before(:each) do
+        create(:reservation, start_time: Time.current.tomorrow.midnight, end_time: Time.current.tomorrow.midnight+2.hours, room: room, user_onid: user.onid)
+      end
+      context "and the reservation is for the current day" do
+        let(:start_time) {Time.current.midnight+1.hours}
+        let(:end_time) {Time.current.midnight+2.hours}
+        context "and the max concurrency is set to 0" do
+          before(:each) do
+            APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(0)
+          end
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
+        end
+        # This test ensures that midnight of the next day is considered as "the next day"
+        context "and the max concurrency is set to 1" do
+          before(:each) do
+            APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(1)
+          end
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
+        end
+      end
+    end
   end
   describe ".save" do
     context "when the model is invalid" do
