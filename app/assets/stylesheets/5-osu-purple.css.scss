@@ -2,6 +2,7 @@
 
 $osu-purple: #561F4B;
 $osu-grey: #4B4B4B;
+$osu-darkgrey: #212121;
 
 @mixin purple-background {
   background-color: $osu-purple;
@@ -29,7 +30,7 @@ $osu-grey: #4B4B4B;
     }
     & > a:hover,
     & > a:focus {
-      box-shadow: 0 0 5px $osu-purple;
+      box-shadow: 0 0 5px $osu-darkgrey;
     }
     &.active > a,
     &.active > a:hover,
@@ -38,10 +39,6 @@ $osu-grey: #4B4B4B;
     }
 
   }
-
-  /*.nav-tabs > li {
-    margin: 0 10px;
-  }*/
 
   .nav-tabs {
     border-bottom: 1px solid $osu-purple;
