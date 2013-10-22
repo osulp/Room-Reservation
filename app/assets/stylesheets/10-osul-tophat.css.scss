@@ -1,46 +1,131 @@
+@import "bootstrap/mixins";
+
 #osu-top-hat {
   width:100%;
   height:55px;
   border-bottom:3px solid #dbd6d0;
-  font-size:13px;
-  font-family:'Gudea',Arial,Helvetica,Verdana,sans-serif;
-  background:rgb(86,86,86) repeat-x scroll left top #2F2A2B;
-  background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzU2NTY1NiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyNTI1MjUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-  background:-moz-linear-gradient(top,rgba(86,86,86,1) 0%,rgba(37,37,37,1) 100%);
-  background:-webkit-linear-gradient(top,rgba(86,86,86,1) 0%,rgba(37,37,37,1) 100%);
-  background:-o-linear-gradient(top,rgba(86,86,86,1) 0%,rgba(37,37,37,1) 100%);
-  background:-ms-linear-gradient(top,rgba(86,86,86,1) 0%,rgba(37,37,37,1) 100%);
-  background:linear-gradient(top,rgba(86,86,86,1) 0%,rgba(37,37,37,1) 100%);
-  a{text-decoration:none;color:#fff;padding:5px 10px;border-radius:10px;}
-  a:hover,a:active,a:focus,ul.menu li a.campaign:hover,ul.menu li a.campaign:active,ul.menu li a.campaign:focus{background-color:#555;}
-  a.tag{float:left;margin-left:1.231em;margin-right:1.5em;position:relative;border:none;z-index:51;padding:0;}
-  a.tag:hover,a.tag:active,a.tag:focus{background:transparent;}
-  ul.menu{float:left;margin:1.465em 0 0;padding:0;width:auto;
-  li.leaf{float:left;list-style-type:none;list-style-image:none;font-size:12px;margin:0;padding:0 .5em;}
-  li a.campaign{padding-left:26px;background:url(campaign.png) 3px center no-repeat;}
-  li.first{background:url(askus.png) no-repeat transparent;padding-left:32px;}
-  li.last{background:url(foundation.png) no-repeat transparent;margin-left:15px;padding-top:1px;padding-left:15px;}
+  font-family:Gudea,Arial,Helvetica,Verdana,sans-serif;
+  @include gradient-vertical(#565656, #252525);
 
+  ul.menu {
+    float:left;
+    margin:1.5em 0 0;
+    padding:0;
+    width:auto;
+    li {
+      &.leaf {
+        float:left;
+        list-style-type:none;
+        list-style-image:none;
+        font-size:12px;
+        margin:0;
+        padding:0 .5em;
+      }
+      &.first {
+        @include border-radius(10px);
+        margin-left: 20px;
+        margin-top: -3px;
+        padding: 3px 5px 3px 37px;
+        background: url(askus.png) 10% 50% no-repeat transparent;
+      }
+      &.last {
+        @include border-radius(10px);
+        margin-top: -3px;
+        padding: 3px 5px 3px 24px;
+        background: url(foundation.png) 10% 50% no-repeat transparent;
+      }
+      &.first, &.last {
+        &:hover, &:active, &:focus {background-color: #555;}
+        a:hover, a:active, a:focus {background-color: transparent;}
+      }
+      a {
+        @include border-radius(10px);
+        text-decoration:none;
+        color:#fff;
+        border-radius:10px;
+        padding: 5px 10px;
+        &:hover, &:active, &:focus{background-color:#555;}
+      }
+    }
   }
-  form.search{float:right;width:auto;margin:0.5em 0 0;position:relative;}
+
+  .tag{
+    float:left;
+    margin-left:1.231em;
+    margin-right:1.5em;
+    position:relative;
+    border:none;
+    z-index:51;
+    padding:0;
+
+    .mobile-header {
+      color:#fff;
+      font-weight:bold;
+      font-size:16px;
+      display: none;
+    }
+  }
+
+  @media (max-width:767px) {
+    height: 40px;
+    ul.menu {
+      display: none;
+    }
+    #mobile-icon-menu {
+      background: transparent;
+      color: #fff;
+      display: block;
+      position: absolute;
+      right: 4%;
+      text-decoration: none;
+      top: 10px;
+      z-index: 300;
+    }
+    #mobile-icon-menu .icon-search {
+      font-size: 18px;
+    }
+  }
+  @media (max-width:480px) {
+    @include gradient-vertical(#c34500, #ae3d00);
+    background-repeat:repeat-x;
+    height:auto;
+    border-bottom:none;
+    text-align:left;
+
+    .container{padding:10px 0 0 10px;}
+    .tag {
+      margin-left:0;
+      float:none;
+      .logo {display: none;}
+      .mobile-header {display: inline-block;color:#fff;font-weight:bold;font-size:16px;}
+    }
+  }
+}
+#mobile-icon-menu {
+  display: none;
 }
 
-.ie #osu-top-hat{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#565656',endColorstr='#252525',GradientType=0);}
-
-.mobile-header {display: none;}
-#alt-menu, #alt-tag, #mobile-menu, #mobile-icon-menu {display: none;}
+#common-header {
+  color: #252525;font-size: 16px;line-height: 22px;
+  a:focus { outline: none; }
+  h1, h2, h1 a { font-weight: 400;}
+  h1 a { text-decoration: none;color: #c34500;}
+  h1, h2 { font-family: "EksjaExtremesRegular", "Arial", "Helvetica", "Verdana", sans-serif;}
+  h1 { font-size: 30px;line-height: 44px;margin: 0px;padding: 1em 0px 0px;}
+  h2 { line-height: 32px;}
+  .tab-content { overflow: hidden;}
+}
 
 #header a:hover, a:active, a:focus { color: #615042; }
-#common-header a:focus { outline: thin dotted #333333;outline-offset: -2px;}
-#common-header h1, h2, h1 a { font-weight: 400;}
-#common-header h1 a { text-decoration: none;color: #c34500;}
-#common-header h1, h2 { font-family: "EksjaExtremesRegular", "Arial", "Helvetica", "Verdana", sans-serif;}
-#common-header h1 { font-size: 30px;line-height: 44px;margin: 0px;padding: 1em 0px 0px;}
-#common-header h2 { font-size: 22px;line-height: 32px;}
-body { font-family: "Gudea", "Arial", "Verdana", sans-serif;}
-#common-header { color: #252525;font-size: 16px;line-height: 22px;}
-#common-header .tab-content { overflow: hidden;}
-
 .word-hide {text-indent: -9999em;}
 
 .form-submit{margin-bottom:1em;}
+body { font-family: "Gudea", "Arial", "Verdana", sans-serif;}
+
+
+.element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  overflow: hidden;
+  height: 1px;
+}
