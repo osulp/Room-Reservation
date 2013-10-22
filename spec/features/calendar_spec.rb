@@ -1,9 +1,30 @@
 require 'spec_helper'
 
 describe "calendar", :js => true do
+  before(:each) do
+    RubyCAS::Filter.fake("fakeuser")
+  end
+  describe "cookie setting" do
+    before(:each) do
+      create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+      create(:reservation, :start_time => Time.current.midnight+20.hours, :end_time => Time.current.midnight+22.hours)
+      visit root_path
+    end
+    it "should go to the next day on click" do
+      expect(page).to have_selector(".bar-danger")
+      page.execute_script('$("a.ui-state-default:not(.ui-state-active)").first().click()')
+      expect(page).not_to have_selector(".bar-danger")
+    end
+    it "should persist the clicked day" do
+      expect(page).to have_selector(".bar-danger")
+      page.execute_script('$("a.ui-state-default:not(.ui-state-active)").first().click()')
+      expect(page).not_to have_selector(".bar-danger")
+      visit root_path
+      expect(page).not_to have_selector(".bar-danger")
+    end
+  end
   describe "past days" do
     before(:each) do
-      RubyCAS::Filter.fake("fakeuser")
       visit root_path
       expect(page).to have_content(Time.current.strftime("%B"))
     end
@@ -16,9 +37,7 @@ describe "calendar", :js => true do
           create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
           create(:reservation, :start_time => Time.current.midnight+23.hours, :end_time => Time.current.midnight+24.hours)
           browser = page.driver
-          browser.set_cookie('day', '1')
-          browser.set_cookie('month', '1')
-          browser.set_cookie('year', '2012')
+          browser.set_cookie('date', '2013-01-01')
           visit root_path
         end
         it "should move you to the current day" do
@@ -31,9 +50,7 @@ describe "calendar", :js => true do
           create(:reservation, :start_time => Time.current.midnight-2.days, :end_time => Time.current.midnight-2.days+1.hour)
           current_day = Time.current-2.days
           browser = page.driver
-          browser.set_cookie('day', current_day.day.to_s)
-          browser.set_cookie('month', current_day.month.to_s)
-          browser.set_cookie('year', current_day.year.to_s)
+          browser.set_cookie('date', "#{current_day.year}-#{current_day.month}-#{current_day.day}")
           visit root_path
         end
         context "and you are not an admin" do
@@ -57,9 +74,7 @@ describe "calendar", :js => true do
           create(:reservation, :start_time => Time.current.midnight+2.days+23.hours, :end_time => Time.current.midnight+2.days+24.hours)
           current_day = Time.current+2.days
           browser = page.driver
-          browser.set_cookie('day', current_day.day.to_s)
-          browser.set_cookie('month', current_day.month.to_s)
-          browser.set_cookie('year', current_day.year.to_s)
+          browser.set_cookie('date', "#{current_day.year}-#{current_day.month}-#{current_day.day}")
           visit root_path
         end
         it "should show the future day" do
