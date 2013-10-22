@@ -7,6 +7,7 @@ describe 'reserve popup' do
     it "shouldn't show a popup on click"
   end
   let(:banner_record) {nil}
+  let(:build_role) {nil}
   context "when the user is logged in", :js => true do
     before(:all) do
       Timecop.return
@@ -15,6 +16,7 @@ describe 'reserve popup' do
       RubyCAS::Filter.fake("fakeuser")
       create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       banner_record
+      build_role
       create(:room)
       visit root_path
     end
@@ -141,6 +143,15 @@ describe 'reserve popup' do
               expect(find(".end-time")).to have_content("3:00 AM")
             end
           end
+          context "and they are an admin" do
+            let(:build_role) {create(:role, :role => :admin, :onid => "fakeuser")}
+            it "should default to a 6 hour time range" do
+              within("#reservation-popup") do
+                expect(find(".start-time")).to have_content("12:00 AM")
+                expect(find(".end-time")).to have_content("6:00 AM")
+              end
+            end
+          end
         end
         context "and their status is configured for 6 hours" do
           let(:banner_record) do
@@ -172,4 +183,3 @@ def after_visit(*args)
   expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
   expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
 end
-

@@ -29,8 +29,11 @@ class User < OpenStruct
   private
 
   def calculate_max_reservation_time
+    if admin?
+      result ||= reservation_times["admin"]
+    end
     if banner_record && banner_record.status
-      result = reservation_times[banner_record.status.downcase] if reservation_times.has_key?(banner_record.status.downcase)
+      result ||= reservation_times[banner_record.status.downcase] if reservation_times.has_key?(banner_record.status.downcase)
     end
     result ||= default_reservation_time
     result.to_i*60

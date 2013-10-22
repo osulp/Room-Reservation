@@ -1,6 +1,7 @@
 users:
   reservation_times:
     default: 180
+    admin: 360
 reservations:
   max_concurrent_reservations: 0
 hours:
