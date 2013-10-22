@@ -20,7 +20,7 @@ describe "GET / reservation bars" do
         visit root_path
       end
       it "should display no room headers" do
-        expect(page).not_to have_selector('.nav-tabs li')
+        expect(page).not_to have_selector('#tabs-floor .nav-tabs li')
       end
     end
     context "when there are rooms" do
@@ -30,7 +30,7 @@ describe "GET / reservation bars" do
         visit root_path
       end
       it "should display as many floor headers as there are rooms with those floors" do
-        expect(page).to have_selector('.nav-tabs li', :count => 2)
+        expect(page).to have_selector('#tabs-floor .nav-tabs li', :count => 2)
       end
     end
   end
