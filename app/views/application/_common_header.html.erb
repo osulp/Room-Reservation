@@ -59,69 +59,54 @@
 </ul>
 <!-- Main menu navbar -->
 <div id="main-menu">
-  <div class="region region-nav">
-    <div id="block-block-31" class="block block-block">
-      <div class="content">
-        <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-          <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-            <li class="ui-state-default ui-corner-top active">
-              <a href="#1Search" class="onesearch" data-toggle="tab">
-                <span>1Search</span>
-              </a>
-            </li>
-            <li class="ui-state-default ui-corner-top">
-              <a href="#books-media" class="books" data-toggle="tab">
-                <span>Books &amp; Media</span>
-              </a>
-            </li>
-            <li class="last ui-state-default ui-corner-top">
-              <a href="#site-search" class="site" data-toggle="tab">
-                <span>Website</span>
-              </a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div id="1Search" class="ui-tabs-panel ui-widget-content ui-corner-bottom tab-pane active">
-              <form method="get" action="http://oregonstate.summon.serialssolutions.com/search/results">
-                <fieldset>
-                  <label>
-                    <input type="text" name="q" maxlength="256" accesskey="s" value="Articles, Books, eCollections" onfocus="if(value=='Articles, Books, eCollections'){value=''};this.style.color='black'">
-                  </label>
-                  <!--<input class="gobtn" type="image" src="/sites/all/themes/osu_confident/images/osul_images/gogray.gif" alt="Go button" />-->
-                  <input class="icon-search word-hide form-submit" type="submit">
-                </fieldset>
-              </form>
-            </div>
-            <div id="books-media" class="ui-tabs-panel ui-widget-content ui-corner-bottom tab-pane">
-              <form method="get" action="http://oasis.oregonstate.edu/search/">
-                <fieldset>
-                  <label>
-                    <input type="hidden" name="searchtype" value="X">
-                    <input type="text" name="searcharg" maxlength="256" accesskey="s" value="Search the catalog" onfocus="if(value=='Search the catalog'){value=''};this.style.color='black'">
-                  </label>
-                  <input type="hidden" name="searchscope" value="13">
-                  <input class="icon-search word-hide form-submit" type="submit">
-                </fieldset>
-              </form>
-            </div>
-            <div id="site-search" class="ui-tabs-panel ui-widget-content ui-corner-bottom tab-pane">
-              <form action="<%= APP_CONFIG['baseurl'] %>/" method="post" id="google-appliance-block-form" accept-charset="UTF-8">
-                <div>
-                  <div class="container-inline">
-                    <h2 class="element-invisible">Search Google Appliance</h2>
-                    <div class="form-item form-type-textfield form-item-search-keys">
-                      <label class="element-invisible" for="edit-search-keys">Enter the terms you wish to search for. </label>
-                      <input onfocus="if(this.value=='Search this site') {value='';};this.style.color='black'" type="text" id="edit-search-keys" name="search_keys" value="Search this site" size="15" maxlength="128" class="form-text">
-                    </div>
-                    <div class="form-wrapper" id="edit-actions">
-                      <input class="icon-search word-hide form-submit" type="submit" id="edit-submit" name="op" value="Search">
-                    </div>
-                    <input type="hidden" name="form_id" value="google_appliance_block_form">
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
+  <div class="region region-nav osu-purple">
+    <div id="tabs-search" class="">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#1Search" class="onesearch" data-toggle="tab">
+            <span>1Search</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="#books-media" class="books" data-toggle="tab">
+            <span>Books &amp; Media</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="#site-search" class="site" data-toggle="tab">
+            <span>Website</span>
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content osu-background">
+        <div id="1Search" class="tab-pane active">
+          <form method="get" action="http://oregonstate.summon.serialssolutions.com/search/results">
+            <fieldset>
+              <input type="text" name="q" maxlength="256" accesskey="s" value="Articles, Books, eCollections" onfocus="if(value=='Articles, Books, eCollections'){value=''};this.style.color='black'">
+              <input class="icon-search word-hide form-submit" type="submit">
+            </fieldset>
+          </form>
+        </div>
+        <div id="books-media" class="tab-pane">
+          <form method="get" action="http://oasis.oregonstate.edu/search/">
+            <fieldset>
+              <input type="hidden" name="searchtype" value="X">
+              <input type="text" name="searcharg" maxlength="256" accesskey="s" value="Search the catalog" onfocus="if(value=='Search the catalog'){value=''};this.style.color='black'">
+              <input type="hidden" name="searchscope" value="13">
+              <input class="icon-search word-hide form-submit" type="submit">
+            </fieldset>
+          </form>
+        </div>
+        <div id="site-search" class="tab-pane">
+          <form action="<%= APP_CONFIG['baseurl'] %>/" method="post" id="google-appliance-block-form" accept-charset="UTF-8">
+            <fieldset>
+              <h2 class="hide">Search Google Appliance</h2>
+              <label class="hide" for="edit-search-keys">Enter the terms you wish to search for. </label>
+              <input onfocus="if(this.value=='Search this site') {value='';};this.style.color='black'" type="text" id="edit-search-keys" name="search_keys" value="Search this site" size="15" maxlength="128" class="form-text">
+              <input class="icon-search word-hide form-submit" type="submit" id="edit-submit" name="op" value="Search">
+              <input type="hidden" name="form_id" value="google_appliance_block_form">
+            </fieldset>
+          </form>
         </div>
       </div>
     </div>

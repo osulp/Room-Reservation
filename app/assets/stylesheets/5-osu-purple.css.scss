@@ -1,27 +1,50 @@
-.osu-purple .title,
-.osu-purple .widget-title {
-	background-color:#561F4B;
-	color:white;
+@import "bootstrap/mixins";
+
+$osu-purple: #561F4B;
+$osu-grey: #4B4B4B;
+$osu-darkgrey: #212121;
+
+@mixin purple-background {
+  background-color: $osu-purple;
+  color: white;
 }
 
-.osu-purple .nav-tabs > li > a,
-.osu-purple .nav-tabs > li > a:hover,
-.osu-purple .nav-tabs > li > a:focus {
-	background-color:#CCC;
-	color:black;
+@mixin grey-background {
+  background-color: $osu-grey;
+  color: white;
 }
 
-.osu-purple .nav-tabs > .active > a,
-.osu-purple .nav-tabs > .active > a:hover,
-.osu-purple .nav-tabs > .active > a:focus {
-	background-color:#561F4B;
-	color:white;
-}
+.osu-purple {
+  .title,
+  .widget-title {
+    @include purple-background;
+  }
 
-.osu-purple .nav-tabs > li {
-	margin: 0 10px;
-}
+  .nav-tabs > li {
+    & > a,
+    & > a:hover,
+    & > a:focus {
+      @include grey-background;
+      transition: all 0.25s ease-in-out;
+      border: none;
+    }
+    & > a:hover,
+    & > a:focus {
+      box-shadow: 0 0 5px $osu-darkgrey;
+    }
+    &.active > a,
+    &.active > a:hover,
+    &.active > a:focus {
+      @include purple-background;
+    }
 
-.osu-purple .nav-tabs {
-	border-bottom: 1px solid #561F4B;
+  }
+
+  .nav-tabs {
+    border-bottom: 1px solid $osu-purple;
+  }
+
+  .osu-background {
+    @include purple-background;
+  }
 }

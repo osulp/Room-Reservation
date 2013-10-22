@@ -13,6 +13,9 @@
   a:hover, a:active, a:focus{background-color:#666;text-decoration:none;border-radius:3px;}
 }
 
+div.content {
+margin: 0.4em 0px 1em;
+}
 .social-media{
   position:relative;top:4px;
   a{background-image:url('socialnetworks.png');display:block;width:16px;height:16px;text-indent:-100px;overflow:hidden;margin:2px 0;}
