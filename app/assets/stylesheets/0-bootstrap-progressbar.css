@@ -132,3 +132,14 @@
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', endColorstr='#fff89406', GradientType=1);
 }
+
+.progress.vertical .bar {
+  -webkit-box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.15);
+  -moz-box-shadow:    inset -1px 0 0 rgba(0, 0, 0, 0.15);
+  box-shadow:         inset -1px 0 0 rgba(0, 0, 0, 0.15);
+}
+.progress.vertical .bar + .bar {
+  -webkit-box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(0, 0, 0, 0.15);
+  -moz-box-shadow:    inset -1px 0 0 rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow:         inset -1px 0 0 rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(0, 0, 0, 0.15);
+}
