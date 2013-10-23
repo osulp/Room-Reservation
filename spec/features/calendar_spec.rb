@@ -109,8 +109,9 @@ describe "calendar", :js => true do
           browser = page.driver
           browser.set_cookie('date', "#{current_day.year}-#{current_day.month}-#{current_day.day}")
           visit root_path
+          visit root_path
         end
-        it "should show the future day" do
+        it "should show the future day", :focus => true do
           expect(page).to have_selector('.bar-danger', :count => 1)
         end
       end
