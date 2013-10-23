@@ -1,6 +1,6 @@
 RoomReservation::Application.routes.draw do
   root :to => 'home#index'
-  get "home/index"
+  get "/(day/:date)", :to => "home#index"
   get "/home/day/:date", :to => "home#day"
   get "/login", :to => 'sessions#new'
   get "/logout", :to => 'sessions#logout'

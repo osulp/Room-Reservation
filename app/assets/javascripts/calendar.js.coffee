@@ -13,6 +13,7 @@ class CalendarManager
     @date_selected = [date.getFullYear(), date.getMonth()+1, date.getDate()]
     this.truncate_to_now()
     this.color_reservations("#{@date_selected[0]}-#{@date_selected[1]}-#{@date_selected[2]}")
+    this.bind_pop_state()
   go_to_today: =>
     day = @datepicker.datepicker("option", "minDate")
     if day? && day != ""
@@ -83,6 +84,8 @@ class CalendarManager
   load_day: (year, month, day) ->
     $('#loading-spinner').show()
     cookie_requested = this.get_date_from_cookie()
+    history.pushState?({}, '', "/day/#{year}-#{month}-#{day}") unless @push == false
+    @push = true
     $.get("/home/day/#{encodeURIComponent("#{year}-#{month}-#{day}")}", (data) =>
       return unless @date_selected.toString() == [year, month, day].toString()
       new_room_list = $(data)
@@ -117,4 +120,14 @@ class CalendarManager
     result = result.split('-')
     return [parseInt(result[0]),parseInt(result[1]), parseInt(result[2])]
   update_cookie: (year, month, day) ->
-    $.cookie('date', "#{year}-#{month}-#{day}", {expires: 30})
+    $.cookie('date', "#{year}-#{month}-#{day}", {expires: 30, path: '/'})
+  go_to_date: (year, month, day) ->
+    @datepicker.datepicker("setDate", "#{month}/#{day}/#{year}")
+    current_date = @datepicker.datepicker("getDate")
+    @push = false
+    this.selected_date(current_date,@datepicker)
+  bind_pop_state: ->
+    $(window).on("popstate", (e)=>
+      date = location.pathname.split("/").pop().split("-")
+      this.go_to_date(date[0], date[1], date[2])
+    )
