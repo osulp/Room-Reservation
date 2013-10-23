@@ -25,7 +25,7 @@ describe "hour bars" do
   context "when there are hours" do
     context "and the hours are room specific" do
       before(:each) do
-        @room_hours = create(:room_hour, start_date: Date.today, end_date: Date.today, start_time: "04:00:00", end_time: "08:00:00")
+        @room_hours = create(:room_hour, start_date: Time.current.to_date, end_date: Time.current.to_date, start_time: "04:00:00", end_time: "08:00:00")
         @room_hours.rooms << @room1
         visit root_path
       end
@@ -62,7 +62,7 @@ describe "hour bars" do
         end
         context "and the second room has room specific hours" do
           before(:each) do
-            @room_hours = create(:room_hour, start_date: Date.today, end_date: Date.today, start_time: "00:00:00", end_time: "00:00:00")
+            @room_hours = create(:room_hour, start_date: Time.current.to_date, end_date: Time.current.to_date, start_time: "00:00:00", end_time: "00:00:00")
             @room_hours.rooms << @room2
             visit root_path
           end
@@ -164,9 +164,9 @@ describe "hour bars" do
     end
     context "when there are room hours" do
       before(:each) do
-        @hour = create(:room_hour, start_date: Date.yesterday, end_date: Date.tomorrow, start_time: "10:00:00", end_time: "12:00:00")
+        @hour = create(:room_hour, start_date: Time.current.yesterday.to_date, end_date: Time.current.tomorrow.to_date, start_time: "10:00:00", end_time: "12:00:00")
         @hour.rooms << @room1
-        @hour2 = create(:room_hour, start_date: Date.yesterday, end_date: Date.tomorrow, start_time: "10:00:00", end_time: "12:00:00")
+        @hour2 = create(:room_hour, start_date: Time.current.yesterday.to_date, end_date: Time.current.tomorrow.to_date, start_time: "10:00:00", end_time: "12:00:00")
         @room2 = create(:room, :floor => 1)
         @hour2.rooms << @room2
         visit root_path

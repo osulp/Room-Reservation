@@ -11,7 +11,8 @@ class UserDecorator < Draper::Decorator
 
   def min_date
     return '' if object.admin?
-    0
+    date = Time.current
+    "#{date.month}/#{date.day}/#{date.year}"
   end
 
   private

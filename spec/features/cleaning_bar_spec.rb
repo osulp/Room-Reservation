@@ -5,7 +5,7 @@ describe "cleaning bars" do
   before(:each) do
     RubyCAS::Filter.fake("user")
     @room1 = create(:room)
-    @special_hour = create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+    @special_hour = create(:special_hour, start_date: Time.current.yesterday.to_date, end_date: Time.current.tomorrow.to_date, open_time: "00:00:00", close_time: "00:00:00")
   end
   context "when there are no cleanings" do
     before(:each) do
@@ -18,7 +18,7 @@ describe "cleaning bars" do
   context "when there is a cleaning for that room" do
     context "on another day" do
       before(:each) do
-        @cleaning = create(:cleaning_record, start_date: Date.yesterday, end_date: Date.yesterday)
+        @cleaning = create(:cleaning_record, start_date: Time.current.yesterday.to_date, end_date: Time.current.yesterday.to_date)
         @cleaning.rooms << @room1
         visit root_path
       end
@@ -28,14 +28,14 @@ describe "cleaning bars" do
     end
     context "on that day" do
       before(:each) do
-        @cleaning = create(:cleaning_record, start_date: Date.yesterday, end_date: Date.today)
+        @cleaning = create(:cleaning_record, start_date: Time.current.yesterday.to_date, end_date: Time.current.to_date)
         @cleaning.rooms << @room1
         @cleaning.save
         visit root_path
       end
       context "but the cleaning is for a different weekday" do
         before(:each) do
-          @cleaning.weekdays = [Date.yesterday.wday]
+          @cleaning.weekdays = [Time.current.yesterday.wday]
           @cleaning.save
           visit root_path
         end
@@ -63,7 +63,7 @@ describe "cleaning bars" do
         end
         context "when a cleaning is deleted" do
           before(:each) do
-            @cleaning2 = create(:cleaning_record, start_date: Date.yesterday, end_date: Date.today)
+            @cleaning2 = create(:cleaning_record, start_date: Time.current.yesterday.to_date, end_date: Time.current.to_date)
             @room2 = create(:room)
             @cleaning2.rooms << @room2
             @cleaning2.save
@@ -78,7 +78,7 @@ describe "cleaning bars" do
         end
         context "when a cleaning's weekdays are changed" do
           before(:each) do
-            @cleaning.weekdays = [Date.yesterday.wday]
+            @cleaning.weekdays = [Time.current.yesterday.wday]
             @cleaning.save
             visit root_path
           end
@@ -88,7 +88,7 @@ describe "cleaning bars" do
         end
         context "when a cleaning is changed to another day" do
           before(:each) do
-            @cleaning.end_date = Date.yesterday
+            @cleaning.end_date = Time.current.yesterday.to_date
             @cleaning.save
             visit root_path
 
@@ -143,7 +143,7 @@ describe "cleaning bars" do
           end
           context "then a new cleaning is added" do
             before(:each) do
-              @cleaning = create(:cleaning_record, start_date: Date.today, end_date: Date.today)
+              @cleaning = create(:cleaning_record, start_date: Time.current.to_date, end_date: Time.current.to_date)
               @cleaning.rooms << @room2
               visit root_path
             end

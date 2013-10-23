@@ -16,6 +16,7 @@ class ReservationPopupManager
       end_time.setTime(end_time.getTime() + end_time.getTimezoneOffset()*60*1000)
       end_time.setSeconds(0)
       end_time.setMinutes(Math.ceil(end_time.getMinutes()/10)*10)
+      master.element = element
       # Set up popup.
       master.position_popup(event.pageX, event.pageY)
       master.populate_reservation_popup(room_element, start_time, end_time)
@@ -67,7 +68,7 @@ class ReservationPopupManager
     @popup.find(".popup-content-errors").html("")
     @popup.find(".popup-content-errors").hide()
   parse_date_string: (date) ->
-    result = date.split("-")
+    result = date.split("+")[0].split("-")
     result.pop() if result.length > 3
     "#{result.join("-").replace("Z","")}-00:00"
   position_popup: (x, y)->
@@ -84,7 +85,8 @@ class ReservationPopupManager
     $("#reservation-popup #room-name").text(room_name)
     $("#reservation-popup #reservation_room_id").val(room_id)
     $("#reservation-popup #reservation_start_time").val(start_time)
-    $.getJSON("/availability/#{room_id}/#{encodeURIComponent(end_time.toISOString()).split(".")[0]+"z"}.json", (result) =>
+    use_time = new Date(@element.data("end"))
+    $.getJSON("/availability/#{room_id}/#{encodeURIComponent(use_time.toISOString()).split(".")[0]+"z"}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability)
     )
@@ -127,11 +129,11 @@ class ReservationPopupManager
     start_time = this.form_time_string(start_time_object)
     end_time = this.form_time_string(end_time_object)
     # Hack to remove timezone information.
-    start_time_object = start_time_object.toLocalISOString().split("-")
+    start_time_object = start_time_object.toLocalISOString().split("+")[0].split("-")
     start_time_object.pop() if start_time_object.length > 3
     start_time_object = start_time_object.join("-")
     start_time_object = start_time_object.replace("Z","")
-    end_time_object = end_time_object.toLocalISOString().split("-")
+    end_time_object = end_time_object.toLocalISOString().split("+")[0].split("-")
     end_time_object.pop() if end_time_object.length > 3
     end_time_object = end_time_object.join("-")
     end_time_object = end_time_object.replace("Z","")

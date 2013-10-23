@@ -14,25 +14,25 @@ class CalendarManager
     this.truncate_to_now()
     this.color_reservations("#{@date_selected[0]}-#{@date_selected[1]}-#{@date_selected[2]}")
   go_to_today: =>
-    @datepicker.datepicker("setDate","+0")
+    day = @datepicker.datepicker("option", "minDate")
+    if day? && day != ""
+      @datepicker.datepicker("setDate", day)
+    else
+      @datepicker.datepicker("setDate","+0")
     current_date = @datepicker.datepicker("getDate")
     this.selected_date(current_date,@datepicker)
     return
   truncate_to_now: =>
     start_time = new Date($(".room-data-wrap").data("start"))
     current_time = new Date()
-    compare_time = new Date(start_time.getTime())
-    compare_time.setDate(current_time.getDate())
-    compare_time.setMonth(current_time.getMonth())
-    compare_time.setFullYear(current_time.getFullYear())
-    difference = current_time - compare_time
+    difference = current_time - start_time
     current_hour = Math.floor(difference/1000/60/60)
     bar_length = current_hour*60*60/180
     hour_elements = $(".tab-content div").filter( -> $(this).data("hour") < current_hour)
-    hour_elements.show()
+    $(".tab-content div").filter( -> $(this).data("hour")?).show()
     $("div").filter( -> $(this).data("old-height")?).each (key, item) ->
       $(this).height($(this).data("old-height"))
-    return if current_time < start_time || (current_time - start_time) > 24*60*60*1000
+    return if current_hour < 0 || (current_time - start_time) > 24*60*60*1000
     $(".tab-pane").show()
     $(".room-data").each (key, item) =>
       $(item).data("old-height", $(item).height())
@@ -49,6 +49,9 @@ class CalendarManager
             new_time.setHours(0)
             new_time.setSeconds(0)
             new_time.setMinutes(Math.ceil(new_time.getMinutes()/10)*10)
+            new_time.setDate(start_time.getDate())
+            new_time.setMonth(start_time.getMonth())
+            new_time.setFullYear(start_time.getFullYear())
             new_time.setTime(new_time.getTime() + current_hour*60*60*1000)
             item.data("start",new_time.toLocalISOString())
             item.attr("data-start", new_time.toLocalISOString())
@@ -108,7 +111,9 @@ class CalendarManager
     return
   get_date_from_cookie: ->
     result = $.cookie('date')
-    result = "0-0-0" if !result?
+    unless result?
+      min_date = @datepicker.datepicker("option", "minDate").split("/")
+      result = "#{min_date[2]}-#{min_date[0]}-#{min_date[1]}"
     result = result.split('-')
     return [parseInt(result[0]),parseInt(result[1]), parseInt(result[2])]
   update_cookie: (year, month, day) ->
