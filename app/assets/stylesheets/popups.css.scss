@@ -6,20 +6,12 @@ input.restlink {
 .popover {
   z-index: 1050;
   display: none;
+  min-width: 250px;
   label {
     font-weight: bold;
   }
   form {
     margin-bottom: 0;
-  }
-  .time-range {
-    .time-range-label span {
-      font-weight: bold;
-      display: inline-block;
-    }
-    .time-range-label {
-      text-align: center;
-    }
   }
   .popup-content-errors {
     border: 2px solid red;
@@ -37,20 +29,19 @@ input.restlink {
   .popup-button {
     text-align: center;
   }
+
+  .popup-message {
+    margin: 0;
+    padding: 8px 14px;
+  }
 }
 
-#cancel-popup {
-  min-width: 250px;
-  .cancellation-message {
-    font-size: 150%;
-    font-weight: bold;
-    text-align: center;
-    display: block;
-  }
+#reservation-popup {
   .time-range-label {
-    text-align: left;
+    text-align: center;
     span {
-      font-weight: normal;
+      font-weight: bold;
+      display: inline-block;
     }
   }
 }
