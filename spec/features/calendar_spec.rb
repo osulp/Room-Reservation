@@ -111,7 +111,7 @@ describe "calendar", :js => true do
           visit root_path
           visit root_path
         end
-        it "should show the future day", :focus => true do
+        it "should show the future day" do
           expect(page).to have_selector('.bar-danger', :count => 1)
         end
       end
