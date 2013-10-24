@@ -12,11 +12,11 @@ shared_examples "a popup" do |initiator, selector|
       expect(page).to have_selector(selector, :visible => true)
     end
     describe "Closing" do
-      describe "Clicking the ×", :force => true do
+      describe "Clicking the close button", :force => true do
         before(:each) do
           expect(page).to have_selector(selector, :visible => true)
           within(selector) do
-            click_link("×")
+            find('.close').trigger('click')
           end
         end
         it "should hide the popup" do
