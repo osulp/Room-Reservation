@@ -23,6 +23,39 @@ describe "calendar", :js => true do
       expect(page).not_to have_selector(".bar-danger")
     end
   end
+  describe "navigation", :js => true do
+    before(:each) do
+      create(:room, :floor => 1)
+      visit root_path
+      expect(page).to have_selector('.bar-danger')
+    end
+    context "when the page is navigated to" do
+      it "should redirect to the appropriate day link" do
+        current_day = Time.current.to_date
+        expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
+      end
+      context "and a day is clicked" do
+        before(:each) do
+          all("a.ui-state-default:not(.ui-state-active)").first().click
+        end
+        it "should go forward" do
+          current_day = Time.current.tomorrow.to_date
+          expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
+        end
+        context "and then the back button is hit" do
+          before(:each) do
+            current_day = Time.current.tomorrow.to_date
+            expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
+            page.evaluate_script('window.history.back()')
+          end
+          it "should go back" do
+            current_day = Time.current.to_date
+            expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
+          end
+        end
+      end
+    end
+  end
   describe "past days" do
     before(:each) do
       visit root_path
@@ -75,6 +108,7 @@ describe "calendar", :js => true do
           current_day = Time.current+2.days
           browser = page.driver
           browser.set_cookie('date', "#{current_day.year}-#{current_day.month}-#{current_day.day}")
+          visit root_path
           visit root_path
         end
         it "should show the future day" do

@@ -1,27 +1,41 @@
 class HomeController < ApplicationController
   before_filter RubyCAS::GatewayFilter, :only => :index
+  before_filter :convert_cookie_to_param
+  before_filter :admin_date_restriction
   def index
-    calendar = get_calendar(cookies['date'])
+    calendar = CalendarManager.new(date)
     @presenter = CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
     @reservation = Reservation.new(:user_onid => current_user.onid, :reserver_onid => current_user.onid)
   end
 
   def day
-    date = params[:date].to_date
-    calendar = get_calendar(params[:date])
+    calendar = CalendarManager.new(date)
     @presenter = CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
     render :partial => 'room_list', :locals => {:floors => @floors}
   end
 
   private
 
-  def get_calendar(date)
-    date ||= Time.current.to_date
-    date = date.to_date
-    current_day = Time.current.midnight.to_date
-    if date < current_day.to_date && !current_user.admin?
-      date = current_day
+  def date
+    current_date = Time.current.to_date
+    params[:date].try(:to_date) || cookies['date'].try(:to_date) || current_date
+  end
+
+  # Redirect to transform the date cookie into a date parameter - this way when they access the root
+  # it has a param they can give out in the URL.
+  def convert_cookie_to_param
+    unless params[:date]
+      params[:date] = date.to_s
+      redirect_to params
     end
-    return CalendarManager.new(date)
+  end
+
+  # Only allow admins to access past dates.
+  def admin_date_restriction
+    current_date = Time.current.to_date
+    if date < current_date && !current_user.admin?
+      params[:date] = current_date.to_s
+      redirect_to params
+    end
   end
 end
