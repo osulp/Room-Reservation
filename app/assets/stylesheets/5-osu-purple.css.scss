@@ -1,6 +1,7 @@
 @import "bootstrap/mixins";
 
 $osu-purple: #561F4B;
+$osu-lightpurple: $osu-purple + #565;
 $osu-grey: #4B4B4B;
 $osu-darkgrey: #212121;
 
@@ -47,4 +48,16 @@ $osu-darkgrey: #212121;
   .osu-background {
     @include purple-background;
   }
+
+  .ui-slider-range {
+    @include gradient-vertical(#662F5B, #460F3B);
+  }
+  .ui-slider-handle.ui-state-default {
+    border-color: $osu-lightpurple;
+  }
+  .ui-slider-handle.ui-state-focus,
+  .ui-slider-handle.ui-state-hover {
+    border-color: $osu-purple;
+  }
+
 }
