@@ -1,17 +1,27 @@
-# Ruby Configuration
 language: ruby
 rvm:
-  - 1.9.3
+- 1.9.3
 bundler_args: --without development
-# Define database configuration
 services:
-  - postgresql
-  - memcached
+- postgresql
+- memcached
 env:
-  - ROOMRES_ADAPTER=postgresql ROOMRES_DB_PREFIX=roomres ROOMRES_DB_USERNAME=travis ROOMRES_DB_HOST=127.0.0.1
+  matrix:
+  - ROOMRES_ADAPTER=postgresql ROOMRES_DB_PREFIX=roomres ROOMRES_DB_USERNAME=travis
+    ROOMRES_DB_HOST=127.0.0.1
+  global:
+    - BUNDLE_ARCHIVE="RoomReservation"
+    - AWS_S3_BUCKET="CI-Artifacts"
+    - secure: kKORhtQCNWogqIsM6y20CcfQRFuB75PfIOA9geixEWOBDjhbJv2SGTKjbhOZW0BvP4j5FHY3lNQ+gOkmNUUBdlvImQWW+qqUOWswKlLs5KHHq1yUTg8WqnJzrex0fbPtUSgCr4jCsoyBPHCCvPleA6/1WLe79RU3TUXfzY0q9xU=
+before_install:
+  - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
+  - gem install bundler bundle_cache
+  - bundle_cache_install
 before_script:
   - psql -c 'create database roomres_test;' -U postgres
   - cp config/config.example.yml config/config.yml
+after_script:
+  - bundle_cache
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
