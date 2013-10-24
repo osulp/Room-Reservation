@@ -98,6 +98,35 @@ describe Reserver do
         end
       end
     end
+    context "when the max concurrency is set to 1" do
+      before(:each) do
+        APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(1)
+      end
+      context "and they have a reservation that crosses midnight" do
+        before(:each) do
+          create(:reservation, start_time: Time.current.tomorrow.midnight-1.hour, end_time: Time.current.tomorrow.midnight+2.hours, room: room, user_onid: user.onid)
+        end
+        context "and the reservation is for the next day" do
+          let(:start_time) {Time.current.tomorrow.midnight+13.hours}
+          let(:end_time) {Time.current.tomorrow.midnight+15.hours}
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
+        end
+      end
+      context "and they have a reservation for the next day" do
+        before(:each) do
+          create(:reservation, start_time: Time.current.tomorrow.midnight+13.hours, end_time: Time.current.tomorrow.midnight+15.hours, room: room, user_onid: user.onid)
+        end
+        context "and they make a reservation that crosses into that day" do
+          let(:start_time) {Time.current.tomorrow.midnight-1.hour}
+          let(:end_time) {Time.current.tomorrow.midnight+2.hours}
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
+        end
+      end
+    end
     context "when there is another reservation for midnight the next day" do
       before(:each) do
         create(:reservation, start_time: Time.current.tomorrow.midnight, end_time: Time.current.tomorrow.midnight+2.hours, room: room, user_onid: user.onid)
