@@ -1,22 +1,10 @@
 @import "bootstrap/mixins";
 input.restlink {
   border: 0;
-  background: #fff;
-  color: #236cb0;
-  cursor: pointer;
-}
-input.restlink:hover {
-  text-decoration: underline;
 }
 
-.popup {
-  border: 1px solid black;
-  display: inline-block;
-  padding: 10px;
-  background-color: white;
-  @include border-radius(2px);
-  position: absolute;
-  z-index: 999;
+.popover {
+  z-index: 1050;
   display: none;
   label {
     font-weight: bold;
@@ -49,12 +37,20 @@ input.restlink:hover {
   .popup-button {
     text-align: center;
   }
-  .close-popup {
-    right: 10px;
-    position: absolute;
-    a {
-      color: blue;
-      font-size: 120%
+}
+
+#cancel-popup {
+  min-width: 250px;
+  .cancellation-message {
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+  }
+  .time-range-label {
+    text-align: left;
+    span {
+      font-weight: normal;
     }
   }
 }
