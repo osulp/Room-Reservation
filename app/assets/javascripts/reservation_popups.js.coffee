@@ -29,6 +29,7 @@ class ReservationPopupManager
     master.prepare_form()
     # Bind popup closers
     this.bind_popup_closers()
+    this.admin_binds() if $("#user-info").data("admin") == true
   prepare_form: ->
     form = $("#new_reservation")
     form.on("ajax:beforeSend", this.display_loading)
@@ -153,3 +154,15 @@ class ReservationPopupManager
     minutes = "0#{minutes}" if minutes < 10
     seconds = date.getSeconds()
     return "#{hours}:#{minutes} #{meridian}"
+  # Just for binding the automatic User fillout stuff at the moment.
+  # This should probably be factored out somewhere, along with the user query stuff.
+  admin_binds: ->
+    $("#reservation_user_onid").blur((e) =>
+      $("#reservation_user_onid").parent().parent().next().find("input").trigger("focus")
+      # TODO: Populate box with ONID information.
+    )
+    $("#reservation_user_onid").keypress((e) =>
+      if e.which == 13
+        $("#reservation_user_onid").trigger("blur")
+        return false
+    )
