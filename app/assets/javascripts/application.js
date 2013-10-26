@@ -17,4 +17,6 @@
 //= require bootstrap
 //= require jquery.cookie
 //= require local_iso
+//= require handlebars
+//= require moment-with-langs
 //= require_tree .

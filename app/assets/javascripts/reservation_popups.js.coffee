@@ -4,6 +4,7 @@ class ReservationPopupManager
   constructor: ->
     master = this
     @popup = $("#reservation-popup")
+    @popup_message = Handlebars.compile(@popup.children(".popup-message").html())
     $("body").on("click", ".bar-success", (event)->
       element = $(this)
       room_element = element.parent().parent()
@@ -29,6 +30,7 @@ class ReservationPopupManager
     master.prepare_form()
     # Bind popup closers
     this.bind_popup_closers()
+    this.admin_binds() if User.current().get_value("admin") == true
   prepare_form: ->
     form = $("#new_reservation")
     form.on("ajax:beforeSend", this.display_loading)
@@ -43,7 +45,7 @@ class ReservationPopupManager
   display_success_message: (event, data, status, xhr) =>
     @popup.children(".popup-content").hide()
     @popup.children(".popup-message").show()
-    @popup.children(".popup-message").text("Your reservation has been made! Check your ONID email for details.")
+    @popup.children(".popup-message").html(@popup_message(data))
     @ignore_popup_hide = true
     window.CalendarManager.refresh_view()
   display_error_message: (event, xhr, status, error) =>
@@ -56,8 +58,9 @@ class ReservationPopupManager
       @popup.find(".popup-content-errors").show()
   display_loading: (xhr, settings) =>
     @popup.children(".popup-content").hide()
-    @popup.children(".popup-message").show()
-    @popup.children(".popup-message").text("Reserving...")
+    popup_message = @popup.children(".popup-message")
+    popup_message.show()
+    popup_message.text("Reserving...")
   hide_popup: ->
     if @ignore_popup_hide
       @ignore_popup_hide = false
@@ -80,12 +83,14 @@ class ReservationPopupManager
     this.hide_popup()
     room_id = room_element.data("room-id")
     room_name = room_element.data("room-name")
-    max_reservation = $("#user-info").data("max-reservation")
+    max_reservation = User.current().get_value("maxReservation")
     return if !max_reservation?
     $("#reservation-popup #room-name").text(room_name)
     $("#reservation-popup #reservation_room_id").val(room_id)
     $("#reservation-popup #reservation_start_time").val(start_time)
     use_time = new Date(@element.data("end"))
+    $("#reservation-popup #reservation_user_onid[type=text]").val("")
+    $("#reservation-popup #reservation_user_onid[type=text]").focus()
     $.getJSON("/availability/#{room_id}/#{encodeURIComponent(use_time.toISOString()).split(".")[0]+"z"}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability)
@@ -153,3 +158,20 @@ class ReservationPopupManager
     minutes = "0#{minutes}" if minutes < 10
     seconds = date.getSeconds()
     return "#{hours}:#{minutes} #{meridian}"
+  # Just for binding the automatic User fillout stuff at the moment.
+  # This should probably be factored out somewhere, along with the user query stuff.
+  admin_binds: ->
+    $("#reservation_user_onid").blur((e) =>
+      id = $("#reservation_user_onid").val()
+      id = id.substring(id.length-9)
+      User.find(id: id, callback: this.set_reservation_onid)
+    )
+    $("#reservation_user_onid").keypress((e) =>
+      if e.which == 13
+        $("#reservation_user_onid").trigger("blur")
+        return false
+    )
+  set_reservation_onid: (user)->
+    if user.get_value("onid")?
+      $("#reservation_user_onid").val(user.get_value("onid"))
+      $("#reservation_user_onid").parent().parent().next().find("input").trigger("focus")

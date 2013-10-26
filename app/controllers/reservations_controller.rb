@@ -28,7 +28,7 @@ class ReservationsController < ApplicationController
     params["reservation"]["reserver_onid"] = current_user.onid
     reserver = Reserver.from_params(params)
     reserver.save
-    respond_with(reserver, :location => root_path, :location => root_path, :responder => JsonResponder)
+    respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
   end
 
   def destroy

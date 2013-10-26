@@ -9,5 +9,5 @@ class TooltipManager
       placement: 'right',
       container: 'body'
     });
-    if($("#user-info").length == 0)
+    unless User.current().get_value("onid")?
       $(".bar-success").attr("data-original-title", "Login to Reserve")
