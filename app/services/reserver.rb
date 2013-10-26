@@ -1,7 +1,8 @@
 class Reserver
-  include ActiveModel::Validations
+  include ActiveModel::Model
 
   validates :start_time, :end_time, :room, :reserver, :reserved_for, :presence => true
+  validate :user_not_nil
   validate :start_time_less_than_end_time
   validate :reservation_not_in_past
   validate :room_is_persisted
@@ -14,7 +15,7 @@ class Reserver
   attr_accessor :reserver, :reserved_for, :room, :start_time, :end_time, :description
   attr_reader :reservation
 
-  delegate :as_json, :to => :reservation
+  delegate :as_json, :read_attribute_for_serialization, :to => :reservation
 
   def self.from_params(params)
     reservation_params = params[:reservation]
@@ -53,6 +54,12 @@ class Reserver
   end
 
   private
+
+  def user_not_nil
+    return if !reserved_for || !reserver
+    errors.add(:base, "A username must be chosen to reserve for.") if reserved_for.nil?
+    errors.add(:base, "Invalid Reserving Party") if reserver.nil?
+  end
 
   # TODO: Evaluate this - what if they have a reservation on the second day when this crosses midnight?
   def concurrency_limit
