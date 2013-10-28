@@ -19,4 +19,6 @@
 //= require local_iso
 //= require handlebars
 //= require moment-with-langs
+//= require moment-timezone
+//= require moment-timezone-data
 //= require_tree .
