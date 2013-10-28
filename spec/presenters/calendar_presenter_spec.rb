@@ -85,6 +85,20 @@ describe CalendarPresenter do
         end
       end
     end
+    describe "room sorting" do
+      context "when there are two events with two floors" do
+        before(:each) do
+          @room_1 = create(:room, :floor => 2)
+          @room_2 = create(:room, :floor => 1)
+        end
+        it "should return the lowest floored room first" do
+          expect(subject.rooms.first.object).to eq @room_2
+        end
+        it "should return floors in order" do
+          expect(subject.floors.first).to eq 1
+        end
+      end
+    end
     describe "complicated events" do
       let(:event_1) {Event.new(Time.current.midnight+1.hour+30.minutes,Time.current.midnight+2.hours+20.minutes,1)}
       let(:event_2) {Event.new(Time.current.midnight+2.hours, Time.current.midnight+4.hours+10.minutes,0)}
