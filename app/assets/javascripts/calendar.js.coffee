@@ -99,11 +99,16 @@ class CalendarManager
     return
   color_reservations: (date)->
     $.getJSON("/reservations?date=#{date}", (reservations) =>
+      user = User.current().get_value("onid")
       for reservation in reservations
         element = $("*[data-id=#{reservation.id}]")
         element.removeClass("bar-danger")
         element.addClass("bar-info")
-        element.attr("data-original-title","Click to Cancel")
+        if reservation.user_onid == user
+          element.attr("data-original-title","Click to Cancel")
+        else
+          element.data("user-onid", reservation.user_onid)
+          element.attr("data-original-title", "#{reservation.user_onid}: Click to Cancel")
     )
     return
   get_date_from_cookie: ->
