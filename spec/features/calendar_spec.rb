@@ -97,7 +97,7 @@ describe "calendar", :js => true do
             visit root_path
           end
           it "should show the past day" do
-            expect(page).to have_selector(".bar-danger")
+            expect(page).to have_selector(".bar-info")
           end
         end
       end

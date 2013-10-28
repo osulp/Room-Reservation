@@ -14,7 +14,7 @@ class CancelPopupManager
       @end_time = moment(element.data("end")).tz("America/Los_Angeles")
       # Set up popup.
       master.position_popup(event.pageX, event.pageY)
-      master.populate_cancel_popup(room_element, @start_time, @end_time)
+      master.populate_cancel_popup(room_element, @start_time, @end_time, element)
       event.stopPropagation()
     )
     @popup.click (event) ->
@@ -71,15 +71,17 @@ class CancelPopupManager
     @popup.show()
     @popup.offset({top: y, left: x+10})
     @popup.hide()
-  populate_cancel_popup: (room_element, start_time, end_time) ->
+  populate_cancel_popup: (room_element, start_time, end_time, reserve_element) ->
     $(".popup").hide()
     this.hide_popup()
     room_id = room_element.data("room-id")
     room_name = room_element.data("room-name")
+    user_onid = reserve_element.data("userOnid")
     $("#cancel-popup .room-name").text(room_name)
     $("#cancel-popup .reservation_room_id").val(room_id)
     $("#cancel-popup .start-time").text(start_time.format("h:mm A"))
     $("#cancel-popup .end-time").text(end_time.format("h:mm A"))
+    $("#cancel-popup .user-onid").text(user_onid)
     link = $("#cancel-popup .cancellation-message a")
     # Populate the correct link from the reservation that was clicked.
     current_link = link.attr("href")

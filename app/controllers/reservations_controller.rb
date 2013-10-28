@@ -4,6 +4,7 @@ class ReservationsController < ApplicationController
   before_filter :require_login, :only => [:create, :destroy]
   def current_user_reservations
     result = current_user.reservations
+    result = Reservation.all if current_user.admin?
     if params[:date]
       date = Time.zone.parse(params[:date])
       result = result.where("start_time <= ? AND end_time >= ?", date.tomorrow.midnight, date.midnight)
