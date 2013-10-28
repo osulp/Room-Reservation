@@ -10,10 +10,8 @@ class CancelPopupManager
       master.reservation_id = element.data("id")
       return unless master.reservation_id?
       # Truncate start/end times to 10 minute mark.
-      @start_time = new Date(master.parse_date_string(element.data("start")))
-      @start_time.setTime(@start_time.getTime() + @start_time.getTimezoneOffset()*60*1000)
-      @end_time = new Date(master.parse_date_string(element.data("end")))
-      @end_time.setTime(@end_time.getTime() + @end_time.getTimezoneOffset()*60*1000)
+      @start_time = moment(element.data("start")).tz("America/Los_Angeles")
+      @end_time = moment(element.data("end")).tz("America/Los_Angeles")
       # Set up popup.
       master.position_popup(event.pageX, event.pageY)
       master.populate_cancel_popup(room_element, @start_time, @end_time)
@@ -80,8 +78,8 @@ class CancelPopupManager
     room_name = room_element.data("room-name")
     $("#cancel-popup .room-name").text(room_name)
     $("#cancel-popup .reservation_room_id").val(room_id)
-    $("#cancel-popup .start-time").text(this.form_time_string(start_time))
-    $("#cancel-popup .end-time").text(this.form_time_string(end_time))
+    $("#cancel-popup .start-time").text(start_time.format("h:mm A"))
+    $("#cancel-popup .end-time").text(end_time.format("h:mm A"))
     link = $("#cancel-popup .cancellation-message a")
     # Populate the correct link from the reservation that was clicked.
     current_link = link.attr("href")
@@ -91,14 +89,3 @@ class CancelPopupManager
     current_link = current_link.join("/")
     link.attr("href", current_link)
     @popup.show()
-  form_time_string: (date) ->
-    meridian = "AM"
-    hours = date.getHours()
-    if(hours >= 12)
-      hours -= 12
-      meridian = "PM"
-    hours = 12 if hours == 0
-    minutes = date.getMinutes()
-    minutes = "0#{minutes}" if minutes < 10
-    seconds = date.getSeconds()
-    return "#{hours}:#{minutes} #{meridian}"

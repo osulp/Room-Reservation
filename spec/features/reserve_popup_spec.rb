@@ -172,8 +172,8 @@ end
 
 def set_reservation_time
   # Set start and end time to a valid time.
-  start_time = (Time.current+1.hour).iso8601.split("-")[0..-2].join("-")
-  end_time = (Time.current+1.hour+10.minutes).iso8601.split("-")[0..-2].join("-")
+  start_time = (Time.current+1.hour).iso8601
+  end_time = (Time.current+1.hour+10.minutes).iso8601
   page.execute_script("$('#reservation_start_time').val('#{start_time}');")
   page.execute_script("$('#reservation_end_time').val('#{end_time}');")
 end

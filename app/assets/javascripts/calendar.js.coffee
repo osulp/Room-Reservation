@@ -24,8 +24,8 @@ class CalendarManager
     this.selected_date(current_date,@datepicker)
     return
   truncate_to_now: =>
-    start_time = new Date($(".room-data-wrap").data("start"))
-    current_time = new Date()
+    start_time = moment($(".room-data-wrap").data("start")).tz("America/Los_Angeles")
+    current_time = moment().tz("America/Los_Angeles")
     difference = current_time - start_time
     current_hour = Math.floor(difference/1000/60/60)
     bar_length = current_hour*60*60/180
@@ -46,16 +46,10 @@ class CalendarManager
       if start_at < bar_length
         if end_at > bar_length
           if(item.data("start")? && item.hasClass("bar-success"))
-            new_time = new Date(current_time.getTime())
-            new_time.setHours(0)
-            new_time.setSeconds(0)
-            new_time.setMinutes(Math.ceil(new_time.getMinutes()/10)*10)
-            new_time.setDate(start_time.getDate())
-            new_time.setMonth(start_time.getMonth())
-            new_time.setFullYear(start_time.getFullYear())
-            new_time.setTime(new_time.getTime() + current_hour*60*60*1000)
-            item.data("start",new_time.toLocalISOString())
-            item.attr("data-start", new_time.toLocalISOString())
+            current_time.second(0)
+            current_time.minute(Math.ceil(current_time.minute()/10)*10)
+            item.data("start",current_time.toISOString())
+            item.attr("data-start", current_time.toISOString())
           item.height(end_at - bar_length)
         else
           item.data("remove", true)

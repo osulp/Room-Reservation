@@ -9,14 +9,12 @@ class ReservationPopupManager
       element = $(this)
       room_element = element.parent().parent()
       # Truncate start/end times to 10 minute mark.
-      start_time = new Date(master.parse_date_string(element.data("start")))
-      start_time.setTime(start_time.getTime() + start_time.getTimezoneOffset()*60*1000)
-      start_time.setSeconds(0)
-      start_time.setMinutes(Math.ceil(start_time.getMinutes()/10)*10)
-      end_time = new Date(master.parse_date_string(element.data("end")))
-      end_time.setTime(end_time.getTime() + end_time.getTimezoneOffset()*60*1000)
-      end_time.setSeconds(0)
-      end_time.setMinutes(Math.ceil(end_time.getMinutes()/10)*10)
+      start_time = moment(element.data("start")).tz("America/Los_Angeles")
+      start_time.second(0)
+      start_time.minute(Math.ceil(start_time.minute()/10)*10)
+      end_time = moment(element.data("end")).tz("America/Los_Angeles")
+      end_time.second(0)
+      end_time.minute(Math.ceil(end_time.minute()/10)*10)
       master.element = element
       # Set up popup.
       master.position_popup(event.pageX, event.pageY)
@@ -87,11 +85,10 @@ class ReservationPopupManager
     return if !max_reservation?
     $("#reservation-popup #room-name").text(room_name)
     $("#reservation-popup #reservation_room_id").val(room_id)
-    $("#reservation-popup #reservation_start_time").val(start_time)
-    use_time = new Date(@element.data("end"))
+    $("#reservation-popup #reservation_start_time").val(start_time.toISOString())
     $("#reservation-popup #reservation_user_onid[type=text]").val("")
     $("#reservation-popup #reservation_user_onid[type=text]").focus()
-    $.getJSON("/availability/#{room_id}/#{encodeURIComponent(use_time.toISOString()).split(".")[0]+"z"}.json", (result) =>
+    $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability)
     )
@@ -129,35 +126,16 @@ class ReservationPopupManager
       else
         @slider_element.slider("values",0,end-max_reservation)
         start = end-max_reservation
-    start_time_object = new Date(@start_time.getTime() + start*10*60*1000)
-    end_time_object = new Date(@start_time.getTime() + end*10*60*1000)
-    start_time = this.form_time_string(start_time_object)
-    end_time = this.form_time_string(end_time_object)
-    # Hack to remove timezone information.
-    start_time_object = start_time_object.toLocalISOString().split("+")[0].split("-")
-    start_time_object.pop() if start_time_object.length > 3
-    start_time_object = start_time_object.join("-")
-    start_time_object = start_time_object.replace("Z","")
-    end_time_object = end_time_object.toLocalISOString().split("+")[0].split("-")
-    end_time_object.pop() if end_time_object.length > 3
-    end_time_object = end_time_object.join("-")
-    end_time_object = end_time_object.replace("Z","")
-    $("#reservation_start_time").val(start_time_object)
-    $("#reservation_end_time").val(end_time_object)
+    start_time_object = @start_time.clone().tz("America/Los_Angeles")
+    end_time_object = @start_time.clone().tz("America/Los_Angeles")
+    # Add the 10 minute increments
+    start_time_object.add('minutes', start*10)
+    end_time_object.add('minutes', end*10)
+    $("#reservation_start_time").val(start_time_object.toISOString())
+    $("#reservation_end_time").val(end_time_object.toISOString())
     # Set labels
-    $("#reservation-popup .time-range-label .start-time").text(start_time)
-    $("#reservation-popup .time-range-label .end-time").text(end_time)
-  form_time_string: (date) ->
-    meridian = "AM"
-    hours = date.getHours()
-    if(hours >= 12)
-      hours -= 12
-      meridian = "PM"
-    hours = 12 if hours == 0
-    minutes = date.getMinutes()
-    minutes = "0#{minutes}" if minutes < 10
-    seconds = date.getSeconds()
-    return "#{hours}:#{minutes} #{meridian}"
+    $("#reservation-popup .time-range-label .start-time").text(start_time_object.format("h:mm A"))
+    $("#reservation-popup .time-range-label .end-time").text(end_time_object.format("h:mm A"))
   # Just for binding the automatic User fillout stuff at the moment.
   # This should probably be factored out somewhere, along with the user query stuff.
   admin_binds: ->
