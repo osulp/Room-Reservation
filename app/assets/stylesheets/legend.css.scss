@@ -1,6 +1,9 @@
 #legend {
   text-align: center;
   font-size: 125%;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
   .legend-icon {
     width: 20px;
     height: 20px;
@@ -16,5 +19,10 @@
 @media (max-width: 679px) {
   #legend {
     font-size: 1em;
+  }
+}
+@media (max-width: 480px) {
+  .legend-hide-sm {
+    display: none;
   }
 }
