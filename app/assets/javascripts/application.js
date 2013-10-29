@@ -22,4 +22,5 @@
 //= require moment-with-langs
 //= require moment-timezone
 //= require moment-timezone-data
+//= require faye
 //= require_tree .

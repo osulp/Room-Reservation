@@ -1,5 +1,11 @@
 require 'spec_helper'
 
+def after_visit(*args)
+  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
+end
+
+
 describe "cleaning bars" do
   include VisitWithAfterHook
   before(:each) do
@@ -155,8 +161,4 @@ describe "cleaning bars" do
       end
     end
   end
-end
-def after_visit(*args)
-  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
 end

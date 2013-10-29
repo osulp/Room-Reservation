@@ -1,5 +1,13 @@
 require 'spec_helper'
 
+def after_visit(*args)
+  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
+  expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
+  expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
+end
+
+
 describe 'cancelling a reservation' do
   include VisitWithAfterHook
   let(:banner_record) {nil}
@@ -91,10 +99,4 @@ describe 'cancelling a reservation' do
       end
     end
   end
-end
-def after_visit(*args)
-  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-  expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
-  expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
 end

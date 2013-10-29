@@ -6,7 +6,7 @@ describe "calendar", :js => true do
   end
   describe "cookie setting" do
     before(:each) do
-      create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+      create(:special_hour, start_date: Date.yesterday, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
       create(:reservation, :start_time => Time.current.midnight+20.hours, :end_time => Time.current.midnight+22.hours)
       visit root_path
     end
