@@ -76,7 +76,7 @@ class CalendarManager
     $(".day").removeClass("day-selected")
     $(".day[day=#{day}]").addClass("day-selected")
   load_day: (year, month, day) ->
-    $('#loading-spinner').show()
+    $('#loading-spinner').show() unless @background_loading
     cookie_requested = this.get_date_from_cookie()
     history.pushState?({}, '', "/day/#{year}-#{month}-#{day}") unless @push == false
     @push = true
@@ -93,8 +93,10 @@ class CalendarManager
       window.TooltipManager.set_tooltips()
       this.truncate_to_now()
       this.color_reservations("#{year}-#{month}-#{day}")
-      window.ReservationPopupManager.hide_popup()
-      window.CancelPopupManager.hide_popup()
+      window.ReservationPopupManager.hide_popup() unless @background_loading
+      window.CancelPopupManager.hide_popup() unless @background_loading
+      @background_loading = false
+      window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
     )
     return
   color_reservations: (date)->
@@ -120,10 +122,11 @@ class CalendarManager
     return [parseInt(result[0]),parseInt(result[1]), parseInt(result[2])]
   update_cookie: (year, month, day) ->
     $.cookie('date', "#{year}-#{month}-#{day}", {expires: 30, path: '/'})
-  go_to_date: (year, month, day) ->
+  go_to_date: (year, month, day, loading) ->
     @datepicker.datepicker("setDate", "#{month}/#{day}/#{year}")
     current_date = @datepicker.datepicker("getDate")
     @push = false
+    @background_loading = !loading
     this.selected_date(current_date,@datepicker)
   bind_pop_state: ->
     $(window).on("popstate", (e)=>

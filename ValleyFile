@@ -1,6 +1,7 @@
 config.vm.box = "Ubuntu Server 12.04 Chef"
 config.vm.box_url = "https://dl.dropbox.com/u/1543052/Boxes/UbuntuServer12.04amd64.box"
 config.vm.forward_port 8000,80
+config.vm.forward_port 9000,9000
 chefjson = {
   "mysql" => {
     "server_root_password" => "vagrant",

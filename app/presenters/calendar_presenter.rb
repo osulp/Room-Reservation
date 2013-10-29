@@ -3,8 +3,22 @@ class CalendarPresenter
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
 
   def self.cached(start_time, end_time)
-    Rails.cache.fetch("Cached/#{form_cache_key(start_time, end_time, Room.all)}") do
-      new(start_time, end_time)
+    key = "Cached/#{form_cache_key(start_time, end_time, Room.all)}"
+    result = Rails.cache.read(key)
+    if result.nil?
+      result = new(start_time, end_time)
+      Rails.cache.write(key, result)
+      self.publish_changed(start_time, end_time)
+    end
+    return result
+  end
+  # Publishes info to Faye
+  def self.publish_changed(start_time, end_time)
+    start_time = start_time.to_date
+    end_time = end_time.to_date
+    notifier = DateUpdateNotifier.new
+    start_time.upto(end_time) do |date|
+      notifier.notify_update(date)
     end
   end
 

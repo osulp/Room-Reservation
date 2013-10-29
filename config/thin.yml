@@ -1,0 +1,11 @@
+---
+pid: pids/thin.pid
+timeout: 30
+wait: 30
+log: log/thin.log
+max_conns: 1024
+environment: production
+threaded: true
+rackup: faye.ru
+port: 9000
+daemonize: true

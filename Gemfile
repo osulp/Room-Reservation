@@ -46,6 +46,12 @@ gem 'protected_attributes'
 # Old Asset Precompile Behavior for Stylesheets
 gem "sprockets-digest-assets-fix"
 
+# Faye
+gem 'faye'
+
+# Thin for faye
+gem 'thin'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
