@@ -126,7 +126,7 @@ class CalendarManager
     @datepicker.datepicker("setDate", "#{month}/#{day}/#{year}")
     current_date = @datepicker.datepicker("getDate")
     @push = false
-    @background_loading = !loading
+    @background_loading = loading
     this.selected_date(current_date,@datepicker)
   bind_pop_state: ->
     $(window).on("popstate", (e)=>

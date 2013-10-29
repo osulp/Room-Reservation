@@ -9,5 +9,5 @@ class FayeManager
     @current_subscription?.cancel()
     @current_subscription = @client.subscribe("/messages/date/#{date}", (data) ->
       date = moment(date)
-      window.CalendarManager.go_to_date(date.year(),date.month()+1,date.date())
+      window.CalendarManager.go_to_date(date.year(),date.month()+1,date.date(),true)
     )
