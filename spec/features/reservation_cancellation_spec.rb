@@ -1,14 +1,13 @@
 require 'spec_helper'
 
-def after_visit(*args)
-  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-  expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
-  expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
-end
-
 describe 'cancelling a reservation' do
   include VisitWithAfterHook
+  def after_visit(*args)
+    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
+    expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
+    expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
+  end
   # TODO: Test this. Can't think of a good way to do it - The gateway filter would break things.
   let(:banner_record) {nil}
   context "when the user is logged in", :js => true do

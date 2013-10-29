@@ -1,24 +1,23 @@
 require 'spec_helper'
 
-def set_reservation_time
-  # Set start and end time to a valid time.
-  start_time = (Time.current+1.hour).iso8601.split("-")[0..-2].join("-")
-  end_time = (Time.current+1.hour+10.minutes).iso8601.split("-")[0..-2].join("-")
-  page.execute_script("$('#reservation_start_time').val('#{start_time}');")
-  page.execute_script("$('#reservation_end_time').val('#{end_time}');")
-end
-def after_visit(*args)
-  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-  expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
-  expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
-end
-
-
 describe "admin reservation popup", :js => true do
   include VisitWithAfterHook
   let(:build_role) {nil}
   let(:banner_record) {nil}
+  def set_reservation_time
+    # Set start and end time to a valid time.
+    start_time = (Time.current+1.hour).iso8601.split("-")[0..-2].join("-")
+    end_time = (Time.current+1.hour+10.minutes).iso8601.split("-")[0..-2].join("-")
+    page.execute_script("$('#reservation_start_time').val('#{start_time}');")
+    page.execute_script("$('#reservation_end_time').val('#{end_time}');")
+  end
+  def after_visit(*args)
+    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
+    expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
+    expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
+  end
+
   before(:each) do
     RubyCAS::Filter.fake("fakeuser")
     build_role

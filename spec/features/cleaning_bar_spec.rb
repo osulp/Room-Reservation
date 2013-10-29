@@ -1,13 +1,12 @@
 require 'spec_helper'
 
-def after_visit(*args)
-  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-end
-
 
 describe "cleaning bars" do
   include VisitWithAfterHook
+  def after_visit(*args)
+    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
+  end
   before(:each) do
     RubyCAS::Filter.fake("user")
     @room1 = create(:room)

@@ -1,22 +1,20 @@
 require 'spec_helper'
 
-def set_reservation_time
-  # Set start and end time to a valid time.
-  start_time = (Time.current+1.hour).iso8601
-  end_time = (Time.current+1.hour+10.minutes).iso8601
-  page.execute_script("$('#reservation_start_time').val('#{start_time}');")
-  page.execute_script("$('#reservation_end_time').val('#{end_time}');")
-end
-def after_visit(*args)
-  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-  expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
-  expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
-end
-
-
 describe 'reserve popup' do
   include VisitWithAfterHook
+  def set_reservation_time
+    # Set start and end time to a valid time.
+    start_time = (Time.current+1.hour).iso8601
+    end_time = (Time.current+1.hour+10.minutes).iso8601
+    page.execute_script("$('#reservation_start_time').val('#{start_time}');")
+    page.execute_script("$('#reservation_end_time').val('#{end_time}');")
+  end
+  def after_visit(*args)
+    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
+    expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
+    expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
+  end
   # TODO: Test this. Can't think of a good way to do it - The gateway filter would break things.
   context "when the user isn't logged in" do
     it "shouldn't show a popup on click"

@@ -1,14 +1,13 @@
 require 'spec_helper'
 
-def after_visit(*args)
-  expect(page).to have_content("Today") if example.metadata[:js]
-  page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-  page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-end
-
-
 describe "GET / reservation bars" do
   include VisitWithAfterHook
+  def after_visit(*args)
+    expect(page).to have_content("Today") if example.metadata[:js]
+    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
+    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
+  end
+
   before(:each) do
     # Fake a login
     RubyCAS::Filter.fake("bla")
