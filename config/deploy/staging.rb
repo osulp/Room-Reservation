@@ -34,7 +34,7 @@ namespace :god do
   end
 
   task :restart, :roles => :app, :except => {:no_release => true} do
-    run "touch #{shared_path}/tmp/restart.txt"
+    run "touch #{shared_path}/tmp/restart.txt && touch #{shared_path}/tmp/restart-faye.txt && touch #{shared_path}/tmp/restart-sidekiq.txt"
   end
 
   task :start, :roles => :app do

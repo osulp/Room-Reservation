@@ -68,6 +68,8 @@ GEM
     capybara-screenshot (0.3.14)
       capybara (>= 1.0, < 3)
       launchy
+    celluloid (0.15.2)
+      timers (~> 1.1.0)
     chunky_png (1.2.8)
     cliver (0.2.2)
     coderay (1.0.9)
@@ -85,6 +87,7 @@ GEM
       sass (~> 3.1)
     compass-rails (2.0.alpha.0)
       compass (>= 0.12.2, < 0.14)
+    connection_pool (1.1.0)
     cookiejar (0.3.0)
     coolline (0.4.2)
     coveralls (0.7.0)
@@ -174,6 +177,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.0.5)
       railties (>= 3.1.0)
+    json (1.8.1)
     kgio (2.8.1)
     launchy (2.3.0)
       addressable (~> 2.3)
@@ -258,6 +262,9 @@ GEM
       ffi (>= 0.5.0)
     rb-kqueue (0.2.0)
       ffi (>= 0.5.0)
+    redis (3.0.5)
+    redis-namespace (1.3.1)
+      redis (~> 3.0.0)
     ref (1.0.5)
     request_store (1.0.5)
     rest-client (1.6.7)
@@ -284,6 +291,12 @@ GEM
       sprockets-rails (~> 2.0.0)
     shoulda-matchers (2.4.0)
       activesupport (>= 3.0.0)
+    sidekiq (2.16.0)
+      celluloid (>= 0.15.2)
+      connection_pool (>= 1.0.0)
+      json
+      redis (>= 3.0.4)
+      redis-namespace (>= 1.3.1)
     simple_form (3.0.0)
       actionpack (>= 4.0.0, < 4.1)
       activemodel (>= 4.0.0, < 4.1)
@@ -317,6 +330,7 @@ GEM
       atomic
     tilt (1.4.1)
     timecop (0.6.3)
+    timers (1.1.0)
     tins (0.11.0)
     treetop (1.4.15)
       polyglot
@@ -372,6 +386,7 @@ DEPENDENCIES
   rubycas-client-rails!
   sass-rails
   shoulda-matchers
+  sidekiq
   simple_form
   spring
   sprockets-digest-assets-fix
