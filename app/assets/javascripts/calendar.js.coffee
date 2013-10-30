@@ -79,23 +79,28 @@ class CalendarManager
     @push = true
     $.get("/home/day/#{encodeURIComponent("#{year}-#{month}-#{day}")}", (data) =>
       return unless @date_selected.toString() == [year, month, day].toString()
-      new_room_list = $(data)
-      for i in [0..new_room_list.length-1]
-        div = $(new_room_list[i])
-        id = div.attr('id')
-        html = div.html()
-        $('#' + id).html(html)
-      $('#loading-spinner').hide()
-      window.FilterManager.apply_filters()
-      window.TooltipManager.set_tooltips()
-      this.truncate_to_now()
-      this.color_reservations("#{year}-#{month}-#{day}")
-      window.ReservationPopupManager.hide_popup() unless @background_loading
-      window.CancelPopupManager.hide_popup() unless @background_loading
-      @background_loading = false
-      window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
+      this.populate_calendar(data)
     )
     return
+  populate_calendar: (data) ->
+    year = @date_selected[0]
+    month = @date_selected[1]
+    day = @date_selected[2]
+    new_room_list = $(data)
+    for i in [0..new_room_list.length-1]
+      div = $(new_room_list[i])
+      id = div.attr('id')
+      html = div.html()
+      $('#' + id).html(html)
+    $('#loading-spinner').hide()
+    window.FilterManager.apply_filters()
+    window.TooltipManager.set_tooltips()
+    this.truncate_to_now()
+    this.color_reservations("#{year}-#{month}-#{day}")
+    window.ReservationPopupManager.hide_popup() unless @background_loading
+    window.CancelPopupManager.hide_popup() unless @background_loading
+    @background_loading = false
+    window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
   color_reservations: (date)->
     $.getJSON("/reservations?date=#{date}", (reservations) =>
       user = User.current().get_value("onid")

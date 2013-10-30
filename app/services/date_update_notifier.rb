@@ -2,14 +2,23 @@ class DateUpdateNotifier
 
   def notify_update(date)
     begin
-      send_message("/messages/date/#{date.year}-#{date.month}-#{date.day}")
+      data = date_html(date)
+      send_message("/messages/date/#{date.year}-#{date.month}-#{date.day}", data)
     rescue Errno::ECONNREFUSED
       Rails.logger.warn "FAYE Server at #{faye_path} unresponsive."
     end
   end
 
-  def send_message(channel)
-    message = {:channel => channel, :data => "Updated", :ext => {:auth_token => auth_token}}
+  def date_html(date)
+    c = ApplicationController.new
+    presenter = CalendarPresenter.cached(Time.zone.parse(date.to_s), Time.zone.parse((date+1.day).to_s))
+    c.instance_variable_set(:@presenter, presenter)
+    c.render_to_string(:partial => "home/room_list")
+  end
+
+  def send_message(channel,data=nil)
+    data ||= "Updated"
+    message = {:channel => channel, :data => data, :ext => {:auth_token => auth_token}}
     Net::HTTP.post_form(faye_server, :message => message.to_json)
   end
 
