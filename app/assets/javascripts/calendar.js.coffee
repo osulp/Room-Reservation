@@ -15,11 +15,8 @@ class CalendarManager
     this.color_reservations("#{@date_selected[0]}-#{@date_selected[1]}-#{@date_selected[2]}")
     this.bind_pop_state()
   go_to_today: =>
-    day = @datepicker.datepicker("option", "minDate")
-    if day? && day != ""
-      @datepicker.datepicker("setDate", day)
-    else
-      @datepicker.datepicker("setDate","+0")
+    day = moment().tz("America/Los_Angeles").format("MM/DD/YYYY")
+    @datepicker.datepicker("setDate", day)
     current_date = @datepicker.datepicker("getDate")
     this.selected_date(current_date,@datepicker)
     return
