@@ -7,6 +7,8 @@ class DateUpdateNotifier
       send_message("/messages/date/#{date.year}-#{date.month}-#{date.day}", data)
     rescue Errno::ECONNREFUSED
       Rails.logger.warn "FAYE Server at #{faye_path} unresponsive."
+    rescue SocketError
+      Rails.logger.warn "Unable to connect to #{faye_path}."
     end
   end
 
