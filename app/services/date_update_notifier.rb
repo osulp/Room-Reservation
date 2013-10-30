@@ -1,7 +1,8 @@
 class DateUpdateNotifier
 
-  def notify_update(date)
+  def notify_update(date,presenter=nil)
     begin
+      @presenter = presenter
       data = date_html(date)
       send_message("/messages/date/#{date.year}-#{date.month}-#{date.day}", data)
     rescue Errno::ECONNREFUSED
@@ -11,7 +12,7 @@ class DateUpdateNotifier
 
   def date_html(date)
     c = ApplicationController.new
-    presenter = CalendarPresenter.cached(Time.zone.parse(date.to_s), Time.zone.parse((date+1.day).to_s))
+    presenter = @presenter || CalendarPresenter.cached(Time.zone.parse(date.to_s), Time.zone.parse((date+1.day).to_s))
     c.instance_variable_set(:@presenter, presenter)
     c.render_to_string(:partial => "home/room_list")
   end
