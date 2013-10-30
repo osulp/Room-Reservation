@@ -31,7 +31,7 @@ RoomReservation::Application.configure do
 
   #config.action_controller.action_on_unpermitted_parameters = :raise
 
-  config.action_mailer.default_url_option = { host: 'RoomReservation.local' }
+  #config.action_mailer.default_url_options = { host: 'RoomReservation.local' }
   config.eager_load = false
 end
 BetterErrors::Middleware.allow_ip! '10.0.2.2' if Rails.env.development?

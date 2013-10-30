@@ -52,6 +52,9 @@ gem 'faye'
 # Thin for faye
 gem 'thin'
 
+# Sidekiq for asynchronous jobs
+gem 'sidekiq'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'

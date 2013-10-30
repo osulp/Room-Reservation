@@ -66,6 +66,6 @@ RoomReservation::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_option = { host: 'RoomReservation.com' }
+  #config.action_mailer.default_url_options = { host: 'RoomReservation.com' }
   config.eager_load = true
 end

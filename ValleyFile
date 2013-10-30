@@ -20,7 +20,7 @@ chefjson = {
     #Relative to /vagrant.
     :docroot => "/public",
     :railsenv => "development",
-    :packages => %w{libyaml-dev libxml2 libxml2-dev libxslt1.1 libxslt1-dev libicu-dev nodejs memcached}
+    :packages => %w{libyaml-dev libxml2 libxml2-dev libxslt1.1 libxslt1-dev libicu-dev nodejs memcached redis-server}
   },
   "rvm" => {
     "default_ruby" => "ruby-1.9.3-p429",
