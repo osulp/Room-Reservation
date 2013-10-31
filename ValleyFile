@@ -23,8 +23,8 @@ chefjson = {
     :packages => %w{libyaml-dev libxml2 libxml2-dev libxslt1.1 libxslt1-dev libicu-dev nodejs memcached redis-server}
   },
   "rvm" => {
-    "default_ruby" => "ruby-1.9.3-p429",
-    "user_default_ruby" => "ruby-1.9.3-p429",
+    "default_ruby" => "ruby-2.0.0-p247",
+    "user_default_ruby" => "ruby-2.0.0-p247",
     "rvmrc" => {
       "rvm_gemset_create_on_use_flag" => 1,
       "rvm_install_on_use_flag" => 1,
@@ -32,10 +32,10 @@ chefjson = {
     }
   },
   :passenger => {
-    :rvm_ruby_version => "ruby-1.9.3-p429",
+    :rvm_ruby_version => "ruby-2.0.0-p247",
     :version => "4.0.19",
     :max_pool_size => 1,
-    :module_path => "/usr/local/rvm/gems/ruby-1.9.3-p429@global/gems/passenger-4.0.19/buildout/apache2/mod_passenger.so"
+    :module_path => "/usr/local/rvm/gems/ruby-2.0.0-p247@global/gems/passenger-4.0.19/buildout/apache2/mod_passenger.so"
   },
   "phantomjs" => {
     "version" => "1.9.0"
