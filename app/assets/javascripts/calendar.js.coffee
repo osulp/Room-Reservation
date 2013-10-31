@@ -24,17 +24,10 @@ class CalendarManager
     start_time = moment($(".room-data-wrap").data("start")).tz("America/Los_Angeles")
     current_time = moment().tz("America/Los_Angeles")
     difference = current_time - start_time
-    current_hour = Math.floor(difference/1000/60/60)
-    bar_length = current_hour*60*60/180
-    hour_elements = $(".tab-content div").filter( -> $(this).data("hour") < current_hour)
-    $(".tab-content div").filter( -> $(this).data("hour")?).show()
-    $("div").filter( -> $(this).data("old-height")?).each (key, item) ->
-      $(this).height($(this).data("old-height"))
-    return if current_hour < 0 || (current_time - start_time) > 24*60*60*1000
+    current_increment = Math.ceil(difference/1000/60/10)
+    bar_length = current_increment*60*10/180
+    return if current_increment < 0 || (current_time - start_time) > 24*60*60*1000
     $(".tab-pane").show()
-    $(".room-data").each (key, item) =>
-      $(item).data("old-height", $(item).height())
-      $(item).height($(item).height() - bar_length)
     $(".bar").each (key, item) =>
       item = $(item)
       start_offset = item.parent().offset().top
@@ -47,14 +40,23 @@ class CalendarManager
             current_time.minute(Math.ceil(current_time.minute()/10)*10)
             item.data("start",current_time.toISOString())
             item.attr("data-start", current_time.toISOString())
+          return true if User.current().get_value("admin") == true && !item.hasClass("bar-success")
+          new_item = $("<div>")
+          new_item.addClass("bar bar-warning")
+          new_item.height(bar_length-start_at)
+          item.before(new_item)
           item.height(end_at - bar_length)
         else
-          item.data("remove", true)
-    $(".bar").filter(-> $(this).data("remove") == true).remove()
-    $(".room-data-bar").height($(".room-data-bar").height()-bar_length)
-    hour_elements.hide()
-    $("#dayviewTable").data("old-height", $("#dayviewTable").height())
-    $("#dayviewTable").height($("#dayviewTable").height() - bar_length)
+          if User.current().get_value("admin") == true
+            if item.hasClass("bar-success")
+              item.removeClass("bar-success")
+              item.addClass("bar-warning")
+          else
+            item.removeClass("bar-success")
+            item.removeClass("bar-info")
+            item.addClass("bar-warning")
+            item.attr("data-id","")
+          item.attr("data-original-title","")
     $(".tab-pane").attr("style",null)
     return
   refresh_view: ->
