@@ -6,17 +6,19 @@ describe "calendar", :js => true do
   end
   describe "cookie setting" do
     before(:each) do
-      create(:special_hour, start_date: Date.yesterday, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
+      create(:special_hour, start_date: Date.yesterday, end_date: 60.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
       create(:reservation, :start_time => Time.current.midnight+20.hours, :end_time => Time.current.midnight+22.hours)
       visit root_path
     end
     it "should go to the next day on click" do
       expect(page).to have_selector(".bar-danger")
+      page.execute_script('$("*[data-handler=next]").click()')
       page.execute_script('$("a.ui-state-default:not(.ui-state-active)").first().click()')
       expect(page).not_to have_selector(".bar-danger")
     end
     it "should persist the clicked day" do
       expect(page).to have_selector(".bar-danger")
+      page.execute_script('$("*[data-handler=next]").click()')
       page.execute_script('$("a.ui-state-default:not(.ui-state-active)").first().click()')
       expect(page).not_to have_selector(".bar-danger")
       visit root_path
@@ -36,15 +38,18 @@ describe "calendar", :js => true do
       end
       context "and a day is clicked" do
         before(:each) do
+          all("*[data-handler=next]").first().click
           all("a.ui-state-default:not(.ui-state-active)").first().click
         end
         it "should go forward" do
-          current_day = Time.current.tomorrow.to_date
+          current_day = (Time.current+1.month).to_date
+          current_day = Date.new(current_day.year, current_day.month, 1)
           expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
         end
         context "and then the back button is hit" do
           before(:each) do
-            current_day = Time.current.tomorrow.to_date
+            current_day = (Time.current+1.month).to_date
+            current_day = Date.new(current_day.year, current_day.month, 1)
             expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
             page.evaluate_script('window.history.back()')
           end
