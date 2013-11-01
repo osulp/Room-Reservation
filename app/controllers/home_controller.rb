@@ -25,7 +25,7 @@ class HomeController < ApplicationController
   # it has a param they can give out in the URL.
   def convert_cookie_to_param
     unless params[:date]
-      params[:date] = date.to_s
+      params[:date] = date.strftime("%Y-%m-%-d")
       redirect_to params
     end
   end
@@ -34,7 +34,7 @@ class HomeController < ApplicationController
   def admin_date_restriction
     current_date = Time.current.to_date
     if date < current_date && !current_user.admin?
-      params[:date] = current_date.to_s
+      params[:date] = current_date.strftime("%Y-%m-%-d")
       redirect_to params
     end
   end

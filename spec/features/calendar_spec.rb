@@ -34,7 +34,7 @@ describe "calendar", :js => true do
     context "when the page is navigated to" do
       it "should redirect to the appropriate day link" do
         current_day = Time.current.to_date
-        expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
+        expect(current_path).to eq "/day/#{current_day.strftime("%Y-%m-%-d")}"
       end
       context "and a day is clicked" do
         before(:each) do
@@ -44,18 +44,18 @@ describe "calendar", :js => true do
         it "should go forward" do
           current_day = (Time.current+1.month).to_date
           current_day = Date.new(current_day.year, current_day.month, 1)
-          expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
+          expect(current_path).to eq "/day/#{current_day.strftime("%Y-%m-%-d")}"
         end
         context "and then the back button is hit" do
           before(:each) do
             current_day = (Time.current+1.month).to_date
             current_day = Date.new(current_day.year, current_day.month, 1)
-            expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
+            expect(current_path).to eq "/day/#{current_day.strftime("%Y-%m-%-d")}"
             page.evaluate_script('window.history.back()')
           end
           it "should go back" do
             current_day = Time.current.to_date
-            expect(current_path).to eq "/day/#{current_day.year}-#{current_day.month}-#{current_day.day}"
+            expect(current_path).to eq "/day/#{current_day.strftime("%Y-%m-%-d")}"
           end
         end
       end
