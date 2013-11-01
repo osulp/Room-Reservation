@@ -13,20 +13,23 @@ describe Admin::UsersController do
   end
 
   context 'and is admin' do
-    let(:build_role) {create(:role, :role => :admin, :onid  => "fakeuser")}
+    let(:build_role) {create(:role, :id => 1, :role => :admin, :onid  => "fakeuser")}
     describe "GET 'index'" do
-      it "returns http success" do
-        get 'index'
-        response.should be_success
-      end
+      it { get :index; response.should be_success }
     end
 
     describe "GET 'new'" do
-      it "returns http success" do
-        get 'new'
-        response.should be_success
-      end
+      it { get :new; response.should be_success }
     end
+
+    describe "POST 'promote'" do
+      it { post :promote, id: 1; response.should redirect_to :action => :index }
+    end
+
+    describe "POST 'demote'" do
+      it { post :demote, id: 1; response.should redirect_to :action => :index }
+    end
+
   end
 
 end
