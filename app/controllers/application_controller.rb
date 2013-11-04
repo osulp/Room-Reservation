@@ -1,3 +1,4 @@
+require 'ipaddr'
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
@@ -10,7 +11,15 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def require_login
+    ip_login
     redirect_to login_path if current_user.nil?
+  end
+
+  def ip_login
+    return unless current_user_username.blank?
+    ip = IPAddr.new(request.remote_ip).to_i
+    auto_login = AutoLogin.joins(:ip_addresses).where(:"ip_addresses.ip_address_i" => ip).first
+    RubyCAS::Filter.fake(auto_login.username) if auto_login
   end
 
   private

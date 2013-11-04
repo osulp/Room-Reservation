@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_filter :ip_login
   before_filter RubyCAS::GatewayFilter, :only => :index
   before_filter :convert_cookie_to_param
   before_filter :admin_date_restriction
