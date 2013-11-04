@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131028142813) do
+ActiveRecord::Schema.define(version: 20131104173431) do
 
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 20131028142813) do
 
   add_index "BannerLookup", ["idHash"], name: "index_BannerLookup_on_idHash", using: :btree
   add_index "BannerLookup", ["onid"], name: "index_BannerLookup_on_onid", using: :btree
+
+  create_table "auto_logins", force: true do |t|
+    t.string   "username"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cleaning_record_rooms", force: true do |t|
     t.integer  "cleaning_record_id"
@@ -90,6 +96,17 @@ ActiveRecord::Schema.define(version: 20131028142813) do
   end
 
   add_index "int_hours", ["start_date", "end_date"], name: "index_int_hours_on_start_date_and_end_date", using: :btree
+
+  create_table "ip_addresses", force: true do |t|
+    t.string   "ip_address"
+    t.integer  "ip_address_i"
+    t.integer  "auto_login_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ip_addresses", ["auto_login_id"], name: "index_ip_addresses_on_auto_login_id", using: :btree
+  add_index "ip_addresses", ["ip_address_i"], name: "index_ip_addresses_on_ip_address_i", using: :btree
 
   create_table "reservations", force: true do |t|
     t.string   "user_onid"
