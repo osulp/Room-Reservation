@@ -33,3 +33,6 @@ vendor/bundler_gems
 config/config.yml
 config/unicorn.rb
 config/god.conf
+
+# Ignore pids
+pids
