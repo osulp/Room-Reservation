@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131104173431) do
+ActiveRecord::Schema.define(version: 20131104180209) do
 
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 20131104173431) do
 
   create_table "ip_addresses", force: true do |t|
     t.string   "ip_address"
-    t.integer  "ip_address_i"
+    t.integer  "ip_address_i",  limit: 8
     t.integer  "auto_login_id"
     t.datetime "created_at"
     t.datetime "updated_at"
