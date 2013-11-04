@@ -9,5 +9,6 @@ class FayeManager
     @current_subscription?.cancel()
     @current_subscription = @client.subscribe("/messages/date/#{date}", (data) ->
       window.CalendarManager.background_loading = true
+      window.CalendarManager.cached_reservations = null
       window.CalendarManager.populate_calendar(data)
     )

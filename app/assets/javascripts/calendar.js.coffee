@@ -14,19 +14,25 @@ class CalendarManager
     this.truncate_to_now()
     this.color_reservations("#{@date_selected[0]}-#{@date_selected[1]}-#{@date_selected[2]}")
     this.bind_pop_state()
+    window.setInterval((=> this.update_truncation()),30000)
   go_to_today: =>
     day = moment().tz("America/Los_Angeles").format("MM/DD/YYYY")
     @datepicker.datepicker("setDate", day)
     current_date = @datepicker.datepicker("getDate")
     this.selected_date(current_date,@datepicker)
     return
-  truncate_to_now: =>
+  get_truncation_increment: ->
     start_time = moment($(".room-data-wrap").data("start")).tz("America/Los_Angeles")
     current_time = moment().tz("America/Los_Angeles")
     difference = current_time - start_time
-    current_increment = Math.ceil(difference/1000/60/10)
-    bar_length = current_increment*60*10/180
-    return if current_increment < 0 || (current_time - start_time) > 24*60*60*1000
+    return Math.ceil(difference/1000/60/10)
+  truncate_to_now: =>
+    start_time = moment($(".room-data-wrap").data("start")).tz("America/Los_Angeles")
+    current_time = moment().tz("America/Los_Angeles")
+    @current_increment = this.get_truncation_increment()
+    truncation_time = start_time.clone().add('minutes',@current_increment*10)
+    bar_length = @current_increment*60*10/180
+    return if @current_increment < 0 || (current_time - start_time) > 24*60*60*1000
     $(".tab-pane").show()
     $(".bar").each (key, item) =>
       item = $(item)
@@ -36,10 +42,10 @@ class CalendarManager
       if start_at < bar_length
         if end_at > bar_length
           if(item.data("start")? && item.hasClass("bar-success"))
-            current_time.second(0)
-            current_time.minute(Math.ceil(current_time.minute()/10)*10)
-            item.data("start",current_time.toISOString())
-            item.attr("data-start", current_time.toISOString())
+            truncation_time.second(0)
+            truncation_time.minute(Math.ceil(truncation_time.minute()/10)*10)
+            item.data("start",truncation_time.toISOString())
+            item.attr("data-start", truncation_time.toISOString())
           return true if User.current().get_value("admin") == true && !item.hasClass("bar-success")
           new_item = $("<div>")
           new_item.addClass("bar bar-warning")
@@ -79,21 +85,18 @@ class CalendarManager
     cookie_requested = this.get_date_from_cookie()
     history.pushState?({}, '', "/day/#{year}-#{month}-#{day}") unless @push == false
     @push = true
+    @cached_reservations = null
     $.get("/home/day/#{encodeURIComponent("#{year}-#{month}-#{day}")}", (data) =>
       return unless @date_selected.toString() == [year, month, day].toString()
       this.populate_calendar(data)
     )
     return
   populate_calendar: (data) ->
+    @cached_data = data
     year = @date_selected[0]
     month = @date_selected[1]
     day = @date_selected[2]
-    new_room_list = $(data)
-    for i in [0..new_room_list.length-1]
-      div = $(new_room_list[i])
-      id = div.attr('id')
-      html = div.html()
-      $('#' + id).html(html)
+    this.update_room_bars(data)
     $('#loading-spinner').hide()
     window.FilterManager.apply_filters()
     window.TooltipManager.set_tooltips()
@@ -103,20 +106,37 @@ class CalendarManager
     window.CancelPopupManager.hide_popup() unless @background_loading
     @background_loading = false
     window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
+  update_room_bars: (data) ->
+    new_room_list = $(data)
+    for i in [0..new_room_list.length-1]
+      div = $(new_room_list[i])
+      id = div.attr('id')
+      html = div.html()
+      $('#' + id).html(html)
+  update_truncation: ->
+    if this.get_truncation_increment() != @current_increment && @cached_data?
+      @background_loading = true
+      this.populate_calendar(@cached_data)
   color_reservations: (date)->
+    if @cached_reservations?
+      this.perform_color_reservations(@cached_reservations)
+      return
     $.getJSON("/reservations?date=#{date}", (reservations) =>
-      user = User.current().get_value("onid")
-      for reservation in reservations
-        element = $("*[data-id=#{reservation.id}]")
-        element.removeClass("bar-danger")
-        element.addClass("bar-info")
-        if reservation.user_onid == user
-          element.attr("data-original-title","Click to Cancel")
-        else
-          element.data("user-onid", reservation.user_onid)
-          element.attr("data-original-title", "#{reservation.user_onid}: Click to Cancel")
+      @cached_reservations = reservations
+      this.perform_color_reservations(reservations)
     )
     return
+  perform_color_reservations: (reservations) ->
+    user = User.current().get_value("onid")
+    for reservation in reservations
+      element = $("*[data-id=#{reservation.id}]")
+      element.removeClass("bar-danger")
+      element.addClass("bar-info")
+      if reservation.user_onid == user
+        element.attr("data-original-title","Click to Cancel")
+      else
+        element.data("user-onid", reservation.user_onid)
+        element.attr("data-original-title", "#{reservation.user_onid}: Click to Cancel")
   get_date_from_cookie: ->
     result = $.cookie('date')
     unless result?
