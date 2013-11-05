@@ -8,4 +8,15 @@ RoomReservation::Application.routes.draw do
   get "/availability/:room_id/:start", :to => 'reservations#availability', :start => /[TZtz0-9:\-\.%]+?/, :format => /html|json/, :as => :availability
   resources :reservations, :only => [:create, :update, :destroy]
   resources :users, :only => [:show]
+
+  # admin panel access
+  namespace :admin do
+    root to: "admin#index"
+    resources :users do
+      member do
+        post 'promote'
+        post 'demote'
+      end
+    end
+  end
 end

@@ -1,0 +1,16 @@
+<div class="admin-sidebar">
+  <div class="admin-userinfo well">
+    Logged in as (<%= @current_user.onid %>)
+  </div>
+  <div class="admin-sidenav">
+    <ul class="admin-sidetiles">
+     <% @sidebar_items.each do |controller, desc| %>
+      <% controller_path = 'admin_' + controller + '_path' %>
+      <li><a href="<%= respond_to?(controller_path) ? send(controller_path) : '#' %>">
+          <i class="fa fa-2x <%= desc[:icon] %>"></i>
+          <span><%= desc[:name] %></span>
+      </a></li>
+     <% end %>
+    </ul>
+  </div>
+</div>

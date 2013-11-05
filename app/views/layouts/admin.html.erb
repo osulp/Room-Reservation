@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="ROBOTS" content="NOODP" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Study Room Reservation Admin Panel | OSU Libraries | Oregon State University</title>
+  <%= stylesheet_link_tag 'admin/application', :media => 'all' %>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render 'admin/navbar' -%>
+  <div class="container-fluid">
+    <%= render 'admin/sidebar' -%>
+    <div class="admin-container">
+      <%= render 'flashes' -%>
+      <%= yield %>
+    </div>
+  </div>
+  <%#= render 'common_footer' -%>
+  <%= javascript_include_tag :admin %>
+</body>
+</html>
