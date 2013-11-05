@@ -22,8 +22,9 @@ class ReservationPopupManager
     )
     @popup.click (event) ->
       event.stopPropagation() unless $(event.target).data("remote")?
-    $("body").click (event) =>
-      this.hide_popup() unless $(event.target).data("remote")?
+    @popup.on("touchend", (event) =>
+      event.stopPropagation() unless $(event.target).data("remote")?
+    )
     # Bind Form
     master.prepare_form()
     # Bind popup closers
@@ -40,16 +41,31 @@ class ReservationPopupManager
       event.preventDefault()
       master.hide_popup()
     )
+    $("body").click (event) =>
+      this.hide_popup() unless $(event.target).data("remote")?
+    $("body").on("touchend", (event) =>
+      this.hide_popup() unless $(event.target).data("remote")?
+    )
+  center_popup: ->
+    if $("body").width() <= 480
+      @popup.css("height","auto")
+      @popup.css("top", "#{$(window).height()/2 - $("#reservation-popup").height()}px")
+  reset_center_popup: ->
+    if $("body").width() <= 480
+      @popup.css("height","100%")
+      @popup.css("top", "0px")
   display_success_message: (event, data, status, xhr) =>
     @popup.children(".popup-content").hide()
     @popup.children(".popup-message").show()
     @popup.children(".popup-message").html(@popup_message(data))
+    this.center_popup()
     @ignore_popup_hide = true
     window.CalendarManager.refresh_view()
   display_error_message: (event, xhr, status, error) =>
     errors = xhr.responseJSON
     @popup.children(".popup-message").hide()
     @popup.children(".popup-content").show()
+    this.reset_center_popup()
     if errors?["errors"]?
       errors = errors["errors"]
       @popup.find(".popup-content-errors").html(errors.join("<br>"))
@@ -59,6 +75,7 @@ class ReservationPopupManager
     popup_message = @popup.children(".popup-message")
     popup_message.show()
     popup_message.text("Reserving...")
+    this.center_popup()
   hide_popup: ->
     if @ignore_popup_hide
       @ignore_popup_hide = false
@@ -74,7 +91,19 @@ class ReservationPopupManager
     "#{result.join("-").replace("Z","")}-00:00"
   position_popup: (x, y)->
     @popup.show()
-    @popup.offset({top: y, left: x+10})
+    # Change behavior for phones
+    @popup.attr("style","")
+    if $("body").width() <= 480
+      @popup.css("max-width","none")
+      @popup.css("max-height","none")
+      @popup.width("100%")
+      this.reset_center_popup()
+      @popup.css("position", "fixed")
+      @popup.css("left",0)
+      @popup.css("margin-left",-1)
+      @popup.css("margin-top",-1)
+    else
+      @popup.offset({top: y, left: x+10})
     @popup.hide()
   populate_reservation_popup: (room_element, start_time, end_time) ->
     $(".popup").hide()
