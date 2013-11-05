@@ -1,0 +1,53 @@
+.admin-sidebar {
+  height: 100%;
+  position: absolute;
+  width: 210px;
+  .admin-sidetiles {
+    margin-left: 15px;
+    margin-top: 15px;
+    text-align: center;
+    li {
+      display: inline-block;
+      float: left;
+      width: 82px;
+      height: 82px;
+      list-style: none outside none;
+      margin: 0 15px 15px 0;
+      transition: 2s;
+      a {
+        background-color: #01316C;
+        font-size: 1.25em;
+        box-shadow: none !important;
+        display: block;
+        width: 82px;
+        height: 82px;
+        padding: 0px !important;
+        text-decoration: none;
+        color: white;
+        i {
+          padding-top: 10px;
+          padding-bottom: 4px;
+        }
+        span {
+          display: block;
+        }
+        &.active {
+          background-color: #3498DB;
+        }
+      }
+      a:hover {
+        background-color: #21518C;
+      }
+    }
+  }
+}
+
+.admin-container {
+  margin-left: 230px;
+  min-height: 1000px;
+  padding-top: 20px;
+  table form {
+    margin: 0;
+    display: inline-block;
+  }
+}

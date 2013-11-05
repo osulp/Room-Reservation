@@ -1,0 +1,20 @@
+<h1>New role</h1>
+
+<%= form_for(@role, :url => admin_role_path(@role)) do |f| %>
+  <p>
+    <%= f.label :onid %><br />
+    <%= f.text_field :onid %>
+  </p>
+  <p>
+  <p>
+    <%= f.label :role %><br />
+    <%= f.select :role, {:staff => 'staff', :admin => 'admin'}, :class=>'span6'%>
+  </p>
+  <p>
+    <%= f.submit 'Create', :class => 'btn btn-primary' %>
+  </p>
+<% end %>
+
+<div class="pull-right">
+  <%= link_to 'Back', admin_roles_path, :class => 'btn' %>
+</div>
