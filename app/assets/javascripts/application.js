@@ -15,6 +15,7 @@
 //= require jquery.ui.datepicker
 //= require jquery.ui.slider
 //= require jquery.ui.draggable
+//= require jquery.ui.touch-punch
 //= require bootstrap
 //= require jquery.cookie
 //= require local_iso

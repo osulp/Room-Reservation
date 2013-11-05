@@ -19,8 +19,9 @@ class CancelPopupManager
     )
     @popup.click (event) ->
       event.stopPropagation() unless $(event.target).data("remote")?
-    $("body").click (event) =>
-      this.hide_popup() unless $(event.target).data("remote")?
+    @popup.on("touchend", (event) =>
+      event.stopPropagation() unless $(event.target).data("remote")?
+    )
     # Bind popup closers
     this.bind_popup_closers()
     # Bind Ajax Events
@@ -30,6 +31,11 @@ class CancelPopupManager
     @popup.find(".close-popup a").click((event) =>
       event.preventDefault()
       master.hide_popup()
+    )
+    $("body").click (event) =>
+      this.hide_popup() unless $(event.target).data("remote")?
+    $("body").on("touchend", (event) =>
+      this.hide_popup() unless $(event.target).data("remote")?
     )
   bind_ajax_events: ->
     link = $("#cancel-popup .cancellation-message a")
@@ -41,6 +47,7 @@ class CancelPopupManager
     @popup.children(".popup-message").show()
     @popup.children(".popup-message").text("This reservation has been cancelled!")
     @ignore_popup_hide = true
+    this.center_popup()
     window.CalendarManager.refresh_view()
   display_error_message: (event, xhr, status, error) =>
     errors = xhr.responseJSON
@@ -50,10 +57,15 @@ class CancelPopupManager
       errors = errors["errors"]
       @popup.find(".popup-content-errors").html(errors.join("<br>"))
       @popup.find(".popup-content-errors").show()
+    this.center_popup()
   display_loading: (xhr, settings) =>
     @popup.children(".popup-content").hide()
     @popup.children(".popup-message").show()
     @popup.children(".popup-message").text("Cancelling...")
+    this.center_popup()
+  center_popup: ->
+    if $("body").width() <= 480
+      @popup.css("top", "#{$(window).height()/2 - $("#cancel-popup").height()}px")
   hide_popup: ->
     if @ignore_popup_hide
       @ignore_popup_hide = false
@@ -69,7 +81,19 @@ class CancelPopupManager
     result.join("-")
   position_popup: (x, y)->
     @popup.show()
-    @popup.offset({top: y, left: x+10})
+    # Change behavior for phones
+    @popup.attr("style","")
+    if $("body").width() <= 480
+      @popup.css("max-width","none")
+      @popup.css("max-height","none")
+      @popup.width("100%")
+      @popup.height("auto")
+      @popup.css("position", "fixed")
+      @popup.css("left",0)
+      @popup.css("margin-left",-1)
+      @popup.css("margin-top",-1)
+    else
+      @popup.offset({top: y, left: x+10})
     @popup.hide()
   populate_cancel_popup: (room_element, start_time, end_time, reserve_element) ->
     $(".popup").hide()
@@ -91,3 +115,4 @@ class CancelPopupManager
     current_link = current_link.join("/")
     link.attr("href", current_link)
     @popup.show()
+    this.center_popup()
