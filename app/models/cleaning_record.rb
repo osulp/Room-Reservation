@@ -1,7 +1,6 @@
 class CleaningRecord < ActiveRecord::Base
   acts_as_paranoid
   before_destroy :touch
-  attr_accessible :end_date, :end_time, :start_date, :start_time
   serialize :weekdays
   validates :start_date, :end_date, :start_time, :end_time, :presence => true
   validate :start_date_less_than_or_equal_to_end_date
