@@ -23,10 +23,23 @@ describe "role administration" do
         expect(page).to have_content("Role updated")
         expect(user_2).to be_admin
       end
+      it "should not let you set your own role" do
+        within("#edit_role_#{user.roles.first.id}") do
+          page.select('staff', :from => "role_role")
+          click_button("Save")
+        end
+        expect(page).to have_content("Cannot update yourself")
+        expect(user).to be_admin
+      end
       it "should let you delete a role", :js => true do
         expect(page).to have_content(user_2.onid)
         find("a[href='/admin/roles/#{user_2.roles.first.id}'][data-method='delete']").click
         expect(page).not_to have_content(user_2.onid)
+      end
+      it "should not let you delete yourself", :js => true do
+        expect(page).to have_content(user.onid)
+        find("a[href='/admin/roles/#{user.roles.first.id}'][data-method='delete']").click
+        expect(page).to have_content("Cannot delete yourself")
       end
     end
     it "should let you create a role" do
