@@ -16,7 +16,7 @@ class UserDecorator < Draper::Decorator
   end
 
   def reservation_popup_partial
-    return "admin_reservation_popup" if object.admin?
+    return "admin_reservation_popup" if object.staff?
     "reservation_popup"
   end
 

@@ -68,6 +68,25 @@ describe User do
       end
     end
   end
+  describe "#staff?" do
+    context "when they are not staff" do
+      it "should return false" do
+        expect(subject.admin?).to be_false
+      end
+    end
+    context "when they are an admin" do
+      subject {build(:user, :admin)}
+      it "should return true" do
+        expect(subject.staff?).to be_true
+      end
+    end
+    context "when they are staff" do
+      subject {build(:user, :staff)}
+      it "should return true" do
+        expect(subject.staff?).to be_true
+      end
+    end
+  end
   describe ".reservations" do
     context "when the user has no reservations" do
       it "should return a blank array" do
