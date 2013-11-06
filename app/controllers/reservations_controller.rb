@@ -26,8 +26,7 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    params["reservation"]["reserver_onid"] = current_user.onid
-    reserver = Reserver.from_params(params)
+    reserver = Reserver.new(params["reserver"].merge(:reserver_onid => current_user.onid))
     reserver.save
     respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
   end

@@ -6,8 +6,8 @@ describe 'reserve popup' do
     # Set start and end time to a valid time.
     start_time = (Time.current+1.hour).iso8601
     end_time = (Time.current+1.hour+10.minutes).iso8601
-    page.execute_script("$('#reservation_start_time').val('#{start_time}');")
-    page.execute_script("$('#reservation_end_time').val('#{end_time}');")
+    page.execute_script("$('#reserver_start_time').val('#{start_time}');")
+    page.execute_script("$('#reserver_end_time').val('#{end_time}');")
   end
   def after_visit(*args)
     page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
@@ -48,7 +48,7 @@ describe 'reserve popup' do
           context "when everything is valid" do
             before(:each) do
               Reservation.destroy_all
-              fill_in "reservation_description", :with => "Testing"
+              fill_in "reserver_description", :with => "Testing"
               set_reservation_time
               click_button "Reserve"
             end
@@ -109,9 +109,9 @@ describe 'reserve popup' do
           context "when the reservation is invalid" do
             before(:each) do
               # Reset reservation_user_onid to another user
-              page.execute_script("$('#reservation_user_onid').val('other_user');")
+              page.execute_script("$('#reserver_user_onid').val('other_user');")
               within("#reservation-popup") do
-                fill_in "reservation_description", :with => "Testing"
+                fill_in "reserver_description", :with => "Testing"
                 click_button "Reserve"
               end
             end
@@ -129,9 +129,9 @@ describe 'reserve popup' do
           context "when the room ID doesn't exist" do
             before(:each) do
               # Reset reservation_room_id to a non-existent
-              page.execute_script("$('#reservation_room_id').val('9');")
+              page.execute_script("$('#reserver_room_id').val('9');")
               within("#reservation-popup") do
-                fill_in "reservation_description", :with => "Testing"
+                fill_in "reserver_description", :with => "Testing"
                 click_button "Reserve"
               end
             end

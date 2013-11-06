@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   def index
     calendar = CalendarManager.new(date)
     @presenter = CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
-    @reservation = Reservation.new(:user_onid => current_user.onid, :reserver_onid => current_user.onid)
+    @reservation = Reserver.new(:user_onid => current_user.onid, :reserver_onid => current_user.onid)
   end
 
   def day

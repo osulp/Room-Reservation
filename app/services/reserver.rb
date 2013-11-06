@@ -12,29 +12,30 @@ class Reserver
   validate :concurrency_limit
   validate :append_reservation_errors
 
-  attr_accessor :reserver, :reserved_for, :room, :start_time, :end_time, :description
+  ATTRIBUTES = [:reserver_onid, :user_onid, :room_id, :start_time, :end_time, :description, :key_card_key]
+  attr_accessor *ATTRIBUTES
+  attr_accessor :reserver, :reserved_for, :room
   attr_reader :reservation
 
   delegate :as_json, :read_attribute_for_serialization, :to => :reservation
 
-  def self.from_params(params)
-    reservation_params = params[:reservation]
-    self.new(
-        User.new(reservation_params[:reserver_onid]),
-        User.new(reservation_params[:user_onid]),
-        Room.where(:id => reservation_params[:room_id]).first,
-        Time.zone.parse(reservation_params[:start_time]),
-        Time.zone.parse(reservation_params[:end_time]),
-        reservation_params[:description]
-    )
+  def initialize(attributes = {})
+    self.reserver = UserDecorator.new(User.new(attributes[:reserver_onid])) if attributes[:reserver_onid]
+    self.reserved_for = UserDecorator.new(User.new(attributes[:user_onid])) if attributes[:user_onid]
+    self.room = Room.where(:id => attributes[:room_id]).first
+    ATTRIBUTES.each do |attribute|
+      send("#{attribute}=", attributes[attribute])
+    end
   end
-  def initialize(reserver, reserved_for, room, start_time, end_time, description=nil)
-    @reserver = UserDecorator.new(reserver)
-    @reserved_for = UserDecorator.new(reserved_for)
-    @room = room
-    @start_time = start_time
-    @end_time = end_time
-    @description = description
+
+  def start_time=(value)
+    @start_time = value if value.blank?
+    @start_time = Time.zone.parse(value.to_s)
+  end
+
+  def end_time=(value)
+    @end_time = value if value.blank?
+    @end_time = Time.zone.parse(value.to_s)
   end
 
   def save
@@ -50,7 +51,11 @@ class Reserver
   end
 
   def persisted?
-    @reservation.persisted?
+    reservation.persisted?
+  end
+
+  def reservation
+    @reservation || Reservation.new
   end
 
   private
