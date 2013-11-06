@@ -2,17 +2,15 @@ require 'spec_helper'
 
 describe Admin::RolesController do
   it_behaves_like 'admin_panel'
-  let(:user) {build(:user)}
-  let(:banner_record) {nil}
-  before(:each) do
-    RubyCAS::Filter.fake(user.onid)
-    RubyCAS::Filter.filter(self)
-    banner_record
-  end
 
   context 'is admin' do
     let(:user) {build(:user, :admin)}
     let(:banner_record) {create(:banner_record, :onid => "fakeuser", :osu_id => "931590000")}
+    before(:each) do
+      RubyCAS::Filter.fake(user.onid)
+      RubyCAS::Filter.filter(self)
+      banner_record
+    end
     describe "GET 'index'" do
       it 'assigns @roles' do
         roles = Role.all

@@ -13,11 +13,11 @@
         <%= f.select :role, {:staff => 'staff', :admin => 'admin'}, {}, {:class => 'span2'}%>
         <%= f.submit 'Save', :class => 'btn btn-primary' %>
       <% end %>
-      <%= link_to 'Delete', admin_role_path(role), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-danger' %>
+      <%= link_to 'Delete', admin_role_path(role), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
     </td>
   </tr>
  <% end %>
 </table>
 <br />
 
-<%= link_to 'New role', new_admin_role_path, :class => 'btn btn-primary' %>
+<%= link_to 'New Role', new_admin_role_path, :class => 'btn btn-primary' %>
