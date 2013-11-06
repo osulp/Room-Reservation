@@ -15,7 +15,7 @@ class Admin::RolesController < AdminController
   def create
     @role = Role.new(params[:role])
     flash[:notice] = 'Role added' if @role.save
-    redirect_to :action => :index
+    respond_with(@role, :location => admin_roles_path)
   end
 
   def update
@@ -25,7 +25,7 @@ class Admin::RolesController < AdminController
     else
       flash[:notice] = 'Role updated' if @role.update(params[:role])
     end
-    redirect_to :action => :index
+    respond_with(@role, :location => admin_roles_path)
   end
 
   def destroy
@@ -35,6 +35,6 @@ class Admin::RolesController < AdminController
     else
       @role.destroy
     end
-    redirect_to :action => :index
+    respond_with(@role, :location => admin_roles_path)
   end
 end

@@ -9,10 +9,6 @@ class AdminController < ApplicationController
 
   protected
 
-  def self.responder
-    AdminResponder
-  end
-
   private
 
   def require_admin
