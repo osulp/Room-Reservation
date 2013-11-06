@@ -4,7 +4,6 @@ describe UsersController do
   describe "#show" do
     let(:user) {nil}
     let(:banner_record) {nil}
-    let(:build_role) {nil}
     context "when a user is not logged in" do
       before(:each) do
         get :show, :format => :json, :id => "931590000"
@@ -14,10 +13,10 @@ describe UsersController do
       end
     end
     context "when a user is logged in" do
+      let(:user) {build(:user)}
       before(:each) do
-        RubyCAS::Filter.fake("fakeuser")
+        RubyCAS::Filter.fake(user.onid)
         RubyCAS::Filter.filter(self)
-        build_role
         banner_record
       end
       context "and they are not an admin" do
@@ -27,7 +26,7 @@ describe UsersController do
         end
       end
       context "and they are an admin" do
-        let(:build_role) {create(:role, :role => :admin, :onid  => "fakeuser")}
+        let(:user) {build(:user, :admin)}
         context "and the user exists" do
           let(:banner_record) {create(:banner_record, :onid => "fakeuser", :osu_id => "931590000")}
           before(:each) do

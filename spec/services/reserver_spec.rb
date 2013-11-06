@@ -4,8 +4,8 @@ describe Reserver do
   before(:each) do
     Timecop.travel(Date.new(2013,8,29))
   end
-  let(:user) {User.new("user")}
-  let(:reserver) {User.new("user")}
+  let(:user) {build(:user)}
+  let(:reserver) {user}
   let(:room) {FactoryGirl.create(:room)}
   let(:start_time) {Time.current.midnight+12.hours}
   let(:end_time) {Time.current.midnight+14.hours+10.minutes}
@@ -28,21 +28,17 @@ describe Reserver do
         end
       end
       context "and the reserver is an admin" do
-        before(:each) do
-          create(:role, :role => "admin", :onid => reserver.onid)
-        end
+        let(:reserver) {build(:user, :admin, :onid => user.onid)}
         it "should be valid" do
           expect(subject).to be_valid
         end
       end
     end
     context "when the reserver is not the same as the reserved_for" do
-      let(:user) {User.new("user")}
-      let(:reserver) {User.new("reserver")}
+      let(:user) {build(:user)}
+      let(:reserver) {build(:user)}
       context "and the reserver is an admin" do
-        before(:each) do
-          create(:role, :role => "admin", :onid => reserver.onid)
-        end
+        let(:reserver) {build(:user, :admin)}
         it "should be valid" do
           expect(subject).to be_valid
         end

@@ -1,0 +1,25 @@
+<div class="admin-sidebar">
+  <div class="admin-userinfo well">
+    Logged in as (<%= @current_user.onid %>)
+  </div>
+  <div class="admin-sidenav">
+    <ul class="admin-sidetiles">
+      <li><a href="#">
+          <i class="fa fa-2x fa-cogs"></i>
+          <span>Settings</span>
+      </a></li>
+      <li><a href="<%= admin_roles_path %>">
+          <i class="fa fa-2x fa-user"></i>
+          <span>Roles</span>
+      </a></li>
+      <li><a href="#">
+          <i class="fa fa-2x fa-building"></i>
+          <span>Rooms</span>
+      </a></li>
+      <li><a href="#">
+          <i class="fa fa-2x fa-key"></i>
+          <span>Keycards</span>
+      </a></li>
+    </ul>
+  </div>
+</div>

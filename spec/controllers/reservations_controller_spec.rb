@@ -84,7 +84,7 @@ describe ReservationsController do
         post :create
       end
       it "should redirect" do
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(login_path(:source => request.original_fullpath))
       end
     end
   end

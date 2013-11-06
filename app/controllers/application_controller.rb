@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     ip_login
-    redirect_to login_path if current_user.nil?
+    redirect_to login_path(:source => request.original_fullpath) if current_user.nil?
   end
 
   def ip_login

@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe "calendar", :js => true do
+  let(:user) {build(:user)}
   before(:each) do
-    RubyCAS::Filter.fake("fakeuser")
+    RubyCAS::Filter.fake(user.onid)
   end
   describe "cookie setting" do
     before(:each) do
@@ -97,8 +98,8 @@ describe "calendar", :js => true do
           end
         end
         context "and you are an admin" do
+          let(:user) {build(:user, :admin)}
           before(:each) do
-            create(:role, :role => "admin", :onid => "fakeuser")
             visit root_path
           end
           it "should show the past day" do
@@ -122,10 +123,7 @@ describe "calendar", :js => true do
       end
     end
     context "when you are an admin" do
-      before(:each) do
-        create(:role, :role => "admin", :onid => "fakeuser")
-        visit root_path
-      end
+      let(:user) {build(:user, :admin)}
       it "should let you go back in time", :js => true do
         expect(page).to have_selector("*[data-handler=prev]")
       end

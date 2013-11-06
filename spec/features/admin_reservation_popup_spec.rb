@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe "admin reservation popup", :js => true do
   include VisitWithAfterHook
-  let(:build_role) {nil}
-  let(:banner_record) {nil}
   def set_reservation_time
     # Set start and end time to a valid time.
     start_time = (Time.current+1.hour).iso8601.split("-")[0..-2].join("-")
@@ -18,9 +16,10 @@ describe "admin reservation popup", :js => true do
     expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
   end
 
+  let(:user) {build(:user)}
+  let(:banner_record) {nil}
   before(:each) do
-    RubyCAS::Filter.fake("fakeuser")
-    build_role
+    RubyCAS::Filter.fake(user.onid)
     banner_record
     create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
     create(:room)
@@ -34,7 +33,7 @@ describe "admin reservation popup", :js => true do
       end
     end
     context "and they are an admin" do
-      let(:build_role) {create(:role, :role => :admin, :onid => "fakeuser")}
+      let(:user) {build(:user, :admin)}
       it "should have an editable username" do
         expect(page).to have_selector("#reservation_user_onid[type='text']")
       end

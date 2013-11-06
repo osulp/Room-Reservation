@@ -4,7 +4,7 @@ describe Canceller do
   before(:each) do
     Timecop.travel(Time.current.midnight)
   end
-  let(:user) {User.new("fakeuser")}
+  let(:user) {build(:user, :onid => "fakeuser")}
   let(:reservation) {create(:reservation, :user_onid => user.onid, start_time: Time.current+2.hours, end_time: Time.current+3.hours)}
   subject{Canceller.new(reservation, user)}
   describe "subject" do
@@ -22,9 +22,7 @@ describe Canceller do
       end
     end
     context "when the canceller is an admin" do
-      before(:each) do
-        create(:role, :role => "admin", :onid => "fakeuser")
-      end
+      let(:user) {build(:user, :admin, :onid => "fakeuser")}
       context "when the reservation isn't owned by the user" do
         let(:reservation) {create(:reservation, :user_onid => "bla", start_time: Time.current+2.hours, end_time: Time.current+3.hours)}
         it "should be valid" do
