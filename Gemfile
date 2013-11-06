@@ -40,9 +40,6 @@ gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
 gem "compass-rails", "~> 2.0.alpha.0"
 
-# protected_attributes until we update
-gem 'protected_attributes'
-
 # Old Asset Precompile Behavior for Stylesheets
 gem "sprockets-digest-assets-fix"
 
