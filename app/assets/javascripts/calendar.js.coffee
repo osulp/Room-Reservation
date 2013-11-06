@@ -132,7 +132,7 @@ class CalendarManager
       element = $("*[data-id=#{reservation.id}]")
       element.removeClass("bar-danger")
       element.addClass("bar-info")
-      if reservation.user_onid == user
+      if reservation.user_onid == user || !reservation.user_onid?
         element.attr("data-original-title","Click to Cancel")
       else
         element.data("user-onid", reservation.user_onid)

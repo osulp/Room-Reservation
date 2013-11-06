@@ -14,8 +14,9 @@ describe ReservationsController do
       end
     end
     context "when a user is logged in" do
+      let(:user) {build(:user)}
       before(:each) do
-        RubyCAS::Filter.fake("user")
+        RubyCAS::Filter.fake(user.onid)
         RubyCAS::Filter.filter(self)
       end
       context "when there are no reservations" do
@@ -39,7 +40,7 @@ describe ReservationsController do
         context "and the current day is requested" do
           context "and it's before the current day" do
             before(:each) do
-              create(:reservation, start_time: Time.current.midnight-4.hours, end_time: Time.current.midnight-2.hours, user_onid: "user")
+              create(:reservation, start_time: Time.current.midnight-4.hours, end_time: Time.current.midnight-2.hours, user_onid: user.onid)
               get :current_user_reservations, :format => :json, :date => "2013-9-5"
             end
             it "should return a blank JSON array" do
@@ -48,16 +49,31 @@ describe ReservationsController do
           end
           context "and it's to come" do
             before(:each) do
-              create(:reservation, start_time: Time.current+2.hours, end_time: Time.current+4.hours, user_onid: "user")
+              create(:reservation, start_time: Time.current+2.hours, end_time: Time.current+4.hours, user_onid: user.onid)
               get :current_user_reservations, :format => :json, :date => "2013-9-5"
             end
             it "should return a JSON array containing the reservation" do
               expect(JSON.parse(response.body).length).to eq 1
             end
+            context "and the user is not an admin" do
+              %w{reserver_onid room_id}.each do |key|
+                it "should not include #{key}" do
+                  expect(JSON.parse(response.body).first.keys).not_to include("room_id")
+                end
+              end
+            end
+            context "and the user is an admin" do
+              let(:user) {build(:user, :admin)}
+              %w{reserver_onid room_id}.each do |key|
+                it "should include #{key}" do
+                  expect(JSON.parse(response.body).first.keys).to include("room_id")
+                end
+              end
+            end
           end
           context "and it's after the current day" do
             before(:each) do
-              create(:reservation, start_time: Time.current.tomorrow.midnight+2.hours, end_time: Time.current.tomorrow.midnight+4.hours, user_onid: "user")
+              create(:reservation, start_time: Time.current.tomorrow.midnight+2.hours, end_time: Time.current.tomorrow.midnight+4.hours, user_onid: user.onid)
               get :current_user_reservations, :format => :json, :date => "2013-9-5"
             end
             it "should return a blank JSOn array" do
@@ -67,7 +83,7 @@ describe ReservationsController do
         end
         context "and no day is given" do
           before(:each) do
-            2.times {create(:reservation, start_time: Time.current.midnight-4.hours, end_time: Time.current.midnight-2.hours, user_onid: "user")}
+            2.times {create(:reservation, start_time: Time.current.midnight-4.hours, end_time: Time.current.midnight-2.hours, user_onid: user.onid)}
             get :current_user_reservations, :format => :json
           end
           it "should return all reservations" do
