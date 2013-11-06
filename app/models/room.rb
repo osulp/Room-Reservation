@@ -8,4 +8,5 @@ class Room < ActiveRecord::Base
   has_many :cleaning_records, :through => :cleaning_record_rooms
   has_many :room_hour_records, :dependent => :destroy
   has_many :room_hours, :through => :room_hour_records
+  has_many :key_cards
 end
