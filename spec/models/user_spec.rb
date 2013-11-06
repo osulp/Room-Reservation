@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  subject {User.new("bla")}
+  subject {build(:user, :onid => "bla")}
   describe "initialization" do
     context "when passed just an onid" do
       it "should create a user object" do
@@ -42,6 +42,19 @@ describe User do
       end
     end
   end
+  describe "#roles" do
+    context "when they have no roles" do
+      it "should return a blank array" do
+        expect(subject.roles).to eq []
+      end
+    end
+    context "when they have roles" do
+      subject {build(:user, :admin, :onid => "bla")}
+      it "should return all roles applicable to that user" do
+        expect(subject.roles.size).to eq 1
+      end
+    end
+  end
   describe "#admin?" do
     context "when they are not an admin" do
       it "should return false" do
@@ -49,9 +62,7 @@ describe User do
       end
     end
     context "when they are an admin" do
-      before(:each) do
-        create(:role, :onid => subject.onid, :role => "admin")
-      end
+      subject {build(:user, :admin)}
       it "should return true" do
         expect(subject.admin?).to be_true
       end

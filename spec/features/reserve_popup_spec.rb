@@ -15,21 +15,20 @@ describe 'reserve popup' do
     expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
     expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
   end
+  let(:user) {build(:user)}
   # TODO: Test this. Can't think of a good way to do it - The gateway filter would break things.
   context "when the user isn't logged in" do
     it "shouldn't show a popup on click"
   end
   let(:banner_record) {nil}
-  let(:build_role) {nil}
   context "when the user is logged in", :js => true do
     before(:all) do
       Timecop.return
     end
     before(:each) do
-      RubyCAS::Filter.fake("fakeuser")
+      RubyCAS::Filter.fake(user.onid)
       create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       banner_record
-      build_role
       create(:room)
       visit root_path
     end
@@ -79,7 +78,7 @@ describe 'reserve popup' do
           end
           context "when the user already has a reservation for that day" do
             before(:each) do
-              create(:reservation, :user_onid => "fakeuser")
+              create(:reservation, :user_onid => user.onid)
             end
             context "when the application is configured to allow multiple reservations a day" do
               before(:each) do
@@ -149,7 +148,7 @@ describe 'reserve popup' do
       end
       context "and they have a banner record" do
         context "and they are an undergraduate" do
-          let(:banner_record) {create(:banner_record, :onid => "fakeuser", :status => "Undergraduate")}
+          let(:banner_record) {create(:banner_record, :onid => user.onid, :status => "Undergraduate")}
           it "should default to a 3 hour time range" do
             within("#reservation-popup") do
               expect(find(".start-time")).to have_content("12:00 AM")
@@ -157,7 +156,7 @@ describe 'reserve popup' do
             end
           end
           context "and they are an admin" do
-            let(:build_role) {create(:role, :role => :admin, :onid => "fakeuser")}
+            let(:user) {build(:user, :admin)}
             it "should default to a 6 hour time range" do
               within("#reservation-popup") do
                 expect(find(".start-time")).to have_content("12:00 AM")
@@ -169,7 +168,7 @@ describe 'reserve popup' do
         context "and their status is configured for 6 hours" do
           let(:banner_record) do
             APP_CONFIG["users"].stub(:[]).with("reservation_times").and_return({"graduate" => "360"})
-            create(:banner_record, :onid => "fakeuser", :status => "Graduate")
+            create(:banner_record, :onid => user.onid, :status => "Graduate")
           end
           it "should set a 6 hour time range" do
             within("#reservation-popup") do

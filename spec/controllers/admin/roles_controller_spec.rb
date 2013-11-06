@@ -2,19 +2,17 @@ require 'spec_helper'
 
 describe Admin::RolesController do
   it_behaves_like 'admin_panel'
-  let(:user) {nil}
+  let(:user) {build(:user)}
   let(:banner_record) {nil}
-  let(:build_role) {nil}
   before(:each) do
-    RubyCAS::Filter.fake("fakeuser")
+    RubyCAS::Filter.fake(user.onid)
     RubyCAS::Filter.filter(self)
-    build_role
     banner_record
   end
 
   context 'is admin' do
+    let(:user) {build(:user, :admin)}
     let(:banner_record) {create(:banner_record, :onid => "fakeuser", :osu_id => "931590000")}
-    let(:build_role) {create(:role, :role => "admin", :onid  => "fakeuser")}
     describe "GET 'index'" do
       it 'assigns @roles' do
         roles = Role.all
@@ -51,7 +49,7 @@ describe Admin::RolesController do
     describe "POST 'update'" do
       before :each do
         @role = create(:role, :role => 'admin', :onid => 'john')
-        @me = Role.where(:onid => 'fakeuser').first
+        @me = Role.where(:onid => user.onid).first
       end
       it 'updates the role' do
         post :update, :id => @role, :role => {:role => 'foo', :onid => 'john'}
@@ -72,7 +70,7 @@ describe Admin::RolesController do
     describe "POST 'destroy'" do
       before :each do
         @role = create(:role, :role => 'admin', :onid => 'foo')
-        @me = Role.where(:onid => 'fakeuser').first
+        @me = Role.where(:onid => user.onid).first
       end
       it 'deletes the role' do
         expect {

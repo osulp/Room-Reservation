@@ -10,13 +10,14 @@ describe 'cancelling a reservation' do
     expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
     expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
   end
+  let(:user) {build(:user)}
   context "when an admin is logged in", :js => true do
     before(:all) do
       Timecop.return
     end
+    let(:user) {build(:user, :admin)}
     before(:each) do
-      RubyCAS::Filter.fake("fakeuser")
-      create(:role, :role => :admin, :onid => "fakeuser")
+      RubyCAS::Filter.fake(user.onid)
       create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       banner_record
       @room = create(:room)
