@@ -124,4 +124,9 @@ class Reserver
     end
   end
 
+  # Ability for CanCan
+  def reserver_ability
+    @reserver_ability ||= Ability.new(reserver)
+  end
+
 end
