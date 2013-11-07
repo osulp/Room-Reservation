@@ -7,7 +7,7 @@ class Ability
       can :manage, :all
     end
     if user.staff?
-      can [:assign_keycard], Reserver
+      can [:assign_keycard, :ignore_restrictions], Reserver
     end
   end
 end
