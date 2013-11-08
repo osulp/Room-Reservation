@@ -32,8 +32,8 @@ describe "admin reservation popup", :js => true do
         expect(page).not_to have_selector("#reserver_user_onid[type='text']")
       end
     end
-    context "and they are an admin" do
-      let(:user) {build(:user, :admin)}
+    context "and they are a staff member" do
+      let(:user) {build(:user, :staff)}
       it "should have an editable username" do
         expect(page).to have_selector("#reserver_user_onid[type='text']")
       end

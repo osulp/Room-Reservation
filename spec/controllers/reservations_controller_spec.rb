@@ -62,8 +62,8 @@ describe ReservationsController do
                 end
               end
             end
-            context "and the user is an admin" do
-              let(:user) {build(:user, :admin)}
+            context "and the user is staff" do
+              let(:user) {build(:user, :staff)}
               %w{reserver_onid room_id}.each do |key|
                 it "should include #{key}" do
                   expect(JSON.parse(response.body).first.keys).to include("room_id")

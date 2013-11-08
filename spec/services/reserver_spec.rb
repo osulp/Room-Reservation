@@ -27,8 +27,8 @@ describe Reserver do
           expect(subject).not_to be_valid
         end
       end
-      context "and the reserver is an admin" do
-        let(:reserver) {build(:user, :admin, :onid => user.onid)}
+      context "and the reserver is a staff member" do
+        let(:reserver) {build(:user, :staff, :onid => user.onid)}
         it "should be valid" do
           expect(subject).to be_valid
         end
@@ -37,8 +37,8 @@ describe Reserver do
     context "when the reserver is not the same as the reserved_for" do
       let(:user) {build(:user)}
       let(:reserver) {build(:user)}
-      context "and the reserver is an admin" do
-        let(:reserver) {build(:user, :admin)}
+      context "and the reserver is staff" do
+        let(:reserver) {build(:user, :staff)}
         it "should be valid" do
           expect(subject).to be_valid
         end

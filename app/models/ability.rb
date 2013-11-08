@@ -11,6 +11,7 @@ class Ability
       can [:assign_keycard, :ignore_restrictions], Reserver
       can [:view_past_dates], :calendar
       can [:manage], Reservation
+      can [:read], BannerRecord
     end
     # Reservation
     can :destroy, Reservation, :user_onid => user.onid

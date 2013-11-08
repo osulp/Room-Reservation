@@ -43,7 +43,7 @@ class User < OpenStruct
   private
 
   def calculate_max_reservation_time
-    if admin?
+    if staff?
       result ||= reservation_times["admin"]
     end
     if banner_record && banner_record.status

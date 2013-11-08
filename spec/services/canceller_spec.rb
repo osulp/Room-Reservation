@@ -21,8 +21,8 @@ describe Canceller do
         end
       end
     end
-    context "when the canceller is an admin" do
-      let(:user) {build(:user, :admin, :onid => "fakeuser")}
+    context "when the canceller is a staff member" do
+      let(:user) {build(:user, :staff, :onid => "fakeuser")}
       context "when the reservation isn't owned by the user" do
         let(:reservation) {create(:reservation, :user_onid => "bla", start_time: Time.current+2.hours, end_time: Time.current+3.hours)}
         it "should be valid" do

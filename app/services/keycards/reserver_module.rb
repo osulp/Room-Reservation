@@ -1,17 +1,24 @@
 module Keycards::ReserverModule
   extend ActiveSupport::Concern
   included do
-    validate :authorized_to_card
-    validate :has_keycard
-    validate :keycard_exists
+    validate :keycard_validations
     before_reservation_save :add_keycard
   end
 
   def keycard
+    return nil if key_card_key.blank?
     KeyCard.where(:key => key_card_key).first
   end
 
   protected
+
+  def keycard_validations
+    if APP_CONFIG[:keycards][:enabled]
+      authorized_to_card
+      has_keycard
+      keycard_exists
+    end
+  end
 
   def add_keycard
     reservation.key_card = keycard

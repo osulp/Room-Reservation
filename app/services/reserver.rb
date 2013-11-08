@@ -3,7 +3,7 @@ class Reserver
   # Callbacks
   define_model_callbacks :reservation_save
   # Keycard Include
-  include(Keycards::ReserverModule) if APP_CONFIG[:keycards][:enabled]
+  include Keycards::ReserverModule
   # Validations
   validates :start_time, :end_time, :room, :reserver, :reserved_for, :presence => true
   validate :user_not_nil
@@ -75,18 +75,18 @@ class Reserver
   # TODO: Evaluate this - what if they have a reservation on the second day when this crosses midnight?
   def concurrency_limit
     max_concurrent = APP_CONFIG["reservations"]["max_concurrent_reservations"].to_i
-    return if !reserved_for || !reserver || max_concurrent == 0 || reserver_ability.can?(:ignore_restrictions,self)
+    return if !reserved_for || !reserver || max_concurrent == 0 || reserver_ability.can?(:ignore_restrictions,self.class)
     current_reservations = reserved_for.reservations.where("start_time <= ? AND end_time >= ? AND start_time >= ?", start_time.tomorrow.midnight-1.second, start_time.midnight, start_time.midnight).size
     errors.add(:base, "You can only make #{max_concurrent} reservations per day.") if current_reservations >= max_concurrent
   end
 
   def authorized_to_reserve
-    return if !reserved_for || !reserver || reserver_ability.can?(:ignore_restrictions,self)
+    return if !reserved_for || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
     errors.add(:base, "You are not authorized to reserve on behalf of #{reserved_for.onid}") if reserved_for.onid.downcase != reserver.onid.downcase
   end
 
   def duration_correct
-    return if !end_time || !start_time || !reserved_for || !reserver || reserver_ability.can?(:ignore_restrictions,self)
+    return if !end_time || !start_time || !reserved_for || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
     duration = end_time - start_time
     errors.add(:base, "The reservation can not be for more than #{(reserved_for.max_reservation_time/60/60).to_i} hours") if duration > reserved_for.max_reservation_time
   end

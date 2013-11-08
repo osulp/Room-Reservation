@@ -155,8 +155,8 @@ describe 'reserve popup' do
               expect(find(".end-time")).to have_content("3:00 AM")
             end
           end
-          context "and they are an admin" do
-            let(:user) {build(:user, :admin)}
+          context "and they are staff" do
+            let(:user) {build(:user, :staff)}
             it "should default to a 6 hour time range" do
               within("#reservation-popup") do
                 expect(find(".start-time")).to have_content("12:00 AM")

@@ -9,6 +9,6 @@ class UsersController < ApplicationController
   private
 
   def require_admin
-    respond_with({:error => "Unauthorized to access resource"}, :status => :unauthorized) unless can?(:manage, :all)
+    respond_with({:error => "Unauthorized to access resource"}, :status => :unauthorized) unless can?(:read, BannerRecord)
   end
 end
