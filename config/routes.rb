@@ -14,5 +14,6 @@ RoomReservation::Application.routes.draw do
   # admin panel access
   namespace :admin do
     resources :roles, :only => [:index, :new, :create, :update, :destroy]
+    resources :rooms, :only => [:index, :new, :create, :edit, :update, :destroy]
   end
 end

@@ -1,0 +1,42 @@
+class Admin::RoomsController < AdminController
+  respond_to :html, :json
+
+  def index
+    @rooms = Room.all
+    respond_with @rooms
+  end
+
+  def new
+    @room = Room.new
+    respond_with @room
+  end
+
+  def edit
+    @room = Room.find(params[:id])
+    respond_with @room
+  end
+
+  def create
+    @room = Room.new(room_params)
+    flash[:notice] = 'Room added' if @room.save
+    respond_with @room, :location => admin_rooms_path
+  end
+
+  def update
+    @room = Room.find(params[:id])
+    flash[:notice] = 'Room updated' if @room.update(room_params)
+    respond_with @room, :location => admin_rooms_path
+  end
+
+  def destroy
+    @room = Room.find(params[:id])
+    @room.destroy
+    respond_with(@role, :location => admin_roles_path)
+  end
+
+  private
+
+  def room_params
+    params.require(:room).permit(:name, :floor, {:filter_ids => []})
+  end
+end

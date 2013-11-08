@@ -1,18 +1,14 @@
 <h1>New role</h1>
-
-<%= form_for(@role, :url => admin_role_path(@role)) do |f| %>
-  <p>
-    <%= f.label :onid %><br />
-    <%= f.text_field :onid %>
-  </p>
-  <p>
-  <p>
-    <%= f.label :role %><br />
-    <%= f.select :role, {:staff => 'staff', :admin => 'admin'}, :class=>'span6'%>
-  </p>
-  <p>
-    <%= f.submit 'Create', :class => 'btn btn-primary' %>
-  </p>
+<br /><br />
+<%= simple_form_for(@role, :url => admin_role_path(@role), :html => {:class => 'form-horizontal'}) do |f| %>
+  <%= f.input :onid %>
+  <div class="control-group">
+    <%= f.label :role %>
+    <div class="controls"><%= f.select :role, {:staff => 'staff', :admin => 'admin'}, :class=>'span6'%></div>
+  </div>
+  <div class="control-group">
+    <div class="controls"><%= f.button :submit, 'Create', :class => 'btn-primary' %></div>
+  </div>
 <% end %>
 
 <div class="pull-right">

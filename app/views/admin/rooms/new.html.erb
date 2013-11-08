@@ -1,0 +1,14 @@
+<h1>New room</h1>
+<br /><br />
+<%= simple_form_for(@room, :url => admin_room_path(@room), :html => {:class => 'form-horizontal'}) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :floor %>
+  <%= f.association :filters, as: :check_boxes %>
+  <div class="control-group">
+    <div class="controls"><%= f.button :submit, 'Create', :class => 'btn-primary' %></div>
+  </div>
+<% end %>
+
+<div class="pull-right">
+  <%= link_to 'Back', admin_rooms_path, :class => 'btn' %>
+</div>
