@@ -1,4 +1,4 @@
-guard 'rspec', :cli => '--color --drb --format documentation', :env => {'SPRING_TMP_PATH' => "/tmp"}, :spring => true do
+guard 'rspec', :cli => '--color --drb --format documentation --order rand:$RANDOM', :env => {'SPRING_TMP_PATH' => "/tmp"}, :spring => true do
   watch('config/routes.rb')
   watch(%r{^spec/.+_spec.rb$})
   watch(%r{^lib/(.+).rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
