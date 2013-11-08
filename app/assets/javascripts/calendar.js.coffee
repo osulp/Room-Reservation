@@ -46,14 +46,14 @@ class CalendarManager
             truncation_time.minute(Math.ceil(truncation_time.minute()/10)*10)
             item.data("start",truncation_time.toISOString())
             item.attr("data-start", truncation_time.toISOString())
-          return true if User.current().get_value("admin") == true && !item.hasClass("bar-success")
+          return true if User.current().get_value("staff") == true && !item.hasClass("bar-success")
           new_item = $("<div>")
           new_item.addClass("bar bar-warning")
           new_item.height(bar_length-start_at)
           item.before(new_item)
           item.height(end_at - bar_length)
         else
-          if User.current().get_value("admin") == true
+          if User.current().get_value("staff") == true
             if item.hasClass("bar-success")
               item.removeClass("bar-success")
               item.addClass("bar-warning")

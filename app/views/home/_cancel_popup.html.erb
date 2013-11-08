@@ -7,7 +7,7 @@
     <%= label_tag 'room_name', 'Room: ', :style => "display: inline;"%> <span class="room-name"></span><br/>
     <div class="time-range">
       <div class="time-range-label">
-        <% if current_user.admin? -%>
+        <% if can?(:manage, Reservation) -%>
           <%= label_tag 'user_onid', 'Reserved For: ', :style => "display: inline;"%><span class="user-onid"></span><br/>
         <% end -%>
         <%= label_tag 'start_time', 'Start: ', :style => "display: inline;"%><span class="start-time"></span><br/>

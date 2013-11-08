@@ -34,7 +34,7 @@ class HomeController < ApplicationController
   # Only allow admins to access past dates.
   def admin_date_restriction
     current_date = Time.current.to_date
-    if date < current_date && !current_user.admin?
+    if date < current_date && !can?(:view_past_dates, :calendar)
       params[:date] = current_date.strftime("%Y-%m-%-d")
       redirect_to params
     end

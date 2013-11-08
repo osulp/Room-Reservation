@@ -1,5 +1,6 @@
 class Reserver
   include ActiveModel::Model
+  include(Keycards::ReserverModule) if APP_CONFIG[:keycards][:enabled]
   validates :start_time, :end_time, :room, :reserver, :reserved_for, :presence => true
   validate :user_not_nil
   validate :start_time_less_than_end_time
@@ -22,7 +23,6 @@ class Reserver
   delegate :as_json, :read_attribute_for_serialization, :to => :reservation
 
   def initialize(attributes = {})
-    include_keycard_logic if APP_CONFIG[:keycards][:enabled]
     ATTRIBUTES.each do |attribute|
       send("#{attribute}=", attributes[attribute])
     end
@@ -64,12 +64,6 @@ class Reserver
   end
 
   private
-
-  def include_keycard_logic
-    singleton_class.class_eval do
-      include Keycards::ReserverModule
-    end
-  end
 
   def user_not_nil
     return if !reserved_for || !reserver

@@ -4,7 +4,6 @@ module Keycards::ReserverModule
     validate :authorized_to_card
     validate :has_keycard
     validate :keycard_exists
-
     before_reservation_save :add_keycard
   end
 

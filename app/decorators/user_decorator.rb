@@ -25,7 +25,7 @@ class UserDecorator < Draper::Decorator
   def data_hash
     {:onid => onid,
      :max_reservation => self.max_reservation_time,
-     :admin => object.admin?
+     :staff => object.staff?
     }
   end
 

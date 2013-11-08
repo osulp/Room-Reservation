@@ -4,9 +4,15 @@ class ReservationSerializer < ActiveModel::Serializer
 
   def attributes
     hash = super
-    unless current_user.admin?
+    unless current_ability.can?(:manage, Reservation)
       hash.except!(:room_id, :reserver_onid)
     end
     return hash
+  end
+
+  private
+
+  def current_ability
+    @current_ability ||= Ability.new(current_user)
   end
 end

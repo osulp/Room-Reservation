@@ -12,7 +12,7 @@ class AdminController < ApplicationController
   private
 
   def require_admin
-    render :status => :unauthorized, :text => 'Only admin can access' unless current_user.admin?
+    render :status => :unauthorized, :text => 'Only admin can access' unless can?(:manage, :all)
   end
 
 end

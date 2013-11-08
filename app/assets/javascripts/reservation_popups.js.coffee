@@ -29,7 +29,7 @@ class ReservationPopupManager
     master.prepare_form()
     # Bind popup closers
     this.bind_popup_closers()
-    this.admin_binds() if User.current().get_value("admin") == true
+    this.admin_binds() if User.current().get_value("staff") == true
   prepare_form: ->
     form = $("#new_reserver")
     form.on("ajax:beforeSend", this.display_loading)
