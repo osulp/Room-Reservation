@@ -1,0 +1,26 @@
+<h1>Rooms</h1>
+
+<table class="table">
+  <tr>
+    <th width="20%">Name</th>
+    <th width="20%">Floor</th>
+    <th width="30%">Filter</th>
+    <th></th>
+  </tr>
+ <% @rooms.each do |room| %>
+  <tr>
+    <td><%= room.name %></td>
+    <td><%= room.floor %></td>
+    <td><% room.filters.each do |f| %>
+      <code class="text-info"><%= f.name %></code>
+    <% end %></td>
+    <td>
+      <%= link_to 'Edit', edit_admin_room_path(room), :class => 'btn' %>
+      <%= link_to 'Delete', admin_room_path(room), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
+    </td>
+  </tr>
+ <% end %>
+</table>
+<br />
+
+<%= link_to 'New Room', new_admin_room_path, :class => 'btn btn-primary' %>
