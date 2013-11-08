@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131104180209) do
+ActiveRecord::Schema.define(version: 20131105230131) do
 
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
@@ -107,6 +107,18 @@ ActiveRecord::Schema.define(version: 20131104180209) do
 
   add_index "ip_addresses", ["auto_login_id"], name: "index_ip_addresses_on_auto_login_id", using: :btree
   add_index "ip_addresses", ["ip_address_i"], name: "index_ip_addresses_on_ip_address_i", using: :btree
+
+  create_table "key_cards", force: true do |t|
+    t.integer  "key",            limit: 8
+    t.integer  "reservation_id"
+    t.integer  "room_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "key_cards", ["key"], name: "index_key_cards_on_key", using: :btree
+  add_index "key_cards", ["reservation_id"], name: "index_key_cards_on_reservation_id", using: :btree
+  add_index "key_cards", ["room_id"], name: "index_key_cards_on_room_id", using: :btree
 
   create_table "reservations", force: true do |t|
     t.string   "user_onid"

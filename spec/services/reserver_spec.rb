@@ -9,7 +9,7 @@ describe Reserver do
   let(:room) {FactoryGirl.create(:room)}
   let(:start_time) {Time.current.midnight+12.hours}
   let(:end_time) {Time.current.midnight+14.hours+10.minutes}
-  subject {Reserver.new(reserver, user, room, start_time, end_time)}
+  subject {Reserver.new({:reserver_onid => reserver.onid, :user_onid => user.onid, :room_id => room.id, :start_time => start_time, :end_time => end_time})}
   describe "validations" do
     before(:each) do
       create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
@@ -27,8 +27,8 @@ describe Reserver do
           expect(subject).not_to be_valid
         end
       end
-      context "and the reserver is an admin" do
-        let(:reserver) {build(:user, :admin, :onid => user.onid)}
+      context "and the reserver is a staff member" do
+        let(:reserver) {build(:user, :staff, :onid => user.onid)}
         it "should be valid" do
           expect(subject).to be_valid
         end
@@ -37,8 +37,8 @@ describe Reserver do
     context "when the reserver is not the same as the reserved_for" do
       let(:user) {build(:user)}
       let(:reserver) {build(:user)}
-      context "and the reserver is an admin" do
-        let(:reserver) {build(:user, :admin)}
+      context "and the reserver is staff" do
+        let(:reserver) {build(:user, :staff)}
         it "should be valid" do
           expect(subject).to be_valid
         end
@@ -64,14 +64,6 @@ describe Reserver do
     end
     context "when the start time is equal to the end time" do
       let(:start_time) {end_time}
-      it "should be invalid" do
-        expect(subject).not_to be_valid
-      end
-    end
-    context "when the room is not persisted" do
-      before(:each) do
-        room.stub(:persisted?).and_return(false)
-      end
       it "should be invalid" do
         expect(subject).not_to be_valid
       end

@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   def index
     calendar = CalendarManager.new(date)
     @presenter = CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
-    @reservation = Reservation.new(:user_onid => current_user.onid, :reserver_onid => current_user.onid)
+    @reservation = Reserver.new(:user_onid => current_user.onid, :reserver_onid => current_user.onid)
   end
 
   def day
@@ -34,7 +34,7 @@ class HomeController < ApplicationController
   # Only allow admins to access past dates.
   def admin_date_restriction
     current_date = Time.current.to_date
-    if date < current_date && !current_user.admin?
+    if date < current_date && !can?(:view_past_dates, :calendar)
       params[:date] = current_date.strftime("%Y-%m-%-d")
       redirect_to params
     end

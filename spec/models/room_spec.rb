@@ -13,6 +13,7 @@ describe Room do
     it {should have_many(:cleaning_records).through(:cleaning_record_rooms)}
     it {should have_many(:room_hour_records)}
     it {should have_many(:room_hours).through(:room_hour_records)}
+    it {should have_many(:key_cards)}
   end
 
 end

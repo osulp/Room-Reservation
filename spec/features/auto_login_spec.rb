@@ -34,15 +34,15 @@ describe "Automatic Login" do
         it "should automatically log in" do
           expect(page).to have_content(auto_login.username)
         end
-        context "and the user is an admin" do
-          let(:build_role) {create(:role, :role => :admin, :onid => auto_login.username)}
+        context "and the user is a staff member" do
+          let(:build_role) {create(:role, :role => :staff, :onid => auto_login.username)}
           it "should login as an admin" do
-            expect(page).to have_selector("#user-info[data-admin=true]")
+            expect(page).to have_selector("#user-info[data-staff=true]")
           end
         end
         context "and the user is not an admin" do
           it "should not login as an admin" do
-            expect(page).not_to have_selector("#user-info[data-admin=true]")
+            expect(page).not_to have_selector("#user-info[data-staff=true]")
           end
         end
       end

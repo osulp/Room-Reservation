@@ -6,8 +6,8 @@ describe "admin reservation popup", :js => true do
     # Set start and end time to a valid time.
     start_time = (Time.current+1.hour).iso8601.split("-")[0..-2].join("-")
     end_time = (Time.current+1.hour+10.minutes).iso8601.split("-")[0..-2].join("-")
-    page.execute_script("$('#reservation_start_time').val('#{start_time}');")
-    page.execute_script("$('#reservation_end_time').val('#{end_time}');")
+    page.execute_script("$('#reserver_start_time').val('#{start_time}');")
+    page.execute_script("$('#reserver_end_time').val('#{end_time}');")
   end
   def after_visit(*args)
     page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
@@ -29,28 +29,28 @@ describe "admin reservation popup", :js => true do
   context "when the user is logged in" do
     context "and they are not an admin" do
       it "should not have an editable username" do
-        expect(page).not_to have_selector("#reservation_user_onid[type='text']")
+        expect(page).not_to have_selector("#reserver_user_onid[type='text']")
       end
     end
-    context "and they are an admin" do
-      let(:user) {build(:user, :admin)}
+    context "and they are a staff member" do
+      let(:user) {build(:user, :staff)}
       it "should have an editable username" do
-        expect(page).to have_selector("#reservation_user_onid[type='text']")
+        expect(page).to have_selector("#reserver_user_onid[type='text']")
       end
       context "and they enter a banner ID" do
         let(:banner_record) {create(:banner_record, :onid => "fakeuser", :status => "Undergraduate", :osu_id => "921590000")}
         it "should fill in the username when an ID is entered" do
-          fill_in("reservation_user_onid", :with => "921590000")
-          expect(page).to have_field("reservation_user_onid", :with => "fakeuser")
+          fill_in("reserver_user_onid", :with => "921590000")
+          expect(page).to have_field("reserver_user_onid", :with => "fakeuser")
         end
         it "should fill in the username when a card is swiped" do
-          fill_in("reservation_user_onid", :with => "11921590000")
-          expect(page).to have_field("reservation_user_onid", :with => "fakeuser")
+          fill_in("reserver_user_onid", :with => "11921590000")
+          expect(page).to have_field("reserver_user_onid", :with => "fakeuser")
         end
         it "should work fine when a name is entered" do
-          fill_in("reservation_user_onid", :with => "terrellt")
-          find("#reservation_user_onid").trigger("blur")
-          expect(page).to have_field("reservation_user_onid", :with => "terrellt")
+          fill_in("reserver_user_onid", :with => "terrellt")
+          find("#reserver_user_onid").trigger("blur")
+          expect(page).to have_field("reserver_user_onid", :with => "terrellt")
         end
       end
       context "and they make a reservation for another user" do
@@ -66,8 +66,8 @@ describe "admin reservation popup", :js => true do
         context "and the onid field is filled in" do
           let(:banner_record) {create(:banner_record, :onid => "fakeuser", :status => "Undergraduate", :osu_id => "921590000")}
           before(:each) do
-            fill_in("reservation_user_onid", :with => "921590000")
-            find("#reservation_user_onid").trigger("blur")
+            fill_in("reserver_user_onid", :with => "921590000")
+            find("#reserver_user_onid").trigger("blur")
             set_reservation_time
             click_button "Reserve"
           end

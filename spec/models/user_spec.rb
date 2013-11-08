@@ -68,4 +68,60 @@ describe User do
       end
     end
   end
+  describe "#staff?" do
+    context "when they are not staff" do
+      it "should return false" do
+        expect(subject.admin?).to be_false
+      end
+    end
+    context "when they are an admin" do
+      subject {build(:user, :admin)}
+      it "should return true" do
+        expect(subject.staff?).to be_true
+      end
+    end
+    context "when they are staff" do
+      subject {build(:user, :staff)}
+      it "should return true" do
+        expect(subject.staff?).to be_true
+      end
+    end
+  end
+  describe ".reservations" do
+    context "when the user has no reservations" do
+      it "should return a blank array" do
+        expect(subject.reservations).to eq []
+      end
+    end
+    context "when the user has reservations" do
+      before(:each) do
+        @reservation = create(:reservation, :user_onid => subject.onid)
+        create(:reservation)
+      end
+      it "should return the reservation" do
+        expect(subject.reservations).to eq [@reservation]
+      end
+    end
+  end
+  describe ".reservations.active" do
+    context "when the user has reservations" do
+      before(:each) do
+        @reservation = create(:reservation, :user_onid => subject.onid)
+        @reservation_2 = create(:reservation, :user_onid => subject.onid)
+      end
+      context "but none are checked out" do
+        it "should return an empty array" do
+          expect(subject.reservations.active).to eq []
+        end
+      end
+      context "and they are checked out" do
+        before(:each) do
+          create(:key_card, :room => @reservation.room, :reservation => @reservation)
+        end
+        it "should return the checked out reservations" do
+          expect(subject.reservations.active).to eq [@reservation]
+        end
+      end
+    end
+  end
 end

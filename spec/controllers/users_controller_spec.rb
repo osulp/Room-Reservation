@@ -25,8 +25,8 @@ describe UsersController do
           expect(response.status).to eq 401 # Unauthorized
         end
       end
-      context "and they are an admin" do
-        let(:user) {build(:user, :admin)}
+      context "and they are staff" do
+        let(:user) {build(:user, :staff)}
         context "and the user exists" do
           let(:banner_record) {create(:banner_record, :onid => "fakeuser", :osu_id => "931590000")}
           before(:each) do

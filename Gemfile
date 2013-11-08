@@ -52,6 +52,9 @@ gem 'thin'
 # Sidekiq for asynchronous jobs
 gem 'sidekiq'
 
+# CanCan for Permissions
+gem 'cancan'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'

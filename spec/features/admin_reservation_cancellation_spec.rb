@@ -11,18 +11,34 @@ describe 'cancelling a reservation' do
     expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
   end
   let(:user) {build(:user)}
-  context "when an admin is logged in", :js => true do
-    before(:all) do
-      Timecop.return
-    end
-    let(:user) {build(:user, :admin)}
+  before(:all) do
+    Timecop.return
+  end
+  before(:each) do
+    RubyCAS::Filter.fake(user.onid)
+    create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+    banner_record
+    @room = create(:room)
+    @start_time = Time.current+1.hours
+    @end_time = Time.current+2.hours
+  end
+  context "when a regular user is logged in", :js => true do
     before(:each) do
-      RubyCAS::Filter.fake(user.onid)
-      create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
-      banner_record
-      @room = create(:room)
-      @start_time = Time.current+1.hours
-      @end_time = Time.current+2.hours
+      create(:reservation, start_time: @start_time+3.hours, end_time: @end_time+3.hours, user_onid: "otheruser", room: @room)
+      create(:reservation, start_time: @start_time, end_time: @end_time, user_onid: user.onid, room: @room)
+      visit root_path
+      expect(page).to have_selector(".bar-info", :count => 1)
+    end
+    it "should let them cancel their own reservation" do
+      find(".bar-info").click
+      click_link("Cancel")
+      expect(page).to have_content("This reservation has been cancelled!")
+      expect(Reservation.all.size).to eq 1
+    end
+  end
+  context "when a staff member is logged in", :js => true do
+    let(:user) {build(:user, :staff)}
+    before(:each) do
       create(:reservation, start_time: @start_time, end_time: @end_time, user_onid: "otheruser", room: @room)
       visit root_path
       expect(page).to have_selector(".bar-info")

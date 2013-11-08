@@ -29,9 +29,9 @@ class ReservationPopupManager
     master.prepare_form()
     # Bind popup closers
     this.bind_popup_closers()
-    this.admin_binds() if User.current().get_value("admin") == true
+    this.admin_binds() if User.current().get_value("staff") == true
   prepare_form: ->
-    form = $("#new_reservation")
+    form = $("#new_reserver")
     form.on("ajax:beforeSend", this.display_loading)
     form.on("ajax:success", this.display_success_message)
     form.on("ajax:error", this.display_error_message)
@@ -113,10 +113,10 @@ class ReservationPopupManager
     max_reservation = User.current().get_value("maxReservation")
     return if !max_reservation?
     $("#reservation-popup #room-name").text(room_name)
-    $("#reservation-popup #reservation_room_id").val(room_id)
-    $("#reservation-popup #reservation_start_time").val(start_time.toISOString())
-    $("#reservation-popup #reservation_user_onid[type=text]").val("")
-    $("#reservation-popup #reservation_user_onid[type=text]").focus()
+    $("#reservation-popup #reserver_room_id").val(room_id)
+    $("#reservation-popup #reserver_start_time").val(start_time.toISOString())
+    $("#reservation-popup #reserver_user_onid[type=text]").val("")
+    $("#reservation-popup #reserver_user_onid[type=text]").focus()
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability)
@@ -160,25 +160,25 @@ class ReservationPopupManager
     # Add the 10 minute increments
     start_time_object.add('minutes', start*10)
     end_time_object.add('minutes', end*10)
-    $("#reservation_start_time").val(start_time_object.toISOString())
-    $("#reservation_end_time").val(end_time_object.toISOString())
+    $("#reserver_start_time").val(start_time_object.toISOString())
+    $("#reserver_end_time").val(end_time_object.toISOString())
     # Set labels
     $("#reservation-popup .time-range-label .start-time").text(start_time_object.format("h:mm A"))
     $("#reservation-popup .time-range-label .end-time").text(end_time_object.format("h:mm A"))
   # Just for binding the automatic User fillout stuff at the moment.
   # This should probably be factored out somewhere, along with the user query stuff.
   admin_binds: ->
-    $("#reservation_user_onid").blur((e) =>
-      id = $("#reservation_user_onid").val()
+    $("#reserver_user_onid").blur((e) =>
+      id = $("#reserver_user_onid").val()
       id = id.substring(id.length-9)
       User.find(id: id, callback: this.set_reservation_onid)
     )
-    $("#reservation_user_onid").keypress((e) =>
+    $("#reserver_user_onid").keypress((e) =>
       if e.which == 13
-        $("#reservation_user_onid").trigger("blur")
+        $("#reserver_user_onid").trigger("blur")
         return false
     )
   set_reservation_onid: (user)->
     if user.get_value("onid")?
-      $("#reservation_user_onid").val(user.get_value("onid"))
-      $("#reservation_user_onid").parent().parent().next().find("input").trigger("focus")
+      $("#reserver_user_onid").val(user.get_value("onid"))
+      $("#reserver_user_onid").parent().parent().next().find("input").trigger("focus")

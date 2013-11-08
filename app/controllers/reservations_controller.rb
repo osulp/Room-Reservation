@@ -4,7 +4,7 @@ class ReservationsController < ApplicationController
   before_filter :require_login, :only => [:create, :destroy]
   def current_user_reservations
     result = current_user.reservations
-    result = Reservation.all if current_user.admin?
+    result = Reservation.all if can?(:destroy, Reservation.new)
     if params[:date]
       date = Time.zone.parse(params[:date])
       result = result.where("start_time <= ? AND end_time >= ?", date.tomorrow.midnight, date.midnight)
@@ -26,8 +26,7 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    params["reservation"]["reserver_onid"] = current_user.onid
-    reserver = Reserver.from_params(params)
+    reserver = Reserver.new(params["reserver"].merge(:reserver_onid => current_user.onid))
     reserver.save
     respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
   end

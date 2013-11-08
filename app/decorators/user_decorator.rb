@@ -10,13 +10,13 @@ class UserDecorator < Draper::Decorator
   end
 
   def min_date
-    return '' if object.admin?
+    return '' if object.staff?
     date = Time.current
     "#{date.month}/#{date.day}/#{date.year}"
   end
 
   def reservation_popup_partial
-    return "admin_reservation_popup" if object.admin?
+    return "admin_reservation_popup" if object.staff?
     "reservation_popup"
   end
 
@@ -25,7 +25,7 @@ class UserDecorator < Draper::Decorator
   def data_hash
     {:onid => onid,
      :max_reservation => self.max_reservation_time,
-     :admin => object.admin?
+     :staff => object.staff?
     }
   end
 

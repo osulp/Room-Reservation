@@ -33,3 +33,5 @@ rubycas:
   validate_url: https://link.to.saml/samlValidate
   cas_destination_logout_param_name: url
 baseurl:
+keycards:
+  enabled: true

@@ -97,8 +97,8 @@ describe "calendar", :js => true do
             expect(page).not_to have_selector(".bar-danger")
           end
         end
-        context "and you are an admin" do
-          let(:user) {build(:user, :admin)}
+        context "and you are a staff member" do
+          let(:user) {build(:user, :staff)}
           before(:each) do
             visit root_path
           end
@@ -122,8 +122,8 @@ describe "calendar", :js => true do
         end
       end
     end
-    context "when you are an admin" do
-      let(:user) {build(:user, :admin)}
+    context "when you are staff" do
+      let(:user) {build(:user, :staff)}
       it "should let you go back in time", :js => true do
         expect(page).to have_selector("*[data-handler=prev]")
       end

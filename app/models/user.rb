@@ -25,15 +25,25 @@ class User < OpenStruct
     Role.where(:onid => onid)
   end
 
+  def role_names
+    roles.pluck(:role)
+  end
+
+  def staff?
+    return false if onid.blank?
+    roles = role_names
+    role_names.include?("admin") || role_names.include?("staff")
+  end
+
   def admin?
     return false if onid.blank?
-    roles.map(&:role).include?("admin")
+    role_names.include?("admin")
   end
 
   private
 
   def calculate_max_reservation_time
-    if admin?
+    if staff?
       result ||= reservation_times["admin"]
     end
     if banner_record && banner_record.status
