@@ -1,6 +1,10 @@
 class Reserver
   include ActiveModel::Model
+  # Callbacks
+  define_model_callbacks :reservation_save
+  # Keycard Include
   include(Keycards::ReserverModule) if APP_CONFIG[:keycards][:enabled]
+  # Validations
   validates :start_time, :end_time, :room, :reserver, :reserved_for, :presence => true
   validate :user_not_nil
   validate :start_time_less_than_end_time
@@ -11,9 +15,6 @@ class Reserver
   validate :authorized_to_reserve
   validate :concurrency_limit
   validate :append_reservation_errors
-
-  # Callbacks
-  define_model_callbacks :reservation_save
 
   ATTRIBUTES = [:reserver_onid, :user_onid, :room_id, :start_time, :end_time, :description, :key_card_key]
   attr_accessor *ATTRIBUTES
