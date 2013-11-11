@@ -113,6 +113,8 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0.3)
+    druthers (0.0.2)
+      activerecord (>= 3.0)
     em-http-request (1.1.1)
       addressable (>= 2.3.4)
       cookiejar
@@ -365,6 +367,7 @@ DEPENDENCIES
   dalli
   database_cleaner
   draper
+  druthers
   execjs
   factory_girl_rails
   faye
