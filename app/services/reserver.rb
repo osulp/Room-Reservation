@@ -74,8 +74,8 @@ class Reserver
 
   # TODO: Evaluate this - what if they have a reservation on the second day when this crosses midnight?
   def concurrency_limit
-    max_concurrent = APP_CONFIG["reservations"]["max_concurrent_reservations"].to_i
-    return if !reserved_for || !reserver || max_concurrent == 0 || reserver_ability.can?(:ignore_restrictions,self.class)
+    max_concurrent = Setting.max_concurrent_reservations.to_i
+    return if !reserved_for || !reserver || !start_time || max_concurrent == 0 || reserver_ability.can?(:ignore_restrictions,self.class)
     current_reservations = reserved_for.reservations.where("start_time <= ? AND end_time >= ? AND start_time >= ?", start_time.tomorrow.midnight-1.second, start_time.midnight, start_time.midnight).size
     errors.add(:base, "You can only make #{max_concurrent} reservations per day.") if current_reservations >= max_concurrent
   end
