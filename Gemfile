@@ -55,6 +55,9 @@ gem 'sidekiq'
 # CanCan for Permissions
 gem 'cancan'
 
+# Druthers for system settings
+gem 'druthers'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'

@@ -82,7 +82,7 @@ describe 'reserve popup' do
             end
             context "when the application is configured to allow multiple reservations a day" do
               before(:each) do
-                APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(0)
+                Setting.stub(:max_concurrent_reservations).and_return(0)
                 # Need to wait for AJAX to finish changing the start/end time - there's likely a better way to do this.
                 # TODO: Fix this.
                 sleep(1)
@@ -96,7 +96,7 @@ describe 'reserve popup' do
             end
             context "when the app is configured to allow 1 reservation a day" do
               before(:each) do
-                APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(1)
+                Setting.stub(:max_concurrent_reservations).and_return(1)
                 within("#reservation-popup") do
                   click_button "Reserve"
                 end

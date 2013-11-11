@@ -88,7 +88,7 @@ describe Reserver do
     end
     context "when the max concurrency is set to 1" do
       before(:each) do
-        APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(1)
+        Setting.stub(:max_concurrent_reservations).and_return(1)
       end
       context "and they have a reservation that crosses midnight" do
         before(:each) do
@@ -124,7 +124,7 @@ describe Reserver do
         let(:end_time) {Time.current.midnight+2.hours}
         context "and the max concurrency is set to 0" do
           before(:each) do
-            APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(0)
+            Setting.stub(:max_concurrent_reservations).and_return(0)
           end
           it "should be valid" do
             expect(subject).to be_valid
@@ -133,7 +133,7 @@ describe Reserver do
         # This test ensures that midnight of the next day is considered as "the next day"
         context "and the max concurrency is set to 1" do
           before(:each) do
-            APP_CONFIG["reservations"].stub(:[]).with("max_concurrent_reservations").and_return(1)
+            Setting.stub(:max_concurrent_reservations).and_return(1)
           end
           it "should be valid" do
             expect(subject).to be_valid
