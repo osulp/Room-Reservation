@@ -9,7 +9,7 @@ class Admin::SettingsController < AdminController
   def update
     @setting = Setting.find(params[:id])
     if @setting.update(setting_params)
-      flash[:notice] = 'Settings successfully saved'
+      flash[:success] = 'Settings successfully saved'
     else
       flash[:error] = @setting.errors.full_messages.join("<br>")
     end
