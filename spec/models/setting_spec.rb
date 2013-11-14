@@ -20,4 +20,10 @@ describe Setting do
       end
     end
   end
+  describe "announcement_header_message" do
+    it "should always be success" do
+      expect{subject.announcement_header_message = "bla"}.not_to raise_error
+      expect(subject.announcement_header_message).to eq "bla"
+    end
+  end
 end
