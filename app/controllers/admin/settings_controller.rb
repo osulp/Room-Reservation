@@ -8,10 +8,16 @@ class Admin::SettingsController < AdminController
 
   def update
     @setting = Setting.find(params[:id])
-    if @setting.update(setting_params)
-      flash[:success] = 'Settings successfully saved'
+    if @setting
+      update_value = Setting.method("#{@setting.key}=")
+      begin
+        update_value.call setting_params[:value]
+        flash[:success] = 'Settings successfully saved'
+      rescue ActiveRecord::RecordInvalid => e
+        flash[:error] = e.message
+      end
     else
-      flash[:error] = @setting.errors.full_messages.join("<br>")
+      flash[:error] = 'Unable to find requested setting'
     end
     redirect_to admin_settings_path
   end
