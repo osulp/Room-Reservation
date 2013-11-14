@@ -7,7 +7,7 @@ describe 'settings administration' do
       RubyCAS::Filter.fake(user.onid)
       visit admin_settings_path
     end
-    %w{max_concurrent_reservations}.each do |setting|
+    %w{max_concurrent_reservations announcement_header_message}.each do |setting|
       describe setting do
         it_behaves_like 'a setting', setting
       end
