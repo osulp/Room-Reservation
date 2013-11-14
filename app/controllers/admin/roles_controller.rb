@@ -14,16 +14,16 @@ class Admin::RolesController < AdminController
 
   def create
     @role = Role.new(role_params)
-    flash[:notice] = 'Role added' if @role.save
+    flash[:success] = 'Role added' if @role.save
     respond_with(@role, :location => admin_roles_path)
   end
 
   def update
     @role = Role.find(params[:id])
     if @role.onid == current_user.onid
-      flash[:notice] = 'Cannot update yourself'
+      flash[:error] = 'Cannot update yourself'
     else
-      flash[:notice] = 'Role updated' if @role.update(role_params)
+      flash[:success] = 'Role updated' if @role.update(role_params)
     end
     respond_with(@role, :location => admin_roles_path)
   end
@@ -31,7 +31,7 @@ class Admin::RolesController < AdminController
   def destroy
     @role = Role.find(params[:id])
     if @role.onid == current_user.onid
-      flash[:notice] = 'Cannot delete yourself'
+      flash[:error] = 'Cannot delete yourself'
     else
       @role.destroy
     end

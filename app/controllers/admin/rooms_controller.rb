@@ -18,13 +18,13 @@ class Admin::RoomsController < AdminController
 
   def create
     @room = Room.new(room_params)
-    flash[:notice] = 'Room added' if @room.save
+    flash[:success] = 'Room added' if @room.save
     respond_with @room, :location => admin_rooms_path
   end
 
   def update
     @room = Room.find(params[:id])
-    flash[:notice] = 'Room updated' if @room.update(room_params)
+    flash[:success] = 'Room updated' if @room.update(room_params)
     respond_with @room, :location => admin_rooms_path
   end
 
