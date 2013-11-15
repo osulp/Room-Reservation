@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe Setting do
   subject {Setting}
+  after(:all) do
+    Setting.druthers_cache.clear
+  end
   describe "max_concurrent_reservations" do
     context "when it's set to a negative number" do
       it "should error" do

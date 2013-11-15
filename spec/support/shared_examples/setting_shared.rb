@@ -27,7 +27,7 @@ shared_examples 'a setting' do |setting_key|
       end
     end
     it "should update the value in the database" do
-      expect(setting.value).to eq value
+      expect(setting.reload.value).to eq value
     end
   end
 end
