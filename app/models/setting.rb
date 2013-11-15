@@ -1,7 +1,7 @@
 class Setting < ActiveRecord::Base
   serialize :value
   # Valid setting keys
-  VALID_KEYS = [:max_concurrent_reservations]
+  VALID_KEYS = [:max_concurrent_reservations, :announcement_header_message]
 
   def self.valid_keys
     VALID_KEYS
@@ -11,6 +11,10 @@ class Setting < ActiveRecord::Base
 
   def self.default_max_concurrent_reservations
     0
+  end
+
+  def self.default_announcement_header_message
+    ''
   end
 
   def validate_max_concurrent_reservations

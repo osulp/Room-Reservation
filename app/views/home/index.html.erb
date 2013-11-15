@@ -6,9 +6,7 @@
       </div>
       <div class="row osu-purple">
         <div class="span9">
-          <div class="alert alert-info" id="remindermessage">
-            Fifth floor rooms are unlocked. No reservation needed.
-          </div>
+          <%= render 'announcement' -%>
           <div class="tabbable" id="tabs-floor">
             <ul class="nav nav-tabs">
               <% @presenter.floors.each do |floor| %>
