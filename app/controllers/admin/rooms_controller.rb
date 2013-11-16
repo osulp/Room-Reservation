@@ -31,7 +31,7 @@ class Admin::RoomsController < AdminController
   def destroy
     @room = Room.find(params[:id])
     @room.destroy
-    respond_with(@role, :location => admin_roles_path)
+    respond_with(@role, :location => admin_rooms_path)
   end
 
   private
