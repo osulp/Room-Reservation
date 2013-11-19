@@ -2,7 +2,11 @@
 
 FactoryGirl.define do
   factory :key_card do
-    key 120142524640
+    sequence(:key) {|n| 12345600000+n}
     room
+    factory:key_card_checked_out do
+      reservation
+      room {reservation.room}
+    end
   end
 end
