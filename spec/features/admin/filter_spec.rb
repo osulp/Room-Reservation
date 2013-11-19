@@ -25,6 +25,7 @@ describe "filter administration" do
       expect(page).to have_content(filter.name)
       find("a[href='/admin/filters/#{filter.id}'][data-method='delete']").click
       expect(page).not_to have_content(filter.name)
+      expect(page).to have_content("Room filter deleted")
     end
   end
   it "should let you create a filter" do

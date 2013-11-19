@@ -31,6 +31,7 @@ describe "room administration" do
       expect(page).to have_content(room.name)
       find("a[href='/admin/rooms/#{room.id}'][data-method='delete']").click
       expect(page).not_to have_content(room.name)
+      expect(page).to have_content("Room deleted")
     end
   end
   it "should let you create a room" do
