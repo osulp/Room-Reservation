@@ -15,6 +15,7 @@ RoomReservation::Application.routes.draw do
   namespace :admin do
     resources :roles, :only => [:index, :new, :create, :update, :destroy]
     resources :rooms, :only => [:index, :new, :create, :edit, :update, :destroy]
+    resources :filters, :only => [:index, :new, :create, :edit, :update, :destroy]
     resources :settings, :only => [:index, :update]
   end
 end
