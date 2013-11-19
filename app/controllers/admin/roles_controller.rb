@@ -33,7 +33,7 @@ class Admin::RolesController < AdminController
     if @role.onid == current_user.onid
       flash[:error] = 'Cannot delete yourself'
     else
-      @role.destroy
+      flash[:success] = 'Role deleted' if @role.destroy
     end
     respond_with(@role, :location => admin_roles_path)
   end

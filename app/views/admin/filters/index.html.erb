@@ -1,0 +1,24 @@
+<h1>Room filters</h1>
+
+<table class="table table-hover">
+  <tr>
+    <th class="span3">Name</th>
+    <th class="span5">Rooms</th>
+    <th class="span4"></th>
+  </tr>
+ <% @filters.each do |filter| %>
+  <tr>
+    <td><%= filter.name %></td>
+    <td><% filter.rooms.each do |f| %>
+      <code class="text-info"><%= f.name %></code>
+    <% end %></td>
+    <td>
+      <%= link_to 'Edit', edit_admin_filter_path(filter), :class => 'btn' %>
+      <%= link_to 'Delete', admin_filter_path(filter), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
+    </td>
+  </tr>
+ <% end %>
+</table>
+<br />
+
+<%= link_to 'New Room Filter', new_admin_filter_path, :class => 'btn btn-primary' %>
