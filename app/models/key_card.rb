@@ -4,7 +4,6 @@ class KeyCard < ActiveRecord::Base
 
   validates :room, :key, :presence => true
   validates :key, :numericality => {:only_integer => true}
-  validates :key, :inclusion => {:in => (100000000000..999999999999), :message => "should be 12 digits"}
   validate :reservation_room_valid
 
   private
