@@ -37,6 +37,6 @@ class Admin::FiltersController < AdminController
   private
 
   def filter_params
-    params.require(:filter).permit(:name)
+    params.require(:filter).permit(:name, {:room_ids => []})
   end
 end
