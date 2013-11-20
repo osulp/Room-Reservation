@@ -1,5 +1,12 @@
 <h1>KeyCards</h1>
 
+<br />
+<form action="" class="form-inline row-fluid">
+  <input type="text" id="keycard_filter" class="span2" placeholder="Type to find a key card" />
+  <button id="keycard_filter_reset" class="btn">Clear</button>
+  <span id="keycard_filter_hit_count" class="text-info hide"></span>
+</form>
+
 <table class="table table-hover">
   <tr>
     <th class="span2">Key</th>
@@ -8,7 +15,7 @@
     <th class="span4"></th>
   </tr>
  <% @keycards.each do |keycard| %>
-  <tr>
+  <tr data-keycard="<%= keycard.key %>">
     <td><%= keycard.key %></td>
     <td>
     <% if keycard.reservation.nil? %>
