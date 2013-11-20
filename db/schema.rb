@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20131111164002) do
   create_table "cleaning_record_rooms", force: true do |t|
     t.integer  "cleaning_record_id"
     t.integer  "room_id"
-    t.datetime "created_at",         limit: 6, null: false
-    t.datetime "updated_at",         limit: 6, null: false
+    t.datetime "created_at",         limit: 6
+    t.datetime "updated_at",         limit: 6
   end
 
   add_index "cleaning_record_rooms", ["cleaning_record_id"], name: "index_cleaning_record_rooms_on_cleaning_record_id", using: :btree
@@ -45,16 +45,16 @@ ActiveRecord::Schema.define(version: 20131111164002) do
     t.date     "end_date"
     t.time     "start_time"
     t.time     "end_time"
-    t.datetime "created_at", limit: 6, null: false
-    t.datetime "updated_at", limit: 6, null: false
+    t.datetime "created_at", limit: 6
+    t.datetime "updated_at", limit: 6
     t.string   "weekdays"
     t.datetime "deleted_at"
   end
 
   create_table "filters", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", limit: 6, null: false
-    t.datetime "updated_at", limit: 6, null: false
+    t.datetime "created_at", limit: 6
+    t.datetime "updated_at", limit: 6
   end
 
   create_table "hours", force: true do |t|
@@ -127,12 +127,12 @@ ActiveRecord::Schema.define(version: 20131111164002) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "description"
-    t.datetime "created_at",    limit: 6, null: false
-    t.datetime "updated_at",    limit: 6, null: false
+    t.datetime "created_at",    limit: 6
+    t.datetime "updated_at",    limit: 6
     t.datetime "deleted_at"
   end
 
-  add_index "reservations", ["room_id"], name: "index_reservations_on_room_id_id", using: :btree
+  add_index "reservations", ["room_id"], name: "index_reservations_on_room_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "onid"
@@ -147,8 +147,8 @@ ActiveRecord::Schema.define(version: 20131111164002) do
   create_table "room_filters", force: true do |t|
     t.integer  "room_id"
     t.integer  "filter_id"
-    t.datetime "created_at", limit: 6, null: false
-    t.datetime "updated_at", limit: 6, null: false
+    t.datetime "created_at", limit: 6
+    t.datetime "updated_at", limit: 6
   end
 
   add_index "room_filters", ["filter_id"], name: "index_room_filters_on_filter_id", using: :btree
@@ -157,8 +157,8 @@ ActiveRecord::Schema.define(version: 20131111164002) do
   create_table "room_hour_records", force: true do |t|
     t.integer  "room_id"
     t.integer  "room_hour_id"
-    t.datetime "created_at",   limit: 6, null: false
-    t.datetime "updated_at",   limit: 6, null: false
+    t.datetime "created_at",   limit: 6
+    t.datetime "updated_at",   limit: 6
   end
 
   add_index "room_hour_records", ["room_hour_id"], name: "index_room_hour_records_on_room_hour_id", using: :btree
@@ -169,16 +169,16 @@ ActiveRecord::Schema.define(version: 20131111164002) do
     t.date     "end_date"
     t.time     "start_time"
     t.time     "end_time"
-    t.datetime "created_at", limit: 6, null: false
-    t.datetime "updated_at", limit: 6, null: false
+    t.datetime "created_at", limit: 6
+    t.datetime "updated_at", limit: 6
     t.datetime "deleted_at"
   end
 
   create_table "rooms", force: true do |t|
     t.string   "name"
     t.integer  "floor"
-    t.datetime "created_at", limit: 6, null: false
-    t.datetime "updated_at", limit: 6, null: false
+    t.datetime "created_at", limit: 6
+    t.datetime "updated_at", limit: 6
   end
 
   add_index "rooms", ["floor"], name: "index_rooms_on_floor", using: :btree
