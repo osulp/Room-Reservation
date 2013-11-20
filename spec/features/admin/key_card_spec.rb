@@ -31,6 +31,14 @@ describe "key_card administration" do
       expect(page).not_to have_content(key_card.key)
       expect(page).to have_content("Key Card deleted")
     end
+    it "should highlight a key when searching matches", :js => true do
+      fill_in "keycard_filter", :with => key_card.key
+      expect(page).to have_selector(".info")
+    end
+    it "should highlight nothing when searching does not match", :js => true do
+      fill_in "keycard_filter", :with => 'bla' + key_card.key.to_s
+      expect(page).not_to have_selector(".info")
+    end
     context "when key card is checked out" do
       let(:key_card) {create(:key_card_checked_out)}
       it "should show the related reservation" do
