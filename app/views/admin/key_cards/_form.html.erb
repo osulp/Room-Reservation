@@ -1,0 +1,7 @@
+<%= simple_form_for(@keycard, :url => admin_key_card_path(@keycard), :html => {:class => 'form-horizontal'}) do |f| %>
+  <%= f.input :key %>
+  <%= f.association :room, as: :radio_buttons %>
+  <div class="control-group">
+    <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
+  </div>
+<% end %>

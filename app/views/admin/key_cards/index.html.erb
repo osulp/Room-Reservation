@@ -1,0 +1,41 @@
+<h1>KeyCards</h1>
+
+<br />
+<form action="" id="keycard_filter_form" class="form-inline row-fluid">
+  <input type="text" id="keycard_filter" class="span2" placeholder="Type to find a key card" />
+  <button id="keycard_filter_reset" type="button" class="btn">Clear</button>
+  <span id="keycard_filter_hit_count" class="text-info hide"></span>
+</form>
+
+<table class="table table-hover">
+  <tr>
+    <th class="span2">Key</th>
+    <th class="span3">Current Status</th>
+    <th class="span3">Rooms</th>
+    <th class="span4"></th>
+  </tr>
+ <% @keycards.each do |keycard| %>
+  <tr data-keycard="<%= keycard.key %>">
+    <td><%= keycard.key %></td>
+    <td>
+    <% if keycard.reservation.nil? %>
+      Available
+    <% else %>
+      <%= keycard.reservation.start_time.strftime('%m/%d %R') %> -
+      <%= keycard.reservation.end_time.strftime('%R') %>
+      by <%= keycard.reservation.user_onid %>
+    <% end %>
+    </td>
+    <td>
+      <code class="text-info"><%= keycard.room.name %></code>
+    </td>
+    <td>
+      <%= link_to 'Edit', edit_admin_key_card_path(keycard), :class => 'btn' %>
+      <%= link_to 'Delete', admin_key_card_path(keycard), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
+    </td>
+  </tr>
+ <% end %>
+</table>
+<br />
+
+<%= link_to 'New KeyCard', new_admin_key_card_path, :class => 'btn btn-primary' %>

@@ -35,6 +35,7 @@ describe "role administration" do
         expect(page).to have_content(user_2.onid)
         find("a[href='/admin/roles/#{user_2.roles.first.id}'][data-method='delete']").click
         expect(page).not_to have_content(user_2.onid)
+      expect(page).to have_content("Role deleted")
       end
       it "should not let you delete yourself", :js => true do
         expect(page).to have_content(user.onid)

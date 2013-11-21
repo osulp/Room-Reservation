@@ -31,6 +31,7 @@ describe "room administration" do
       expect(page).to have_content(room.name)
       find("a[href='/admin/rooms/#{room.id}'][data-method='delete']").click
       expect(page).not_to have_content(room.name)
+      expect(page).to have_content("Room deleted")
     end
   end
   it "should let you create a room" do
@@ -38,7 +39,7 @@ describe "room administration" do
     fill_in "room_name", :with => "Restroom"
     fill_in "room_floor", :with => "8"
     check filter.name
-    click_button "Create"
+    click_button "Save"
     expect(page).to have_content("Room added")
     expect(Room.last.name).to eq "Restroom"
     expect(Room.last.floor).to eq 8
