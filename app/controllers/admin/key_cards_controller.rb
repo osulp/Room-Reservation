@@ -2,7 +2,7 @@ class Admin::KeyCardsController < AdminController
   respond_to :html, :json
 
   def index
-    @keycards = KeyCard.all
+    @keycards = KeyCard.includes(:room).order('rooms.name')
     respond_with @keycards
   end
 
