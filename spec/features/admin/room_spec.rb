@@ -39,7 +39,7 @@ describe "room administration" do
     fill_in "room_name", :with => "Restroom"
     fill_in "room_floor", :with => "8"
     check filter.name
-    click_button "Create"
+    click_button "Save"
     expect(page).to have_content("Room added")
     expect(Room.last.name).to eq "Restroom"
     expect(Room.last.floor).to eq 8

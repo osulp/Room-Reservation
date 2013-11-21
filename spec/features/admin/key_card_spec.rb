@@ -57,7 +57,7 @@ describe "key_card administration" do
     click_link "New KeyCard"
     fill_in "key_card_key", :with => "87654321"
     choose room.name
-    click_button "Create"
+    click_button "Save"
     expect(page).to have_content("Key Card added")
     expect(KeyCard.last.key).to eq 87654321
     expect(KeyCard.last.room).to eq room
