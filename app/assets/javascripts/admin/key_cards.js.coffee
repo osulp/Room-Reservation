@@ -6,6 +6,7 @@ class KeyCardFilterManager
     for keycard in $("tr[data-keycard]")
       element = $(keycard)
       @keycards.push {"key": element.attr('data-keycard'), "element": element}
+    $('#keycard_filter_form').submit(() -> false)
     @input = $("input#keycard_filter")
     @hit_count = $("span#keycard_filter_hit_count")
     @reset = $("button#keycard_filter_reset")
