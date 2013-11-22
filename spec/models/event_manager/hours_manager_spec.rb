@@ -39,7 +39,8 @@ describe EventManager::HoursManager do
   end
 
   describe ".events_between" do
-    subject {EventManager::HoursManager.new.events_between(Time.current.midnight, Time.current.tomorrow.midnight, [@room])}
+    let(:hours_manager) {EventManager::HoursManager.new}
+    subject {hours_manager.events_between(Time.current.midnight, Time.current.tomorrow.midnight, [@room])}
     before(:each) do
       @room = create(:room)
     end
@@ -86,8 +87,8 @@ describe EventManager::HoursManager do
         expect(subject.first.start_time).to eq Time.current.midnight
         expect(subject.first.end_time).to eq Time.current.midnight+13.hours
       end
-      it "should lock up the schedule from 21:50:00 to midnight" do
-        expect(subject[1].start_time).to eq Time.current.midnight+21.hours+50.minutes
+      it "should lock up the schedule from (22:00:00 - hour_buffer) to midnight" do
+        expect(subject[1].start_time).to eq Time.current.midnight+22.hours-hours_manager.send(:hour_buffer)
         expect(subject[1].end_time).to eq Time.current.midnight+24.hours
       end
     end
@@ -123,8 +124,8 @@ describe EventManager::HoursManager do
       it "should return one event" do
         expect(subject.length).to eq 1
       end
-      it "should only lock the schedule from 3:50 to midnight" do
-        expect(subject.first.start_time).to eq Time.current.midnight+15.hours+50.minutes
+      it "should only lock the schedule from (4:00 - hour_buffer) to midnight" do
+        expect(subject.first.start_time).to eq Time.current.midnight+16.hours-hours_manager.send(:hour_buffer)
         expect(subject.first.end_time).to eq Time.current.tomorrow.midnight
       end
     end
