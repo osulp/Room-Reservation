@@ -63,7 +63,7 @@ describe EventManager::HoursManager do
         expect(subject.length).to eq 2
         expect(subject.first.start_time).to eq Time.zone.parse("2013-08-19 00:00:00")
         expect(subject.first.end_time).to eq Time.zone.parse("2013-08-19 12:00:00")
-        expect(subject.second.start_time).to eq Time.zone.parse("2013-08-19 14:00:00")
+        expect(subject.second.start_time).to eq Time.zone.parse("2013-08-19 13:50:00")
         expect(subject.second.end_time).to eq Time.zone.parse("2013-08-20 00:00:00")
       end
     end
@@ -86,8 +86,8 @@ describe EventManager::HoursManager do
         expect(subject.first.start_time).to eq Time.current.midnight
         expect(subject.first.end_time).to eq Time.current.midnight+13.hours
       end
-      it "should lock up the schedule from 22:00:00 to midnight" do
-        expect(subject[1].start_time).to eq Time.current.midnight+22.hours
+      it "should lock up the schedule from 21:50:00 to midnight" do
+        expect(subject[1].start_time).to eq Time.current.midnight+21.hours+50.minutes
         expect(subject[1].end_time).to eq Time.current.midnight+24.hours
       end
     end
@@ -123,8 +123,8 @@ describe EventManager::HoursManager do
       it "should return one event" do
         expect(subject.length).to eq 1
       end
-      it "should only lock the schedule from 4:00 to midnight" do
-        expect(subject.first.start_time).to eq Time.current.midnight+16.hours
+      it "should only lock the schedule from 3:50 to midnight" do
+        expect(subject.first.start_time).to eq Time.current.midnight+15.hours+50.minutes
         expect(subject.first.end_time).to eq Time.current.tomorrow.midnight
       end
     end
