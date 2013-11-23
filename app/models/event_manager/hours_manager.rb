@@ -114,7 +114,15 @@ class EventManager::HoursManager < EventManager::EventManager
   end
 
   def build_event(start_time, end_time, room)
+    if (start_time.hour + start_time.min + start_time.sec) != 0
+      start_time -= hour_buffer
+    end
     HoursDecorator.new(Event.new(start_time, end_time, priority, nil, room.id))
+  end
+
+  # TODO: Make this configurable
+  def hour_buffer
+    10.minutes
   end
 
   def string_to_time(date, time)
