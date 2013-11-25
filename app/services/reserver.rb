@@ -15,6 +15,7 @@ class Reserver
   validate :authorized_to_reserve
   validate :concurrency_limit
   validate :append_reservation_errors
+  validate :day_limit_applied
 
   ATTRIBUTES = [:reserver_onid, :user_onid, :room_id, :start_time, :end_time, :description, :key_card_key]
   attr_accessor *ATTRIBUTES
@@ -65,6 +66,17 @@ class Reserver
   end
 
   private
+
+  def day_limit
+    (Setting.day_limit || 0).to_i
+  end
+
+  def day_limit_applied
+    return if !start_time || day_limit == 0 || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
+    if Time.current+day_limit.days < start_time
+      errors.add(:base, "You can only make reservations #{day_limit} days in advance")
+    end
+  end
 
   def user_not_nil
     return if !reserved_for || !reserver

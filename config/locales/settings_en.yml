@@ -2,3 +2,4 @@ en:
   settings:
     max_concurrent_reservations: "Max Concurrent Reservations"
     announcement_header_message: "Announcement Header Message"
+    day_limit: "Days for Advance Reservation"
