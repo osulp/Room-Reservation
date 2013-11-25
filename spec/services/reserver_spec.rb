@@ -34,6 +34,33 @@ describe Reserver do
         end
       end
     end
+    context "when there is a reservation date limit" do
+      let(:start_time) {Time.current.midnight+5.days+12.hours}
+      let(:end_time) {Time.current.midnight+5.days+14.hours}
+      let(:day_limit) {0}
+      before(:each) do
+        subject.stub(:day_limit).and_return(day_limit)
+      end
+      context "and it is 0" do
+        it "should be valid" do
+          expect(subject).to be_valid
+        end
+      end
+      context "and it is less than the reservation request" do
+        let(:day_limit) {2}
+        context "and the reserver is staff" do
+          let(:reserver) {build(:user, :staff)}
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
+        end
+        context "and the reserver is not staff" do
+          it "should be invalid" do
+            expect(subject).not_to be_valid
+          end
+        end
+      end
+    end
     context "when the reserver is not the same as the reserved_for" do
       let(:user) {build(:user)}
       let(:reserver) {build(:user)}
