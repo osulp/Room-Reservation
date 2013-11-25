@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :reservation do
-    sequence(:user_onid) {|n| "user#{n}"}
+    sequence(:user_onid) {|n| "reservation_user#{n}"}
     room
     sequence(:reserver_onid) {|n| "user#{n}"}
     start_time {Time.now}
