@@ -21,9 +21,6 @@ module DruthersPatch
       self.const_get(:VALID_KEYS)
     end
 
-    def druthers_cache
-      Rails.cache
-    end
     def set_druther(key, value)
       obj = where(key: key).first_or_initialize
       if obj.respond_to? :update!

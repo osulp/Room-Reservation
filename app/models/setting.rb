@@ -5,12 +5,20 @@ class Setting < ActiveRecord::Base
   include DruthersPatch
   serialize :value
 
+  def self.druthers_cache
+    Rails.cache
+  end
+
   def self.default_max_concurrent_reservations
     0
   end
 
   def self.default_announcement_header_message
     ''
+  end
+
+  def self.setting_config
+    @setting_config ||= (YAML.load_file(Rails.root.join("config","settings.yml")) || {})
   end
 
   def self.default_day_limit

@@ -1,0 +1,4 @@
+day_limit:
+  type: number
+max_concurrent_reservations:
+  type: number

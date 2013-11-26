@@ -2,7 +2,7 @@ class Admin::SettingsController < AdminController
   respond_to :html, :json
 
   def index
-    @settings = scoped_collection
+    @settings = scoped_collection.decorate
     respond_with(@settings)
   end
 
