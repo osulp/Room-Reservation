@@ -8,6 +8,13 @@ module DruthersPatch
         numerical_validation
       end
     end
+
+    private
+
+    def numerical_validation
+      validator = ActiveModel::Validations::NumericalityValidator.new(:attributes => [:value], :only_integer => true, :greater_than_or_equal_to => 0)
+      validator.validate(self)
+    end
   end
   module ClassMethods
     def valid_keys

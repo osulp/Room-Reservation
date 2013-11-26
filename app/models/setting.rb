@@ -23,11 +23,4 @@ class Setting < ActiveRecord::Base
     return key.to_s if ret == ''
     ret
   end
-
-  private
-
-  def numerical_validation
-    validator = ActiveModel::Validations::NumericalityValidator.new(:attributes => [:value], :only_integer => true, :greater_than_or_equal_to => 0)
-    validator.validate(self)
-  end
 end
