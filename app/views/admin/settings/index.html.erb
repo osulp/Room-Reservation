@@ -10,7 +10,7 @@
       <td><%= setting.friendly_name %></td>
       <td>
         <%= form_for(setting, :url => admin_setting_path(setting), :html => {:class => 'form-inline'}) do |f| %>
-          <%= f.text_field :value %>
+          <%= f.text_field :value, setting.field_configuration %>
           <%= f.submit 'Save', :class => 'btn btn-primary' %>
         <% end %>
       </td>

@@ -35,6 +35,11 @@ end
 shared_examples 'only accepting numerical value' do |setting_key|
   let(:setting) {Setting.where(:key => setting_key).first}
   let(:value) {'foo'}
+  it "should set the field as a numeric field" do
+    within("#edit_setting_#{setting.id}") do
+      expect(page).to have_selector("input[type=number]")
+    end
+  end
   context "when filled with non-numeric value" do
     before(:each) do
       within("#edit_setting_#{setting.id}") do
