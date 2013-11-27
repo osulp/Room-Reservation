@@ -17,6 +17,9 @@ describe 'settings administration' do
         it_behaves_like 'only accepting numerical value', setting
       end
     end
+    it "should organize miscellaneous settings first" do
+      expect(all("th").first).to have_content("Miscellaneous Settings")
+    end
     it "should persist the setting being changed" do
       expect(page).to have_content("Max Concurrent Reservations")
       s = Setting.where(:key => "announcement_header_message").first!

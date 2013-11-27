@@ -1,4 +1,6 @@
 day_limit:
   type: number
+  category: Reservation Settings
 max_concurrent_reservations:
   type: number
+  category: Reservation Settings

@@ -2,7 +2,9 @@ class Admin::SettingsController < AdminController
   respond_to :html, :json
 
   def index
-    @settings = scoped_collection.decorate
+    @settings = Hash[scoped_collection.decorate.group_by(&:category).sort_by{|key, value| key}]
+    miscellaneous = {"Miscellaneous Settings" => @settings.delete("Miscellaneous Settings")}
+    @settings = miscellaneous.merge(@settings)
     respond_with(@settings)
   end
 
@@ -30,7 +32,7 @@ class Admin::SettingsController < AdminController
       Setting.where(key: k).first_or_create(value: Setting.send(k))
     end
 
-    Setting.all
+    Setting.all.order(:key)
   end
 
   def setting_params

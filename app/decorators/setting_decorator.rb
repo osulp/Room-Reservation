@@ -5,4 +5,8 @@ class SettingDecorator < Draper::Decorator
     self.class.setting_config[key] || {}
   end
 
+  def category
+    field_configuration["category"] || "Miscellaneous Settings"
+  end
+
 end
