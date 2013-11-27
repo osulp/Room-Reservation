@@ -1,13 +1,6 @@
 module DruthersPatch
   extend ActiveSupport::Concern
   included do
-    def_druthers(*self.const_get(:VALID_KEYS))
-
-    self.const_get(:NUMERIC_KEYS).each do |key|
-      define_method("validate_#{key}") do
-        numerical_validation
-      end
-    end
 
     private
 
