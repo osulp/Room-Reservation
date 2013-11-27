@@ -24,5 +24,4 @@
 //= require moment-timezone
 //= require moment-timezone-data
 //= require faye
-//= require tinymce-jquery
 //= require_tree .
