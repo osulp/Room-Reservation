@@ -8,6 +8,11 @@ shared_examples 'a setting' do |setting_key|
   it "should have translation" do
     expect(@translation).not_to be_start_with 'translation missing'
   end
+  it "should show the category" do
+    within(".admin-container") do
+      expect(page).to have_content(setting.decorate.category)
+    end
+  end
   it "should show the setting" do
     within(".admin-container") do
       expect(page).to have_content(@translation)

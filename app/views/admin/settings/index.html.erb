@@ -1,19 +1,20 @@
 <h1>Settings</h1>
 
 <table class="table table-hover">
-  <tr>
-    <th class="span4">Setting Name</th>
-    <th class="span8">Value</th>
-  </tr>
-  <% @settings.each do |setting| %>
+  <% @settings.each do |category, settings| %>
     <tr>
-      <td><%= setting.friendly_name %></td>
-      <td>
-        <%= form_for(setting, :url => admin_setting_path(setting), :html => {:class => 'form-inline'}) do |f| %>
-          <%= f.text_field :value, setting.field_configuration %>
-          <%= f.submit 'Save', :class => 'btn btn-primary' %>
-        <% end %>
-      </td>
+      <th class="span12" colspan="2"><%= category %></th>
     </tr>
+    <% settings.each do |setting| %>
+      <tr>
+        <td><%= setting.friendly_name %></td>
+        <td>
+          <%= form_for(setting, :url => admin_setting_path(setting), :html => {:class => 'form-inline'}) do |f| %>
+            <%= f.text_field :value, setting.field_configuration %>
+            <%= f.submit 'Save', :class => 'btn btn-primary' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
 </table>
