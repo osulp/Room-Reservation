@@ -11,3 +11,7 @@ reservation_email:
     class: tinymce
   field_type: text_area
   category: Email Settings
+from_name:
+  category: Email Settings
+from_address:
+  category: Email Settings

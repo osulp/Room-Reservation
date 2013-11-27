@@ -7,7 +7,7 @@ describe 'settings administration' do
       RubyCAS::Filter.fake(user.onid)
       visit admin_settings_path
     end
-    %w{max_concurrent_reservations announcement_header_message day_limit}.each do |setting|
+    %w{max_concurrent_reservations announcement_header_message day_limit from_address from_name}.each do |setting|
       describe setting do
         it_behaves_like 'a setting', setting
       end
@@ -24,14 +24,14 @@ describe 'settings administration' do
       expect(page).to have_content("Max Concurrent Reservations")
       s = Setting.where(:key => "announcement_header_message").first!
       within("#edit_setting_#{s.id}") do
-        fill_in "setting_value", :with => "Blabla"
+        fill_in "setting_value_#{s.id}", :with => "Blabla"
         click_button "Save"
       end
       visit root_path
       expect(page).to have_content("Blabla")
       visit admin_settings_path
       within("#edit_setting_#{s.id}") do
-        fill_in "setting_value", :with => "Blabla2"
+        fill_in "setting_value_#{s.id}", :with => "Blabla2"
         click_button "Save"
       end
       visit root_path
