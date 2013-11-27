@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/osulp/non-stupid-digest-assets.git
-  revision: 3ff5e8b24fc5e51ba239baca01a57173fbfc0a07
-  specs:
-    non-stupid-digest-assets (1.0.1)
-
-GIT
   remote: git://github.com/rubycas/rubycas-client-rails.git
   revision: b97de6edc7871bc43ca1c9572f4d9188a210b341
   specs:
@@ -19,6 +13,12 @@ GIT
   specs:
     rubycas-client (2.3.10.rc1)
       activesupport
+
+GIT
+  remote: git://github.com/tobiasr/sprockets-digest-assets-fix.git
+  revision: 88c756c20c17038fb5b463ae2430d13da35f33a8
+  specs:
+    sprockets-digest-assets-fix (1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -386,7 +386,6 @@ DEPENDENCIES
   meta_request
   mysql2
   newrelic_rpm
-  non-stupid-digest-assets!
   paranoia (~> 2.0)
   pg
   poltergeist
@@ -399,6 +398,7 @@ DEPENDENCIES
   sidekiq
   simple_form
   spring
+  sprockets-digest-assets-fix!
   therubyracer
   thin
   timecop
