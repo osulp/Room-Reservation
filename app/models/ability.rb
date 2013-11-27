@@ -2,6 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    return if user.nil?
     # Make administrators superheros. They can do whatever they want.
     if user.admin?
       can :manage, :all

@@ -87,7 +87,7 @@ describe "GET / reservation bars" do
             sleep(1)
             expect(page).to have_selector(".bar-danger")
             expect(page).not_to have_selector(".bar-info")
-            expect(page).to have_selector(".bar-success",:count => 2)
+            expect(page).to have_selector(".bar-success",:count => 1)
           end
         end
         context "and the reservation is for the user" do
