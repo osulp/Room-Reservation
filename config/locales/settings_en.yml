@@ -6,3 +6,4 @@ en:
     reservation_email: "Reservation Email"
     from_name: "From Name"
     from_address: "From Address"
+    cancellation_email: "Cancellation Email"
