@@ -3,3 +3,7 @@ en:
     max_concurrent_reservations: "Max Concurrent Reservations"
     announcement_header_message: "Announcement Header Message"
     day_limit: "Days for Advance Reservation"
+    reservation_email: "Reservation Email Footer"
+    from_name: "From Name"
+    from_address: "From Address"
+    cancellation_email: "Cancellation Email Footer"

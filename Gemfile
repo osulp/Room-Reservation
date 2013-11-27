@@ -58,6 +58,9 @@ gem 'cancan'
 # Druthers for system settings
 gem 'druthers'
 
+# TinyMCE
+gem 'tinymce-rails'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'

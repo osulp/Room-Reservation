@@ -1,6 +1,30 @@
 day_limit:
-  type: number
+  tag_attributes:
+    type: number
   category: Reservation Settings
+  default: 0
 max_concurrent_reservations:
-  type: number
+  tag_attributes:
+    type: number
   category: Reservation Settings
+  default: 0
+reservation_email:
+  tag_attributes:
+    class: tinymce
+  field_type: text_area
+  category: Email Settings
+  default: ''
+cancellation_email:
+  tag_attributes:
+    class: tinymce
+  field_type: text_area
+  category: Email Settings
+  default: ''
+from_name:
+  category: Email Settings
+  default: 'Room Reservation System'
+from_address:
+  category: Email Settings
+  default: 'no-reply@roomreservation.com'
+announcement_header_message:
+  default: ''
