@@ -112,12 +112,15 @@ describe "calendar", :js => true do
           create(:special_hour, start_date: 4.days.ago, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
           create(:reservation, :start_time => Time.current.midnight+2.days+23.hours, :end_time => Time.current.midnight+2.days+24.hours)
           current_day = Time.current+2.days
+          visit root_path
+          expect(page).to have_selector('button[data-handler="today"]')
           browser = page.driver
-          browser.set_cookie('date', "#{current_day.year}-#{current_day.month}-#{current_day.day}")
+          browser.set_cookie('date', "#{current_day.year}-#{current_day.month}-#{current_day.day}", :path => '/')
           visit root_path
           visit root_path
         end
         it "should show the future day" do
+          expect(page).to have_selector('button[data-handler="today"]')
           expect(page).to have_selector('.bar-danger', :count => 1)
         end
       end

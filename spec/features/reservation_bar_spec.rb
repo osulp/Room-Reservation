@@ -8,9 +8,11 @@ describe "GET / reservation bars" do
     page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
   end
 
+  let(:user) {"bla"}
+  let(:login) {RubyCAS::Filter.fake(user) unless user.blank?}
   before(:each) do
     # Fake a login
-    RubyCAS::Filter.fake("bla")
+    login
     # Start Time to be 1:00 AM January 1
     t = Time.local(2013, 1, 1, 1, 0, 0)
     Timecop.travel(t)
@@ -74,6 +76,19 @@ describe "GET / reservation bars" do
           create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
           r = create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1)
           visit root_path
+        end
+        context "when user not logged in" do
+          let(:user) {nil}
+          let(:login) {RubyCAS::GatewayFilter.stub(:filter).and_return(true)}
+          before(:each) do
+            visit root_path
+          end
+          it "should show the red bar for the reservation", :js => true do
+            sleep(1)
+            expect(page).to have_selector(".bar-danger")
+            expect(page).not_to have_selector(".bar-info")
+            expect(page).to have_selector(".bar-success",:count => 1)
+          end
         end
         context "and the reservation is for the user" do
           before(:each) do
