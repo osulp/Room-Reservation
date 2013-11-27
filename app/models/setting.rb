@@ -1,6 +1,6 @@
 class Setting < ActiveRecord::Base
   # Valid setting keys
-  VALID_KEYS = [:max_concurrent_reservations, :announcement_header_message, :day_limit]
+  VALID_KEYS = [:max_concurrent_reservations, :announcement_header_message, :day_limit, :reservation_email]
   NUMERIC_KEYS = [:max_concurrent_reservations, :day_limit]
   include DruthersPatch
   serialize :value
@@ -14,6 +14,10 @@ class Setting < ActiveRecord::Base
   end
 
   def self.default_announcement_header_message
+    ''
+  end
+
+  def self.default_reservation_email
     ''
   end
 

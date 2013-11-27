@@ -1,6 +1,13 @@
 day_limit:
-  type: number
+  tag_attributes:
+    type: number
   category: Reservation Settings
 max_concurrent_reservations:
-  type: number
+  tag_attributes:
+    type: number
   category: Reservation Settings
+reservation_email:
+  tag_attributes:
+    class: tinymce
+  field_type: text_area
+  category: Email Settings
