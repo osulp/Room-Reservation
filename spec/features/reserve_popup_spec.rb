@@ -62,7 +62,7 @@ describe 'reserve popup' do
                 expect(page).to have_content("Reserving...")
               end
             end
-            context "when the reservation succeeds", :focus => true do
+            context "when the reservation succeeds" do
               before(:each) do
                 expect(page).to have_selector(".bar-info", :count => 1)
               end

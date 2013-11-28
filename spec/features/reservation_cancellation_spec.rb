@@ -53,6 +53,24 @@ describe 'cancelling a reservation' do
         expect(page).to have_content("This reservation has been cancelled!")
         expect(Reservation.all.size).to eq 0
       end
+      context "when the user doesn't have a banner record" do
+        it "should not send an email" do
+          expect(page).to have_content("This reservation has been cancelled!")
+          expect(ActionMailer::Base.deliveries.length).to eq 0
+        end
+      end
+      context "when the user has a banner record" do
+        let(:banner_record) {create(:banner_record, :onid => "fakeuser", :status => "Undergraduate", :email => "bla@bla.org")}
+        it "should send an email" do
+          expect(page).to have_content("This reservation has been cancelled!")
+          expect(ActionMailer::Base.deliveries.length).to eq 1
+          email = ActionMailer::Base.deliveries.first
+          body = email.body.to_s
+          expect(body).to include Room.first.name
+          expect(body).to include "has been cancelled."
+          expect(email.subject).to eq "Study Room Reservations Cancellation"
+        end
+      end
       describe "then clicking to reserve again" do
         before(:each) do
           expect(page).to have_content("This reservation has been cancelled!")

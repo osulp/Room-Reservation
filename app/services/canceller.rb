@@ -1,11 +1,13 @@
 class Canceller
   include ActiveModel::Validations
-
+  # Callbacks
+  define_model_callbacks :reservation_destroy
   attr_accessor :reservation, :cancelling_user
   validate :reservation_owned_by_user
   validate :reservation_not_over
 
   delegate :as_json, :to => :reservation
+  after_reservation_destroy :send_email
 
   def initialize(reservation, cancelling_user)
     self.reservation = reservation
@@ -14,10 +16,19 @@ class Canceller
 
   def save
     return false unless valid?
-    return reservation.destroy
+    run_callbacks :reservation_destroy do
+      reservation.destroy
+    end
   end
 
   protected
+
+  def send_email
+    reserved_for = UserDecorator.new(User.new(reservation.user_onid))
+    if reserved_for.banner_record && !reserved_for.banner_record.email.blank?
+      ReservationMailer.delay.cancellation_email(reservation, reserved_for)
+    end
+  end
 
   def reservation_owned_by_user
     errors.add(:base, "Unauthorized for cancellation of this reservation") unless cancelling_user_ability.can?(:destroy, reservation)
