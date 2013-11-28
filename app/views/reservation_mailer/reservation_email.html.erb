@@ -1,0 +1,13 @@
+Your room has been reserved!<br/><br/>
+
+<b>Name:</b> <%= @user.object.onid %><br/>
+<br/>
+<b>E-mail:</b> <%= @user.banner_record.email %><br/>
+<br/>
+<b>Room:</b> <%= @reservation.room.name %><br/>
+<br/>
+<b>Date and Time:</b> <%= @reservation.start_time.strftime("%B %-d, %Y %l:%M %p") %> - <%= @reservation.end_time.strftime("%B %-d, %Y %l:%M %p") %> <br/>
+<br/>
+<b>Description: </b> <%= @reservation.description %> <br/>
+<br/>
+<%= raw @footer %>

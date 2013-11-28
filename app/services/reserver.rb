@@ -23,6 +23,7 @@ class Reserver
   attr_reader :reservation
 
   delegate :as_json, :read_attribute_for_serialization, :to => :reservation
+  after_reservation_save :send_email
 
   def initialize(attributes = {})
     ATTRIBUTES.each do |attribute|
@@ -66,6 +67,12 @@ class Reserver
   end
 
   private
+
+  def send_email
+    if reserved_for.banner_record && !reserved_for.banner_record.email.blank?
+      ReservationMailer.delay.reservation_email(reservation, reserved_for)
+    end
+  end
 
   def day_limit
     (Setting.day_limit || 0).to_i

@@ -62,13 +62,30 @@ describe 'reserve popup' do
                 expect(page).to have_content("Reserving...")
               end
             end
-            context "when the reservation succeeds" do
-              it "should create a reservation" do
+            context "when the reservation succeeds", :focus => true do
+              before(:each) do
                 expect(page).to have_selector(".bar-info", :count => 1)
+              end
+              context "and the user has no banner record" do
+                it "should not send an email" do
+                  expect(ActionMailer::Base.deliveries).to be_empty
+                end
+              end
+              context "and the user has a banner record" do
+                let(:banner_record) {create(:banner_record, :onid => user.onid, :status => "Undergraduate", :email => "bla@bla.org")}
+                it "should send an email" do
+                  expect(ActionMailer::Base.deliveries.length).to eq 1
+                  email = ActionMailer::Base.deliveries.first
+                  expect(email.subject).to eq "Study Room Reservations Reservation"
+                  expect(email.body.to_s).to include user.onid
+                  expect(email.body.to_s).to include user.banner_record.email
+                  expect(email.body.to_s).to include Room.first.name
+                end
+              end
+              it "should create a reservation" do
                 expect(Reservation.all.length).to eq 1
               end
               it "should set the reservation's description" do
-                expect(page).to have_selector(".bar-info", :count => 1)
                 expect(Reservation.first.description).to eq "Testing"
               end
               it "should update the view to display the new reservation" do
@@ -155,6 +172,7 @@ describe 'reserve popup' do
               expect(find(".end-time")).to have_content("3:00 AM")
             end
           end
+
           context "and they are staff" do
             let(:user) {build(:user, :staff)}
             it "should default to a 6 hour time range" do
