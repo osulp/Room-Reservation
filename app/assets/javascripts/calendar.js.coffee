@@ -2,7 +2,7 @@ jQuery ->
   window.CalendarManager = new CalendarManager
 class CalendarManager
   constructor: ->
-    this.initialize_calendar()
+    this.initialize_calendar() if $("#datepicker").length > 0
   initialize_calendar: ->
     @datepicker = $("#datepicker")
     @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"))
