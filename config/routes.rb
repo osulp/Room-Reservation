@@ -10,6 +10,7 @@ RoomReservation::Application.routes.draw do
   resources :users, :only => [:show]
 
   get "/admin", :to => 'admin#index'
+  get "/my", :to => 'my#index'
 
   # admin panel access
   namespace :admin do
