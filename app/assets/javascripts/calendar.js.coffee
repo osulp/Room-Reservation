@@ -66,8 +66,11 @@ class CalendarManager
     $(".tab-pane").attr("style",null)
     return
   refresh_view: ->
-    current_date = @datepicker.datepicker("getDate")
-    this.selected_date(current_date,@datepicker)
+    if @datepicker?
+      current_date = @datepicker.datepicker("getDate")
+      this.selected_date(current_date,@datepicker)
+    else
+      location.reload()
   selected_date: (dateText, inst) =>
     date = @datepicker.datepicker("getDate")
     @date_selected = [date.getFullYear(), date.getMonth()+1, date.getDate()]
