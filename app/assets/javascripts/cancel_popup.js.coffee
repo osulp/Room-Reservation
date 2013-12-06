@@ -4,6 +4,7 @@ class CancelPopupManager
   constructor: ->
     master = this
     @popup = $("#cancel-popup")
+    return if @popup.length == 0
     $("body").on("click", ".bar-info", (event)->
       element = $(this)
       room_element = element.parent().parent()

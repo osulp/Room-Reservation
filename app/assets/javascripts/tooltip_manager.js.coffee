@@ -5,7 +5,9 @@ class TooltipManager
     this.set_tooltips()
   set_tooltips: ->
     $(".tooltip").remove()
-    $('.bar').tooltip({
+    bars = $('.bar')
+    return if bars.length == 0
+    bars.tooltip({
       placement: 'right',
       container: 'body'
     });
