@@ -3,6 +3,7 @@ jQuery ->
 class FilterManager
   constructor: ->
     @filters = []
+    return if $("#room-filters").length == 0
     $("#room-filters input").each (key, element) =>
       @filters.push new Filter($(element), this)
   clear_all_filters: ->

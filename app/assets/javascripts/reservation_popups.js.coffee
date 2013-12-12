@@ -4,6 +4,7 @@ class ReservationPopupManager
   constructor: ->
     master = this
     @popup = $("#reservation-popup")
+    return if @popup.length == 0
     @popup_message = Handlebars.compile(@popup.children(".popup-message").html())
     $("body").on("click", ".bar-success", (event)->
       element = $(this)

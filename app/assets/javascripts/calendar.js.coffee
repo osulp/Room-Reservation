@@ -2,7 +2,7 @@ jQuery ->
   window.CalendarManager = new CalendarManager
 class CalendarManager
   constructor: ->
-    this.initialize_calendar()
+    this.initialize_calendar() if $("#datepicker").length > 0
   initialize_calendar: ->
     @datepicker = $("#datepicker")
     @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"))
@@ -66,8 +66,11 @@ class CalendarManager
     $(".tab-pane").attr("style",null)
     return
   refresh_view: ->
-    current_date = @datepicker.datepicker("getDate")
-    this.selected_date(current_date,@datepicker)
+    if @datepicker?
+      current_date = @datepicker.datepicker("getDate")
+      this.selected_date(current_date,@datepicker)
+    else
+      location.reload()
   selected_date: (dateText, inst) =>
     date = @datepicker.datepicker("getDate")
     @date_selected = [date.getFullYear(), date.getMonth()+1, date.getDate()]
