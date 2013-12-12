@@ -1,0 +1,15 @@
+<div class="navbar navbar-fixed-top admin-navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <span class="brand" href="#">Admin Shortcuts</span>
+      <form class="navbar-form form-inline pull-left span6">
+        <%= text_field_tag('keycard_entry', '',:placeholder => 'Swipe Keycard') %>
+        <%= text_field_tag('user_lookup', '',:placeholder => 'Search for User') %>
+      </form>
+      <form class="navbar-form form-inline pull-right span3">
+        <%= label_tag('patron_mode', "Patron Mode", :class => 'navbar-text') %>
+        <%= check_box_tag('patron_mode', "Patron Mode",false, :class => 'checkbox') %>
+      </form>
+    </div>
+  </div>
+</div>

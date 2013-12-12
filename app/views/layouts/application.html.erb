@@ -11,6 +11,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body data-push-server="<%= APP_CONFIG['push']['server'] %>">
+  <%= render 'admin_navbar' if current_user.staff? %>
   <% cache "Tophat" do -%>
     <%= render 'common_tophat' -%>
   <% end -%>
