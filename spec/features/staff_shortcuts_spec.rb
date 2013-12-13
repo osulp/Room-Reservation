@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "admin shortcuts" do
+describe "staff shortcuts" do
   let(:user) {build(:user, :staff)}
   let(:keycard) {nil}
   let(:reservation) {nil}
@@ -9,7 +9,7 @@ describe "admin shortcuts" do
     reservation
     keycard
     visit root_path
-    expect(page).to have_content("Admin Shortcuts")
+    expect(page).to have_content("Staff Shortcuts")
   end
   describe "keycard swipe", :js => true do
     before(:each) do

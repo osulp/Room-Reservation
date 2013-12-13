@@ -15,7 +15,7 @@ describe "viewing the home page" do
   context "as staff" do
     let(:user) {build(:user, :staff)}
     it "should show the admin bar" do
-      expect(page).to have_content("Admin Shortcuts")
+      expect(page).to have_content("Staff Shortcuts")
     end
   end
   context "as a user" do
@@ -23,7 +23,7 @@ describe "viewing the home page" do
       expect(page).not_to have_link("(Admin)", :href => admin_path)
     end
     it "should not show the admin bar" do
-      expect(page).not_to have_content("Admin Shortcuts")
+      expect(page).not_to have_content("Staff Shortcuts")
     end
   end
 end
