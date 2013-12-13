@@ -5,6 +5,10 @@
   .brand {
     margin-left:0px;
   }
+  input.bordered {
+    border-width: 2px;
+    border-color: red;
+  }
   input[type="checkbox"].checkbox {
     margin-top: -3px;
   }

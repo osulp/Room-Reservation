@@ -17,7 +17,11 @@ RoomReservation::Application.routes.draw do
     resources :roles, :only => [:index, :new, :create, :update, :destroy]
     resources :rooms, :only => [:index, :new, :create, :edit, :update, :destroy]
     resources :filters, :only => [:index, :new, :create, :edit, :update, :destroy]
-    resources :key_cards, :only => [:index, :new, :create, :edit, :update, :destroy]
+    resources :key_cards, :only => [:index, :new, :create, :edit, :update, :destroy] do
+      collection do
+        get 'search/:key', :to => 'key_cards#search', :as => "search_admin_key_cards"
+      end
+    end
     resources :settings, :only => [:index, :update]
   end
 end

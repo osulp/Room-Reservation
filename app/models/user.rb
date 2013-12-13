@@ -1,4 +1,5 @@
 class User < OpenStruct
+  include Draper::Decoratable
   def initialize(name, extra_params={})
     extra_params ||= {}
     extra_params[:onid] = name

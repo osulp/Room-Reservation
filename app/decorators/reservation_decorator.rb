@@ -1,4 +1,6 @@
 class ReservationDecorator < EventDecorator
+  decorates_association :user
+  decorates_association :reserver
 
   def color
     return 'danger'

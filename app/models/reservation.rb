@@ -9,6 +9,13 @@ class Reservation < ActiveRecord::Base
     joins(:key_card)
   end
 
+  def user
+    User.new(user_onid)
+  end
+  def reserver
+    User.new(reserver_onid)
+  end
+
   def duration
     self.end_time - self.start_time
   end

@@ -15,4 +15,8 @@ class AdminController < ApplicationController
     render :status => :unauthorized, :text => 'Only admin can access' unless can?(:manage, :all)
   end
 
+  def require_staff
+    render :status => :unauthorized, :text => 'Only staff can access' unless current_user.staff?
+  end
+
 end
