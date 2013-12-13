@@ -124,7 +124,7 @@ class CalendarManager
     if @cached_reservations?
       this.perform_color_reservations(@cached_reservations)
       return
-    $.getJSON("/reservations?date=#{date}", (reservations) =>
+    $.getJSON("/reservations.json?date=#{date}", (reservations) =>
       @cached_reservations = reservations
       this.perform_color_reservations(reservations)
     )

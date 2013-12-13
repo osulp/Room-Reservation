@@ -1,7 +1,19 @@
 class ReservationsController < ApplicationController
-  respond_to :json
+  respond_to :json, :html
   include_root_in_json = false
   before_filter :require_login, :only => [:create, :destroy]
+  before_filter RubyCAS::Filter, :only => :index
+
+  def index
+    # Split all reservations into coming ones and invalid ones
+    @reservations = current_user.reservations.with_deleted.order(:start_time).partition do |r|
+      r.end_time.future? && !r.deleted?
+    end
+    # TODO: Cache this if necessary; Slice this if it's too long
+    @reservations[1].reverse!
+    respond_with @reservations
+  end
+
   def current_user_reservations
     result = current_user.reservations
     result = Reservation.all if can?(:destroy, Reservation.new)
