@@ -11,6 +11,7 @@ class ReservationsController < ApplicationController
     end
     # TODO: Cache this if necessary; Slice this if it's too long
     @reservations[1].reverse!
+    @reservations.map!{|x| x.map{|y| y.decorate}}
     respond_with @reservations
   end
 

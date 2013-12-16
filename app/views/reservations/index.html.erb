@@ -20,18 +20,14 @@
   >
     <td><%= reservation.room.name %></td>
     <td>
-      <%= reservation.start_time.strftime('%m/%d %R') %> -
-      <%= reservation.end_time.strftime('%R') %>
+      <%= reservation.formatted_start %> -
+      <%= reservation.formatted_end %>
       <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
     </td>
     <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
     </td>
-    <td><%= reservation.created_at.strftime('%m/%d %R') %></td>
-    <td><a href="#" class="btn btn-danger bar-info"
-      data-id="<%= reservation.id %>"
-      data-start="<%= reservation.start_time.iso8601 %>"
-      data-end="<%= reservation.end_time.iso8601 %>"
-    >Cancel</a></td>
+    <td><%= reservation.formatted_created_at %></td>
+    <td><%= link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => reservation.data_hash %></td>
   </tr>
  <% end %>
  <% if @reservations[0].empty? %>
@@ -46,15 +42,15 @@
   <tr class="reservation">
     <td><%= reservation.room.name %></td>
     <td>
-      <%= reservation.start_time.strftime('%m/%d %R') %> -
-      <%= reservation.end_time.strftime('%R') %>
+      <%= reservation.formatted_start %> -
+      <%= reservation.formatted_end %>
       <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
     </td>
     <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
-    <td><%= reservation.created_at.strftime('%m/%d %R') %></td>
+    <td><%= reservation.formatted_created_at %></td>
     <td>
       <% if reservation.deleted? %>
-        <span class="label label-important">Cancelled <%= reservation.deleted_at.strftime('%m/%d %R') %></span>
+        <span class="label label-important">Cancelled <%= reservation.formatted_deleted_at %></span>
       <% else %>
         <span class="label">Expired</span>
       <% end %>
