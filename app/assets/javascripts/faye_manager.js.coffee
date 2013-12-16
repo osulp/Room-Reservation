@@ -2,6 +2,7 @@ jQuery ->
   window.FayeManager = new FayeManager
 class FayeManager
   constructor: ->
+    return if $("#datepicker").length == 0
     @client = new Faye.Client($("body").data("push-server"))
     date_selected = window.CalendarManager.date_selected
     this.subscribe_to_date("#{date_selected[0]}-#{date_selected[1]}-#{date_selected[2]}")

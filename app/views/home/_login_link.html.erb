@@ -3,5 +3,5 @@
 <% else %>
   <%= raw current_user.tag %>
   <p><strong>Logged in as:</strong><br />
-    <%= current_user.onid %> (Reservations) <%= link_to('(Admin)', admin_path) if current_user.admin? %> <%= link_to "Logout", logout_path %></p>
+    <%= current_user.onid %> <%= link_to '(Reservations)', reservations_path %> <%= link_to('(Admin)', admin_path) if current_user.admin? %> <%= link_to "Logout", logout_path %></p>
 <% end %>

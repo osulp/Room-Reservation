@@ -4,7 +4,8 @@ RoomReservation::Application.routes.draw do
   get "/home/day/:date", :to => "home#day", :date => /[TZtz0-9:\-\.%]+?/, :format => /html|json/
   get "/login", :to => 'sessions#new'
   get "/logout", :to => 'sessions#logout'
-  get "/reservations", :to => 'reservations#current_user_reservations', :as => :current_user_reservations
+  get "/reservations", :to => 'reservations#index', :as => :my_reservations, :format => 'html'
+  get "/reservations", :to => 'reservations#current_user_reservations', :as => :current_user_reservations, :format => 'json'
   get "/availability/:room_id/:start", :to => 'reservations#availability', :start => /[TZtz0-9:\-\.%]+?/, :format => /html|json/, :as => :availability
   resources :reservations, :only => [:create, :update, :destroy]
   resources :users, :only => [:show]
