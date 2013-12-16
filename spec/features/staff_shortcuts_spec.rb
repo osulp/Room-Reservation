@@ -21,20 +21,6 @@ describe "staff shortcuts" do
         it "should clear the keycard entry field" do
           expect(find_field("keycard_entry").value).to eq ""
         end
-        it "should show a modal dialog" do
-          expect(page).to have_content("Keycard Checkin")
-        end
-        it "should ask you to check the card in" do
-          within("#modal_skeleton") do
-            expect(page).to have_content("Would you like to check this card in?")
-          end
-        end
-        it "should show you the reservation details" do
-          within("#modal_skeleton") do
-            expect(page).to have_content("Room")
-            expect(page).to have_content(keycard.reservation.room.name)
-          end
-        end
       end
     end
   end

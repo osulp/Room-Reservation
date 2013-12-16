@@ -15,16 +15,15 @@ class AdminShortcutsManager
         this.keycard_swiped()
         e.preventDefault()
     )
+  checked_in: (event, xhr, status) =>
+    console.log(event)
+    console.log(xhr)
+    console.log(status)
+    return
   keycard_swiped: =>
     @keycard_field.removeClass("bordered")
     keycard_entry = @keycard_field.val()
     return if !keycard_entry? || keycard_entry == ""
     @keycard_field.val("")
-    $.get("/admin/key_cards/search/#{keycard_entry}", (data)=>
-      @modal.find(".modal-content").html(data)
-      @modal.modal()
-    ).fail(=>
-      @keycard_field.addClass("bordered")
-    )
     return
   bind_user_search: ->

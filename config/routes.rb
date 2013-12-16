@@ -21,6 +21,9 @@ RoomReservation::Application.routes.draw do
       collection do
         get 'search/:key', :to => 'key_cards#search', :as => "search_admin_key_cards"
       end
+      member do
+        post 'checkin', :to => 'key_cards#checkin'
+      end
     end
     resources :settings, :only => [:index, :update]
   end

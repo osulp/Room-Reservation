@@ -1,8 +1,8 @@
 class Admin::KeyCardsController < AdminController
   respond_to :html, :json
-  skip_before_filter :require_admin, :only => :search
-  before_filter :require_staff, :only => :search
-  layout false, :only => :search
+  skip_before_filter :require_admin, :only => [:search, :checkin]
+  before_filter :require_staff, :only => [:search, :checkin]
+  layout false, :only => [:search, :checkin]
 
   def index
     @keycards = KeyCard.includes(:room).order('rooms.name')
@@ -37,13 +37,8 @@ class Admin::KeyCardsController < AdminController
     respond_with(@role, :location => admin_key_cards_path)
   end
 
-  def search
-    @keycard = KeyCard.where(:key => params[:key]).first!.decorate
-    if @keycard.reservation
-      render "checkin"
-    else
-      render "checkout"
-    end
+  def checkin
+    @keycard = KeyCard.find(params[:id])
   end
 
   private
