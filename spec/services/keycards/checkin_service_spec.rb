@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Keycards::CheckinService do
-  let(:keycard) {create(:key_card)}
+  let(:keycard) {create(:key_card_checked_out)}
   let(:user) {build(:user, :staff)}
   subject {Keycards::CheckinService.new(keycard, user)}
   before(:each) do
@@ -31,8 +31,9 @@ describe Keycards::CheckinService do
       @result = subject.save
     end
     context "when the key card has no reservation" do
-      it "should return true" do
-        expect(@result).to eq true
+      let(:keycard) {create(:key_card)}
+      it "should return false" do
+        expect(@result).to eq false
       end
     end
     context "when the keycard has a reservation" do

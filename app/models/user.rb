@@ -41,6 +41,10 @@ class User < OpenStruct
     role_names.include?("admin")
   end
 
+  def attributes
+    {"onid" => nil}
+  end
+
   private
 
   def calculate_max_reservation_time

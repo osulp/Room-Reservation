@@ -1,13 +1,15 @@
 class Keycards::CheckinService
   include ActiveModel::Model
-  attr_accessor :keycard, :user
+  attr_accessor :keycard, :user, :reservation
   validate :user_can_checkin
   validate :append_keycard_errors
   validate :append_reservation_errors
+  validate :has_reservation
 
   def initialize(keycard, user)
     self.keycard = keycard
     self.user = user
+    self.reservation = keycard.reservation
   end
 
   def user=(user)
@@ -19,7 +21,6 @@ class Keycards::CheckinService
 
   def save
     truncate_reservation
-    reservation = keycard.reservation
     remove_reservation
     return false unless valid?
     KeyCard.transaction do
@@ -30,11 +31,19 @@ class Keycards::CheckinService
     return true
   end
 
+  def attributes
+    {"keycard" => nil}
+  end
+
+  def as_json(options={})
+    {"keycard" => keycard}
+  end
+
   private
 
   # @TODO: Add truncated_at timestamp.
   def truncate_reservation
-    keycard.reservation.end_time = Time.current if keycard.reservation
+    reservation.end_time = Time.current if keycard.reservation
   end
 
   def remove_reservation
@@ -51,12 +60,16 @@ class Keycards::CheckinService
   end
 
   def append_reservation_errors
-    return if !keycard.reservation
-    unless keycard.reservation.valid?
-      keycard.reservation.errors.full_messages.each do |msg|
+    return if !reservation
+    unless reservation.valid?
+      reservation.errors.full_messages.each do |msg|
         self.errors.add(:base, msg)
       end
     end
+  end
+
+  def has_reservation
+    errors.add(:base, "This keycard is not checked out.") unless reservation
   end
 
   def user_can_checkin
