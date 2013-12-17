@@ -11,7 +11,7 @@ describe Admin::KeyCardsController do
     end
     context "when a keycard is given" do
       before(:each) do
-        post :checkin, :id => keycard.id, :format => :json
+        post :checkin, :key => keycard.key, :format => :json
       end
       context "with no reservation" do
         it "should return errors in JSON form" do

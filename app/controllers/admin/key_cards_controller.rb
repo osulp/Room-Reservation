@@ -38,10 +38,10 @@ class Admin::KeyCardsController < AdminController
   end
 
   def checkin
-    keycard = KeyCard.find(params[:id])
+    keycard = KeyCard.where(:key => params[:key]).first!
     @checkin_service = Keycards::CheckinService.new(keycard, current_user)
     @checkin_service.save
-    respond_with(@checkin_service, :location => root_path)
+    respond_with(@checkin_service, :location => root_path,:responder => JsonResponder)
   end
 
   private

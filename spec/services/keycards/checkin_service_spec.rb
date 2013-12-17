@@ -41,12 +41,30 @@ describe Keycards::CheckinService do
       let(:reservation) {create(:reservation, :user_onid => user.onid, :reserver_onid => user.onid, :start_time => start_time, :end_time => end_time)}
       let(:start_time) {Time.current - 2.hours}
       let(:end_time) {Time.current + 2.hours}
+      context "when the reservation is in the past" do
+        let(:end_time) {Time.current - 1.hours}
+        it "should leave the reservation alone" do
+          expect(Reservation.first.end_time.to_i).to eq end_time.to_i
+        end
+      end
+      context "when the reservation is in the future" do
+        let(:start_time) {Time.current + 1.hours}
+        it "should leave it alone" do
+          expect(@result).to eq true
+          r = Reservation.first
+          expect(r.start_time.to_i).to eq start_time.to_i
+          expect(r.end_time.to_i).to eq end_time.to_i
+        end
+      end
       context "when the reservation is ongoing" do
         it "should return true" do
           expect(@result).to eq true
         end
         it "should truncate the reservation" do
           expect(Reservation.first.end_time.to_i).to eq Time.current.to_i
+        end
+        it "should strip the reservation from the key card" do
+          expect(KeyCard.last.reservation).to eq nil
         end
       end
     end

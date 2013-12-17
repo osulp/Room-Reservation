@@ -26,10 +26,20 @@ class AdminShortcutsManager
     keycard_entry = @keycard_field.val()
     return if !keycard_entry? || keycard_entry == ""
     @keycard_field.val("")
-    this.keycard_success()
+    $.post("/admin/key_cards/checkin/#{keycard_entry}", this.keycard_success, 'JSON').fail(this.keycard_failure)
     return
   keycard_success: =>
     @message.removeClass('text-error')
     @message.addClass('text-success')
     @message.text('Key Card Checked In')
+    @keycard_field.removeClass("error")
+    @keycard_field.addClass("success")
+  keycard_failure: (data) =>
+    @message.removeClass('text-success')
+    @message.addClass('text-error')
+    data = data.responseJSON
+    errors = data["errors"].join(", ")
+    @message.text(errors)
+    @keycard_field.removeClass("success")
+    @keycard_field.addClass("error")
   bind_user_search: ->

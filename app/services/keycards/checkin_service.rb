@@ -20,6 +20,10 @@ class Keycards::CheckinService
   end
 
   def save
+    if reservation
+      old_start = reservation.start_time
+      old_end = reservation.end_time
+    end
     truncate_reservation
     remove_reservation
     return false unless valid?
@@ -28,7 +32,12 @@ class Keycards::CheckinService
       result &&= Reserver.new(reservation).save if reservation
       raise ActiveRecord::Rollback unless result == true
     end
+    notify_dates(old_start, old_end) if reservation
     return true
+  end
+
+  def notify_dates(start_time, end_time)
+    CalendarPresenter.publish_changed(start_time, end_time)
   end
 
   def attributes
@@ -43,11 +52,15 @@ class Keycards::CheckinService
 
   # @TODO: Add truncated_at timestamp.
   def truncate_reservation
-    reservation.end_time = Time.current if keycard.reservation
+    return if !reservation
+    return if reservation.end_time < Time.current
+    return if reservation.start_time > Time.current
+    reservation.end_time = Time.current
   end
 
   def remove_reservation
     keycard.reservation = nil
+    reservation.key_card = nil if reservation
   end
 
   def append_keycard_errors
@@ -69,7 +82,7 @@ class Keycards::CheckinService
   end
 
   def has_reservation
-    errors.add(:base, "This keycard is not checked out.") unless reservation
+    errors.add(:base, "Not checked out.") unless reservation
   end
 
   def user_can_checkin

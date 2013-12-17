@@ -12,4 +12,20 @@
   input[type="checkbox"].checkbox {
     margin-top: -3px;
   }
+  #staff-shortcut-message {
+    &.text-error {
+      color: #b94a48;
+    }
+    &.text-success {
+      color: #468847;
+    }
+  }
+  #keycard_entry {
+    &.error {
+      border-color: #b94a48;
+    }
+    &.success {
+      border-color: #468847;
+    }
+  }
 }
