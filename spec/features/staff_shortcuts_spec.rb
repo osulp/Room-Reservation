@@ -21,6 +21,16 @@ describe "staff shortcuts" do
         it "should clear the keycard entry field" do
           expect(find_field("keycard_entry").value).to eq ""
         end
+        it "should show a success message" do
+          within('#staff-shortcuts') do
+            expect(page).to have_selector('.text-success')
+            expect(page).to have_content("Key Card Checked In")
+          end
+        end
+        it "should check the card in" do
+          expect(page).to have_content('Key Card Checked In')
+          expect(KeyCard.first.reservation).to eq nil
+        end
       end
     end
   end

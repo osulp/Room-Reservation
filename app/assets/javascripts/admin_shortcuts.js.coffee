@@ -4,6 +4,7 @@ class AdminShortcutsManager
   constructor: ->
     @keycard_field = $("#keycard_entry")
     @modal = $("#modal_skeleton")
+    @message = $("#staff-shortcut-message")
     this.bind_keycard_swipe()
     this.bind_user_search()
   bind_keycard_swipe: ->
@@ -25,5 +26,10 @@ class AdminShortcutsManager
     keycard_entry = @keycard_field.val()
     return if !keycard_entry? || keycard_entry == ""
     @keycard_field.val("")
+    this.keycard_success()
     return
+  keycard_success: =>
+    @message.removeClass('text-error')
+    @message.addClass('text-success')
+    @message.text('Key Card Checked In')
   bind_user_search: ->

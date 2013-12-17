@@ -12,8 +12,25 @@ class Reservation < ActiveRecord::Base
   def user
     User.new(user_onid)
   end
+
   def reserver
     User.new(reserver_onid)
+  end
+
+  def user=(user)
+    if user.kind_of?(User)
+      self.user_onid = user.onid
+    else
+      self.user_onid = user.to_s
+    end
+  end
+
+  def reserver=(user)
+    if user.kind_of?(User)
+      self.reserver_onid = user.onid
+    else
+      self.reserver_onid = user.to_s
+    end
   end
 
   def duration

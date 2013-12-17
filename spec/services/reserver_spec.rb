@@ -17,8 +17,8 @@ describe Reserver do
     it {should validate_presence_of :start_time}
     it {should validate_presence_of :end_time}
     it {should validate_presence_of :room}
-    it {should validate_presence_of :reserver}
-    it {should validate_presence_of :reserved_for}
+    it {should validate_presence_of :reserver_onid}
+    it {should validate_presence_of :user_onid}
     it {should be_valid}
     context "when the duration is greater than what the user can have" do
       let(:end_time) {start_time + 4.hours}
@@ -61,7 +61,7 @@ describe Reserver do
         end
       end
     end
-    context "when the reserver is not the same as the reserved_for" do
+    context "when the reserver is not the same as the user" do
       let(:user) {build(:user)}
       let(:reserver) {build(:user)}
       context "and the reserver is staff" do
@@ -170,6 +170,22 @@ describe Reserver do
     end
   end
   describe ".save" do
+    context "when the reserver is passed a reservation object" do
+      before(:each) do
+        create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
+        subject.save
+        @reservation = Reservation.first
+        @reservation.end_time = @reservation.end_time + 1.minute
+        @new_reserver = Reserver.new(@reservation)
+      end
+      it "should be valid" do
+        expect(@new_reserver).to be_valid
+      end
+      it "should persist changes on save" do
+        expect(@new_reserver.save).to eq true
+        expect(Reservation.first.end_time).to eq @reservation.end_time
+      end
+    end
     context "when the model is invalid" do
       before(:each) do
         subject.stub(:valid?).and_return(false)

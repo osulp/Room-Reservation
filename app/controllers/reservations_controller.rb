@@ -39,7 +39,7 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    reserver = Reserver.new(params["reserver"].merge(:reserver_onid => current_user.onid))
+    reserver = Reserver.new(reserver_params)
     reserver.save
     respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
   end
@@ -53,6 +53,11 @@ class ReservationsController < ApplicationController
 
 
   protected
+
+  def reserver_params
+    params[:reserver] = params[:reserver].merge(:reserver_onid => current_user.onid)
+    params.require(:reserver).permit(:reserver_onid, :user_onid, :start_time, :room_id, :end_time, :description, :key_card_key)
+  end
 
   # @TODO: Make this configurable
   def max_availability
