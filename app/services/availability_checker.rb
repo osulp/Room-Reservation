@@ -1,10 +1,11 @@
 class AvailabilityChecker
-  attr_reader :room, :start_time, :end_time
+  attr_reader :room, :start_time, :end_time, :blacklist
 
-  def initialize(room, start_time, end_time)
+  def initialize(room, start_time, end_time, blacklist=[])
     @room = room
     @start_time = start_time
     @end_time = end_time
+    @blacklist = blacklist
   end
   def available?
     return false unless events.empty?
@@ -21,7 +22,7 @@ class AvailabilityChecker
       presenter = CalendarPresenter.cached(time, time.tomorrow.midnight)
       @events |= presenter.rooms.find{|room| room.id == self.room.id}.events
     end
-    @events = @events.select{|event| event.end_time > start_time && event.start_time < end_time}
+    @events = @events.select{|event| event.end_time > start_time && event.start_time < end_time && event.try(:object).try(:payload) != blacklist}
     @events
   end
 end

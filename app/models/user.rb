@@ -1,4 +1,5 @@
 class User < OpenStruct
+  include Draper::Decoratable
   def initialize(name, extra_params={})
     extra_params ||= {}
     extra_params[:onid] = name
@@ -38,6 +39,10 @@ class User < OpenStruct
   def admin?
     return false if onid.blank?
     role_names.include?("admin")
+  end
+
+  def attributes
+    {"onid" => nil}
   end
 
   private

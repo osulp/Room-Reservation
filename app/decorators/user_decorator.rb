@@ -1,8 +1,16 @@
 class UserDecorator < Draper::Decorator
+  decorates :user
   delegate_all
 
   def tag
     h.content_tag(:span,'',:id => "user-info", :data => data_hash)
+  end
+
+  def name
+    if banner_record && !banner_record.fullName.blank?
+      return banner_record.fullName
+    end
+    onid
   end
 
   def nil?

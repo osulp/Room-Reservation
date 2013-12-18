@@ -5,7 +5,7 @@ class Reserver
   # Keycard Include
   include Keycards::ReserverModule
   # Validations
-  validates :start_time, :end_time, :room, :reserver, :reserved_for, :presence => true
+  validates :start_time, :end_time, :room, :reserver_onid, :user_onid, :presence => true
   validate :user_not_nil
   validate :start_time_less_than_end_time
   validate :reservation_not_in_past
@@ -17,42 +17,28 @@ class Reserver
   validate :append_reservation_errors
   validate :day_limit_applied
 
-  ATTRIBUTES = [:reserver_onid, :user_onid, :room_id, :start_time, :end_time, :description, :key_card_key]
-  attr_accessor *ATTRIBUTES
-  attr_accessor :reserver, :reserved_for, :room
+  delegate :reserver, :user, :reserver_onid, :user_onid, :room_id, :room, :start_time, :end_time, :description, :key_card, :to => :reservation
+  delegate :start_time=, :end_time=, :room=, :reserver=, :user=, :reserver_onid=, :user_onid=, :to => :reservation
+  attr_accessor :key_card_key
   attr_reader :reservation
 
   delegate :as_json, :read_attribute_for_serialization, :to => :reservation
   after_reservation_save :send_email
 
   def initialize(attributes = {})
-    ATTRIBUTES.each do |attribute|
-      send("#{attribute}=", attributes[attribute])
+    if attributes.kind_of?(Reservation)
+      @reservation = attributes
+      return
     end
-    self.reserver = UserDecorator.new(User.new(reserver_onid)) if reserver_onid
-    self.reserved_for = UserDecorator.new(User.new(user_onid)) if user_onid
-    self.room = Room.where(:id => room_id).first
-  end
-
-  def start_time=(value)
-    @start_time = value if value.blank?
-    @start_time = Time.zone.parse(value.to_s)
-  end
-
-  def end_time=(value)
-    @end_time = value if value.blank?
-    @end_time = Time.zone.parse(value.to_s)
+    self.key_card_key = attributes.delete(:key_card_key)
+    @reservation ||= Reservation.new
+    @reservation.attributes = attributes
   end
 
   def save
     return false unless valid?
     @reservation ||= Reservation.new
-    @reservation.update_attributes(:user_onid => reserved_for.onid,
-                                   :reserver_onid => reserver.onid,
-                                   :room => room,
-                                   :start_time => start_time,
-                                   :end_time => end_time,
-                                   :description => description)
+
     run_callbacks :reservation_save do
       @reservation.save
     end
@@ -69,8 +55,8 @@ class Reserver
   private
 
   def send_email
-    if reserved_for.banner_record && !reserved_for.banner_record.email.blank?
-      ReservationMailer.delay.reservation_email(reservation, reserved_for)
+    if user.banner_record && !user.banner_record.email.blank?
+      ReservationMailer.delay.reservation_email(reservation, user.decorate)
     end
   end
 
@@ -86,28 +72,28 @@ class Reserver
   end
 
   def user_not_nil
-    return if !reserved_for || !reserver
-    errors.add(:base, "A username must be chosen to reserve for.") if reserved_for.nil?
+    return if !user || !reserver
+    errors.add(:base, "A username must be chosen to reserve for.") if user.nil?
     errors.add(:base, "Invalid Reserving Party") if reserver.nil?
   end
 
   # TODO: Evaluate this - what if they have a reservation on the second day when this crosses midnight?
   def concurrency_limit
     max_concurrent = Setting.max_concurrent_reservations.to_i
-    return if !reserved_for || !reserver || !start_time || max_concurrent == 0 || reserver_ability.can?(:ignore_restrictions,self.class)
-    current_reservations = reserved_for.reservations.where("start_time <= ? AND end_time >= ? AND start_time >= ?", start_time.tomorrow.midnight-1.second, start_time.midnight, start_time.midnight).size
+    return if !user || !reserver || !start_time || max_concurrent == 0 || reserver_ability.can?(:ignore_restrictions,self.class)
+    current_reservations = user.reservations.where("start_time <= ? AND end_time >= ? AND start_time >= ?", start_time.tomorrow.midnight-1.second, start_time.midnight, start_time.midnight).size
     errors.add(:base, "You can only make #{max_concurrent} reservations per day.") if current_reservations >= max_concurrent
   end
 
   def authorized_to_reserve
-    return if !reserved_for || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
-    errors.add(:base, "You are not authorized to reserve on behalf of #{reserved_for.onid}") if reserved_for.onid.downcase != reserver.onid.downcase
+    return if !user || !reserver || reserver_ability.can?(:ignore_restrictions,self.class) || !user_onid || !reserver_onid
+    errors.add(:base, "You are not authorized to reserve on behalf of #{user.onid}") if user.onid.downcase != reserver.onid.downcase
   end
 
   def duration_correct
-    return if !end_time || !start_time || !reserved_for || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
+    return if !end_time || !start_time || !user || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
     duration = end_time - start_time
-    errors.add(:base, "The reservation can not be for more than #{(reserved_for.max_reservation_time/60/60).to_i} hours") if duration > reserved_for.max_reservation_time
+    errors.add(:base, "The reservation can not be for more than #{(user.max_reservation_time/60/60).to_i} hours") if duration > user.max_reservation_time
   end
 
   def start_time_less_than_end_time
@@ -119,7 +105,7 @@ class Reserver
   end
 
   def time_is_available
-    checker = AvailabilityChecker.new(room, start_time, end_time)
+    checker = AvailabilityChecker.new(room, start_time, end_time, @reservation)
     return if !room || !start_time || !end_time
     errors.add(:base, "The requested time slot is not available for reservation") unless checker.available?
   end

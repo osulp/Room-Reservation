@@ -17,7 +17,14 @@ RoomReservation::Application.routes.draw do
     resources :roles, :only => [:index, :new, :create, :update, :destroy]
     resources :rooms, :only => [:index, :new, :create, :edit, :update, :destroy]
     resources :filters, :only => [:index, :new, :create, :edit, :update, :destroy]
-    resources :key_cards, :only => [:index, :new, :create, :edit, :update, :destroy]
+    resources :key_cards, :only => [:index, :new, :create, :edit, :update, :destroy] do
+      collection do
+        post 'checkin/:key', :to => 'key_cards#checkin'
+      end
+      member do
+        post 'checkin', :to => 'key_cards#checkin'
+      end
+    end
     resources :settings, :only => [:index, :update]
   end
 end

@@ -1,0 +1,31 @@
+.admin-navbar {
+  //width: 70%;
+  margin-left:auto;
+  margin-right:auto;
+  .brand {
+    margin-left:0px;
+  }
+  input.bordered {
+    border-width: 2px;
+    border-color: red;
+  }
+  input[type="checkbox"].checkbox {
+    margin-top: -3px;
+  }
+  #staff-shortcut-message {
+    &.text-error {
+      color: #b94a48;
+    }
+    &.text-success {
+      color: #468847;
+    }
+  }
+  #keycard_entry {
+    &.error {
+      border-color: #b94a48;
+    }
+    &.success {
+      border-color: #468847;
+    }
+  }
+}
