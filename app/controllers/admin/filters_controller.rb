@@ -31,7 +31,7 @@ class Admin::FiltersController < AdminController
   def destroy
     @filter = Filter.find(params[:id])
     flash[:success] = 'Room filter deleted' if @filter.destroy
-    respond_with(@role, :location => admin_filters_path)
+    respond_with(@filter, :location => admin_filters_path)
   end
 
   private

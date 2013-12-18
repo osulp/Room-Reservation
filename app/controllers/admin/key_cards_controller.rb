@@ -34,7 +34,7 @@ class Admin::KeyCardsController < AdminController
   def destroy
     @keycard = KeyCard.find(params[:id])
     flash[:success] = 'Key Card deleted' if @keycard.destroy
-    respond_with(@role, :location => admin_key_cards_path)
+    respond_with(@keycard, :location => admin_key_cards_path)
   end
 
   def checkin
