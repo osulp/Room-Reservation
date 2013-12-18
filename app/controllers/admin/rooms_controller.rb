@@ -31,7 +31,7 @@ class Admin::RoomsController < AdminController
   def destroy
     @room = Room.find(params[:id])
     flash[:success] = 'Room deleted' if @room.destroy
-    respond_with(@role, :location => admin_rooms_path)
+    respond_with(@room, :location => admin_rooms_path)
   end
 
   private
