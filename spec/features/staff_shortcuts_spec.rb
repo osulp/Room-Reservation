@@ -18,9 +18,6 @@ describe "staff shortcuts" do
     context "when an existing card is swiped" do
       context "which is checked out to a reservation" do
         let(:keycard) {create(:key_card_checked_out)}
-        it "should clear the keycard entry field" do
-          expect(find_field("keycard_entry").value).to eq ""
-        end
         it "should show a success message" do
           within('#staff-shortcuts') do
             expect(page).to have_selector('.text-success')
