@@ -18,7 +18,7 @@ class EventManager::ReservationManager < EventManager::EventManager
   end
 
   def to_event(reservation)
-    end_time = reservation.truncated_at if reservation.truncated_at && reservation.truncated_at < reservation.end_time
+    end_time = reservation.truncated_at if reservation.truncated_at && reservation.truncated_at < reservation.end_time && reservation.truncated_at >= reservation.start_time
     end_time ||= reservation.end_time
     ReservationDecorator.new(Event.new(reservation.start_time-reservation_padding, end_time+reservation_padding, priority, reservation, reservation.room_id))
   end
