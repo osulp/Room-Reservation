@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131111164002) do
+ActiveRecord::Schema.define(version: 20131220185521) do
 
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 20131111164002) do
     t.datetime "created_at",    limit: 6
     t.datetime "updated_at",    limit: 6
     t.datetime "deleted_at"
+    t.datetime "truncated_at"
   end
 
   add_index "reservations", ["room_id"], name: "index_reservations_on_room_id", using: :btree
