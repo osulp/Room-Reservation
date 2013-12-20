@@ -31,4 +31,36 @@ describe "staff shortcuts" do
       end
     end
   end
+  describe "user search", :focus => true, :js => true do
+    before(:each) do
+      fill_in "user_lookup", :with => value
+    end
+    context "when a username is entered" do
+      let(:value) {user.onid}
+      context "when an ONID username is entered" do
+        it "should bring up a modal window" do
+          within("#modal_skeleton") do
+            expect(page).to have_content("User Reservations (#{user.onid})")
+          end
+        end
+      end
+    end
+    context "when an ID is entered" do
+      let(:banner_record) do
+        b = build(:banner_record, :onid => user.onid)
+        b.osu_id = "931590800"
+        b.save
+        b
+      end
+      let(:value) do
+        banner_record
+        "931590800"
+      end
+      it "should bring up a modal window" do
+        within("#modal_skeleton") do
+          expect(page).to have_content("User Reservations (#{user.onid})")
+        end
+      end
+    end
+  end
 end

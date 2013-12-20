@@ -3,6 +3,7 @@ jQuery ->
 class AdminShortcutsManager
   constructor: ->
     @keycard_field = $("#keycard_entry")
+    @user_field = $("#user_lookup")
     @modal = $("#modal_skeleton")
     @message = $("#staff-shortcut-message")
     this.bind_keycard_swipe()
@@ -47,3 +48,26 @@ class AdminShortcutsManager
     @keycard_field.removeClass("success")
     @keycard_field.addClass("error")
   bind_user_search: ->
+    @user_field.on("blur", => this.user_searched())
+    # Bind to enter key.
+    @user_field.on("keypress", (e) =>
+      if e.which == 13
+        @user_field.trigger("blur")
+        this.user_searched()
+        e.preventDefault()
+    )
+  user_searched: =>
+    @user_field.removeClass("bordered")
+    user_query = @user_field.val()
+    return if !user_query || user_query == ""
+    @user_field.val("")
+    @user_field.focus()
+    $.get("/admin/users/#{user_query}/reservations", (data) =>
+      @modal.find(".modal-content").html(data)
+      @modal.modal().css({
+        width: 'auto',
+        'margin-left': ->
+          return -($(this).width() / 2);
+        }
+      )
+    )

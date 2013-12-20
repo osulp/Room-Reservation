@@ -1,0 +1,54 @@
+<table class="table table-hover my-reservations">
+  <tr>
+    <th class="span2">Room</th>
+    <th class="span3">Date &amp; Time</th>
+    <th class="span3">Weekday</th>
+    <th class="span2">Request Date</th>
+    <th class="span2"></th>
+  </tr>
+  <% @reservations[0].each do |reservation| %>
+    <tr
+    data-room-id="<%= reservation.room.id %>"
+    data-room-name="<%= reservation.room.name %>"
+    class="reservation"
+    >
+      <td><%= reservation.room.name %></td>
+      <td>
+        <%= reservation.formatted_start %> -
+        <%= reservation.formatted_end %>
+        <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
+      </td>
+      <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
+      </td>
+      <td><%= reservation.formatted_created_at %></td>
+      <td><%= link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => reservation.data_hash %></td>
+    </tr>
+  <% end %>
+  <% if @reservations[0].empty? %>
+    <tr><td colspan="5" class="row-empty">Empty</td></tr>
+  <% end %>
+  <% unless @reservations[1].empty? %>
+    <tr>
+      <th colspan="5">Expired &amp; Cancelled</th>
+    </tr>
+  <% end %>
+  <% @reservations[1].each do |reservation| %>
+    <tr class="reservation">
+      <td><%= reservation.room.name %></td>
+      <td>
+        <%= reservation.formatted_start %> -
+        <%= reservation.formatted_end %>
+        <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
+      </td>
+      <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
+      <td><%= reservation.formatted_created_at %></td>
+      <td>
+        <% if reservation.deleted? %>
+          <span class="label label-important">Cancelled <%= reservation.formatted_deleted_at %></span>
+        <% else %>
+          <span class="label">Expired</span>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

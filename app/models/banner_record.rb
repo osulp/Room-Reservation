@@ -9,6 +9,11 @@ class BannerRecord < ActiveRecord::Base
     self.where(:idHash => hash).first!
   end
 
+  def self.soft_find_by_osu_id(id)
+    hash = IdHash.create(id)
+    self.where(:idHash => hash).first
+  end
+
   def osu_id=(value)
     self.idHash = IdHash.create(value).to_s
   end
