@@ -31,7 +31,7 @@ describe "staff shortcuts" do
       end
     end
   end
-  describe "user search", :focus => true, :js => true do
+  describe "user search", :js => true do
     before(:each) do
       fill_in "user_lookup", :with => value
     end

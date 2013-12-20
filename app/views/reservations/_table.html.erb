@@ -21,7 +21,7 @@
       <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
       </td>
       <td><%= reservation.formatted_created_at %></td>
-      <td><%= link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => reservation.data_hash %></td>
+      <td><%= reservation.status_string %></td>
     </tr>
   <% end %>
   <% if @reservations[0].empty? %>
@@ -43,11 +43,7 @@
       <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
       <td><%= reservation.formatted_created_at %></td>
       <td>
-        <% if reservation.deleted? %>
-          <span class="label label-important">Cancelled <%= reservation.formatted_deleted_at %></span>
-        <% else %>
-          <span class="label">Expired</span>
-        <% end %>
+        <%= reservation.status_string %>
       </td>
     </tr>
   <% end %>

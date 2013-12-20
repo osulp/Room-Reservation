@@ -18,7 +18,7 @@
         <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
       </td>
       <td><%= reservation.formatted_created_at %></td>
-      <td><%= link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => reservation.data_hash %></td>
+      <td><%= reservation.status_string %></td>
     </tr>
   <% end %>
   <% if @reservations[0].empty? %>
@@ -38,12 +38,7 @@
         <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
       </td>
       <td><%= reservation.formatted_created_at %></td>
-      <td>
-        <% if reservation.deleted? %>
-          <span class="label label-important">Cancelled <%= reservation.formatted_deleted_at %></span>
-        <% else %>
-          <span class="label">Expired</span>
-        <% end %>
+      <td><%= reservation.status_string %></td>
       </td>
     </tr>
   <% end %>
