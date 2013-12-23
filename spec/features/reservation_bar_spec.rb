@@ -106,6 +106,20 @@ describe "GET / reservation bars" do
           expect(page).to have_selector(".bar-danger")
           expect(page).to have_selector(".bar-success",:count => 2)
         end
+        context "and the reservation has been truncated", :js => true do
+          it "should change the height appropriately" do
+            expect(page).to have_selector(".bar-danger")
+            current_height = page.evaluate_script("$('.bar-danger').first().height()")
+            r = Reservation.first
+            r.truncated_at = r.end_time - 1.hours
+            r.save
+            visit root_path
+            expect(page).to have_selector(".bar-danger")
+            new_height = page.evaluate_script("$('.bar-danger').first().height()")
+            expect(current_height).not_to eq new_height
+          end
+
+        end
 
         describe "caching", :caching => true  do
           before(:each) do
@@ -131,6 +145,19 @@ describe "GET / reservation bars" do
               create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
               visit root_path
               expect(page).to have_selector(".bar-danger", :count => 2)
+            end
+          end
+          context "and the reservation has been truncated", :js => true do
+            it "should change the height appropriately" do
+              expect(page).to have_selector(".bar-danger")
+              current_height = page.evaluate_script("$('.bar-danger').first().height()")
+              r = Reservation.first
+              r.truncated_at = r.end_time - 1.hours
+              r.save
+              visit root_path
+              expect(page).to have_selector(".bar-danger")
+              new_height = page.evaluate_script("$('.bar-danger').first().height()")
+              expect(current_height).not_to eq new_height
             end
           end
           context "when the reservation switches to be owned by them" do
@@ -205,3 +232,4 @@ describe "GET / reservation bars" do
     end
   end
 end
+

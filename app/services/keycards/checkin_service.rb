@@ -53,9 +53,9 @@ class Keycards::CheckinService
   # @TODO: Add truncated_at timestamp.
   def truncate_reservation
     return if !reservation
-    return if reservation.end_time < Time.current
-    return if reservation.start_time > Time.current
-    reservation.end_time = Time.current
+    #return if reservation.end_time < Time.current
+    #return if reservation.start_time > Time.current
+    reservation.truncated_at = Time.current
   end
 
   def remove_reservation

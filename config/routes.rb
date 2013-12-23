@@ -21,9 +21,14 @@ RoomReservation::Application.routes.draw do
       collection do
         post 'checkin/:key', :to => 'key_cards#checkin'
       end
+    end
+    resources :reservations, :only => [] do
       member do
-        post 'checkin', :to => 'key_cards#checkin'
+        post 'checkout/:key', :to => 'reservations#checkout'
       end
+    end
+    resources :users, :only => [] do
+      resources :reservations, :only => [:index]
     end
     resources :settings, :only => [:index, :update]
   end

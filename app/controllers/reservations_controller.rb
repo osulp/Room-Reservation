@@ -5,13 +5,7 @@ class ReservationsController < ApplicationController
   before_filter RubyCAS::Filter, :only => :index
 
   def index
-    # Split all reservations into coming ones and invalid ones
-    @reservations = current_user.reservations.with_deleted.order(:start_time).partition do |r|
-      r.end_time.future? && !r.deleted?
-    end
-    # TODO: Cache this if necessary; Slice this if it's too long
-    @reservations[1].reverse!
-    @reservations.map!{|x| x.map{|y| y.decorate}}
+    @reservations = ReservationFacade.new(current_user).reservations
     respond_with @reservations
   end
 

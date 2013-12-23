@@ -9,7 +9,7 @@ class Ability
     end
     # Staff permissions
     if user.staff?
-      can [:check_in], KeyCard
+      can [:check_in, :check_out], KeyCard
       can [:assign_keycard, :ignore_restrictions], Reserver
       can [:view_past_dates], :calendar
       can [:manage], Reservation

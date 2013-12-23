@@ -60,8 +60,11 @@ describe Keycards::CheckinService do
         it "should return true" do
           expect(@result).to eq true
         end
-        it "should truncate the reservation" do
-          expect(Reservation.first.end_time.to_i).to eq Time.current.to_i
+        it "should leave end_time alone" do
+          expect(Reservation.first.end_time.to_i).to eq end_time.to_i
+        end
+        it "should add a truncated_at" do
+          expect(Reservation.first.truncated_at.to_i).to eq Time.current.to_i
         end
         it "should strip the reservation from the key card" do
           expect(KeyCard.last.reservation).to eq nil

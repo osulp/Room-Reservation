@@ -69,6 +69,24 @@ describe "GET /reservations" do
           Timecop.return
         end
       end
+      context "and the reservation has been truncated" do
+        before(:each) do
+          r = Reservation.last
+          r.start_time = Time.current-1.hour
+          r.end_time = Time.current + 1.hour
+          r.truncated_at = Time.current
+          r.save
+          visit my_reservations_path
+        end
+        it "should mark the reservation as not ongoing" do
+          expect(page).to have_content("Empty")
+        end
+        it "should display the checkin time" do
+          expect(page).to have_selector(".reservation")
+          expect(page).to have_content(@room1.name)
+          expect(page).to have_content('Checked In')
+        end
+      end
       context "and the reservation is cancelled" do
         it "should display as cancelled" do
           Reservation.last.destroy

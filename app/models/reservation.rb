@@ -37,4 +37,8 @@ class Reservation < ActiveRecord::Base
     self.end_time - self.start_time
   end
 
+  def expired?
+    end_time < Time.current
+  end
+
 end

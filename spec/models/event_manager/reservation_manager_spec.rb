@@ -75,6 +75,31 @@ describe EventManager::ReservationManager do
           expect(subject.second.payload).to eq @r1
         end
       end
+      context "when the room has a reservation with a truncated time" do
+        let(:truncated_at) {end_time-3.hours}
+        before(:each) do
+          @r = create(:reservation, :room => room, :start_time => start_time+2.hours, :end_time => end_time-2.hours, :truncated_at => truncated_at )
+        end
+        context "which is less than end_time" do
+          it "should return that for #end_time" do
+            expect(subject.first.end_time-10.minutes).to eq truncated_at
+          end
+        end
+        context "which is greater than end_time" do
+          let(:truncated_at) {end_time-1.hours}
+          it "should return the regular end_time" do
+            expect(subject.first.end_time-10.minutes).not_to eq truncated_at
+            expect(subject.first.end_time-10.minutes).to eq @r.end_time
+          end
+        end
+        context "which is less than start_time" do
+          let(:truncated_at) {start_time+1.hours}
+          it "should return the regular start_time and end_time" do
+            expect(subject.first.end_time-10.minutes).to eq @r.end_time
+            expect(subject.first.start_time+10.minutes).to eq @r.start_time
+          end
+        end
+      end
     end
   end
 end
