@@ -17,6 +17,7 @@ class CancelPopupManager
       master.position_popup(event.pageX, event.pageY)
       master.populate_cancel_popup(room_element, @start_time, @end_time, element)
       event.stopPropagation()
+      event.preventDefault()
     )
     @popup.click (event) ->
       event.stopPropagation() unless $(event.target).data("remote")?
