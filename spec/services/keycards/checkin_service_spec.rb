@@ -3,9 +3,11 @@ require 'spec_helper'
 describe Keycards::CheckinService do
   let(:keycard) {create(:key_card_checked_out)}
   let(:user) {build(:user, :staff)}
+  let(:banner_record) {create(:banner_record, :onid => user.onid, :email => "bla@bla.org")}
   subject {Keycards::CheckinService.new(keycard, user)}
   before(:each) do
     Timecop.freeze
+    banner_record
     create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
   end
   it "should be valid" do
@@ -65,6 +67,9 @@ describe Keycards::CheckinService do
         end
         it "should add a truncated_at" do
           expect(Reservation.first.truncated_at.to_i).to eq Time.current.to_i
+        end
+        it "should not send an email" do
+          expect(ActionMailer::Base.deliveries).to be_empty
         end
         it "should strip the reservation from the key card" do
           expect(KeyCard.last.reservation).to eq nil

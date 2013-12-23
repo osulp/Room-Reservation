@@ -29,7 +29,7 @@ class Keycards::CheckinService
     return false unless valid?
     KeyCard.transaction do
       result = keycard.save
-      result &&= Reserver.new(reservation).save if reservation
+      result &&= Reserver.new(reservation, :ignore_email => true).save if reservation
       raise ActiveRecord::Rollback unless result == true
     end
     notify_dates(old_start, old_end) if reservation

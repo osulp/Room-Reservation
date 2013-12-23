@@ -25,7 +25,8 @@ class Reserver
   delegate :as_json, :read_attribute_for_serialization, :to => :reservation
   after_reservation_save :send_email
 
-  def initialize(attributes = {})
+  def initialize(attributes = {},options={})
+    @options = options
     if attributes.kind_of?(Reservation)
       @reservation = attributes
       return
@@ -55,6 +56,7 @@ class Reserver
   private
 
   def send_email
+    return if @options[:ignore_email]
     if user.banner_record && !user.banner_record.email.blank?
       ReservationMailer.delay.reservation_email(reservation, user.decorate)
     end
