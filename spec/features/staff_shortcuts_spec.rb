@@ -61,6 +61,54 @@ describe "staff shortcuts" do
           expect(page).to have_content("User Reservations (#{user.onid})")
         end
       end
+      context "and the user has a reservation" do
+        let(:reservation) {create(:reservation, :user_onid => user.onid, :start_time => Time.current + 2.hours, :end_time => Time.current+4.hours)}
+        it "should show it" do
+          within("#modal_skeleton") do
+            expect(page).to have_content("User Reservations")
+            expect(page).to have_content(reservation.room.name)
+            expect(page).not_to have_content("Empty")
+          end
+        end
+        context "which already has a keycard attached" do
+          let(:keycard) {create(:key_card, :room => reservation.room, :reservation => reservation)}
+          it "should hide the keycard entry field" do
+            within("#modal_skeleton") do
+              expect(page).to have_content(reservation.room.name)
+              expect(page).not_to have_selector(".keycard-checkout")
+              expect(page).to have_content("Checked Out")
+            end
+          end
+        end
+        context "which still needs to be checked out" do
+          it "should show the keycard entry field" do
+            within("#modal_skeleton") do
+              expect(page).to have_selector(".keycard-checkout")
+            end
+          end
+          context "and a card is swiped" do
+            let(:keycard) {create(:key_card, :room => reservation.room)}
+            before(:each) do
+              fill_in "keycard-checkout-#{reservation.id}", :with => keycard.key
+            end
+            it "should show a confirmation page" do
+              expect(page).to have_content("Key Card Checked Out")
+            end
+            it "should reload the information" do
+              expect(page).to have_content("Checked Out")
+            end
+          end
+        end
+        context "which is more than 12 hours in the future" do
+          let(:reservation) {create(:reservation, :user_onid => user.onid, :start_time => Time.current + 13.hours, :end_time => Time.current+14.hours)}
+          it "should hide the keycard entry field" do
+            within("#modal_skeleton") do
+              expect(page).to have_content(reservation.room.name)
+              expect(page).not_to have_selector(".keycard-checkout")
+            end
+          end
+        end
+      end
     end
   end
 end

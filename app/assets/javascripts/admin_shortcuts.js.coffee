@@ -7,6 +7,7 @@ class AdminShortcutsManager
     @modal = $("#modal_skeleton")
     @message = $("#staff-shortcut-message")
     this.bind_keycard_swipe()
+    this.bind_keycard_checkout()
     this.bind_user_search()
   bind_keycard_swipe: ->
     @keycard_field.on("blur", => this.keycard_swiped())
@@ -17,6 +18,47 @@ class AdminShortcutsManager
         this.keycard_swiped()
         e.preventDefault()
     )
+  bind_keycard_checkout: ->
+    master = this
+    $('body').on('blur', '.keycard-checkout', ->
+      master.keycard_checkout_swiped(this)
+    )
+    $('body').on('keypress', '.keycard-checkout', (e)->
+      if e.which == 13
+        $(this).trigger("blur")
+        master.keycard_checkout_swiped(this)
+        e.preventDefault()
+    )
+    return
+  keycard_checkout_swiped: (field) ->
+    field = $(field)
+    id = field.data("id")
+    keycard_value = field.val()
+    return if !keycard_value || !id
+    field.val("")
+    $.post("/admin/reservations/#{id}/checkout/#{keycard_value}.json", this.keycard_checkout_success, 'JSON').fail(this.keycard_checkout_failure)
+    return
+  keycard_checkout_success: (data) =>
+    this.reload_user(this.show_success)
+    return
+  show_success: =>
+    alert = $("#modal-alert")
+    alert.removeClass("alert-error")
+    alert.addClass("alert-success")
+    alert.html("Key Card Checked Out")
+    alert.show()
+    return
+  keycard_checkout_failure: (data) =>
+    alert = $("#modal-alert")
+    alert.removeClass("alert-success")
+    alert.addClass("alert-error")
+    data = data.responseJSON
+    if data?["errors"]?
+      alert.html(data["errors"].join("<br>"))
+    else
+      alert.html("Unable to find given key card.")
+    alert.show()
+    return
   checked_in: (event, xhr, status) =>
     console.log(event)
     console.log(xhr)
@@ -62,12 +104,21 @@ class AdminShortcutsManager
     return if !user_query || user_query == ""
     @user_field.val("")
     @user_field.focus()
+    this.load_user(user_query)
+  reload_user: (callback)=>
+    user_query = @modal.find(".modal-content").data("user")
+    this.load_user(user_query, callback) if user_query?
+    return
+  load_user: (user_query, callback) =>
     $.get("/admin/users/#{user_query}/reservations", (data) =>
+      @modal.find(".modal-content").data("user", user_query)
       @modal.find(".modal-content").html(data)
+      callback?()
       @modal.modal().css({
-        width: 'auto',
-        'margin-left': ->
-          return -($(this).width() / 2);
+          width: 'auto',
+          'margin-left': ->
+            return -($(this).width() / 2);
         }
       )
     )
+    return

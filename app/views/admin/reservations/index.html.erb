@@ -3,6 +3,7 @@
   <h4 class="modal-title">User Reservations (<%= @user.onid %>)</h4>
 </div>
 <div class="modal-body">
+  <div id="modal-alert" class="alert" style="display: none;"></div>
   <%= render :partial => "table" %>
 </div>
 <div class="modal-footer">

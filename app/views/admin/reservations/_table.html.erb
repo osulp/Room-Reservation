@@ -4,6 +4,7 @@
     <th class="span3">Date &amp; Time</th>
     <th class="span2">Request Date</th>
     <th class="span2"></th>
+    <th class="span2"></th>
   </tr>
   <% @reservations[0].each do |reservation| %>
     <tr
@@ -19,6 +20,7 @@
       </td>
       <td><%= reservation.formatted_created_at %></td>
       <td><%= reservation.status_string %></td>
+      <td><%= reservation.keycard_checkout %></td>
     </tr>
   <% end %>
   <% if @reservations[0].empty? %>
@@ -39,7 +41,7 @@
       </td>
       <td><%= reservation.formatted_created_at %></td>
       <td><%= reservation.status_string %></td>
-      </td>
+      <td></td>
     </tr>
   <% end %>
 </table>

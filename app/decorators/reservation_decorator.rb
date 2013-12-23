@@ -37,6 +37,12 @@ class ReservationDecorator < EventDecorator
     h.content_tag(:span, :class => "label label-important") {"Cancelled #{formatted_deleted_at}"}
   end
 
+  def keycard_checkout
+    return if start_time > Time.current+12.hours # TODO: Make this configurable.
+    return "Checked Out" if key_card
+    h.text_field_tag "keycard-checkout-#{self.id}", '', :class => 'keycard-checkout', :placeholder => "Swipe Keycard to Check Out", :data => {:id => id}
+  end
+
   def cancel_string
     h.link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => data_hash
   end
