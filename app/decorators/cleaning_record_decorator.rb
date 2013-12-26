@@ -19,7 +19,7 @@ class CleaningRecordDecorator < Draper::Decorator
 
   def room_names
     room_names = []
-    rooms.group_by(&:floor).each do |floor, floor_rooms|
+    rooms.order(:floor, :name).group_by(&:floor).each do |floor, floor_rooms|
       mapped_names = floor_rooms.map(&:name)
       if floor_rooms.map{|x| x.name} == organized_floors[floor]
         room_names << "Floor #{floor}"
