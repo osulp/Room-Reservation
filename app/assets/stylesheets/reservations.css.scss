@@ -1,29 +1,30 @@
 $w: 40px;
 .my-reservations {
-  .weekday {
-    border-bottom: 1px dotted lightgrey;
-    width: $w * 7;
-    div {
-      width: $w; height: 20px;
-      text-align: center; color: white;
-      border-radius: 3px;
-      text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
-      padding: 2px 0;
-      font-weight: 700;
-    }
-    
-    .d0 { background-color: #D15B47; &:after {content: 'Sun';} margin-left: $w * 0; margin-right: $w * 6; }
-    .d1 { background-color: #87B87F; &:after {content: 'Mon';} margin-left: $w * 1; margin-right: $w * 5; }
-    .d2 { background-color: #6FB3E0; &:after {content: 'Tue';} margin-left: $w * 2; margin-right: $w * 4; }
-    .d3 { background-color: #69AA46; &:after {content: 'Wed';} margin-left: $w * 3; margin-right: $w * 3; }
-    .d4 { background-color: #269ABC; &:after {content: 'Thu';} margin-left: $w * 4; margin-right: $w * 2; }
-    .d5 { background-color: #FFB752; &:after {content: 'Fri';} margin-left: $w * 5; margin-right: $w * 1; }
-    .d6 { background-color: #AC2925; &:after {content: 'Sat';} margin-left: $w * 6; margin-right: $w * 0; }
-  }
 
   td.row-empty {
     text-align: center;
     font-style: italic;
     color: grey;
   }
+}
+.weekday {
+  border-bottom: 1px dotted lightgrey;
+  //width: $w * 7;
+  div {
+    width: $w; height: 20px;
+    text-align: center; color: white;
+    border-radius: 3px;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+    padding: 2px 0;
+    font-weight: 700;
+    position: absolute;
+  }
+
+  .d0 { background-color: #D15B47; &:after {content: 'Sun';} margin-left: $w * 0; margin-right: $w * 6; }
+  .d1 { background-color: #87B87F; &:after {content: 'Mon';} margin-left: $w * 1; margin-right: $w * 5; }
+  .d2 { background-color: #6FB3E0; &:after {content: 'Tue';} margin-left: $w * 2; margin-right: $w * 4; }
+  .d3 { background-color: #69AA46; &:after {content: 'Wed';} margin-left: $w * 3; margin-right: $w * 3; }
+  .d4 { background-color: #269ABC; &:after {content: 'Thu';} margin-left: $w * 4; margin-right: $w * 2; }
+  .d5 { background-color: #FFB752; &:after {content: 'Fri';} margin-left: $w * 5; margin-right: $w * 1; }
+  .d6 { background-color: #AC2925; &:after {content: 'Sat';} margin-left: $w * 6; margin-right: $w * 0; }
 }

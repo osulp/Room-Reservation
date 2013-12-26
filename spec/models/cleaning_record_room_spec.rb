@@ -4,8 +4,6 @@ describe CleaningRecordRoom do
   describe "validations" do
     it {should belong_to(:room)}
     it {should belong_to(:cleaning_record)}
-    it {should validate_presence_of(:room)}
-    it {should validate_presence_of(:cleaning_record)}
     context "when a room has a cleaning record" do
       before(:each) do
         @room = create(:room)

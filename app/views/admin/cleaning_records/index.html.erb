@@ -1,0 +1,35 @@
+<h1>Cleaning Schedule</h1>
+
+<table class="table table-hover">
+  <tr>
+    <th class="span2">Date Range</th>
+    <th class="span2">Time Range (Closed)</th>
+    <th class="span3">Weekdays</th>
+    <th class="span3">Rooms</th>
+    <th class="span2"></th>
+  </tr>
+  <% @cleaning_records.each do |cleaning_record| %>
+    <tr class="cleaning-record">
+      <td><%= cleaning_record.date_range %></td>
+      <td><%= cleaning_record.time_range %></td>
+      <td>
+        <div class="weekday">
+          <% cleaning_record.weekdays.each do |weekday| %>
+            <div class="d<%= weekday %>"></div>
+          <% end %>
+        </div>
+      </td>
+      <td>
+        <% cleaning_record.rooms.each do |f| %>
+          <code class="text-info"><%= f.name %></code>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to 'Edit', edit_admin_cleaning_record_path(cleaning_record), :class => 'btn' %>
+        <%= link_to 'Delete', admin_cleaning_record_path(cleaning_record), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'New Cleaning Record', new_admin_cleaning_record_path, :class => 'btn btn-primary' %>
