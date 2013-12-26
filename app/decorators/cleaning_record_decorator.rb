@@ -10,12 +10,7 @@ class CleaningRecordDecorator < Draper::Decorator
   end
 
   def room_collection
-    #all_rooms_selection | floor_selection | room_selection
     room_selection
-  end
-
-  def all_rooms_selection
-    [["All Rooms", nil, {:data => {:all => true}}]]
   end
 
   def floor_selection
