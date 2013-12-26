@@ -2,7 +2,7 @@ class CleaningRecordDecorator < Draper::Decorator
   delegate_all
 
   def date_range
-    "#{start_date.strftime("%m/%d")} - #{end_date.strftime("%m/%d")}"
+    "#{start_date.strftime("%m/%d/%y")} - #{end_date.strftime("%m/%d/%y")}"
   end
 
   def time_range
