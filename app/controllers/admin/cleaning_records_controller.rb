@@ -5,7 +5,7 @@ class Admin::CleaningRecordsController < AdminController
   end
 
   def new
-    @cleaning_record = CleaningRecord.new
+    @cleaning_record = CleaningRecord.new.decorate
     respond_with(@cleaning_record)
   end
 
@@ -21,12 +21,13 @@ class Admin::CleaningRecordsController < AdminController
       redirect_to admin_cleaning_records_path
     else
       build_errors
+      @cleaning_record = @cleaning_record.decorate
       render :action => 'new'
     end
   end
 
   def edit
-    @cleaning_record = CleaningRecord.find(params[:id])
+    @cleaning_record = CleaningRecord.find(params[:id]).decorate
     respond_with @cleaning_record
   end
 
@@ -42,6 +43,7 @@ class Admin::CleaningRecordsController < AdminController
       redirect_to admin_cleaning_records_path
     else
       build_errors
+      @cleaning_record = @cleaning_record.decorate
       render :action => 'edit'
     end
   end
@@ -49,6 +51,7 @@ class Admin::CleaningRecordsController < AdminController
   def destroy
     @cleaning_record = CleaningRecord.find(params[:id])
     flash[:success] = 'Cleaning record deleted' if @cleaning_record.destroy
+    @cleaning_record = @cleaning_record.decorate
     respond_with(@cleaning_record, :location => admin_cleaning_records_path)
   end
 

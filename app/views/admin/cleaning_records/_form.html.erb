@@ -3,7 +3,25 @@
   <%= f.input :end_date, :class => "datepicker" %>
   <%= f.input :start_time %>
   <%= f.input :end_time %>
-  <%= f.association :rooms, as: :check_boxes %>
+  <div class="row">
+  <div class="span6">
+    <%= f.association :rooms, as: :check_boxes, :collection => @cleaning_record.room_collection %>
+  </div>
+  <div class="span6">
+    <div class="controls">
+      <%= label_tag "", :class => "checkbox" do %>
+        <%= check_box_tag "all_rooms","",false, :class => "check_boxes optional", :data => {:trigger_floor => @cleaning_record.floor_selection.map{|x| x.last}.join(",")} %>
+        All Rooms
+      <% end %>
+      <% @cleaning_record.floor_selection.each do |floor| %>
+        <%= label_tag "", :class => "checkbox" do %>
+          <%= check_box_tag floor.second,"",false, :class => "check_boxes optional", :data => {:trigger_floor => floor.last} %>
+          <%= floor.first %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  </div>
   <%= f.input :weekdays, :as => :check_boxes, :collection => [["Sun","0"], ["Mon","1"], ["Tues","2"], ["Wed","3"],["Thur","4"],["Fri","5"],["Sat","6"]] %>
   <div class="control-group">
     <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
