@@ -1,0 +1,11 @@
+<%= simple_form_for(@cleaning_record, :url => admin_cleaning_record_path(@cleaning_record), :html => {:class => 'form-horizontal cleaning-record-form'}) do |f| %>
+  <%= f.input :start_date, :class => "datepicker" %>
+  <%= f.input :end_date, :class => "datepicker" %>
+  <%= f.input :start_time %>
+  <%= f.input :end_time %>
+  <%= f.association :rooms, as: :check_boxes %>
+  <%= f.input :weekdays, :as => :check_boxes, :collection => [["Sun","0"], ["Mon","1"], ["Tues","2"], ["Wed","3"],["Thur","4"],["Fri","5"],["Sat","6"]] %>
+  <div class="control-group">
+    <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
+  </div>
+<% end %>
