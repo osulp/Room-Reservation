@@ -17,6 +17,27 @@ describe "cleaning record administration" do
       it "should show it" do
         expect(page).to have_selector(".cleaning-record")
       end
+      context "when it is attached to a room" do
+        let(:room_1) {create(:room)}
+        let(:room_2) {nil}
+        let(:cleaning_record) {create(:cleaning_record, :rooms => [room_1])}
+        context "and it is all rooms on a floor" do
+          it "should say the floor name" do
+            expect(page).to have_content("Floor 1")
+          end
+        end
+        context "and there are other rooms on that floor" do
+          let(:room_2) {create(:room, :floor => room_1.floor)}
+          let(:perform_setup) do
+            cleaning_record
+            room_2
+          end
+          it "should say the room name" do
+            expect(page).to have_content(room_1.name)
+            expect(page).not_to have_content("Floor 1")
+          end
+        end
+      end
       it "should be deletable" do
         expect(page).to have_selector(".cleaning-record")
         find("a[href='/admin/cleaning_records/#{cleaning_record.id}'][data-method='delete']").click
