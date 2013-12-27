@@ -16,7 +16,7 @@ class RoomHour < ActiveRecord::Base
   end
 
   def start_time_correct
-    if start_time && end_time && start_time > end_time
+    if start_time && end_time && start_time > end_time && end_time.strftime("%l:%M %P") != "12:15 am"
       errors.add(:start_time, "must be before the end time.")
     end
   end

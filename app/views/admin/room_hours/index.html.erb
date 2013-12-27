@@ -1,0 +1,24 @@
+<h1>Room Hours</h1>
+
+<table class="table table-hover">
+  <tr>
+    <th class="span2">Date Range</th>
+    <th class="span2">Hours</th>
+    <th class="span3">Rooms</th>
+    <th class="span2"></th>
+  </tr>
+  <% @room_hours.each do |room_hour| %>
+    <tr class="room-hour">
+      <td><%= room_hour.date_range %></td>
+      <td><%= room_hour.hours_string %></td>
+      <td>
+        <% room_hour.room_names.each do |f| %>
+          <code class="text-info"><%= f %></code>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to 'Delete', admin_room_hour_path(room_hour), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -18,6 +18,7 @@ RoomReservation::Application.routes.draw do
     resources :rooms, :only => [:index, :new, :create, :edit, :update, :destroy]
     resources :filters, :only => [:index, :new, :create, :edit, :update, :destroy]
     resources :cleaning_records
+    resources :room_hours
     resources :key_cards, :only => [:index, :new, :create, :edit, :update, :destroy] do
       collection do
         post 'checkin/:key', :to => 'key_cards#checkin'
