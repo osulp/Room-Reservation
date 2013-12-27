@@ -94,6 +94,22 @@ describe "cleaning record administration" do
           end
         end
       end
+      context "when there is an error in the form" do
+        before(:each) do
+          page.select "09", :from => "cleaning_record_start_time_4i"
+          page.select "00", :from => "cleaning_record_start_time_5i"
+          page.select "00", :from => "cleaning_record_end_time_4i"
+          page.select "00", :from => "cleaning_record_end_time_5i"
+          %w{Sun Mon Tues Wed Thur Fri Sat}.each do |day|
+            page.check day
+          end
+          page.check room.name
+          click_button "Save"
+        end
+        it "should show an error" do
+          expect(page).to have_content("Start time must be less than or equal to the end time")
+        end
+      end
       context "when the form is filled out" do
         before(:each) do
           page.select "00", :from => "cleaning_record_start_time_4i"
@@ -103,7 +119,6 @@ describe "cleaning record administration" do
           %w{Sun Mon Tues Wed Thur Fri Sat}.each do |day|
             page.check day
           end
-          p
           page.check room.name
           click_button "Save"
           expect(page).to have_content "Succesfully Created Cleaning Record"

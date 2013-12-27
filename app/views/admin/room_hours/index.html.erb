@@ -17,8 +17,11 @@
         <% end %>
       </td>
       <td>
+        <%= link_to 'Edit', edit_admin_room_hour_path(room_hour), :class => 'btn' %>
         <%= link_to 'Delete', admin_room_hour_path(room_hour), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
       </td>
     </tr>
   <% end %>
 </table>
+
+<%= link_to 'New Room Hour', new_admin_room_hour_path, :class => 'btn btn-primary' %>
