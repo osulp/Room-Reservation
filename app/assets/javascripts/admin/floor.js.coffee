@@ -6,6 +6,10 @@ jQuery ->
     sync_room_filters(this)
   )
   check_rooms()
+  $(".datepicker").datepicker(
+    showButtonPanel: true
+    dateFormat: 'yy-mm-dd'
+  )
 check_rooms = ->
   $("*[data-floor]").each ->
     sync_room_filters(this)

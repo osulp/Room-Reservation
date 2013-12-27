@@ -6,7 +6,7 @@ class Admin::RoomHoursController < AdminController
   end
 
   def new
-    @room_hour = RoomHour.new.decorate
+    @room_hour = RoomHour.new(:start_date => Time.current.to_date, :end_date => Time.current.to_date).decorate
   end
 
   # TODO: Figure out why respond_with isn't rendering new correctly.
