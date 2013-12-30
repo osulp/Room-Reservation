@@ -38,6 +38,17 @@ class ReservationsController < ApplicationController
     respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
   end
 
+  def update
+    reservation = Reservation.find(params[:id])
+    reserver_params = self.reserver_params
+    key = reserver_params.delete(:key_card_key)
+    reservation.attributes = reserver_params
+    reserver = Reserver.new(reservation)
+    reserver.key_card_key = key
+    reserver.save
+    respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
+  end
+
   def destroy
     reservation = Reservation.find(params[:id])
     canceller = Canceller.new(reservation, current_user)

@@ -45,4 +45,5 @@
         </div>
       </div>
 <%= render :partial => current_user.reservation_popup_partial %>
+<%= render :partial => 'admin_update_popup' if current_user.staff? %>
 <%= render :partial => 'cancel_popup' %>

@@ -25,6 +25,10 @@ class Reserver
   delegate :as_json, :read_attribute_for_serialization, :to => :reservation
   after_reservation_save :send_email
 
+
+  def self.reflect_on_association(association)
+    Reservation.reflect_on_association(association)
+  end
   def initialize(attributes = {},options={})
     @options = options
     if attributes.kind_of?(Reservation)
