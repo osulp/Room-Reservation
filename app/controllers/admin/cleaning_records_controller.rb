@@ -5,7 +5,7 @@ class Admin::CleaningRecordsController < AdminController
   end
 
   def new
-    @cleaning_record = CleaningRecord.new.decorate
+    @cleaning_record = CleaningRecord.new(:start_date => Time.current.to_date, :end_date => Time.current.to_date).decorate
     respond_with(@cleaning_record)
   end
 

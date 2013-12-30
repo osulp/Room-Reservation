@@ -1,0 +1,41 @@
+<%= simple_form_for(@room_hour, :url => admin_room_hour_path(@room_hour), :html => {:class => 'form-horizontal room-hour-form'}) do |f| %>
+  <%= f.input :start_date, :as => :string, :input_html => { :class => 'datepicker' } %>
+  <%= f.input :end_date, :as => :string, :input_html => { :class => 'datepicker' } %>
+  <div class="row">
+    <div class="span7">
+      <%= f.input :start_time %>
+      <%= f.input :end_time %>
+    </div>
+    <div class="span5" style="text-align: left;">
+      <h3 style="margin-top:-10px;">Special Timings</h3>
+      <ul>
+        <li><b>1:00 am - 1:00 am:</b> Closed</li>
+        <li><b>12:00 am - 12:00 am:</b> Open 24 hours</li>
+        <li><b>12:15 am - xx:xx:</b> Closes xx:xx</li>
+        <li><b>xx:xx - 12:15 am:</b> xx:xx - No Closing</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <%= f.association :rooms, as: :check_boxes, :collection => @room_hour.room_collection %>
+    </div>
+    <div class="span6">
+      <div class="controls">
+        <%= label_tag "", :class => "checkbox" do %>
+          <%= check_box_tag "all_rooms","",false, :class => "check_boxes optional", :data => {:trigger_floor => @room_hour.floor_selection.map{|x| x.last}.join(",")} %>
+          All Rooms
+        <% end %>
+        <% @room_hour.floor_selection.each do |floor| %>
+          <%= label_tag "", :class => "checkbox" do %>
+            <%= check_box_tag floor.second,"",false, :class => "check_boxes optional", :data => {:trigger_floor => floor.last} %>
+            <%= floor.first %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
+  </div>
+<% end %>
