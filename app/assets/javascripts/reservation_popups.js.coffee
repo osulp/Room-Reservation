@@ -6,7 +6,7 @@ class ReservationPopupManager
     @popup = $("#reservation-popup")
     return if @popup.length == 0
     @popup_message = Handlebars.compile(@popup.children(".popup-message").html())
-    $("body").on("click", ".bar-success", (event)->
+    $("body").on("click", "*[data-action=reserve]", (event)->
       element = $(this)
       room_element = element.parent().parent()
       # Truncate start/end times to 10 minute mark.

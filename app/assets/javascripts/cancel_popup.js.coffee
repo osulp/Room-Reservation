@@ -5,7 +5,7 @@ class CancelPopupManager
     master = this
     @popup = $("#cancel-popup")
     return if @popup.length == 0
-    $("body").on("click", ".bar-info", (event)->
+    $("body").on("click", "*[data-action=cancel]", (event)->
       element = $(this)
       room_element = element.parent().parent()
       master.reservation_id = element.data("id")
