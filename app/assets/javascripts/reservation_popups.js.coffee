@@ -163,7 +163,7 @@ class ReservationPopupManager
     @popup.find("#reserver_user_onid[type=text]").val("")
     @popup.find("#reserver_user_onid[type=text]").focus()
     @popup.find("form").attr("action", "/reservations/#{@element.data("id")}.json")
-    @popup.find("form").attr("method", "put")
+    @popup.find("form").attr("method", "post")
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json?blacklist=#{@element.data("id")}", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability)
