@@ -58,10 +58,10 @@ class Admin::CleaningRecordsController < AdminController
   private
 
   def build_errors
-    flash[:error] = @cleaning_record.errors.full_messages
-    flash[:error] |= @cleaning_record.cleaning_record_rooms.map{|x| x.errors.full_messages}.flatten
-    flash[:error] |= @cleaning_record.rooms.map{|x| x.errors.full_messages}.flatten
-    flash[:error] = flash[:error].to_sentence
+    flash.now[:error] = @cleaning_record.errors.full_messages
+    flash.now[:error] |= @cleaning_record.cleaning_record_rooms.map{|x| x.errors.full_messages}.flatten
+    flash.now[:error] |= @cleaning_record.rooms.map{|x| x.errors.full_messages}.flatten
+    flash.now[:error] = flash[:error].to_sentence
   end
 
   def cleaning_record_params

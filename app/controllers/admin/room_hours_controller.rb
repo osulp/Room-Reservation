@@ -49,9 +49,9 @@ class Admin::RoomHoursController < AdminController
   private
 
   def build_errors
-    flash[:error] = @room_hour.errors.full_messages
-    flash[:error] |= @room_hour.rooms.map{|x| x.errors.full_messages}.flatten
-    flash[:error] = flash[:error].to_sentence
+    flash.now[:error] = @room_hour.errors.full_messages
+    flash.now[:error] |= @room_hour.rooms.map{|x| x.errors.full_messages}.flatten
+    flash.now[:error] = flash[:error].to_sentence
   end
 
   def find_room_hour
