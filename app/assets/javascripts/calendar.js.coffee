@@ -135,11 +135,14 @@ class CalendarManager
       element = $("*[data-id=#{reservation.id}]")
       element.removeClass("bar-danger")
       element.addClass("bar-info")
-      if reservation.user_onid == user || !reservation.user_onid?
+      element.attr("data-action", "cancel")
+      if User.current().get_value("staff") == true
+        element.attr("data-action", "update")
+      if (reservation.user_onid == user || !reservation.user_onid?) && User.current().get_value("staff") == false
         element.attr("data-original-title","Click to Cancel")
       else
         element.data("user-onid", reservation.user_onid)
-        element.attr("data-original-title", "#{reservation.user_onid}: Click to Cancel")
+        element.attr("data-original-title", "#{reservation.user_onid}: Click to Update")
   get_date_from_cookie: ->
     result = $.cookie('date')
     unless result?

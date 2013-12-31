@@ -4,9 +4,12 @@ class ReservationPopupManager
   constructor: ->
     master = this
     @popup = $("#reservation-popup")
+    @reservation_popup = $("#reservation-popup")
+    @update_popup = $("#update-popup")
     return if @popup.length == 0
     @popup_message = Handlebars.compile(@popup.children(".popup-message").html())
-    $("body").on("click", ".bar-success", (event)->
+    $("body").on("click", "*[data-action=reserve]", (event)->
+      master.popup = master.reservation_popup
       element = $(this)
       room_element = element.parent().parent()
       # Truncate start/end times to 10 minute mark.
@@ -21,10 +24,35 @@ class ReservationPopupManager
       master.position_popup(event.pageX, event.pageY)
       master.populate_reservation_popup(room_element, start_time, end_time)
     )
-    @popup.click (event) ->
-      event.stopPropagation() unless $(event.target).data("remote")?
-    @popup.on("touchend", (event) =>
-      event.stopPropagation() unless $(event.target).data("remote")?
+    # Set up update popup
+    $("body").on("click", "*[data-action=update]", (event) ->
+      master.popup = master.update_popup
+      element = $(this)
+      room_element = element.parent().parent()
+      # Truncate start/end times to 10 minute mark.
+      start_time = moment(element.data("start")).tz("America/Los_Angeles")
+      prev = $(element.prev())
+      if prev.hasClass("bar-success")
+        start_time = moment(prev.data("start")).tz("America/Los_Angeles")
+      start_time.second(0)
+      start_time.minute(Math.ceil(start_time.minute()/10)*10)
+      end_time = moment(element.data("end")).tz("America/Los_Angeles")
+      end_time.second(0)
+      end_time.minute(Math.ceil(end_time.minute()/10)*10)
+      master.element = element
+      # Set up popup.
+      master.position_popup(event.pageX, event.pageY)
+      master.populate_update_popup(room_element, start_time, end_time)
+    )
+    @reservation_popup.click (event) ->
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
+    @reservation_popup.on("touchend", (event) =>
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
+    )
+    @update_popup.click (event) ->
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
+    @update_popup.on("touchend", (event) =>
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
     )
     # Bind Form
     master.prepare_form()
@@ -32,13 +60,13 @@ class ReservationPopupManager
     this.bind_popup_closers()
     this.admin_binds() if User.current().get_value("staff") == true
   prepare_form: ->
-    form = $("#new_reserver")
+    form = $(".reserver")
     form.on("ajax:beforeSend", this.display_loading)
     form.on("ajax:success", this.display_success_message)
     form.on("ajax:error", this.display_error_message)
   bind_popup_closers: ->
     master = this
-    @popup.find(".close-popup a").click((event) =>
+    $(".reserver-popup .close-popup a").click((event) =>
       event.preventDefault()
       master.hide_popup()
     )
@@ -113,17 +141,46 @@ class ReservationPopupManager
     room_name = room_element.data("room-name")
     max_reservation = User.current().get_value("maxReservation")
     return if !max_reservation?
-    $("#reservation-popup #room-name").text(room_name)
-    $("#reservation-popup #reserver_room_id").val(room_id)
-    $("#reservation-popup #reserver_start_time").val(start_time.toISOString())
-    $("#reservation-popup #reserver_user_onid[type=text]").val("")
-    $("#reservation-popup #reserver_user_onid[type=text]").focus()
+    @popup.find("#room-name").text(room_name)
+    @popup.find("#reserver_room_id").val(room_id)
+    @popup.find("#reserver_start_time").val(start_time.toISOString())
+    @popup.find("#reserver_user_onid[type=text]").val("")
+    @popup.find("#reserver_user_onid[type=text]").focus()
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability)
     )
+  populate_update_popup: (room_element, start_time, end_time) ->
+    $(".popup").hide()
+    this.hide_popup()
+    room_id = room_element.data("room-id")
+    room_name = room_element.data("room-name")
+    max_reservation = User.current().get_value("maxReservation")
+    return if !max_reservation?
+    @popup.find("#room-name").text(room_name)
+    @popup.find("#reserver_room_id").val(room_id)
+    @popup.find("#reserver_start_time").val(start_time.toISOString())
+    @popup.find("#reserver_user_onid[type=text]").val("")
+    @popup.find("#reserver_user_onid[type=text]").focus()
+    @popup.find("form").attr("action", "/reservations/#{@element.data("id")}.json")
+    @popup.find("form").attr("method", "post")
+    $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json?blacklist=#{@element.data("id")}", (result) =>
+      availability = result.availability
+      this.build_slider(start_time, end_time, max_reservation, availability)
+      s = moment(@element.data("start")).tz("America/Los_Angeles")
+      s.second(0)
+      s.minute(Math.ceil(s.minute()/10)*10)
+      @slider_element.slider(values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10])
+      this.slid(1, {values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10]})
+    )
+    $.getJSON("/reservations/#{@element.data("id")}.json", (result) =>
+      @popup.find("#reserver_user_onid").val(result.user_onid)
+      @popup.find("#reserver_key_card_key").val(result.key_card?.key? || "")
+      @popup.find("#reserver_description").val(result.description)
+      @popup.find("#update-cancel-button").html(result.cancel_string)
+    )
   build_slider: (start_time, end_time, max_reservation, available_time) ->
-    @slider_element = $("#reservation-slider")
+    @slider_element = @popup.find(".reservation-slider")
     @start_time = start_time
     @end_time = end_time
     @max_reservation = max_reservation
@@ -161,11 +218,11 @@ class ReservationPopupManager
     # Add the 10 minute increments
     start_time_object.add('minutes', start*10)
     end_time_object.add('minutes', end*10)
-    $("#reserver_start_time").val(start_time_object.toISOString())
-    $("#reserver_end_time").val(end_time_object.toISOString())
+    @popup.find("#reserver_start_time").val(start_time_object.toISOString())
+    @popup.find("#reserver_end_time").val(end_time_object.toISOString())
     # Set labels
-    $("#reservation-popup .time-range-label .start-time").text(start_time_object.format("h:mm A"))
-    $("#reservation-popup .time-range-label .end-time").text(end_time_object.format("h:mm A"))
+    @popup.find(".time-range-label .start-time").text(start_time_object.format("h:mm A"))
+    @popup.find(".time-range-label .end-time").text(end_time_object.format("h:mm A"))
   # Just for binding the automatic User fillout stuff at the moment.
   # This should probably be factored out somewhere, along with the user query stuff.
   admin_binds: ->

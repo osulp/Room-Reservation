@@ -17,7 +17,7 @@ class Reserver
   validate :append_reservation_errors
   validate :day_limit_applied
 
-  delegate :reserver, :user, :reserver_onid, :user_onid, :room_id, :room, :start_time, :end_time, :description, :key_card, :to => :reservation
+  delegate :reserver, :user, :reserver_onid, :user_onid, :room_id, :room, :start_time, :end_time, :description, :key_card, :decorate, :to => :reservation
   delegate :start_time=, :end_time=, :room=, :reserver=, :user=, :reserver_onid=, :user_onid=, :to => :reservation
   attr_accessor :key_card_key
   attr_reader :reservation
@@ -25,6 +25,10 @@ class Reserver
   delegate :as_json, :read_attribute_for_serialization, :to => :reservation
   after_reservation_save :send_email
 
+
+  def self.reflect_on_association(association)
+    Reservation.reflect_on_association(association)
+  end
   def initialize(attributes = {},options={})
     @options = options
     if attributes.kind_of?(Reservation)

@@ -1,12 +1,12 @@
-<div class="popup osu-purple popover right reserver-popup" id="reservation-popup">
-  <h3 class="popover-title">Reserve a room
+<div class="popup osu-purple popover right reserver-popup" id="update-popup">
+  <h3 class="popover-title">Update Reservation
     <span class="close-popup"><%= link_to "×", "#", :class => 'close' %></span>
   </h3>
   <div class="popup-content popover-content">
     <div class="popup-content-errors alert alert-danger"></div>
-    <%= simple_form_for @reservation, :url => reservation_path(@reservation.reservation), :remote => true, :format => :json, :html => {:class => "reserver"} do |f| %>
+    <%= simple_form_for @reservation, :url => reservation_path(@reservation.reservation), :remote => true, :html => {:class => "reserver"} do |f| %>
+      <%= hidden_field_tag '_method', 'patch' %>
       <%= f.input :room_id, :as => :hidden %>
-      <%= f.input :user_onid, :as => :hidden %>
       <%= f.input :start_time, :as => :hidden %>
       <%= f.input :end_time, :as => :hidden %>
       <%= label_tag 'room_name', 'Room: ', :style => "display: inline;"%> <span id="room-name"></span><br/>
@@ -17,11 +17,18 @@
           <span class="start-time"></span> - <span class="end-time"></span>
         </div>
       </div>
+      <%= f.input :user_onid, :label => "Username:" %>
+      <%= f.input(:key_card_key, :label => "Keycard:") if APP_CONFIG[:keycards][:enabled] %>
       <%= f.input :description, :label => "Group or description (optional):" %>
       <div class="popup-button">
-         <%= f.submit "Reserve", :class => "btn btn-primary" %>
+        <%= f.submit "Reserve", :class => "btn btn-primary" %>
+        <span id="update-cancel-button"><a href="#" class="btn btn-danger">Danger</a></span>
       </div>
     <% end %>
   </div>
-  <div class="popup-message alert alert-success">Your reservation has been made! Check your ONID email for details.</div>
+  <div class="popup-message alert alert-success">
+    Room Reserved <br/>
+    <b>Room:</b> {{room.name}}<br/>
+    <b>Time Range:</b> {{pretty-time-range start_time end_time}}
+  </div>
 </div>

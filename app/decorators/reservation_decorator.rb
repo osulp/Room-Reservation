@@ -44,7 +44,11 @@ class ReservationDecorator < EventDecorator
   end
 
   def cancel_string
-    h.link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => data_hash
+    h.content_tag(:span, :data => {"room-id" => self.room.id, "room-name" => self.room.name}) do
+      h.content_tag(:span) do
+        h.link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => data_hash
+      end
+    end
   end
 
   def truncated_string
@@ -65,7 +69,9 @@ class ReservationDecorator < EventDecorator
     {
         :id => self.id,
         start: (payload.start_time).iso8601.to_s,
-        end: (payload.end_time).iso8601.to_s
+        end: (payload.end_time).iso8601.to_s,
+        action: "cancel",
+        user_onid: user_onid
     }
   end
 

@@ -1,7 +1,7 @@
 class ReservationsController < ApplicationController
   respond_to :json, :html
   include_root_in_json = false
-  before_filter :require_login, :only => [:create, :destroy]
+  before_filter :require_login, :only => [:create, :destroy, :show, :update]
   before_filter RubyCAS::Filter, :only => :index
 
   def index
@@ -19,12 +19,20 @@ class ReservationsController < ApplicationController
     respond_with(Array.wrap(result))
   end
 
+  def show
+    @reservation = Reservation.find(params[:id])
+    authorize! :read, @reservation
+    respond_with(@reservation)
+  end
+
   # Returns availability in seconds given a time
   def availability
     available_time = max_availability
     start_time = Time.zone.parse(params[:start])
     room = Room.find(params[:room_id])
-    availability_checker = AvailabilityChecker.new(room, start_time, start_time+max_availability)
+    blacklist = Reservation.where(:id => (params['blacklist']||'').split(","))
+    blacklist = blacklist.first unless blacklist.empty?
+    availability_checker = AvailabilityChecker.new(room, start_time, start_time+max_availability,blacklist)
     unless availability_checker.available?
       available_time = availability_checker.events.first.start_time - start_time
       available_time = 0 if available_time < 0
@@ -34,6 +42,18 @@ class ReservationsController < ApplicationController
 
   def create
     reserver = Reserver.new(reserver_params)
+    reserver.save
+    respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
+  end
+
+  def update
+    reservation = Reservation.find(params[:id])
+    authorize! :update, reservation
+    reserver_params = self.reserver_params
+    key = reserver_params.delete(:key_card_key)
+    reservation.attributes = reserver_params
+    reserver = Reserver.new(reservation)
+    reserver.key_card_key = key
     reserver.save
     respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
   end
@@ -49,13 +69,13 @@ class ReservationsController < ApplicationController
   protected
 
   def reserver_params
-    params[:reserver] = params[:reserver].merge(:reserver_onid => current_user.onid)
+    params[:reserver] = params[:reserver].merge(:reserver_onid => current_user.onid) if params[:reserver]
     params.require(:reserver).permit(:reserver_onid, :user_onid, :start_time, :room_id, :end_time, :description, :key_card_key)
   end
 
   # @TODO: Make this configurable
   def max_availability
-    6.hours
+    current_user.max_reservation_time
   end
 
   def default_serializer_options

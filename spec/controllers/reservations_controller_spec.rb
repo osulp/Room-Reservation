@@ -3,6 +3,7 @@ require 'spec_helper'
 describe ReservationsController do
   before(:each) do
     Timecop.travel(Date.new(2013,9,5))
+    User.any_instance.stub(:max_reservation_time).and_return(6.hours)
   end
   describe "current_user_reservations" do
     context "when a user is not logged in" do
@@ -181,5 +182,5 @@ describe ReservationsController do
       response.should be_success
     end
   end
-  
+
 end

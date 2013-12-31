@@ -59,11 +59,6 @@ class AdminShortcutsManager
       alert.html("Unable to find given key card.")
     alert.show()
     return
-  checked_in: (event, xhr, status) =>
-    console.log(event)
-    console.log(xhr)
-    console.log(status)
-    return
   keycard_swiped: =>
     @keycard_field.removeClass("bordered")
     keycard_entry = @keycard_field.val()

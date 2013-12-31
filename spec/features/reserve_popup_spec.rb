@@ -174,8 +174,11 @@ describe 'reserve popup' do
           end
 
           context "and they are staff" do
-            let(:user) {build(:user, :staff)}
-            it "should default to a 6 hour time range" do
+            let(:user) do
+              User.any_instance.stub(:max_reservation_time).and_return(6.hours)
+              build(:user, :staff)
+            end
+            it "should default to the configured time range" do
               within("#reservation-popup") do
                 expect(find(".start-time")).to have_content("12:00 AM")
                 expect(find(".end-time")).to have_content("6:00 AM")

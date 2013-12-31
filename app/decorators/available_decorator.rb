@@ -11,7 +11,8 @@ class AvailableDecorator < EventDecorator
   def data_hash
     {
         start: (start_time).iso8601.to_s,
-        end: (end_time).iso8601.to_s
+        end: (end_time).iso8601.to_s,
+        action: "reserve"
     }
   end
 
