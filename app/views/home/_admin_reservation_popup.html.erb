@@ -1,17 +1,17 @@
-<div class="popup osu-purple popover right" id="reservation-popup">
+<div class="popup osu-purple popover right reserver-popup" id="reservation-popup">
   <h3 class="popover-title">Reserve a room
     <span class="close-popup"><%= link_to "×", "#", :class => 'close' %></span>
   </h3>
   <div class="popup-content popover-content">
     <div class="popup-content-errors alert alert-danger"></div>
-    <%= simple_form_for @reservation, :url => reservation_path(@reservation.reservation), :remote => true, :format => :json do |f| %>
+    <%= simple_form_for @reservation, :url => reservation_path(@reservation.reservation), :remote => true, :format => :json, :html => {:class => "reserver"} do |f| %>
       <%= f.input :room_id, :as => :hidden %>
       <%= f.input :start_time, :as => :hidden %>
       <%= f.input :end_time, :as => :hidden %>
       <%= label_tag 'room_name', 'Room: ', :style => "display: inline;"%> <span id="room-name"></span><br/>
       <%= label_tag 'range', 'Time Range: ' %>
       <div class="time-range">
-        <div id="reservation-slider"></div>
+        <div class="reservation-slider"></div>
         <div class="time-range-label">
           <span class="start-time"></span> - <span class="end-time"></span>
         </div>

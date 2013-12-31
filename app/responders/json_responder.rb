@@ -7,7 +7,7 @@ class JsonResponder < ActionController::Responder
       display resource
     elsif post?
       display resource, :status => :created, :location => api_location
-    elsif patch?
+    elsif patch? || put?
       display resource, :status => :ok
     else
       head :no_content

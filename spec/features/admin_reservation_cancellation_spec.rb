@@ -47,8 +47,8 @@ describe 'cancelling a reservation' do
       before(:each) do
         find(".bar-info").trigger(:mouseover)
       end
-      it "should show the cancellation tooltip" do
-        expect(page).to have_content("Click to Cancel")
+      it "should show the update tooltip" do
+        expect(page).to have_content("Click to Update")
       end
       it "should show the owning user's name" do
         expect(page).to have_content("otheruser")
@@ -59,11 +59,12 @@ describe 'cancelling a reservation' do
         expect(page).to have_selector("#cancel-popup", :visible => false)
       end
     end
-    it_should_behave_like "a popup", ".bar-info", "#cancel-popup"
+    it_should_behave_like "a popup", ".bar-info", "#update-popup"
     describe "clicking cancel" do
       before(:each) do
         find(".bar-info").click
         click_link("Cancel")
+        click_link("Cancel It")
       end
       it "should display a success message" do
         within("#cancel-popup") do
@@ -87,6 +88,7 @@ describe 'cancelling a reservation' do
     context "when the reservation is clicked" do
       before(:each) do
         find(".bar-info").click
+        click_link "Cancel"
       end
       it "should display the owning user" do
         within("#cancel-popup") do
@@ -95,7 +97,7 @@ describe 'cancelling a reservation' do
       end
       it "should ask if they want to cancel" do
         within("#cancel-popup") do
-          expect(page).to have_content("Cancel")
+          expect(page).to have_content("Cancel It")
         end
       end
       it "should display the room name" do
