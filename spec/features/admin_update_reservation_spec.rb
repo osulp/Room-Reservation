@@ -32,39 +32,46 @@ describe "editing a reservation" do
       expect(page).not_to have_content("Click to Update")
     end
   end
-  context "when an admin is logged in", :js => true do
-    let(:user) {build(:user, :admin)}
-    before(:each) do
-      create(:reservation, start_time: @start_time, end_time: @end_time, user_onid: "otheruser", room: @room)
-      visit root_path
-      expect(page).to have_selector(".bar-info", :count => 1)
-    end
-    it "should have a tooltip for editing" do
-      find(".bar-info").trigger(:mouseover)
-      expect(page).to have_content("Click to Update")
-    end
-    context "when the bar is clicked" do
+  [true, false].each do |keycard_setting|
+    context "when keycards are #{keycard_setting}" do
       before(:each) do
-        find(".bar-info").trigger("click")
+        APP_CONFIG[:keycards].stub(:[]).with(:enabled).and_return(keycard_setting)
       end
-      it "should display the start time" do
-        within("#update-popup") do
-          expect(page).to have_content(@start_time.strftime("%l:%M %p"))
+      context "when a staff member is logged in", :js => true do
+        let(:user) {build(:user, :staff)}
+        before(:each) do
+          create(:reservation, start_time: @start_time, end_time: @end_time, user_onid: "otheruser", room: @room)
+          visit root_path
+          expect(page).to have_selector(".bar-info", :count => 1)
         end
-      end
-      it "should display the end time" do
-        within("#update-popup") do
-          expect(page).to have_content(@end_time.strftime("%l:%M %p"))
+        it "should have a tooltip for editing" do
+          find(".bar-info").trigger(:mouseover)
+          expect(page).to have_content("Click to Update")
         end
-      end
-      it "should let you change the time" do
-        expect(page).to have_field("Username:", :with => "otheruser")
-        end_time = (@end_time+20.minutes).iso8601.split("-")[0..-2].join("-")
-        page.execute_script("$('#update-popup').find('#reserver_end_time').val('#{end_time}');")
-        click_button "Reserve"
-        expect(page).not_to have_field("Username:", :with => "otheruser")
-        expect(page).to have_content("Room Reserved")
-        expect(Reservation.last.end_time).to eq @end_time+20.minutes
+        context "when the bar is clicked" do
+          before(:each) do
+            find(".bar-info").trigger("click")
+          end
+          it "should display the start time" do
+            within("#update-popup") do
+              expect(page).to have_content(@start_time.strftime("%l:%M %p"))
+            end
+          end
+          it "should display the end time" do
+            within("#update-popup") do
+              expect(page).to have_content(@end_time.strftime("%l:%M %p"))
+            end
+          end
+          it "should let you change the time" do
+            expect(page).to have_field("Username:", :with => "otheruser")
+            end_time = (@end_time+20.minutes).iso8601.split("-")[0..-2].join("-")
+            page.execute_script("$('#update-popup').find('#reserver_end_time').val('#{end_time}');")
+            click_button "Reserve"
+            expect(page).not_to have_field("Username:", :with => "otheruser")
+            expect(page).to have_content("Room Reserved")
+            expect(Reservation.last.end_time).to eq @end_time+20.minutes
+          end
+        end
       end
     end
   end

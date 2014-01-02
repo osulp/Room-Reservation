@@ -31,7 +31,7 @@ module Keycards::ReserverModule
 
   def has_keycard
     return if !reserver || !key_card_key.blank?
-    errors.add(:base, "A key card must be swiped to make this reservation") if reserver_ability.can?(:assign_keycard,self) && !reserver_ability.can?(:manage, self)
+    errors.add(:base, "A key card must be swiped to make this reservation") if reserver_ability.can?(:assign_keycard,self) && !reserver_ability.can?(:manage, self) && !reservation.persisted?
   end
 
   def keycard_exists
