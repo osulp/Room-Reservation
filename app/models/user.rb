@@ -14,6 +14,19 @@ class User < OpenStruct
     Reservation.where(:user_onid => onid)
   end
 
+  def email
+    @email ||= begin
+      result = super
+      if !result.blank?
+        result
+      elsif banner_record && !banner_record.email.blank?
+        banner_record.email
+      else
+        ""
+      end
+    end
+  end
+
   def max_reservation_time
     @max_reservation_time ||= calculate_max_reservation_time
   end

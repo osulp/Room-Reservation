@@ -25,8 +25,9 @@ describe 'reserve popup' do
     before(:all) do
       Timecop.return
     end
+    let(:fake) {RubyCAS::Filter.fake(user.onid)}
     before(:each) do
-      RubyCAS::Filter.fake(user.onid)
+      fake
       create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       banner_record
       create(:room)
@@ -69,6 +70,12 @@ describe 'reserve popup' do
               context "and the user has no banner record" do
                 it "should not send an email" do
                   expect(ActionMailer::Base.deliveries).to be_empty
+                end
+                context "but they have an email from CAS" do
+                  let(:fake) {RubyCAS::Filter.fake(user.onid, {:email => "bla@bla.org"})}
+                  it "should send an email" do
+                    expect(ActionMailer::Base.deliveries).not_to be_empty
+                  end
                 end
               end
               context "and the user has a banner record" do

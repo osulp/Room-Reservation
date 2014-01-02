@@ -1,0 +1,15 @@
+Your reservation has been edited.<br><br>
+
+<b>Name:</b> <%= @user.object.onid %><br/>
+<br/>
+<b>E-mail:</b> <%= @user.email %><br/>
+<br/>
+<b>Room:</b> <%= @reservation.room.name %><br/>
+<br/>
+<b>Original Date and Time:</b> <%= @previous.start_time.strftime("%B %-d, %Y %l:%M %p") %> - <%= @previous.end_time.strftime("%B %-d, %Y %l:%M %p") %> <br/>
+<br/>
+<b>New Date and Time:</b> <%= @reservation.start_time.strftime("%B %-d, %Y %l:%M %p") %> - <%= @reservation.end_time.strftime("%B %-d, %Y %l:%M %p") %> <br/>
+<br/>
+<b>Description: </b> <%= @reservation.description %> <br/>
+<br/>
+<%= raw @footer %>

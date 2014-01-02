@@ -11,26 +11,32 @@ class Reservation < ActiveRecord::Base
   end
 
   def user
-    User.new(user_onid)
+    @user = nil if @user && @user.onid != user_onid
+    @user ||= User.new(user_onid)
   end
 
   def reserver
-    User.new(reserver_onid)
+    @reserver = nil if @reserver && @reserver.onid != reserver_onid
+    @reserver ||= User.new(reserver_onid)
   end
 
   def user=(user)
-    if user.kind_of?(User)
+    if user.respond_to?(:onid)
       self.user_onid = user.onid
+      @user = user
     else
       self.user_onid = user.to_s
+      @user = nil
     end
   end
 
   def reserver=(user)
-    if user.kind_of?(User)
+    if user.respond_to?(:onid)
       self.reserver_onid = user.onid
+      @reserver = reserver
     else
       self.reserver_onid = user.to_s
+      @reserver = nil
     end
   end
 

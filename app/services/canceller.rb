@@ -25,7 +25,8 @@ class Canceller
 
   def send_email
     reserved_for = UserDecorator.new(User.new(reservation.user_onid))
-    if reserved_for.banner_record && !reserved_for.banner_record.email.blank?
+    reserved_for = cancelling_user if reserved_for.onid == cancelling_user.onid
+    unless reserved_for.email.blank?
       ReservationMailer.delay.cancellation_email(reservation, reserved_for)
     end
   end

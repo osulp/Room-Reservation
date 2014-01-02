@@ -3,14 +3,22 @@ class ReservationMailer < ActionMailer::Base
     @user = user
     @reservation = reservation
     @footer = Setting.reservation_email
-    mail(:to => @user.banner_record.email, :from => from_email, :reply_to => from_email, :subject => reservation_subject)
+    mail(:to => @user.email, :from => from_email, :reply_to => from_email, :subject => reservation_subject)
+  end
+
+  def update_email(reservation, user)
+    @user = user
+    @reservation = reservation
+    @previous = @reservation.previous_version
+    @footer = Setting.reservation_email
+    mail(:to => @user.email, :from => from_email, :reply_to => from_email, :subject => update_subject)
   end
 
   def cancellation_email(reservation, user)
     @user = user
     @reservation = reservation
     @footer = Setting.cancellation_email
-    mail(:to => @user.banner_record.email, :from => from_email, :reply_to => from_email, :subject => cancellation_subject)
+    mail(:to => @user.email, :from => from_email, :reply_to => from_email, :subject => cancellation_subject)
   end
 
   private
@@ -21,6 +29,10 @@ class ReservationMailer < ActionMailer::Base
 
   def cancellation_subject
     "Study Room Reservations Cancellation"
+  end
+
+  def update_subject
+    "Study Room Reservation Updated"
   end
 
   def from_email
