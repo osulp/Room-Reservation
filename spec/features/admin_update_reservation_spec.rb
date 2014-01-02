@@ -33,7 +33,7 @@ describe "editing a reservation" do
     end
   end
   [true, false].each do |keycard_setting|
-    context "when keycards are #{keycard_setting}" do
+    context "when keycards are #{keycard_setting}", :versioning => true do
       before(:each) do
         APP_CONFIG[:keycards].stub(:[]).with(:enabled).and_return(keycard_setting)
       end

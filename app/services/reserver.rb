@@ -33,7 +33,6 @@ class Reserver
     @options = options
     if attributes.kind_of?(Reservation)
       @reservation = attributes
-      @options[:email_method] = :update_email if @reservation.persisted?
       return
     end
     self.key_card_key = attributes.delete(:key_card_key)
