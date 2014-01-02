@@ -1,5 +1,6 @@
 class Reservation < ActiveRecord::Base
   acts_as_paranoid
+  has_paper_trail
   belongs_to :room
   has_one :key_card
   before_destroy :touch

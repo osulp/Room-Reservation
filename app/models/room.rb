@@ -1,4 +1,5 @@
 class Room < ActiveRecord::Base
+  has_paper_trail
   validates :floor, :name, presence: true
   validates :floor, numericality: {only_integer: true}
   has_many :reservations

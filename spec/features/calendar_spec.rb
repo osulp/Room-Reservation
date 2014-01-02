@@ -35,7 +35,7 @@ describe "calendar", :js => true do
     context "when the page is navigated to" do
       it "should redirect to the appropriate day link" do
         current_day = Time.current.to_date
-        expect(current_path).to eq "/day/#{current_day.strftime("%Y-%-m-%-d")}"
+        expect(current_path).to eq "/day/#{current_day.strftime("%Y-%m-%-d")}"
       end
       context "and a day is clicked" do
         before(:each) do
@@ -56,7 +56,7 @@ describe "calendar", :js => true do
           end
           it "should go back" do
             current_day = Time.current.to_date
-            expect(current_path).to eq "/day/#{current_day.strftime("%Y-%-m-%-d")}"
+            expect(current_path).to eq "/day/#{current_day.strftime("%Y-%m-%-d")}"
           end
         end
       end

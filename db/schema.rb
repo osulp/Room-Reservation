@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131220185521) do
+ActiveRecord::Schema.define(version: 20140102175535) do
 
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
@@ -203,5 +203,16 @@ ActiveRecord::Schema.define(version: 20131220185521) do
   end
 
   add_index "special_hours", ["start_date", "end_date"], name: "index_special_hours_on_start_date_and_end_date", using: :btree
+
+  create_table "versions", force: true do |t|
+    t.string   "item_type",  null: false
+    t.integer  "item_id",    null: false
+    t.string   "event",      null: false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
 end

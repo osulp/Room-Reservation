@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def user_for_paper_trail
+    current_user.onid.to_s
+  end
+
   def require_login
     ip_login
     redirect_to login_path(:source => request.original_fullpath) if current_user.nil?
