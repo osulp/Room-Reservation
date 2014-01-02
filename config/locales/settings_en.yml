@@ -4,6 +4,7 @@ en:
     announcement_header_message: "Announcement Header Message"
     day_limit: "Days for Advance Reservation"
     reservation_email: "Reservation Email Footer"
+    update_email: "Update Email Footer"
     from_name: "From Name"
     from_address: "From Address"
     cancellation_email: "Cancellation Email Footer"

@@ -42,6 +42,8 @@ class ReservationsController < ApplicationController
 
   def create
     reserver = Reserver.new(reserver_params)
+    reserver.reserver = current_user
+    reserver.user = current_user if params[:reserver][:user_onid] == current_user.onid
     reserver.save
     respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
   end
@@ -54,6 +56,8 @@ class ReservationsController < ApplicationController
     reservation.attributes = reserver_params
     reserver = Reserver.new(reservation)
     reserver.key_card_key = key
+    reserver.reserver = current_user
+    reserver.user = current_user if params[:reserver][:user_onid] == current_user.onid
     reserver.save
     respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
   end
@@ -69,7 +73,7 @@ class ReservationsController < ApplicationController
   protected
 
   def reserver_params
-    params[:reserver] = params[:reserver].merge(:reserver_onid => current_user.onid) if params[:reserver]
+    params[:reserver] = params[:reserver].merge(:reserver_onid => current_user.onid)
     params.require(:reserver).permit(:reserver_onid, :user_onid, :start_time, :room_id, :end_time, :description, :key_card_key)
   end
 

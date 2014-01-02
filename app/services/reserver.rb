@@ -61,8 +61,19 @@ class Reserver
 
   def send_email
     return if @options[:ignore_email]
-    if user.banner_record && !user.banner_record.email.blank?
-      ReservationMailer.delay.reservation_email(reservation, user.decorate)
+    unless user.email.blank?
+      ReservationMailer.delay.send(email_method, reservation, user.decorate)
+    end
+  end
+
+  def email_method
+    @email_method ||= begin
+      return @options[:email_method] unless @options[:email_method].blank?
+      if reservation.versions.size > 1
+        :update_email
+      else
+        :reservation_email
+      end
     end
   end
 

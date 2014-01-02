@@ -14,8 +14,9 @@ describe 'cancelling a reservation' do
     before(:all) do
       Timecop.return
     end
+    let(:fake) {RubyCAS::Filter.fake("fakeuser")}
     before(:each) do
-      RubyCAS::Filter.fake("fakeuser")
+      fake
       create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       banner_record
       @room = create(:room)
@@ -57,6 +58,13 @@ describe 'cancelling a reservation' do
         it "should not send an email" do
           expect(page).to have_content("This reservation has been cancelled!")
           expect(ActionMailer::Base.deliveries.length).to eq 0
+        end
+        context "but they have an email from CAS" do
+          let(:fake) {RubyCAS::Filter.fake("fakeuser", :email => "bla@bla.org")}
+          it "should send an email" do
+            expect(page).to have_content("This reservation has been cancelled!")
+            expect(ActionMailer::Base.deliveries).not_to be_empty
+          end
         end
       end
       context "when the user has a banner record" do
