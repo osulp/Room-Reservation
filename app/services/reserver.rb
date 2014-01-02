@@ -33,22 +33,12 @@ class Reserver
     @options = options
     if attributes.kind_of?(Reservation)
       @reservation = attributes
+      @options[:email_method] = :update_email if @reservation.persisted?
       return
     end
     self.key_card_key = attributes.delete(:key_card_key)
     @reservation ||= Reservation.new
     @reservation.attributes = attributes
-  end
-
-  def email_method
-    @email_method ||= begin
-      return @options[:email_method] unless @options[:email_method].blank?
-      if reservation.versions.size > 1
-        :update_email
-      else
-        :reservation_email
-      end
-    end
   end
 
   def save
@@ -74,6 +64,17 @@ class Reserver
     return if @options[:ignore_email]
     unless user.email.blank?
       ReservationMailer.delay.send(email_method, reservation, user.decorate)
+    end
+  end
+
+  def email_method
+    @email_method ||= begin
+      return @options[:email_method] unless @options[:email_method].blank?
+      if reservation.versions.size > 1
+        :update_email
+      else
+        :reservation_email
+      end
     end
   end
 
