@@ -10,7 +10,7 @@ class ReservationMailer < ActionMailer::Base
     @user = user
     @reservation = reservation
     @previous = @reservation.previous_version
-    @footer = Setting.reservation_email
+    @footer = Setting.update_email
     mail(:to => @user.email, :from => from_email, :reply_to => from_email, :subject => update_subject)
   end
 

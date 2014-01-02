@@ -20,6 +20,12 @@ cancellation_email:
   field_type: text_area
   category: Email Settings
   default: ''
+update_email:
+  tag_attributes:
+    class: tinymce
+  field_type: text_area
+  category: Email Settings
+  default: ''
 from_name:
   category: Email Settings
   default: 'Room Reservation System'

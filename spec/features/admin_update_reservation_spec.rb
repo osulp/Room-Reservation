@@ -71,6 +71,35 @@ describe "editing a reservation" do
             expect(page).to have_content("Room Reserved")
             expect(Reservation.last.end_time).to eq @end_time+20.minutes
           end
+          context "when a reservation is edited" do
+            before(:each) do
+              expect(page).to have_field("Username:", :with => "otheruser")
+              end_time = (@end_time+20.minutes).iso8601.split("-")[0..-2].join("-")
+              page.execute_script("$('#update-popup').find('#reserver_end_time').val('#{end_time}');")
+              click_button "Reserve"
+              expect(page).not_to have_field("Username:", :with => "otheruser")
+              expect(page).to have_content("Room Reserved")
+            end
+            context "and the user doesn't have a banner record" do
+              it "should not send an email" do
+                expect(ActionMailer::Base.deliveries).to be_empty
+              end
+            end
+            context "and the user has a banner record" do
+              let(:banner_record) {
+                create(:banner_record, :onid => "otheruser", :email => "bla@bla.org")
+              }
+              it "should send an email" do
+                expect(ActionMailer::Base.deliveries).not_to be_empty
+                d = ActionMailer::Base.deliveries.first
+                expect(d.body).to include("Your reservation has been edited")
+              end
+              it "should include the previous start time in the email" do
+                d = ActionMailer::Base.deliveries.first
+                expect(d.body).to include(@end_time.strftime("%B %-d, %Y %l:%M %p"))
+              end
+            end
+          end
         end
       end
     end
