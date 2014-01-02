@@ -61,6 +61,9 @@ gem 'druthers'
 # TinyMCE
 gem 'tinymce-rails'
 
+# PaperTrail for versioning
+gem 'paper_trail', '~> 3.0.0'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
