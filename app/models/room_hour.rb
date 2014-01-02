@@ -1,5 +1,6 @@
 class RoomHour < ActiveRecord::Base
   acts_as_paranoid
+  has_paper_trail
   before_destroy :touch
   validates :start_date, :end_date, :start_time, :end_time, :presence => true
   validate :start_date_correct

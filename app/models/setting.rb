@@ -1,4 +1,5 @@
 class Setting < ActiveRecord::Base
+  has_paper_trail
   # Valid setting keys
   @setting_config ||= (YAML.load_file(Rails.root.join("config","settings.yml")) || {})
   VALID_KEYS = @setting_config.keys

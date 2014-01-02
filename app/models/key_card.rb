@@ -1,4 +1,5 @@
 class KeyCard < ActiveRecord::Base
+  has_paper_trail
   belongs_to :reservation
   belongs_to :room
 
