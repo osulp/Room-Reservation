@@ -33,5 +33,6 @@ RoomReservation::Application.routes.draw do
       resources :reservations, :only => [:index]
     end
     resources :settings, :only => [:index, :update]
+    resources :auto_logins
   end
 end

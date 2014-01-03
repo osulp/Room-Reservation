@@ -1,0 +1,25 @@
+<h1>Auto Logins</h1>
+
+<table class="table table-hover">
+  <tr>
+    <th class="span2">Username</th>
+    <th class="span3">IP Addresses</th>
+    <th class="span2"></th>
+  </tr>
+  <% @auto_logins.each do |auto_login| %>
+    <tr class="auto-login">
+      <td><%= auto_login.username %></td>
+      <td>
+        <% auto_login.ip_addresses.each do |addr| %>
+          <code class="text-info"><%= addr.ip_address %></code>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to 'Edit', edit_admin_auto_login_path(auto_login), :class => 'btn' %>
+        <%= link_to 'Delete', admin_auto_login_path(auto_login), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'New Auto Login', new_admin_auto_login_path, :class => 'btn btn-primary' %>

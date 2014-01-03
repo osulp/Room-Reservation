@@ -4,7 +4,6 @@ describe IpAddress do
   subject {build(:ip_address)}
   it {should validate_presence_of(:ip_address)}
   it {should validate_presence_of(:ip_address_i)}
-  it {should validate_presence_of(:auto_login)}
   describe "validations" do
     it "should require a valid IP" do
       subject[:ip_address] = "bla"
