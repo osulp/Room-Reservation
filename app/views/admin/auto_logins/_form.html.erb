@@ -1,0 +1,14 @@
+<%= simple_form_for(@auto_login, :url => admin_auto_login_path(@auto_login), :html => {:class => 'form-horizontal cleaning-record-form'}) do |f| %>
+  <%= f.input :username %>
+  <%= f.simple_fields_for :ip_addresses do |p| %>
+    <%= render "ip_address_fields", :f => p %>
+  <% end %>
+  <div class="control-group">
+    <div class="controls">
+      <%= link_to_add_fields "Add IP Address", f, :ip_addresses %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
+  </div>
+<% end %>
