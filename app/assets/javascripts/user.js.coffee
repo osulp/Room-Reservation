@@ -5,9 +5,10 @@ class @User
     options = options || {}
     id = options['id']
     callback = options['callback']
+    element = options['element']
     $.getJSON("/users/#{id}", (data) =>
       user = new User(data)
-      callback(user)
+      callback(user, element)
     )
   constructor: (data)->
     @data_object = data || {}

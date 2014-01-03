@@ -226,17 +226,18 @@ class ReservationPopupManager
   # Just for binding the automatic User fillout stuff at the moment.
   # This should probably be factored out somewhere, along with the user query stuff.
   admin_binds: ->
-    $("#reserver_user_onid").blur((e) =>
-      id = $("#reserver_user_onid").val()
+    master = this
+    $("*[name='reserver[user_onid]']").blur((e) ->
+      id = $(this).val()
       id = id.substring(id.length-9)
-      User.find(id: id, callback: this.set_reservation_onid)
+      User.find(id: id, callback: master.set_reservation_onid, element: $(this))
     )
-    $("#reserver_user_onid").keypress((e) =>
+    $("*[name='reserver[user_onid]']").keypress((e) ->
       if e.which == 13
-        $("#reserver_user_onid").trigger("blur")
+        $(this).trigger("blur")
         return false
     )
-  set_reservation_onid: (user)->
+  set_reservation_onid: (user, element)->
     if user.get_value("onid")?
-      $("#reserver_user_onid").val(user.get_value("onid"))
-      $("#reserver_user_onid").parent().parent().next().find("input").trigger("focus")
+      element.val(user.get_value("onid"))
+      element.parent().parent().next().find("input").trigger("focus")
