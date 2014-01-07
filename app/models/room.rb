@@ -10,4 +10,5 @@ class Room < ActiveRecord::Base
   has_many :room_hour_records, :dependent => :destroy
   has_many :room_hours, :through => :room_hour_records
   has_many :key_cards
+  mount_uploader :image, ImageUploader
 end

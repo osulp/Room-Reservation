@@ -37,6 +37,6 @@ class Admin::RoomsController < AdminController
   private
 
   def room_params
-    params.require(:room).permit(:name, :floor, {:filter_ids => []})
+    params.require(:room).permit(:name, :floor, :description, :image, {:filter_ids => []})
   end
 end

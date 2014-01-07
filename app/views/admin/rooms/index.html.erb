@@ -2,10 +2,11 @@
 
 <table class="table table-hover">
   <tr>
-    <th class="span2">Name</th>
-    <th class="span2">Floor</th>
-    <th class="span4">Filters</th>
-    <th class="span4"></th>
+    <th class="span1">Name</th>
+    <th class="span1">Floor</th>
+    <th class="span3">Filters</th>
+    <th class="span2"></th>
+    <th class="span5">Description</th>
   </tr>
  <% @rooms.each do |room| %>
   <tr>
@@ -17,6 +18,12 @@
     <td>
       <%= link_to 'Edit', edit_admin_room_path(room), :class => 'btn' %>
       <%= link_to 'Delete', admin_room_path(room), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
+    </td>
+    <td>
+      <% unless room.image.blank? %>
+        <%= image_tag room.image.url, :class => 'span1 pull-right' %>
+      <% end %>
+      <%= truncate(room.description, :length => 50) %>
     </td>
   </tr>
  <% end %>
