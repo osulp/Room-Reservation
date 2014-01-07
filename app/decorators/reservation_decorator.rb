@@ -33,7 +33,6 @@ class ReservationDecorator < EventDecorator
       end
       return cancel_string
     end
-    return cancel_string if end_time.future? && truncated_at.blank? && !deleted?
     return deleted_string if deleted?
     return truncated_string unless truncated_at.blank?
     h.content_tag(:span, :class => "label") {"Expired"}
