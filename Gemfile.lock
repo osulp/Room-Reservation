@@ -75,6 +75,10 @@ GEM
     capybara-screenshot (0.3.14)
       capybara (>= 1.0, < 3)
       launchy
+    carrierwave (0.9.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     chunky_png (1.2.9)

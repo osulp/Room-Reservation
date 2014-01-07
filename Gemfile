@@ -64,6 +64,9 @@ gem 'tinymce-rails'
 # PaperTrail for versioning
 gem 'paper_trail', '~> 3.0.0'
 
+# File uploading
+gem 'carrierwave'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
