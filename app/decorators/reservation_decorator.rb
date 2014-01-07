@@ -27,7 +27,12 @@ class ReservationDecorator < EventDecorator
   end
 
   def status_string
-    return cancel_string if end_time.future? && truncated_at.blank? && !deleted?
+    if end_time.future? && truncated_at.blank? && !deleted?
+      if h.can?(:update, object)
+        return cancel_string+" "+edit_string
+      end
+      return cancel_string
+    end
     return deleted_string if deleted?
     return truncated_string unless truncated_at.blank?
     h.content_tag(:span, :class => "label") {"Expired"}
@@ -47,6 +52,14 @@ class ReservationDecorator < EventDecorator
     h.content_tag(:span, :data => {"room-id" => self.room.id, "room-name" => self.room.name}) do
       h.content_tag(:span) do
         h.link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => data_hash
+      end
+    end
+  end
+
+  def edit_string
+    h.content_tag(:span, :data => {"room-id" => self.room.id, "room-name" => self.room.name}) do
+      h.content_tag(:span) do
+        h.link_to "Edit", '#', :class => "btn btn-primary bar-info", :data => data_hash.merge(:action => "update")
       end
     end
   end

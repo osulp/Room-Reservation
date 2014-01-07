@@ -70,6 +70,24 @@ describe "staff shortcuts" do
             expect(page).not_to have_content("Empty")
           end
         end
+        it "should have a working cancel button" do
+          sleep(1)
+          click_link "Cancel"
+          expect(page).to have_content("Cancel a reservation")
+          click_link "Cancel It"
+          expect(page).to have_content("cancelled")
+          expect(Reservation.all.size).to eq 0
+          within("#modal_skeleton") do
+            expect(page).not_to have_link("Cancel")
+          end
+        end
+        it "should have a working edit button" do
+          sleep(1)
+          within("#modal_skeleton") do
+            click_link "Edit"
+          end
+          expect(page).to have_selector("#update-popup",:visible => true)
+        end
         context "which already has a keycard attached" do
           let(:keycard) {create(:key_card, :room => reservation.room, :reservation => reservation)}
           it "should hide the keycard entry field" do

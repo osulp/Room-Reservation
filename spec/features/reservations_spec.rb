@@ -40,6 +40,9 @@ describe "GET /reservations" do
           expect(page).to have_selector(".reservation")
           expect(page).to have_content(@room1.name)
         end
+        it "should not show an edit button" do
+          expect(page).not_to have_content("Edit")
+        end
         context "The cancel button", :js => true do
           it_should_behave_like "a popup", ".bar-info", "#cancel-popup"
 

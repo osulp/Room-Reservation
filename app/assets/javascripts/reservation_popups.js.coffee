@@ -6,7 +6,8 @@ class ReservationPopupManager
     @popup = $("#reservation-popup")
     @reservation_popup = $("#reservation-popup")
     @update_popup = $("#update-popup")
-    return if @popup.length == 0
+    return if @reservation_popup.length == 0 && @update_popup.length == 0
+    @popup = @update_popup if @reservation_popup.length == 0
     @popup_message = Handlebars.compile(@popup.children(".popup-message").html())
     $("body").on("click", "*[data-action=reserve]", (event)->
       master.popup = master.reservation_popup
@@ -23,6 +24,7 @@ class ReservationPopupManager
       # Set up popup.
       master.position_popup(event.pageX, event.pageY)
       master.populate_reservation_popup(room_element, start_time, end_time)
+      event.preventDefault()
     )
     # Set up update popup
     $("body").on("click", "*[data-action=update]", (event) ->
@@ -43,6 +45,7 @@ class ReservationPopupManager
       # Set up popup.
       master.position_popup(event.pageX, event.pageY)
       master.populate_update_popup(room_element, start_time, end_time)
+      event.preventDefault()
     )
     @reservation_popup.click (event) ->
       event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
@@ -89,7 +92,7 @@ class ReservationPopupManager
     @popup.children(".popup-message").html(@popup_message(data))
     this.center_popup()
     @ignore_popup_hide = true
-    window.CalendarManager.refresh_view()
+    window.EventsManager.eventsUpdated()
   display_error_message: (event, xhr, status, error) =>
     errors = xhr.responseJSON
     @popup.children(".popup-message").hide()

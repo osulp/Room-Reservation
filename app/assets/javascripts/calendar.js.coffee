@@ -3,6 +3,8 @@ jQuery ->
 class CalendarManager
   constructor: ->
     this.initialize_calendar() if $("#datepicker").length > 0
+    # When events are updated, refresh the calendar.
+    $(document).on("eventsUpdated", => this.refresh_view())
   initialize_calendar: ->
     @datepicker = $("#datepicker")
     @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"))
@@ -132,7 +134,7 @@ class CalendarManager
   perform_color_reservations: (reservations) ->
     user = User.current().get_value("onid")
     for reservation in reservations
-      element = $("*[data-id=#{reservation.id}]")
+      element = $(".bar[data-id=#{reservation.id}]")
       element.removeClass("bar-danger")
       element.addClass("bar-info")
       element.attr("data-action", "cancel")

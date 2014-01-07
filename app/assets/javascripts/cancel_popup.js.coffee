@@ -45,12 +45,12 @@ class CancelPopupManager
     link.on("ajax:success", this.display_success_message)
     link.on("ajax:error", this.display_error_message)
   display_success_message: (event, data, status, xhr) =>
+    window.EventsManager.eventsUpdated()
     @popup.children(".popup-content").hide()
     @popup.children(".popup-message").show()
     @popup.children(".popup-message").text("This reservation has been cancelled!")
     @ignore_popup_hide = true
     this.center_popup()
-    window.CalendarManager.refresh_view()
   display_error_message: (event, xhr, status, error) =>
     errors = xhr.responseJSON
     @popup.children(".popup-message").hide()
