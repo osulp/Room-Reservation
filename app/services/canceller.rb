@@ -5,9 +5,11 @@ class Canceller
   attr_accessor :reservation, :cancelling_user
   validate :reservation_owned_by_user
   validate :reservation_not_over
+  validate :reservation_not_checked_out
 
   delegate :as_json, :to => :reservation
   after_reservation_destroy :send_email
+  before_reservation_destroy :checkin_keycard
 
   def initialize(reservation, cancelling_user)
     self.reservation = reservation
@@ -23,6 +25,13 @@ class Canceller
 
   protected
 
+  def checkin_keycard
+    if reservation.key_card
+      service = Keycards::CheckinService.new(reservation.key_card, cancelling_user)
+      service.save
+    end
+  end
+
   def send_email
     reserved_for = UserDecorator.new(User.new(reservation.user_onid))
     reserved_for = cancelling_user if reserved_for.onid == cancelling_user.onid
@@ -37,6 +46,10 @@ class Canceller
 
   def reservation_not_over
     errors.add(:base, "Completed reservations may not be cancelled") if [reservation.start_time, reservation.end_time].max < Time.current
+  end
+
+  def reservation_not_checked_out
+    errors.add(:reservation, "can not be cancelled while it is checked out.") if reservation.key_card && !cancelling_user_ability.can?(:ignore_restrictions, self.class)
   end
 
   def cancelling_user_ability

@@ -38,8 +38,10 @@ describe 'cancelling a reservation' do
   end
   context "when a staff member is logged in", :js => true do
     let(:user) {build(:user, :staff)}
+    let(:perform_setup) {nil}
     before(:each) do
       create(:reservation, start_time: @start_time, end_time: @end_time, user_onid: "otheruser", room: @room)
+      perform_setup
       visit root_path
       expect(page).to have_selector(".bar-info")
     end
@@ -65,6 +67,20 @@ describe 'cancelling a reservation' do
         find(".bar-info").click
         click_link("Cancel")
         click_link("Cancel It")
+      end
+      context "when the reservation has a keycard attached" do
+        let(:perform_setup) do
+          r = Reservation.first
+          create(:key_card, :reservation => r, :room => r.room)
+        end
+        it "should check in the key card" do
+          within("#cancel-popup") do
+            expect(page).to have_content("This reservation has been cancelled!")
+          end
+          expect(KeyCard.last.reservation_id).to eq nil
+          expect(Reservation.all.size).to eq 0
+          expect(Reservation.with_deleted.last.key_card).to eq nil
+        end
       end
       it "should display a success message" do
         within("#cancel-popup") do
