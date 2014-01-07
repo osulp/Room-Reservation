@@ -19,7 +19,7 @@ set :deploy_via, :remote_cache
 set :deploy_to, config['deploy_to']
 set :use_sudo, false
 set :keep_releases, 5
-set :shared_children, shared_children + %w{pids sockets tmp}
+set :shared_children, shared_children + %w{pids sockets tmp public/uploads}
 
 # if you want to clean up old releases on each deploy uncomment this:
 after 'deploy:restart', 'deploy:cleanup'

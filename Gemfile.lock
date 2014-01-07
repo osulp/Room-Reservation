@@ -375,6 +375,7 @@ DEPENDENCIES
   cancan
   capybara
   capybara-screenshot
+  carrierwave
   coffee-rails
   compass-rails
   coveralls
