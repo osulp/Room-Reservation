@@ -2,6 +2,14 @@
   <%= f.input :name %>
   <%= f.input :floor %>
   <%= f.association :filters, as: :check_boxes %>
+  <%= f.input :description, :input_html => {:class => 'span6', :rows => 6} %>
+  <%= f.input :image, :as => 'file' %>
+  <% unless @room.image.blank? %>
+  <div class="control-group">
+    <%= image_tag @room.image, :class => 'img-polaroid' %>
+  </div>
+  <% end %>
+
   <div class="control-group">
     <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
   </div>
