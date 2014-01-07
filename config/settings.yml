@@ -34,3 +34,8 @@ from_address:
   default: 'no-reply@roomreservation.com'
 announcement_header_message:
   default: ''
+reservation_padding:
+  tag_attributes:
+    type: number
+  category: Reservation Settings
+  default: 10

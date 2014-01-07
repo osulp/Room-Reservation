@@ -8,3 +8,4 @@ en:
     from_name: "From Name"
     from_address: "From Address"
     cancellation_email: "Cancellation Email Footer"
+    reservation_padding: "Padding Between Events (in Minutes):"

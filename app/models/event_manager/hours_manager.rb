@@ -122,7 +122,7 @@ class EventManager::HoursManager < EventManager::EventManager
 
   # TODO: Make this configurable
   def hour_buffer
-    10.minutes
+    Setting.reservation_padding.to_i.minutes
   end
 
   def string_to_time(date, time)
