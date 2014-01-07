@@ -20,12 +20,18 @@ describe "room administration" do
       click_link "Edit"
       fill_in "room_name", :with => "Restroom"
       fill_in "room_floor", :with => "8"
+      fill_in "room_description", :with => "This is a restroom on 8th floor.\nEnjoy."
       check filter.name
+      attach_file "room_image", 'spec/fixtures/sample.png'
       click_button "Save"
       expect(page).to have_content("Room updated")
-      expect(Room.last.name).to eq "Restroom"
-      expect(Room.last.floor).to eq 8
-      expect(Room.last.filters).to eq [filter]
+      room = Room.last
+      expect(room.name).to eq "Restroom"
+      expect(room.floor).to eq 8
+      expect(room.description).to eq "This is a restroom on 8th floor.\nEnjoy."
+      expect(room.filters).to eq [filter]
+      expect(room.image).not_to be_blank
+      room.remove_image!
     end
     it "should let you delete a room", :js => true do
       expect(page).to have_content(room.name)
@@ -38,11 +44,17 @@ describe "room administration" do
     click_link "New Room"
     fill_in "room_name", :with => "Restroom"
     fill_in "room_floor", :with => "8"
+    fill_in "room_description", :with => "This is a restroom on 8th floor.\nEnjoy."
     check filter.name
+    attach_file "room_image", 'spec/fixtures/sample.png'
     click_button "Save"
     expect(page).to have_content("Room added")
-    expect(Room.last.name).to eq "Restroom"
-    expect(Room.last.floor).to eq 8
-    expect(Room.last.filters).to eq [filter]
+    room = Room.last
+    expect(room.name).to eq "Restroom"
+    expect(room.floor).to eq 8
+    expect(room.description).to eq "This is a restroom on 8th floor.\nEnjoy."
+    expect(room.filters).to eq [filter]
+    expect(room.image).not_to be_blank
+    room.remove_image!
   end
 end
