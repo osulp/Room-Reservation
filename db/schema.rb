@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140102175535) do
+ActiveRecord::Schema.define(version: 20140103232015) do
 
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
@@ -178,8 +178,10 @@ ActiveRecord::Schema.define(version: 20140102175535) do
   create_table "rooms", force: true do |t|
     t.string   "name"
     t.integer  "floor"
-    t.datetime "created_at", limit: 6
-    t.datetime "updated_at", limit: 6
+    t.datetime "created_at",  limit: 6
+    t.datetime "updated_at",  limit: 6
+    t.text     "description"
+    t.string   "image"
   end
 
   add_index "rooms", ["floor"], name: "index_rooms_on_floor", using: :btree
