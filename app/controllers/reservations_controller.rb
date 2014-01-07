@@ -6,6 +6,7 @@ class ReservationsController < ApplicationController
 
   def index
     @reservations = ReservationFacade.new(current_user).reservations
+    @reservation = Reserver.new # Just for the update popup. Should refactor this eventually.
     respond_with @reservations
   end
 

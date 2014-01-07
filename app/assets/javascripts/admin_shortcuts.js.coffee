@@ -93,6 +93,9 @@ class AdminShortcutsManager
         this.user_searched()
         e.preventDefault()
     )
+    $(document).on("eventsUpdated", =>
+      this.reload_user(->) if @modal.is(':visible')
+    )
   user_searched: =>
     @user_field.removeClass("bordered")
     user_query = @user_field.val()
