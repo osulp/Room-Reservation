@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ip_login
-    RubyCAS::Filter.fake(current_user.onid) unless current_user.nil?
+    RubyCAS::Filter.fake(current_user.onid) unless current_user.nil? || !cas_username.blank?
   end
 
   def require_login
