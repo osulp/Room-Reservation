@@ -16,7 +16,11 @@ describe "Automatic Login" do
     ENV['RAILS_TEST_IP_ADDRESS'] = nil
   end
   context "when an auto login record exists" do
-    let(:auto_login) {create(:auto_login)}
+    let(:auto_login) {
+      a = create(:auto_login)
+      create(:auto_login)
+      a
+    }
     context "and there is no IP associated" do
       it "should not automatically log in" do
         expect(page).not_to have_content(auto_login.username)
