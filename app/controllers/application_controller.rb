@@ -14,22 +14,28 @@ class ApplicationController < ActionController::Base
     current_user.onid.to_s
   end
 
-  def require_login
-    ip_login
-    redirect_to login_path(:source => request.original_fullpath) if current_user.nil?
+  def ip_login
+    RubyCAS::Filter.fake(current_user.onid) unless current_user.nil? || !cas_username.blank?
   end
 
-  def ip_login
-    return unless current_user_username.blank?
-    ip = IPAddr.new(request.remote_ip).to_i
-    auto_login = AutoLogin.joins(:ip_addresses).where(:"ip_addresses.ip_address_i" => ip).first
-    RubyCAS::Filter.fake(auto_login.username) if auto_login
+  def require_login
+    redirect_to login_path(:source => request.original_fullpath) if current_user.nil?
   end
 
   private
 
   def current_user_username
+    ip_login_username || cas_username
+  end
+
+  def cas_username
     session[RubyCAS::Filter.client.username_session_key]
+  end
+
+  def ip_login_username
+    ip = IPAddr.new(request.remote_ip).to_i
+    ip_addr = IpAddress.where(:ip_address_i => ip).includes(:auto_login).first
+    return ip_addr.try(:auto_login).try(:username)
   end
 
   def current_user_extra_attributes
