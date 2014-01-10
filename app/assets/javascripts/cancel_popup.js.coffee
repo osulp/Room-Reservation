@@ -6,18 +6,10 @@ class CancelPopupManager
     @popup = $("#cancel-popup")
     return if @popup.length == 0
     $("body").on("click", "*[data-action=cancel]", (event)->
-      element = $(this)
-      room_element = element.parent().parent()
-      master.reservation_id = element.data("id")
-      return unless master.reservation_id?
-      # Truncate start/end times to 10 minute mark.
-      @start_time = moment(element.data("start")).tz("America/Los_Angeles")
-      @end_time = moment(element.data("end")).tz("America/Los_Angeles")
-      # Set up popup.
-      master.position_popup(event.pageX, event.pageY)
-      master.populate_cancel_popup(room_element, @start_time, @end_time, element)
-      event.stopPropagation()
-      event.preventDefault()
+      master.cancel_clicked($(this), event)
+    )
+    $("body").on("touchend", "*[data-action=cancel]", (event) ->
+      master.cancel_clicked($(this), event)
     )
     @popup.click (event) ->
       event.stopPropagation() unless $(event.target).data("remote")?
@@ -28,6 +20,22 @@ class CancelPopupManager
     this.bind_popup_closers()
     # Bind Ajax Events
     this.bind_ajax_events()
+  cancel_clicked: (element, event) ->
+    master = this
+    console.log("Clicked")
+    room_element = element.parent().parent()
+    master.reservation_id = element.data("id")
+    console.log(master.reservation_id)
+    return unless master.reservation_id?
+    # Truncate start/end times to 10 minute mark.
+    @start_time = moment(element.data("start")).tz("America/Los_Angeles")
+    @end_time = moment(element.data("end")).tz("America/Los_Angeles")
+    # Set up popup.
+    master.position_popup(event.pageX, event.pageY)
+    master.populate_cancel_popup(room_element, @start_time, @end_time, element)
+    console.log("made it this far..")
+    event.stopPropagation()
+    event.preventDefault()
   bind_popup_closers: ->
     master = this
     @popup.find(".close-popup a").click((event) =>
