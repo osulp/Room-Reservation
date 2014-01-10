@@ -117,6 +117,32 @@ describe Reserver do
       before(:each) do
         Setting.stub(:max_concurrent_reservations).and_return(1)
       end
+      context "and they have another reservation already" do
+        before(:each) do
+          @r1 = create(:reservation, :start_time => Time.current.midnight+1.hour, :end_time => Time.current.midnight+2.hours, :room => room, :user_onid => user.onid, :reserver_onid => other_user)
+        end
+        context "that was made by them" do
+          let(:other_user) {user.onid}
+          it "should be invalid" do
+            expect(subject).not_to be_valid
+          end
+        end
+        context "that was made by an admin" do
+          let(:other_user) {"bologna"}
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
+          context "that has an attached keycard" do
+            before(:each) do
+              APP_CONFIG[:keycards].stub(:[]).with(:enabled).and_return(true)
+              create(:key_card, :reservation => @r1, :room => room)
+            end
+            it "should be invalid" do
+              expect(subject).not_to be_valid
+            end
+          end
+        end
+      end
       context "and they have a reservation that crosses midnight" do
         before(:each) do
           create(:reservation, start_time: Time.current.tomorrow.midnight-1.hour, end_time: Time.current.tomorrow.midnight+2.hours, room: room, user_onid: user.onid)

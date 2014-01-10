@@ -6,8 +6,8 @@ describe 'reserve popup' do
     # Set start and end time to a valid time.
     start_time = (Time.current+1.hour).iso8601
     end_time = (Time.current+1.hour+10.minutes).iso8601
-    page.execute_script("$('#reserver_start_time').val('#{start_time}');")
-    page.execute_script("$('#reserver_end_time').val('#{end_time}');")
+    page.execute_script("$('#reservation-popup').find('#reserver_start_time').val('#{start_time}');")
+    page.execute_script("$('#reservation-popup').find('#reserver_end_time').val('#{end_time}');")
   end
   def after_visit(*args)
     page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
@@ -102,7 +102,7 @@ describe 'reserve popup' do
           end
           context "when the user already has a reservation for that day" do
             before(:each) do
-              create(:reservation, :user_onid => user.onid)
+              create(:reservation, :user_onid => user.onid, :reserver_onid => user.onid)
             end
             context "when the application is configured to allow multiple reservations a day" do
               before(:each) do

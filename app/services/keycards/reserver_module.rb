@@ -17,6 +17,7 @@ module Keycards::ReserverModule
       authorized_to_card
       has_keycard
       keycard_exists
+      keycard_limitation
     end
   end
 
@@ -37,5 +38,10 @@ module Keycards::ReserverModule
   def keycard_exists
     return if !reserver || key_card_key.blank?
     errors.add(:base, "Invalid keycard.") if !keycard
+  end
+
+  def keycard_limitation
+    return if !user || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
+    errors.add(:base, "You can not reserve a room when you have one checked out.") if user.reservations.joins(:key_card).size > 0
   end
 end
