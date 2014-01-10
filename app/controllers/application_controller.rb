@@ -21,15 +21,16 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user_username
+    logger.info "USERNAME: #{ip_login_username || cas_username}"
     ip_login_username || cas_username
   end
-
   def cas_username
     session[RubyCAS::Filter.client.username_session_key]
   end
 
   def ip_login_username
     ip = IPAddr.new(request.remote_ip).to_i
+    logger.info "IP: #{ip}"
     ip_addr = IpAddress.where(:ip_address_i => ip).includes(:auto_login).first
     return ip_addr.try(:auto_login).try(:username)
   end
