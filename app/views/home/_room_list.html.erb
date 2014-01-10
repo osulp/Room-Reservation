@@ -4,7 +4,13 @@
       <div class="room-data-wrap" data-start="<%= @presenter.start_time.iso8601 %>">
         <% @presenter.rooms.select { |r| r.floor == floor }.each do |room| %>
             <div class="room-data <%= room.filter_string %>" data-room-id="<%= room.id %>" data-room-name="<%= room.name%>">
-              <div class="title"><%= room.name %></div>
+              <div class="room-name title"
+                title="<%= room.name %>"
+                data-content="<% unless room.image.blank? %><%= h (image_tag room.image.url, :class => "room-image").to_str %><% end %><%= h room.description %>"
+                data-html="true"
+                data-container="body"
+                data-placement="bottom"
+              ><%= room.name %></div>
               <div class="room-data-bar progress vertical">
                 <% room.decorated_events(@presenter.start_time).each do |r| %>
                   <%= raw r.bar %>
