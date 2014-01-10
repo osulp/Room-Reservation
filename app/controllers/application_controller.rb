@@ -14,10 +14,6 @@ class ApplicationController < ActionController::Base
     current_user.onid.to_s
   end
 
-  def ip_login
-    cas_username = ip_login_username unless ip_login_username.blank?
-  end
-
   def require_login
     redirect_to login_path(:source => request.original_fullpath) if current_user.nil?
   end
