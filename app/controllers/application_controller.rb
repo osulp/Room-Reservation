@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   def ip_login_username
     ip = IPAddr.new(request.remote_ip).to_i
-    ip_addr = IpAddress.where(:ip_address_i => ip).includes(:auto_login).first
+    ip_addr = IpAddress.joins(:auto_login).where(:ip_address_i => ip).first
     return ip_addr.try(:auto_login).try(:username)
   end
 
