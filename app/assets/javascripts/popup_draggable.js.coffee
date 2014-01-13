@@ -1,2 +1,3 @@
 jQuery ->
-  jQuery(".popup").draggable handle:".popover-title"
+  if $("body").width() > 480
+    jQuery(".popup").draggable handle:".popover-title"
