@@ -145,26 +145,13 @@
      */
     mouseProto._mouseInit = function () {
 
-        var self = this,
-            parentObject = self.element.parent(),
-            objectSelector = '#' + self.element.attr('id');
-
-        // Fallback if no id is set
-        if( objectSelector === '#' ){
-            objectSelector = '.' + self.element.attr('class').replace(/\s/g, '.');
-        }
-
-        // Undelegate the global touch events in
-        parentObject
-            .undelegate( objectSelector, 'touchstart' )
-            .undelegate( objectSelector, 'touchmove' )
-            .undelegate( objectSelector, 'touchend' );
+        var self = this;
 
         // Delegate the touch handlers to the widget's element
-        parentObject
-            .delegate( objectSelector, 'touchstart', $.proxy( self, '_touchStart') )
-            .delegate( objectSelector, "touchmove", $.proxy( self, '_touchMove') )
-            .delegate( objectSelector, "touchend", $.proxy( self, '_touchEnd') );
+        self.element
+            .bind('touchstart', $.proxy(self, '_touchStart'))
+            .bind('touchmove', $.proxy(self, '_touchMove'))
+            .bind('touchend', $.proxy(self, '_touchEnd'));
 
         // Call the original $.ui.mouse init method
         _mouseInit.call(self);
