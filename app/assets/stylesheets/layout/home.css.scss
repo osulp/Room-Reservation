@@ -98,8 +98,12 @@ $room_time_height: 20px;
   margin-bottom: 5px;
 }
 
-.popover .room-image {
-  display: block;
-  margin: 4px auto;
-  max-width: 70%;
+body > .popover {
+  max-width: 320px;
+  .room-image {
+    display: block;
+    margin: 4px auto;
+    max-width: 100px;
+    float: right;
+  }
 }

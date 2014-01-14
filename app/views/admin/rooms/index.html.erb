@@ -23,7 +23,7 @@
       <% unless room.image.blank? %>
         <%= image_tag room.image.url, :class => 'span1 pull-right' %>
       <% end %>
-      <%= truncate(room.description, :length => 50) %>
+      <%= simple_format truncate(room.description, :length => 50) %>
     </td>
   </tr>
  <% end %>

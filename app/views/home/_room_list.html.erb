@@ -6,10 +6,11 @@
             <div class="room-data <%= room.filter_string %>" data-room-id="<%= room.id %>" data-room-name="<%= room.name%>">
               <div class="room-name title"
                 title="<%= room.name %>"
-                data-content="<% unless room.image.blank? %><%= h (image_tag room.image.url, :class => "room-image").to_str %><% end %><%= h room.description %>"
+                data-content="<% unless room.image.blank? %><%= h (link_to image_tag(room.image.url, :class => 'room-image'), room.image.url, :target => '_blank').to_str %><% end %><%= h simple_format(room.description) %>"
                 data-html="true"
                 data-container="body"
                 data-placement="bottom"
+                data-trigger="manual"
               ><%= room.name %></div>
               <div class="room-data-bar progress vertical">
                 <% room.decorated_events(@presenter.start_time).each do |r| %>

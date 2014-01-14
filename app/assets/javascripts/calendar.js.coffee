@@ -113,6 +113,9 @@ class CalendarManager
     @background_loading = false
     window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
   update_room_bars: (data) ->
+    # Close all popovers on room-name
+    $('.room-name').popover('hide')
+    
     new_room_list = $(data)
     for i in [0..new_room_list.length-1]
       div = $(new_room_list[i])
