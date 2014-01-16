@@ -7,7 +7,7 @@ class CalendarManager
     $(document).on("eventsUpdated", => this.refresh_view())
   initialize_calendar: ->
     @datepicker = $("#datepicker")
-    @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"))
+    @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"), maxDate: @datepicker.data("max-date"))
     $(document).on("click","button[data-handler=today]",this.go_to_today)
     cached_date = this.get_date_from_cookie()
     @datepicker.datepicker("setDate","#{cached_date[1]}/#{cached_date[2]}/#{cached_date[0]}")

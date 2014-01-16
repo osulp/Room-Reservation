@@ -23,6 +23,12 @@ class UserDecorator < Draper::Decorator
     "#{date.month}/#{date.day}/#{date.year}"
   end
 
+  def max_date
+    return '' if object.staff?
+    return '' if Setting.day_limit.to_i == 0
+    "+#{Setting.day_limit}"
+  end
+
   def reservation_popup_partial
     return "admin_reservation_popup" if object.staff?
     "reservation_popup"

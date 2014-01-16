@@ -1,7 +1,7 @@
           <div id="login-link">
             <%= render :partial => "login_link" %>
           </div>
-          <div id="datepicker" class="widget" data-min-date="<%= current_user.min_date %>"></div>
+          <div id="datepicker" class="widget" data-min-date="<%= current_user.min_date %>" data-max-date="<%= current_user.max_date %>"></div>
           <div id="options" class="widget">
             <div class="widget-title">Options</div>
             <div class="widget-content">
