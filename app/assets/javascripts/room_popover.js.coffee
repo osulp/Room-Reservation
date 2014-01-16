@@ -4,10 +4,7 @@ jQuery ->
     $(this).popover('toggle')
     event.stopPropagation()
   )
-  $('body').on('click', '.popover-content', (event) ->
-    event.stopPropagation()
-  )
-  $('body').on('click', '*:not(.room-name):not(.popover-content)', ->
-    $('.room-name').popover('hide')
+  $('body').on('click', (event) ->
+    $('.room-name').popover('hide') unless $(event.target).hasClass('popover-content') || $(event.target).hasClass('room-name')
   )
   $('#dayviewTable').popover({html: true, selector: '.room-name', trigger: 'manual', placement: 'bottom', container: 'body'})
