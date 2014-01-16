@@ -12,9 +12,9 @@ class CancelPopupManager
       master.cancel_clicked($(this), event)
     )
     @popup.click (event) ->
-      event.stopPropagation() unless $(event.target).data("remote")?
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).hasClass("ui-slider-handle")
     @popup.on("touchend", (event) =>
-      event.stopPropagation() unless $(event.target).data("remote")?
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).hasClass("ui-slider-handle")
     )
     # Bind popup closers
     this.bind_popup_closers()
@@ -22,10 +22,8 @@ class CancelPopupManager
     this.bind_ajax_events()
   cancel_clicked: (element, event) ->
     master = this
-    console.log("Clicked")
     room_element = element.parent().parent()
     master.reservation_id = element.data("id")
-    console.log(master.reservation_id)
     return unless master.reservation_id?
     # Truncate start/end times to 10 minute mark.
     @start_time = moment(element.data("start")).tz("America/Los_Angeles")
@@ -33,7 +31,6 @@ class CancelPopupManager
     # Set up popup.
     master.position_popup(event.pageX, event.pageY)
     master.populate_cancel_popup(room_element, @start_time, @end_time, element)
-    console.log("made it this far..")
     event.stopPropagation()
     event.preventDefault()
   bind_popup_closers: ->
@@ -45,7 +42,7 @@ class CancelPopupManager
     $("body").click (event) =>
       this.hide_popup() unless $(event.target).data("remote")?
     $("body").on("touchend", (event) =>
-      this.hide_popup() unless $(event.target).data("remote")?
+      this.hide_popup() unless $(event.target).data("remote")? || $(event.target).hasClass("ui-slider-handle")
     )
   bind_ajax_events: ->
     link = $("#cancel-popup .cancellation-message a")

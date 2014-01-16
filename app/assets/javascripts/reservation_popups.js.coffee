@@ -48,14 +48,14 @@ class ReservationPopupManager
       event.preventDefault()
     )
     @reservation_popup.click (event) ->
-      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")? || $(event.target).hasClass("ui-slider-handle")
     @reservation_popup.on("touchend", (event) =>
-      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")? || $(event.target).hasClass("ui-slider-handle")
     )
     @update_popup.click (event) ->
-      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")? || $(event.target).hasClass("ui-slider-handle")
     @update_popup.on("touchend", (event) =>
-      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")?
+      event.stopPropagation() unless $(event.target).data("remote")? || $(event.target).data("action")? || $(event.target).hasClass("ui-slider-handle")
     )
     # Bind Form
     master.prepare_form()
@@ -74,9 +74,9 @@ class ReservationPopupManager
       master.hide_popup()
     )
     $("body").click (event) =>
-      this.hide_popup() unless $(event.target).data("remote")?
+      this.hide_popup() unless $(event.target).data("remote")? || $(event.target).hasClass("ui-slider-handle")
     $("body").on("touchend", (event) =>
-      this.hide_popup() unless $(event.target).data("remote")?
+      this.hide_popup() unless $(event.target).data("remote")? || $(event.target).hasClass("ui-slider-handle")
     )
   center_popup: ->
     if $("body").width() <= 480
