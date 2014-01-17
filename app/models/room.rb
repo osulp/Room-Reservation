@@ -11,4 +11,5 @@ class Room < ActiveRecord::Base
   has_many :room_hours, :through => :room_hour_records
   has_many :key_cards
   mount_uploader :image, ImageUploader
+  mount_uploader :floor_map, ImageUploader
 end

@@ -10,6 +10,13 @@
   </div>
   <% end %>
 
+  <%= f.input :floor_map, :as => 'file' %>
+  <% unless @room.floor_map.blank? %>
+  <div class="control-group">
+    <%= image_tag @room.floor_map, :class => 'img-polaroid' %>
+  </div>
+  <% end %>
+
   <div class="control-group">
     <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
   </div>
