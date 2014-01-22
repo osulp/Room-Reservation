@@ -68,6 +68,13 @@ $room_time_height: 20px;
   }
 }
 
+#login-link {
+  font-size: 16px;
+  @media (min-width: 768px) {
+    float: right;
+  }
+}
+
 #sidebar {
   font-size: 16px;
   .ui-datepicker .ui-widget-header {

@@ -1,10 +1,12 @@
       <div class="row">
         <div class="span12">
           <h2 id="heading">Study Room Reservation</h2>
-          <p>All study rooms have whiteboards. Some rooms have monitors and dry-erase walls.</p>
         </div>
       </div>
       <div class="row osu-purple">
+        <div class="span3" id="login-link">
+          <%= render :partial => "login_link" %>
+        </div>
         <div class="span9">
           <%= render 'announcement' -%>
           <div class="tabbable" id="tabs-floor">
