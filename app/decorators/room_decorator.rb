@@ -41,4 +41,14 @@ class RoomDecorator < Draper::Decorator
     AvailableDecorator.new(Event.new(start_time, end_time, 0))
   end
 
+  def popover_content
+    content = ''
+
+    content += h.link_to h.image_tag(image.url, :class => 'room-image'), image.url, :target => '_blank' unless image.blank?
+    content += h.simple_format description
+    content += h.link_to 'View floor map', floor_map.url, :target => '_blank', :class => 'btn btn-default' unless floor_map.blank?
+
+    content
+  end
+
 end

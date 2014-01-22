@@ -6,13 +6,7 @@
             <div class="room-data <%= room.filter_string %>" data-room-id="<%= room.id %>" data-room-name="<%= room.name%>">
               <div class="room-name title"
                 title="<%= room.name %>"
-                data-content="<%- unless room.image.blank? -%>
-                    <%= h (link_to image_tag(room.image.url, :class => 'room-image'), room.image.url, :target => '_blank').to_str %>
-                  <%- end -%>
-                  <%= h simple_format(room.description).to_str -%>
-                  <%- unless room.floor_map.blank? -%>
-                    <%= h (link_to 'View floor map', room.floor_map.url, :target => '_blank', :class => 'btn btn-default').to_str %>
-                  <%- end -%>"
+                data-content="<%= room.popover_content %>"
                 data-html="true"
                 data-container="body"
                 data-placement="bottom"
