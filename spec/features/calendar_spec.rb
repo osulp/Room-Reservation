@@ -82,6 +82,16 @@ describe "calendar", :js => true do
         it "should hide future days past that point" do
           expect(page).to have_selector("a.ui-state-default", :count => 2)
         end
+        it "should show information on hover" do
+          expect(page).to have_selector("a.ui-state-default", :count => 2)
+          page.execute_script("$('span.ui-state-default').last().trigger('mouseenter')")
+          expect(page).to have_selector(".tooltip")
+        end
+        it "should not show information for past dates" do
+          expect(page).to have_selector("a.ui-state-default", :count => 2)
+          page.execute_script("$('span.ui-state-default').first().trigger('mouseenter')")
+          expect(page).not_to have_selector(".tooltip")
+        end
       end
     end
     context "when you are an admin" do
