@@ -7,7 +7,7 @@ class CalendarManager
     $(document).on("eventsUpdated", => this.refresh_view())
   initialize_calendar: ->
     @datepicker = $("#datepicker")
-    @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"))
+    @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"), maxDate: @datepicker.data("max-date"))
     $(document).on("click","button[data-handler=today]",this.go_to_today)
     cached_date = this.get_date_from_cookie()
     @datepicker.datepicker("setDate","#{cached_date[1]}/#{cached_date[2]}/#{cached_date[0]}")
@@ -16,6 +16,7 @@ class CalendarManager
     this.truncate_to_now()
     this.color_reservations("#{@date_selected[0]}-#{@date_selected[1]}-#{@date_selected[2]}")
     this.bind_pop_state()
+    this.bind_day_limit_hover()
     window.setInterval((=> this.update_truncation()),30000)
   go_to_today: =>
     day = moment().tz("America/Los_Angeles").format("MM/DD/YYYY")
@@ -164,4 +165,22 @@ class CalendarManager
     $(window).on("popstate", (e)=>
       date = location.pathname.split("/").pop().split("-")
       this.go_to_date(date[0], date[1], date[2])
+    )
+  bind_day_limit_hover: ->
+    $("body").on("mouseenter", "span.ui-state-default", ->
+      return if $(this).parent().hasClass("has-tooltip")
+      active_days = $("a.ui-state-default")
+      all_elements = $("#datepicker").find("td")
+      last_active_day = $(active_days[0]) unless active_days.length == 0
+      parent = last_active_day?.parent()
+      if active_days.length == 0 || all_elements.index($(this).parent()) > all_elements.index(last_active_day?.parent())
+        parent = $(this).parent()
+        parent.tooltip(
+          placement: 'bottom'
+          trigger: 'hover'
+          title: "You can only reserve up to #{$("#datepicker").data("max-date").substr(1)} days in advance."
+          container: 'body'
+        )
+        parent.tooltip("show")
+        parent.addClass("has-tooltip")
     )

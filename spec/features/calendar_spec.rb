@@ -62,6 +62,48 @@ describe "calendar", :js => true do
       end
     end
   end
+  describe "future days", :js => true do
+    let(:day_limit) {1}
+    before(:each) do
+      Setting.stub(:day_limit).and_return(day_limit)
+      visit root_path
+      expect(page).to have_content(Time.current.strftime("%B"))
+      @remaining_days = Time.days_in_month(Time.current.month) - Time.current.day + 1
+    end
+    context "when you are not an admin" do
+      let(:day_limit) {0}
+      context "and the day limit is 0" do
+        it "should not restrict anything" do
+          expect(page).to have_selector("a.ui-state-default", :count => @remaining_days)
+        end
+      end
+      context "and the day limit is set" do
+        let(:day_limit) {1}
+        it "should hide future days past that point" do
+          expect(page).to have_selector("a.ui-state-default", :count => 2)
+        end
+        it "should show information on hover" do
+          expect(page).to have_selector("a.ui-state-default", :count => 2)
+          page.execute_script("$('span.ui-state-default').last().trigger('mouseenter')")
+          expect(page).to have_selector(".tooltip")
+        end
+        it "should not show information for past dates" do
+          expect(page).to have_selector("a.ui-state-default", :count => 2)
+          page.execute_script("$('span.ui-state-default').first().trigger('mouseenter')")
+          expect(page).not_to have_selector(".tooltip")
+        end
+      end
+    end
+    context "when you are an admin" do
+      let(:user) {build(:user, :staff)}
+      context "and the day limit is set" do
+        let(:day_limit) {1}
+        it "should not hide anything" do
+          expect(page).to have_selector("a.ui-state-default", :count => Time.days_in_month(Time.current.month))
+        end
+      end
+    end
+  end
   describe "past days" do
     before(:each) do
       visit root_path
