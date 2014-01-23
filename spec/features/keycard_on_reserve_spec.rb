@@ -71,7 +71,7 @@ describe "Keycard Popup", :js => true do
             click_button "Reserve"
           end
           it "should work" do
-            expect(page).to have_content("Room Reserved")
+            expect(page).to have_content("Until")
           end
         end
       end
@@ -112,7 +112,7 @@ describe "Keycard Popup", :js => true do
           context "that does exist" do
             it "should work" do
               within("#reservation-popup") do
-                expect(page).to have_content("Room Reserved")
+                expect(page).to have_content("Until")
               end
               expect(Reservation.first.key_card).to eq keycard
             end
