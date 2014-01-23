@@ -72,7 +72,7 @@ describe "admin reservation popup", :js => true do
             click_button "Reserve"
           end
           it "should show a confirmation message" do
-            expect(page).to have_content("Room Reserved")
+            expect(page).to have_content("Until")
           end
           it "should show the room info" do
             within("#reservation-popup") do

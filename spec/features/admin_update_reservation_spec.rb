@@ -68,7 +68,7 @@ describe "editing a reservation" do
             page.execute_script("$('#update-popup').find('#reserver_end_time').val('#{end_time}');")
             click_button "Reserve"
             expect(page).not_to have_field("Username:", :with => "otheruser")
-            expect(page).to have_content("Room Reserved")
+            expect(page).to have_content("Until")
             expect(Reservation.last.end_time).to eq @end_time+20.minutes
           end
           context "when a reservation is edited" do
@@ -78,7 +78,7 @@ describe "editing a reservation" do
               page.execute_script("$('#update-popup').find('#reserver_end_time').val('#{end_time}');")
               click_button "Reserve"
               expect(page).not_to have_field("Username:", :with => "otheruser")
-              expect(page).to have_content("Room Reserved")
+              expect(page).to have_content("Until")
             end
             context "and the user doesn't have a banner record" do
               it "should not send an email" do
