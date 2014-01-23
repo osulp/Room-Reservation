@@ -26,7 +26,8 @@ class UserDecorator < Draper::Decorator
   def max_date
     return '' if object.staff?
     return '' if Setting.day_limit.to_i == 0
-    "+#{Setting.day_limit}"
+    date = Time.current+Setting.day_limit.to_i.days
+    "#{date.month}/#{date.day}/#{date.year}"
   end
 
   def reservation_popup_partial

@@ -175,10 +175,11 @@ class CalendarManager
       parent = last_active_day?.parent()
       if active_days.length == 0 || all_elements.index($(this).parent()) > all_elements.index(last_active_day?.parent())
         parent = $(this).parent()
+        advance = Math.abs(moment($("#datepicker").data("max-date")).tz("America/Los_Angeles").diff(moment().tz("America/Los_Angeles").hour(0).minute(0).second(0).subtract(1, 'hour'),'days'))
         parent.tooltip(
           placement: 'bottom'
           trigger: 'hover'
-          title: "You can only reserve up to #{$("#datepicker").data("max-date").substr(1)} days in advance."
+          title: "You can only reserve up to #{advance} days in advance."
           container: 'body'
         )
         parent.tooltip("show")
