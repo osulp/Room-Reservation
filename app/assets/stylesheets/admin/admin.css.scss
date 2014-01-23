@@ -50,4 +50,12 @@
     margin: 0;
     display: inline-block;
   }
+
+  .form-horizontal .inline-checkbox {
+    .checkbox, .radio {
+      width: auto;
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
 }
