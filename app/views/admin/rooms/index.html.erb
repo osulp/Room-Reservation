@@ -20,10 +20,13 @@
       <%= link_to 'Delete', admin_room_path(room), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger' %>
     </td>
     <td>
+      <% unless room.floor_map.blank? %>
+        <%= image_tag room.floor_map.url, :class => 'span2 pull-right' %>
+      <% end %>
       <% unless room.image.blank? %>
         <%= image_tag room.image.url, :class => 'span1 pull-right' %>
       <% end %>
-      <%= truncate(room.description, :length => 50) %>
+      <%= simple_format truncate(room.description, :length => 150) %>
     </td>
   </tr>
  <% end %>

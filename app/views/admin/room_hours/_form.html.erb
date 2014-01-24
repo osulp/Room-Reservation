@@ -18,10 +18,10 @@
   </div>
   <div class="row">
     <div class="span6">
-      <%= f.association :rooms, as: :check_boxes, :collection => @room_hour.room_collection %>
+      <%= f.association :rooms, as: :check_boxes, :collection => @room_hour.room_collection, :wrapper_html => {:class => 'inline-checkbox'} %>
     </div>
     <div class="span6">
-      <div class="controls">
+      <div class="controls inline-checkbox">
         <%= label_tag "", :class => "checkbox" do %>
           <%= check_box_tag "all_rooms","",false, :class => "check_boxes optional", :data => {:trigger_floor => @room_hour.floor_selection.map{|x| x.last}.join(",")} %>
           All Rooms

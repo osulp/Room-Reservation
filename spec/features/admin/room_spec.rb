@@ -23,6 +23,7 @@ describe "room administration" do
       fill_in "room_description", :with => "This is a restroom on 8th floor.\nEnjoy."
       check filter.name
       attach_file "room_image", 'spec/fixtures/sample.png'
+      attach_file "room_floor_map", 'spec/fixtures/sample.png'
       click_button "Save"
       expect(page).to have_content("Room updated")
       room = Room.last
@@ -31,7 +32,25 @@ describe "room administration" do
       expect(room.description).to eq "This is a restroom on 8th floor.\nEnjoy."
       expect(room.filters).to eq [filter]
       expect(room.image).not_to be_blank
+      expect(room.floor_map).not_to be_blank
       room.remove_image!
+      room.remove_floor_map!
+    end
+    it "should let you delete the images" do
+      click_link "Edit"
+      attach_file "room_image", 'spec/fixtures/sample.png'
+      attach_file "room_floor_map", 'spec/fixtures/sample.png'
+      click_button "Save"
+      room = Room.last
+      expect(room.image).not_to be_blank
+      expect(room.floor_map).not_to be_blank
+      click_link "Edit"
+      check "room_remove_image"
+      check "room_remove_floor_map"
+      click_button "Save"
+      room = Room.last
+      expect(room.image).to be_blank
+      expect(room.floor_map).to be_blank
     end
     it "should let you delete a room", :js => true do
       expect(page).to have_content(room.name)
@@ -47,6 +66,7 @@ describe "room administration" do
     fill_in "room_description", :with => "This is a restroom on 8th floor.\nEnjoy."
     check filter.name
     attach_file "room_image", 'spec/fixtures/sample.png'
+    attach_file "room_floor_map", 'spec/fixtures/sample.png'
     click_button "Save"
     expect(page).to have_content("Room added")
     room = Room.last
@@ -55,6 +75,8 @@ describe "room administration" do
     expect(room.description).to eq "This is a restroom on 8th floor.\nEnjoy."
     expect(room.filters).to eq [filter]
     expect(room.image).not_to be_blank
+    expect(room.floor_map).not_to be_blank
     room.remove_image!
+    room.remove_floor_map!
   end
 end

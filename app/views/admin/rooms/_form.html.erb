@@ -6,7 +6,16 @@
   <%= f.input :image, :as => 'file' %>
   <% unless @room.image.blank? %>
   <div class="control-group">
+    <label for="room_remove_image" class="checkbox"><%= f.check_box :remove_image %>Remove image</label>
     <%= image_tag @room.image, :class => 'img-polaroid' %>
+  </div>
+  <% end %>
+
+  <%= f.input :floor_map, :as => 'file' %>
+  <% unless @room.floor_map.blank? %>
+  <div class="control-group">
+    <label for="room_remove_floor_map" class="checkbox"><%= f.check_box :remove_floor_map %>Remove floor map</label>
+    <%= image_tag @room.floor_map, :class => 'img-polaroid' %>
   </div>
   <% end %>
 

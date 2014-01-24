@@ -5,10 +5,10 @@
   <%= f.input :end_time %>
   <div class="row">
   <div class="span6">
-    <%= f.association :rooms, as: :check_boxes, :collection => @cleaning_record.room_collection %>
+    <%= f.association :rooms, as: :check_boxes, :collection => @cleaning_record.room_collection, :wrapper_html => {:class => 'inline-checkbox'} %>
   </div>
   <div class="span6">
-    <div class="controls">
+    <div class="inline-checkbox controls">
       <%= label_tag "", :class => "checkbox" do %>
         <%= check_box_tag "all_rooms","",false, :class => "check_boxes optional", :data => {:trigger_floor => @cleaning_record.floor_selection.map{|x| x.last}.join(",")} %>
         All Rooms
@@ -22,7 +22,7 @@
     </div>
   </div>
   </div>
-  <%= f.input :weekdays, :as => :check_boxes, :collection => [["Sun","0"], ["Mon","1"], ["Tues","2"], ["Wed","3"],["Thur","4"],["Fri","5"],["Sat","6"]] %>
+  <%= f.input :weekdays, :as => :check_boxes, :collection => [["Sun","0"], ["Mon","1"], ["Tues","2"], ["Wed","3"],["Thur","4"],["Fri","5"],["Sat","6"]], :wrapper_html => {:class => 'inline-checkbox'} %>
   <div class="control-group">
     <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
   </div>

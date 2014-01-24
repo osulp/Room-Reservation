@@ -53,7 +53,7 @@ $room_time_height: 20px;
 
         &.fadeout {opacity: 0.4;}
 
-        .title {text-align: center;}
+        .room-name {text-align: center; position: relative;}
 
         .room-data-bar.progress.vertical {height: $room_time_height * 24;}
       }
@@ -96,4 +96,14 @@ $room_time_height: 20px;
   font-size: 125%;
   width: 100%;
   margin-bottom: 5px;
+}
+
+body > .popover {
+  max-width: 320px;
+  .room-image {
+    display: block;
+    margin: 0 0 4px 4px;
+    max-width: 100px;
+    float: right;
+  }
 }
