@@ -10,4 +10,9 @@ namespace :roomreservation do
       c.render_to_string(:partial => "home/room_list")
     end
   end
+
+  desc "Clears Cache"
+  task :clear_cache => :environment do
+    Rails.cache.clear
+  end
 end
