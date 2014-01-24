@@ -27,7 +27,7 @@ after 'deploy:restart', 'deploy:cleanup'
 after 'deploy:finalize_update', 'deploy:symlink_config'
 after 'deploy:update_code', 'deploy:migrate'
 after 'deploy:restart', 'deploy:cleanup'
-after 'deploy:cleanup', 'roomreservation:clear_cache'
+after 'deploy:restart', 'roomreservation:clear_cache'
 after 'roomreservation:clear_cache', 'roomreservation:warm_cache'
 
 namespace :deploy do
