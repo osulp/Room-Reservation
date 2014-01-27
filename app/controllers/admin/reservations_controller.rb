@@ -11,7 +11,7 @@ class Admin::ReservationsController < AdminController
     else
       @user = User.new(params[:user_id])
     end
-    @reservations = ReservationFacade.new(@user).reservations
+    @reservations = ReservationFacade.new(@user, current_user).reservations
     respond_with(@reservations)
   end
 

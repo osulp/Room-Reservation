@@ -28,9 +28,6 @@ class ReservationDecorator < EventDecorator
 
   def status_string
     if end_time.future? && truncated_at.blank? && !deleted?
-      if h.can?(:update, object)
-        return cancel_string+" "+edit_string
-      end
       return cancel_string
     end
     return deleted_string if deleted?

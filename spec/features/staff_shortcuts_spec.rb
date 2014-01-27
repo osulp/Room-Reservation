@@ -70,6 +70,13 @@ describe "staff shortcuts" do
             expect(page).not_to have_content("Empty")
           end
         end
+        it "should have the time in 24h time" do
+          within("#modal_skeleton") do
+            expect(page).to have_content("User Reservations")
+            expect(page).to have_content(reservation.start_time.strftime("%H:%M"))
+            expect(page).to have_content(reservation.end_time.strftime("%H:%M"))
+          end
+        end
         it "should have a working cancel button" do
           sleep(1)
           click_link "Cancel"

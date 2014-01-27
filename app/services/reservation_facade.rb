@@ -1,7 +1,8 @@
 class ReservationFacade
-  attr_accessor :user
-  def initialize(user)
+  attr_accessor :user, :current_user
+  def initialize(user, current_user=nil)
     self.user = user
+    self.current_user = current_user || user
   end
 
   def reservations
@@ -11,7 +12,13 @@ class ReservationFacade
     end
     # TODO: Cache this if necessary; Slice this if it's too long
     reservations[1].reverse!
-    reservations.map!{|x| x.map{|y| y.decorate}}
-    return reservations
+    return reservations.map{|x| x.map{|y| decorator.new(y)}}
+  end
+
+  private
+
+  def decorator
+    return AdminReservationDecorator if current_user.staff?
+    ReservationDecorator
   end
 end

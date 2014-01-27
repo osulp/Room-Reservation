@@ -40,6 +40,11 @@ describe "GET /reservations" do
           expect(page).to have_selector(".reservation")
           expect(page).to have_content(@room1.name)
         end
+        it "should display the time in 12h time" do
+          r = Reservation.first
+          expect(page).not_to have_content(r.start_time.strftime("%H:%M"))
+          expect(page).not_to have_content(r.end_time.strftime("%H:%M"))
+        end
         it "should not show an edit button" do
           expect(page).not_to have_content("Edit")
         end
