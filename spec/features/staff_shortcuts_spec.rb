@@ -61,6 +61,17 @@ describe "staff shortcuts" do
           expect(page).to have_content("User Reservations (#{user.onid})")
         end
       end
+      context "and it is a card swiped ID" do
+        let(:value) do
+          banner_record
+          "11931590800"
+        end
+        it "should bring up a modal window" do
+          within("#modal_skeleton") do
+            expect(page).to have_content("User Reservations (#{user.onid})")
+          end
+        end
+      end
       context "and the user has a reservation" do
         let(:reservation) {create(:reservation, :user_onid => user.onid, :start_time => Time.current + 2.hours, :end_time => Time.current+4.hours)}
         it "should show it" do
