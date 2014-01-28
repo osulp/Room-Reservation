@@ -100,6 +100,7 @@ class AdminShortcutsManager
     @user_field.removeClass("bordered")
     user_query = @user_field.val()
     return if !user_query || user_query == ""
+    user_query = user_query.replace(/^11([0-9]{9})/, '$1')
     @user_field.val("")
     @user_field.focus()
     this.load_user(user_query)
