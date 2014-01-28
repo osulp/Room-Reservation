@@ -15,7 +15,7 @@
       <td><%= reservation.room.name %></td>
       <td>
         <%= reservation.formatted_start %> -
-        <%= reservation.formatted_end %>
+        <%= raw reservation.formatted_end %>
         <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
       </td>
       <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
@@ -37,7 +37,7 @@
       <td><%= reservation.room.name %></td>
       <td>
         <%= reservation.formatted_start %> -
-        <%= reservation.formatted_end %>
+        <%= raw reservation.formatted_end %>
         <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
       </td>
       <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
