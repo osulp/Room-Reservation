@@ -31,6 +31,19 @@ describe "staff shortcuts" do
       end
     end
   end
+  describe "patron mode" do
+    context "when the user is staff" do
+      it "should not show" do
+        expect(page).not_to have_selector("#patron_mode")
+      end
+    end
+    context "when the user is an admin" do
+      let(:user) {build(:user, :admin)}
+      it "should show" do
+        expect(page).to have_selector("#patron_mode")
+      end
+    end
+  end
   describe "user search", :js => true do
     before(:each) do
       fill_in "user_lookup", :with => value
