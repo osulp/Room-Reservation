@@ -121,11 +121,8 @@ class ReservationPopupManager
     "#{result.join("-").replace("Z","")}-00:00"
   position_popup: (x, y)->
     @popup.show()
-    console.log("Yo")
-    console.log("X: #{x} Y: #{y} Window Scroll: #{window.scrollY}")
     if(y < window.scrollY)
       y = window.scrollY+10
-      console.log(y)
     # Change behavior for phones
     @popup.attr("style","")
     if $("body").width() <= 480
@@ -138,11 +135,8 @@ class ReservationPopupManager
       @popup.css("margin-left",-1)
       @popup.css("margin-top",-1)
     else
-      console.log("Popup X: #{@popup.offset().left} Popup Y: #{@popup.offset().top}")
-      console.log("X: #{x} Y: #{y}")
       @popup.css("top", y)
       @popup.css("left", x+10)
-      console.log("Popup X: #{@popup.offset().left} Popup Y: #{@popup.offset().top}")
     return
   populate_reservation_popup: (room_element, start_time, end_time, event) ->
     $(".popup").hide()
