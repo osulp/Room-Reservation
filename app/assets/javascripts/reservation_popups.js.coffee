@@ -120,11 +120,11 @@ class ReservationPopupManager
     result.pop() if result.length > 3
     "#{result.join("-").replace("Z","")}-00:00"
   position_popup: (x, y)->
-    @popup.show()
     if(y < window.scrollY)
       y = window.scrollY+10
     # Change behavior for phones
     @popup.attr("style","")
+    @popup.show()
     if $("body").width() <= 480
       @popup.css("max-width","none")
       @popup.css("max-height","none")
