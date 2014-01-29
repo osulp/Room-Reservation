@@ -1,5 +1,5 @@
 <table class="table table-hover my-reservations">
-  <tr>
+  <tr class="show-desktop">
     <th class="span2">Room</th>
     <th class="span3">Date &amp; Time</th>
     <th class="span3">Weekday</th>
@@ -7,22 +7,7 @@
     <th class="span2"></th>
   </tr>
   <% @reservations[0].each do |reservation| %>
-    <tr
-    data-room-id="<%= reservation.room.id %>"
-    data-room-name="<%= reservation.room.name %>"
-    class="reservation"
-    >
-      <td><%= reservation.room.name %></td>
-      <td>
-        <%= reservation.formatted_start %> -
-        <%= raw reservation.formatted_end %>
-        <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
-      </td>
-      <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
-      </td>
-      <td><%= reservation.formatted_created_at %></td>
-      <td><%= reservation.status_string %></td>
-    </tr>
+    <%= render 'row', :reservation => reservation %>
   <% end %>
   <% if @reservations[0].empty? %>
     <tr><td colspan="5" class="row-empty">Empty</td></tr>
@@ -33,18 +18,6 @@
     </tr>
   <% end %>
   <% @reservations[1].each do |reservation| %>
-    <tr class="reservation">
-      <td><%= reservation.room.name %></td>
-      <td>
-        <%= reservation.formatted_start %> -
-        <%= raw reservation.formatted_end %>
-        <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
-      </td>
-      <td><div class="weekday"><div class="d<%= reservation.end_time.wday %>"></div></div>
-      <td><%= reservation.formatted_created_at %></td>
-      <td>
-        <%= reservation.status_string %>
-      </td>
-    </tr>
+    <%= render 'row', :reservation => reservation %>
   <% end %>
 </table>

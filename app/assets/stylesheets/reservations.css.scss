@@ -6,25 +6,75 @@ $w: 40px;
     font-style: italic;
     color: grey;
   }
+
+  @media (max-width: 979px) {
+    tr, td, th {
+      display: block;
+    }
+  }
 }
+
 .weekday {
-  border-bottom: 1px dotted lightgrey;
-  //width: $w * 7;
   div {
     width: $w; height: 20px;
     text-align: center; color: white;
     border-radius: 3px;
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
-    padding: 2px 0;
     font-weight: 700;
-    position: absolute;
   }
 
-  .d0 { background-color: #D15B47; &:after {content: 'Sun';} margin-left: $w * 0; margin-right: $w * 6; }
-  .d1 { background-color: #87B87F; &:after {content: 'Mon';} margin-left: $w * 1; margin-right: $w * 5; }
-  .d2 { background-color: #6FB3E0; &:after {content: 'Tue';} margin-left: $w * 2; margin-right: $w * 4; }
-  .d3 { background-color: #69AA46; &:after {content: 'Wed';} margin-left: $w * 3; margin-right: $w * 3; }
-  .d4 { background-color: #269ABC; &:after {content: 'Thu';} margin-left: $w * 4; margin-right: $w * 2; }
-  .d5 { background-color: #FFB752; &:after {content: 'Fri';} margin-left: $w * 5; margin-right: $w * 1; }
-  .d6 { background-color: #AC2925; &:after {content: 'Sat';} margin-left: $w * 6; margin-right: $w * 0; }
+  .d0 { background-color: #D15B47; &:after {content: 'Sun';} }
+  .d1 { background-color: #87B87F; &:after {content: 'Mon';} }
+  .d2 { background-color: #6FB3E0; &:after {content: 'Tue';} }
+  .d3 { background-color: #69AA46; &:after {content: 'Wed';} }
+  .d4 { background-color: #269ABC; &:after {content: 'Thu';} }
+  .d5 { background-color: #FFB752; &:after {content: 'Fri';} }
+  .d6 { background-color: #AC2925; &:after {content: 'Sat';} }
+
+  @media (min-width: 1200px) {
+    width: $w * 7;
+    .d0 { margin-left: $w * 0; margin-right: $w * 6; }
+    .d1 { margin-left: $w * 1; margin-right: $w * 5; }
+    .d2 { margin-left: $w * 2; margin-right: $w * 4; }
+    .d3 { margin-left: $w * 3; margin-right: $w * 3; }
+    .d4 { margin-left: $w * 4; margin-right: $w * 2; }
+    .d5 { margin-left: $w * 5; margin-right: $w * 1; }
+    .d6 { margin-left: $w * 6; margin-right: $w * 0; }
+  }
+
+  @media (min-width: 980px) and (max-width: 1199px) {
+    // Compact size of week day
+    width: $w * 4;
+    .d0 { margin-left: $w / 2 * 0; margin-right: $w / 2 * 6; }
+    .d1 { margin-left: $w / 2 * 1; margin-right: $w / 2 * 5; }
+    .d2 { margin-left: $w / 2 * 2; margin-right: $w / 2 * 4; }
+    .d3 { margin-left: $w / 2 * 3; margin-right: $w / 2 * 3; }
+    .d4 { margin-left: $w / 2 * 4; margin-right: $w / 2 * 2; }
+    .d5 { margin-left: $w / 2 * 5; margin-right: $w / 2 * 1; }
+    .d6 { margin-left: $w / 2 * 6; margin-right: $w / 2 * 0; }
+  }
+
+  @media (max-width: 979px) {
+    >div { margin: 0 4px; }
+  }
+
+  @media (min-width: 980px) {
+    border-bottom: 1px dotted lightgrey;
+    padding: 2px 0;
+  }
+}
+
+// Responsive fixes
+.show-desktop {
+  @media (max-width: 979px) {
+    display: none!important;
+  }
+}
+.hide-desktop {
+  @media (min-width: 980px) {
+    display: none!important;
+  }
+}
+.inline-block {
+  display: inline-block;
 }
