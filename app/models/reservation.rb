@@ -10,6 +10,14 @@ class Reservation < ActiveRecord::Base
     joins(:key_card)
   end
 
+  def self.inactive
+    includes(:key_card).references(:key_cards).where("key_cards.id IS NULL")
+  end
+
+  def self.ongoing
+    where("start_time <= ? AND end_time >= ?", Time.current, Time.current)
+  end
+
   def user
     @user = nil if @user && @user.onid != user_onid
     @user ||= User.new(user_onid)
