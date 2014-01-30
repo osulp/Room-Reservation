@@ -22,8 +22,7 @@ class ReservationPopupManager
       end_time.minute(Math.ceil(end_time.minute()/10)*10)
       master.element = element
       # Set up popup.
-      master.position_popup(event.pageX, event.pageY)
-      master.populate_reservation_popup(room_element, start_time, end_time)
+      master.populate_reservation_popup(room_element, start_time, end_time, event)
       event.preventDefault()
     )
     # Set up update popup
@@ -43,8 +42,7 @@ class ReservationPopupManager
       end_time.minute(Math.ceil(end_time.minute()/10)*10)
       master.element = element
       # Set up popup.
-      master.position_popup(event.pageX, event.pageY)
-      master.populate_update_popup(room_element, start_time, end_time)
+      master.populate_update_popup(room_element, start_time, end_time, event)
       event.preventDefault()
     )
     @reservation_popup.click (event) ->
@@ -122,9 +120,11 @@ class ReservationPopupManager
     result.pop() if result.length > 3
     "#{result.join("-").replace("Z","")}-00:00"
   position_popup: (x, y)->
-    @popup.show()
+    if(y < window.scrollY)
+      y = window.scrollY+10
     # Change behavior for phones
     @popup.attr("style","")
+    @popup.show()
     if $("body").width() <= 480
       @popup.css("max-width","none")
       @popup.css("max-height","none")
@@ -135,9 +135,10 @@ class ReservationPopupManager
       @popup.css("margin-left",-1)
       @popup.css("margin-top",-1)
     else
-      @popup.offset({top: y, left: x+10})
-    @popup.hide()
-  populate_reservation_popup: (room_element, start_time, end_time) ->
+      @popup.css("top", y)
+      @popup.css("left", x+10)
+    return
+  populate_reservation_popup: (room_element, start_time, end_time, event) ->
     $(".popup").hide()
     this.hide_popup()
     room_id = room_element.data("room-id")
@@ -152,8 +153,10 @@ class ReservationPopupManager
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability)
+      this.position_popup(event.pageX, event.pageY)
+      @popup.show()
     )
-  populate_update_popup: (room_element, start_time, end_time) ->
+  populate_update_popup: (room_element, start_time, end_time, event) ->
     $(".popup").hide()
     this.hide_popup()
     room_id = room_element.data("room-id")
@@ -175,6 +178,7 @@ class ReservationPopupManager
       s.minute(Math.ceil(s.minute()/10)*10)
       @slider_element.slider(values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10])
       this.slid(1, {values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10]})
+      this.position_popup(event.pageX, event.pageY)
     )
     $.getJSON("/reservations/#{@element.data("id")}.json", (result) =>
       @popup.find("#reserver_user_onid").val(result.user_onid)
