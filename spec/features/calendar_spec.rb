@@ -82,10 +82,15 @@ describe "calendar", :js => true do
         it "should hide future days past that point" do
           expect(page).to have_selector("a.ui-state-default", :count => 2)
         end
-        it "should show information on hover" do
-          expect(page).to have_selector("a.ui-state-default", :count => 2)
-          page.execute_script("$('span.ui-state-default').last().trigger('mouseenter')")
-          expect(page).to have_selector(".tooltip")
+        context "when you hover" do
+          let(:day_limit) {10}
+          it "should show information" do
+            if page.has_selector?('a[data-handler=next]')
+              find('a[data-handler=next]').click
+            end
+            page.execute_script("$('span.ui-state-default').last().trigger('mouseenter')")
+            expect(page).to have_selector(".tooltip")
+          end
         end
         it "should not show information for past dates" do
           expect(page).to have_selector("a.ui-state-default", :count => 2)
