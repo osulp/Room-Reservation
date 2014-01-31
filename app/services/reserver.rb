@@ -143,7 +143,7 @@ class Reserver
   end
 
   def reset_truncated_at
-    if reservation.changed?
+    if reservation.changed? && !reservation.truncated_at_changed?
       reservation.truncated_at = nil
     end
   end
