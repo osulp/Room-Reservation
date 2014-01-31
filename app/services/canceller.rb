@@ -45,7 +45,7 @@ class Canceller
   end
 
   def reservation_not_over
-    time = reservation.truncated_at
+    time = reservation.truncated_at if reservation.truncated_at < reservation.end_time && reservation.truncated_at > reservation.start_time
     time ||= [reservation.start_time, reservation.end_time].max
     errors.add(:base, "Completed reservations may not be cancelled") if time  < Time.current
   end
