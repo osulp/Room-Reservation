@@ -51,6 +51,8 @@ gem 'thin'
 
 # Sidekiq for asynchronous jobs
 gem 'sidekiq'
+# Sidetiq for scheduling of jobs
+gem 'sidetiq'
 
 # CanCan for Permissions
 gem 'cancan'
