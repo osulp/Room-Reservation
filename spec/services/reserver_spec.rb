@@ -211,6 +211,20 @@ describe Reserver do
         expect(@new_reserver.save).to eq true
         expect(Reservation.first.end_time).to eq @reservation.end_time
       end
+      context "which has a truncated_at set already" do
+        before(:each) do
+          @reservation = Reservation.first
+          @reservation.truncated_at = Time.current
+          @reservation.save
+          @reservation.reload
+          @reservation.end_time = @reservation.end_time + 1.minute
+          @new_reserver = Reserver.new(@reservation)
+        end
+        it "should reset the truncated_at timestamp" do
+          expect(@new_reserver.save).to eq true
+          expect(Reservation.first.truncated_at).to be_nil
+        end
+      end
     end
     context "when the model is invalid" do
       before(:each) do

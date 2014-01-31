@@ -24,6 +24,7 @@ class Reserver
 
   delegate :as_json, :read_attribute_for_serialization, :to => :reservation
   after_reservation_save :send_email
+  before_reservation_save :reset_truncated_at
 
 
   def self.reflect_on_association(association)
@@ -138,6 +139,12 @@ class Reserver
       reservation.errors.full_messages.each do |msg|
         self.errors.add(:base, msg)
       end
+    end
+  end
+
+  def reset_truncated_at
+    if reservation.changed? && !reservation.truncated_at_changed?
+      reservation.truncated_at = nil
     end
   end
 

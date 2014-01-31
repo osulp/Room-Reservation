@@ -63,27 +63,37 @@ describe "calendar", :js => true do
     end
   end
   describe "future days", :js => true do
-    let(:day_limit) {1}
+    let(:day_limit) {16}
     before(:each) do
       Setting.stub(:day_limit).and_return(day_limit)
       visit root_path
       expect(page).to have_content(Time.current.strftime("%B"))
-      @remaining_days = Time.days_in_month(Time.current.month) - Time.current.day + 1
+      if page.has_selector?('a[data-handler=next]')
+        find('a[data-handler=next]').click
+      end
+      @remaining_days = begin
+        limit_day = Time.current+day_limit.days
+        if limit_day.month == Time.current.month
+          day_limit + 1
+        else
+          Time.current.day+day_limit-Time.days_in_month(Time.current.month)
+        end
+      end
     end
     context "when you are not an admin" do
       let(:day_limit) {0}
       context "and the day limit is 0" do
         it "should not restrict anything" do
-          expect(page).to have_selector("a.ui-state-default", :count => @remaining_days)
+          expect(page).to have_selector("a.ui-state-default", :count => Time.days_in_month((Time.current+1.month).month))
         end
       end
       context "and the day limit is set" do
-        let(:day_limit) {1}
+        let(:day_limit) {16}
         it "should hide future days past that point" do
-          expect(page).to have_selector("a.ui-state-default", :count => 2)
+          expect(page).to have_selector("a.ui-state-default", :count => @remaining_days)
         end
         context "when you hover" do
-          let(:day_limit) {10}
+          let(:day_limit) {16}
           it "should show information" do
             if page.has_selector?('a[data-handler=next]')
               find('a[data-handler=next]').click
@@ -93,7 +103,9 @@ describe "calendar", :js => true do
           end
         end
         it "should not show information for past dates" do
-          expect(page).to have_selector("a.ui-state-default", :count => 2)
+          if page.has_selector?('a[data-handler=prev]')
+            find('a[data-handler=prev]').click
+          end
           page.execute_script("$('span.ui-state-default').first().trigger('mouseenter')")
           expect(page).not_to have_selector(".tooltip")
         end
@@ -104,7 +116,7 @@ describe "calendar", :js => true do
       context "and the day limit is set" do
         let(:day_limit) {1}
         it "should not hide anything" do
-          expect(page).to have_selector("a.ui-state-default", :count => Time.days_in_month(Time.current.month))
+          expect(page).to have_selector("a.ui-state-default", :count => Time.days_in_month((Time.current+1.month).month))
         end
       end
     end
