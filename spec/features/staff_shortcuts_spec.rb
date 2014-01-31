@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "staff shortcuts" do
+describe "staff shortcuts", :versioning => true do
   let(:user) {build(:user, :staff)}
   let(:keycard) {nil}
   let(:reservation) {nil}

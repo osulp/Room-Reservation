@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "GET /reservations" do
+describe "GET /reservations", :versioning => true do
   let(:user) {"bla"}
   let(:login) {RubyCAS::Filter.fake(user) unless user.blank?}
   before(:each) do
