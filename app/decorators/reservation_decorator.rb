@@ -63,7 +63,7 @@ class ReservationDecorator < EventDecorator
 
 
   def truncated_string
-    return checked_in_string unless self.versions.last.whodunnit == "Truncator"
+    return checked_in_string unless self.versions.last.try(:whodunnit) == "Truncator"
     truncator_string
   end
 
