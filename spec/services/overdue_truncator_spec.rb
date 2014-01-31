@@ -51,18 +51,25 @@ describe OverdueTruncator do
     let(:start_time_2) {Time.current-1.hour}
     let(:end_time_2) {Time.current+1.hour}
     subject {OverdueTruncator}
-    before(:each) do
-      reservation
-      reservation_2
+    context "when there are reservations to be truncated" do
+      before(:each) do
+        reservation
+        reservation_2
+      end
+      it "should truncate all overdue reservations" do
+        subject.call
+        expect(reservation.reload.truncated_at).not_to be_blank
+        expect(reservation_2.reload.truncated_at).not_to be_blank
+      end
+      it "should the change to days to be published once" do
+        expect(CalendarPresenter).to receive(:publish_changed).exactly(1).times.with(start_time.to_date, end_time.to_date)
+        subject.call
+      end
     end
-    it "should truncate all overdue reservations" do
-      subject.call
-      expect(reservation.reload.truncated_at).not_to be_blank
-      expect(reservation_2.reload.truncated_at).not_to be_blank
-    end
-    it "should the change to days to be published once" do
-      expect(CalendarPresenter).to receive(:publish_changed).exactly(1).times.with(start_time.to_date, end_time.to_date)
-      subject.call
+    context "when there are no reservations to be truncated" do
+      it "should not error" do
+        expect{subject.call}.not_to raise_error
+      end
     end
   end
 end

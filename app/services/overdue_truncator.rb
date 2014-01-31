@@ -19,7 +19,7 @@ class OverdueTruncator
 
   def notify_updates(ranges)
     merge_ranges(ranges).each do |range|
-      CalendarPresenter.publish_changed(range.first, range.last)
+      CalendarPresenter.publish_changed(range.first, range.last) if range
     end
   end
 
@@ -43,7 +43,7 @@ class OverdueTruncator
       outages.push(r)
     end
   end
-  outages
+  outages.compact
 end
 
 end
