@@ -4,6 +4,7 @@ class OverdueTruncator
   end
 
   def perform_truncation!
+    PaperTrail.whodunnit = "Truncator"
     ranges = []
     Reservation.transaction do
       eligible_reservations.each do |reservation|

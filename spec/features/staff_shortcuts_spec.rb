@@ -119,6 +119,18 @@ describe "staff shortcuts" do
           end
           expect(page).to have_selector("#update-popup",:visible => true)
         end
+        context "which has been truncated by the auto truncator" do
+          let(:reservation) {create(:reservation, :user_onid => user.onid, :start_time => Time.current - 1.hours, :end_time => Time.current+1.hours)}
+          let(:value) do
+            banner_record
+            OverdueTruncator.call
+            expect(reservation.reload.truncated_at).not_to be_nil
+            "931590800"
+          end
+          it "should say that it's been truncated" do
+            expect(page).to have_content("Truncated")
+          end
+        end
         context "which already has a keycard attached" do
           let(:keycard) {create(:key_card, :room => reservation.room, :reservation => reservation)}
           it "should hide the keycard entry field" do

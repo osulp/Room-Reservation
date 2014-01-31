@@ -14,4 +14,16 @@ class AdminReservationDecorator < ReservationDecorator
     end
     super
   end
+
+  def truncator_string
+    h.content_tag(:span, :class => "label label-info") do
+      "Truncated #{formatted_truncated_at}"
+    end
+  end
+
+  def checked_in_string
+    h.content_tag(:span, :class => "label label-info") do
+      "Checked In #{formatted_truncated_at}"
+    end
+  end
 end

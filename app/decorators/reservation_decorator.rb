@@ -61,10 +61,20 @@ class ReservationDecorator < EventDecorator
     end
   end
 
+
   def truncated_string
+    return checked_in_string unless self.versions.last.whodunnit == "Truncator"
+    truncator_string
+  end
+
+  def checked_in_string
     h.content_tag(:span, :class => "label label-info") do
       "Checked In #{formatted_truncated_at}"
     end
+  end
+
+  def truncator_string
+    checked_in_string
   end
 
   def payload
