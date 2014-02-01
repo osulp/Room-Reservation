@@ -16,6 +16,15 @@ describe OverdueTruncator do
         it "should return them" do
           expect(subject).to eq [reservation]
         end
+        context "and have already been truncated" do
+          before(:each) do
+            reservation.truncated_at = Time.current
+            reservation.save
+          end
+          it "should not return them" do
+            expect(subject).to eq []
+          end
+        end
         context "which started before the limit" do
           before(:each) do
             OverdueTruncator.any_instance.stub(:truncate_limit).and_return(1.hour+1.minutes)

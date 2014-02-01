@@ -4,6 +4,7 @@ class OverdueTruncator
   end
 
   def perform_truncation!
+    PaperTrail.whodunnit = "Truncator"
     ranges = []
     Reservation.transaction do
       eligible_reservations.each do |reservation|
@@ -24,7 +25,7 @@ class OverdueTruncator
   end
 
   def eligible_reservations
-    @eligible_reservations ||= Reservation.ongoing.inactive.where("start_time < ?", Time.current-truncate_limit)
+    @eligible_reservations ||= Reservation.ongoing.inactive.where("start_time < ? AND truncated_at IS NULL", Time.current-truncate_limit)
   end
 
   # TODO: Move to configuration.
