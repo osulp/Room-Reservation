@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117221913) do
+ActiveRecord::Schema.define(version: 20140203170058) do
 
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
@@ -133,7 +133,12 @@ ActiveRecord::Schema.define(version: 20140117221913) do
     t.datetime "truncated_at"
   end
 
+  add_index "reservations", ["deleted_at"], name: "index_reservations_on_deleted_at", using: :btree
+  add_index "reservations", ["end_time"], name: "index_reservations_on_end_time", using: :btree
+  add_index "reservations", ["reserver_onid"], name: "index_reservations_on_reserver_onid", using: :btree
   add_index "reservations", ["room_id"], name: "index_reservations_on_room_id", using: :btree
+  add_index "reservations", ["start_time"], name: "index_reservations_on_start_time", using: :btree
+  add_index "reservations", ["user_onid"], name: "index_reservations_on_user_onid", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "onid"
@@ -186,6 +191,7 @@ ActiveRecord::Schema.define(version: 20140117221913) do
   end
 
   add_index "rooms", ["floor"], name: "index_rooms_on_floor", using: :btree
+  add_index "rooms", ["name"], name: "index_rooms_on_name", using: :btree
 
   create_table "settings", force: true do |t|
     t.string   "key"
