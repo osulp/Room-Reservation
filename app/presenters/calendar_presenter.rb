@@ -15,7 +15,7 @@ class CalendarPresenter
   # Publishes info to Faye
   def self.publish_changed(start_time, end_time, presenter=nil)
     start_time = start_time.to_date
-    end_time = end_time.to_date
+    end_time = (end_time-1.minute).to_date unless end_time.kind_of?(Date)
     notifier = DateUpdateNotifier.new
     start_time.upto(end_time) do |date|
       notifier.notify_update(date,presenter)
