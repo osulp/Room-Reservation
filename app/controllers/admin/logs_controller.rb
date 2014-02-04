@@ -1,9 +1,13 @@
 class Admin::LogsController < AdminController
   def index
-    @reservations = AdminReservationsDecorator.new(Reservation.all.with_deleted.joins(:room).order("#{sort_field} #{sort_order}").page(params[:page]).per(per_page))
+    @reservations = AdminReservationsDecorator.new(reservations.page(params[:page]).per(per_page))
   end
 
   private
+
+  def reservations
+    Reservation.all.with_deleted.joins(:room).order("#{sort_field} #{sort_order}")
+  end
 
   def per_page
     20

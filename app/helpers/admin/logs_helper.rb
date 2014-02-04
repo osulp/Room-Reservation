@@ -1,9 +1,9 @@
 module Admin::LogsHelper
   def sort_field(field, display)
     if params[:sort_field].to_s == field.to_s
-      "#{display} " + link_to(raw(sort_arrow(field)), admin_logs_path(:sort_field => field.to_s, :page => params[:page], :sort_order => sort_order(field)))
+      "#{display} " + link_to(raw(sort_arrow(field)), admin_logs_path(:sort_field => field.to_s, :page => params[:page], :sort_order => sort_order(field)), :data => {:sort => field})
     else
-      link_to raw("#{display} #{sort_arrow(field)}"),admin_logs_path(:sort_field => field.to_s, :page => params[:page], :sort_order => sort_order(field))
+      link_to raw("#{display} #{sort_arrow(field)}"),admin_logs_path(:sort_field => field.to_s, :page => params[:page], :sort_order => sort_order(field)), :data => {:sort => field}
     end
   end
 
