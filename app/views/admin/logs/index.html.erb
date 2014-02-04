@@ -19,6 +19,7 @@
     <th><%= raw sort_field(:reserver_onid, "Reserved By") %></th>
     <th><%= raw sort_field(:updated_at, "Reserved At") %></th>
     <th></th>
+    <th></th>
   </thead>
   <tbody>
     <% @reservations.each do |reservation| %>
@@ -31,6 +32,7 @@
         <td><%= filter_field(:reserver_onid,reservation.reserver.onid) %></td>
         <td><%= reservation.formatted_updated_at %></td>
         <td><%= reservation.status_string %></td>
+        <td><%= link_to_unless reservation.versions.size <= 1, "History", history_admin_reservation_path(reservation) %></td>
       </tr>
     <% end %>
   </tbody>

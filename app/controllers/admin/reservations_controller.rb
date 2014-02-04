@@ -2,7 +2,7 @@ class Admin::ReservationsController < AdminController
   respond_to :html, :json
   skip_before_filter :require_admin, :only => [:index, :checkout]
   before_filter :require_staff, :only => [:index, :checkout]
-  layout :false
+  layout :false, :except => :history
 
   def index
     banner_record = BannerRecord.soft_find_by_osu_id(params[:user_id])
@@ -13,6 +13,12 @@ class Admin::ReservationsController < AdminController
     end
     @reservations = ReservationFacade.new(@user, current_user).reservations
     respond_with(@reservations)
+  end
+
+  # Show past versions of a given reservation
+  def history
+    @reservation = Reservation.find(params[:id])
+    respond_with(@reservation)
   end
 
   def checkout

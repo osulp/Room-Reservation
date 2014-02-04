@@ -63,5 +63,16 @@ describe "Admin Logs" do
         expect(page).not_to have_content(reservation_2.user_onid)
       end
     end
+    context "and the reservation has a history", :versioning => true do
+      before(:each) do
+        reservation.start_time = reservation.start_time + 10.minutes
+        reservation.save
+        all("tr td a")[0].click # Click the first user.
+        click_link "History"
+      end
+      it "should show the history" do
+        expect(page).to have_selector("tr", :count => 4)
+      end
+    end
   end
 end

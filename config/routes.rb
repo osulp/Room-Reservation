@@ -28,6 +28,7 @@ RoomReservation::Application.routes.draw do
     resources :reservations, :only => [] do
       member do
         post 'checkout/:key', :to => 'reservations#checkout'
+        get 'history'
       end
     end
     resources :users, :only => [] do

@@ -1,0 +1,9 @@
+<h1>History for Reservation ID: <%= @reservation.id %></h1>
+
+<h2>Current Record:</h2>
+
+<%= render "history_table", :reservations => [@reservation] %>
+
+<h2>History:</h2>
+
+<%= render "history_table", :reservations => @reservation.versions.map{|x| x.reify}.compact %>
