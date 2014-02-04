@@ -69,6 +69,9 @@ gem 'paper_trail', '~> 3.0.0'
 # File uploading
 gem 'carrierwave'
 
+# Kaminari for pagination
+gem 'kaminari'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
