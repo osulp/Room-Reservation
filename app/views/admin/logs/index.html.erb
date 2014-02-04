@@ -1,0 +1,30 @@
+<h1>Reservation Logs</h1>
+
+<table class="table table-hover">
+  <thead>
+    <th>ID</th>
+    <th><%= raw sort_field(:user_onid,"User") %></th>
+    <th><%= raw sort_field(:room,"Room") %></th>
+    <th><%= raw sort_field(:start_time, "Start") %></th>
+    <th><%= raw sort_field(:end_time, "End") %></th>
+    <th><%= raw sort_field(:reserver_onid, "Reserved By") %></th>
+    <th><%= raw sort_field(:updated_at, "Reserved At") %></th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% @reservations.each do |reservation| %>
+      <tr>
+        <td><%= reservation.id %></td>
+        <td><%= reservation.user.onid %></td>
+        <td><%= reservation.room.name %></td>
+        <td><%= reservation.formatted_start %></td>
+        <td><%= raw reservation.formatted_end %></td>
+        <td><%= reservation.reserver.onid %></td>
+        <td><%= reservation.formatted_updated_at %></td>
+        <td><%= reservation.status_string %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @reservations %>
