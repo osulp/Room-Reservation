@@ -53,6 +53,10 @@ describe "Admin Logs" do
       it "should filter out all other columns" do
         expect(page).not_to have_content(reservation_2.user_onid)
       end
+      it "should not lose the filter when you sort" do
+        find("a[data-sort=start_time]").click
+        expect(page).not_to have_content(reservation_2.user_onid)
+      end
     end
   end
 end

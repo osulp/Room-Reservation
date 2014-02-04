@@ -3,7 +3,7 @@ module Admin::LogsHelper
     if params[:sort_field].to_s == field.to_s
       "#{display} " + link_to(raw(sort_arrow(field)), admin_logs_path(sort_params.merge(:sort_field => field.to_s, :sort_order => sort_order(field))), :data => {:sort => field})
     else
-      link_to raw("#{display} #{sort_arrow(field)}"),admin_logs_path(sort_params.merge(:sort_field => field.to_s, :sort_order => sort_order(field))), :data => {:sort => field}
+      link_to display,admin_logs_path(sort_params.merge(:sort_field => field.to_s, :sort_order => sort_order(field))), :data => {:sort => field}
     end
   end
 
@@ -25,7 +25,9 @@ module Admin::LogsHelper
     {
         :sort_field => params[:sort_field],
         :sort_order => params[:sort_order],
-        :page => params[:page]
+        :page => params[:page],
+        :filter_field => params[:filter_field],
+        :filter_value => params[:filter_value]
     }
   end
 
