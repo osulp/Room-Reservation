@@ -40,7 +40,9 @@ module Admin::LogsHelper
     {
       "rooms.name" => "Room",
       "user_onid" => "User",
-      "reserver_onid" => "Reserver"
+      "reserver_onid" => "Reserver",
+      "end_time" => "Ends Before",
+      "start_time" => "Starts After"
     }.with_indifferent_access
   end
 
@@ -58,8 +60,12 @@ module Admin::LogsHelper
   end
 
   def filter_field(field, value)
+    link_to value, filter_field_link(field, value)
+  end
+
+  def filter_field_link(field, value)
     facets = sort_params[:facets]
     facets = facets.merge(field => value)
-    link_to value, admin_logs_path(sort_params.merge(:facets => facets))
+    admin_logs_path(sort_params.merge(:facets => facets))
   end
 end

@@ -14,8 +14,8 @@
     <th>ID</th>
     <th><%= raw sort_field(:user_onid,"User") %></th>
     <th><%= raw sort_field(:room,"Room") %></th>
-    <th><%= raw sort_field(:start_time, "Start") %></th>
-    <th><%= raw sort_field(:end_time, "End") %></th>
+    <th><input type="text" style="display:none" id="start_time" class="hidden-datepicker" /><%= raw sort_field(:start_time, "Start") %> <%= link_to image_tag('calendar.gif'), filter_field_link(:start_time, "FILLER"), :data => {:trigger => "start_time"} %> </th>
+    <th><input type="text" style="display:none" id="end_time" class="hidden-datepicker" /><%= raw sort_field(:end_time, "End") %> <%= link_to image_tag('calendar.gif'), filter_field_link(:end_time, "FILLER"), :data => {:trigger => "end_time"} %></th>
     <th><%= raw sort_field(:reserver_onid, "Reserved By") %></th>
     <th><%= raw sort_field(:updated_at, "Reserved At") %></th>
     <th></th>

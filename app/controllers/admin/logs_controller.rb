@@ -12,18 +12,24 @@ class Admin::LogsController < AdminController
   def filtered_reservations
     reservations = self.reservations
     facets.each do |facet, value|
-      reservations = reservations.where(facet => value)
+      if facet == :start_time
+        reservations = reservations.where("start_time >= ?", value)
+      elsif facet == :end_time
+        reservations = reservations.where("end_time <= ?", value)
+      else
+        reservations = reservations.where(facet => value)
+      end
     end
     reservations
   end
   def facets
     @facets ||= Hash[(params[:facets] || {}).map{|facet, value|
-      facet.downcase.to_sym == :room ? [:"rooms.name",value] : [facet, value]
-    }.select{|x| safe_filter_fields.include?(x[0].downcase.to_sym)}]
+      facet.downcase.to_sym == :room ? [:"rooms.name",value] : [facet.downcase.to_sym, value]
+    }.select{|x| safe_filter_fields.include?(x[0])}]
   end
 
   def safe_filter_fields
-    [:user_onid, :"rooms.name", :reserver_onid]
+    [:user_onid, :"rooms.name", :reserver_onid, :start_time, :end_time]
   end
 
   def per_page
