@@ -63,7 +63,11 @@ class Reserver
   def send_email
     return if @options[:ignore_email]
     unless user.email.blank?
-      ReservationMailer.delay.send(email_method, reservation, user.decorate)
+      begin
+        ReservationMailer.delay.send(email_method, reservation, user.decorate)
+      rescue Redis::CannotConnectError
+        return
+      end
     end
   end
 
