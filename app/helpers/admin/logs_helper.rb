@@ -1,3 +1,5 @@
+# NOTE: A lot of this needs to be refactored into objects.
+
 module Admin::LogsHelper
   def sort_field(field, display)
     if params[:sort_field].to_s == field.to_s
@@ -19,6 +21,27 @@ module Admin::LogsHelper
       sort_order.downcase!
       sort_order == "desc" ? "asc" : "desc"
     end
+  end
+
+  def facet_to_label(facet)
+    facet_label_hash[facet] || facet
+  end
+
+  def link_to_delete_label(facet)
+    s = sort_params
+    facets = s[:facets]
+    facets = facets.except(facet)
+    s[:facets] = facets
+    link_to raw("&times;"), admin_logs_path(s), :class => "close"
+  end
+
+  # TODO: Move to i18n.
+  def facet_label_hash
+    {
+      "rooms.name" => "Room",
+      "user_onid" => "User",
+      "reserver_onid" => "Reserver"
+    }.with_indifferent_access
   end
 
   def sort_params

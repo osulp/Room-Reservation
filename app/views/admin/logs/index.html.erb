@@ -1,5 +1,14 @@
 <h1>Reservation Logs</h1>
 
+<% unless @facets.empty? %>
+  <strong>Facets:</strong>
+<% end %>
+<span class="facets">
+  <% @facets.each do |facet, value| %>
+    <span class="label label-info"><%= facet_to_label(facet) %>: <%= value %><%= link_to_delete_label(facet) %></span>
+  <% end %>
+</span>
+
 <table class="table table-hover">
   <thead>
     <th>ID</th>
