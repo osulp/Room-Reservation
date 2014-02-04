@@ -17,7 +17,7 @@ class Admin::ReservationsController < AdminController
 
   # Show past versions of a given reservation
   def history
-    @reservation = Reservation.find(params[:id])
+    @reservation = Reservation.with_deleted.find(params[:id])
     respond_with(@reservation)
   end
 
