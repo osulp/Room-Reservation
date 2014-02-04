@@ -46,5 +46,13 @@ describe "Admin Logs" do
         expect(all("tr td").first).to have_content reservation_2.id
       end
     end
+    context "and they click a filterable column" do
+      before(:each) do
+        all("tr td a")[0].click # Click the first user.
+      end
+      it "should filter out all other columns" do
+        expect(page).not_to have_content(reservation_2.user_onid)
+      end
+    end
   end
 end
