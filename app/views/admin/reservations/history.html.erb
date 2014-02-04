@@ -6,4 +6,4 @@
 
 <h2>History:</h2>
 
-<%= render "history_table", :reservations => @reservation.versions.map{|x| x.reify}.compact %>
+<%= render "history_table", :reservations => @reservation.versions.order("created_at DESC").map{|x| x.reify}.compact %>
