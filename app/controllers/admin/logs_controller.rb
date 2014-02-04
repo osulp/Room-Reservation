@@ -3,30 +3,23 @@ class Admin::LogsController < AdminController
     @reservations = AdminReservationsDecorator.new(filtered_reservations.page(params[:page]).per(per_page))
   end
 
-  private
+  protected
 
   def reservations
     Reservation.all.with_deleted.joins(:room).order("#{sort_field} #{sort_order}")
   end
 
   def filtered_reservations
-    if filter_field && filter_value && safe_filter_fields.include?(filter_field.to_sym)
-      reservations.where(filter_field => filter_value)
-    else
-      reservations
+    reservations = self.reservations
+    facets.each do |facet, value|
+      reservations = reservations.where(facet => value)
     end
+    reservations
   end
-
-  def filter_field
-    f = params[:filter_field]
-    if f.to_s.downcase == "room"
-      f = "rooms.name"
-    end
-    return f
-  end
-
-  def filter_value
-    params[:filter_value]
+  def facets
+    @facets ||= Hash[(params[:facets] || {}).map{|facet, value|
+      facet.downcase.to_sym == :room ? [:"rooms.name",value] : [facet, value]
+    }.select{|x| safe_filter_fields.include?(x[0].downcase.to_sym)}]
   end
 
   def safe_filter_fields

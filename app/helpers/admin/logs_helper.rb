@@ -26,12 +26,17 @@ module Admin::LogsHelper
         :sort_field => params[:sort_field],
         :sort_order => params[:sort_order],
         :page => params[:page],
-        :filter_field => params[:filter_field],
-        :filter_value => params[:filter_value]
+        :facets => facets
     }
   end
 
+  def facets
+    @facets ||= params[:facets] || {}
+  end
+
   def filter_field(field, value)
-    link_to value, admin_logs_path(sort_params.merge(:filter_field => field, :filter_value => value))
+    facets = sort_params[:facets]
+    facets = facets.merge(field => value)
+    link_to value, admin_logs_path(sort_params.merge(:facets => facets))
   end
 end
