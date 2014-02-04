@@ -50,7 +50,6 @@ module Admin::LogsHelper
     {
         :sort_field => params[:sort_field],
         :sort_order => params[:sort_order],
-        :page => params[:page],
         :facets => facets
     }
   end
