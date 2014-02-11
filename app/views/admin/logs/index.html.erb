@@ -3,7 +3,7 @@
 <%= form_tag admin_logs_path, :method => :get, :class => "form-search" do %>
     <%= text_field_tag "facets[user_onid]", '', :placeholder => "ONID", :class => "input-medium search-query" %>
     <% @presenter.facets.each do |facet, value| %>
-      <% next if facet.downcase == "user_onid" %>
+      <% next if facet.to_s.downcase == "user_onid" %>
       <%= hidden_field_tag "facets[#{facet}]", value %>
     <% end %>
     <%= hidden_field_tag "sort_field", @presenter.sort_field %>
