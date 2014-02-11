@@ -13,7 +13,14 @@ class Admin::SettingsController < AdminController
     if @setting
       update_value = Setting.method("#{@setting.key}=")
       begin
-        update_value.call setting_params[:value]
+        value = params[:setting][:value]
+        if value.kind_of?(Hash)
+          d = @setting.decorate
+          d.immune_keys.each do |key|
+            value[key] ||= @setting.value[key]
+          end
+        end
+        update_value.call value
         flash[:success] = 'Settings successfully saved'
       rescue ActiveRecord::RecordInvalid => e
         flash[:error] = e.message
@@ -33,9 +40,5 @@ class Admin::SettingsController < AdminController
     end
 
     Setting.all.order(:key)
-  end
-
-  def setting_params
-    params.require(:setting).permit(:value)
   end
 end

@@ -195,10 +195,10 @@ describe 'reserve popup' do
         end
         context "and their status is configured for 6 hours" do
           let(:banner_record) do
-            APP_CONFIG["users"].stub(:[]).with("reservation_times").and_return({"graduate" => "360"})
+            Setting.stub(:reservation_times).and_return({"graduate" => "360"})
             create(:banner_record, :onid => user.onid, :status => "Graduate")
           end
-          it "should set a 6 hour time range" do
+          it "should set a 6 hour time range", :focus => true do
             within("#reservation-popup") do
               expect(find(".start-time")).to have_content("12:00 AM")
               expect(find(".end-time")).to have_content("6:00 AM")

@@ -17,4 +17,8 @@ class SettingDecorator < Draper::Decorator
     configuration["field_type"] || "text_field"
   end
 
+  def immune_keys
+    configuration["immune_keys"]
+  end
+
 end
