@@ -1,0 +1,11 @@
+<table class="table table-hover">
+  <tr>
+    <td class="span4"><%= setting.friendly_name %></td>
+    <td>
+      <%= form_for(setting, :url => admin_setting_path(setting), :html => {:class => 'form-inline'}) do |f| %>
+        <%= f.send(setting.field_type, :value, setting.field_configuration.merge(:id => "setting_value_#{setting.id}")) %>
+        <%= f.submit 'Save', :class => 'btn btn-primary' %>
+      <% end %>
+    </td>
+  </tr>
+</table>

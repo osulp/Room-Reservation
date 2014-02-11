@@ -39,3 +39,15 @@ reservation_padding:
     type: number
   category: Reservation Settings
   default: 10
+reservation_times:
+  field_type: hash
+  category: "User Reservation Limits (Minutes)"
+  immune_keys:
+    - admin
+    - default
+  default:
+    graduate: 360
+    faculty: 360
+    professional: 360
+    default: 180
+    admin: 720

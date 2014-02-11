@@ -1,0 +1,20 @@
+<%= form_for(setting, :url => admin_setting_path(setting), :html => {:class => 'form-inline'}) do |f| %>
+  <table class="table table-hover">
+  <% setting.value.each do |key, value| %>
+    <tr>
+      <td class="span4"><%= key %></td>
+      <td class="closing">
+        <%= text_field_tag("setting[value][#{key}]", value, setting.field_configuration.merge(:id => "setting_value_#{setting.id}_#{key}", :type => "number")) %>
+        <% unless setting.immune_keys.include?(key) %>
+          <a class="close">&times;</a></td>
+        <% end %>
+    </tr>
+  <% end %>
+  <tr>
+    <td><%= text_field_tag nil, nil, :placeholder => "New Key", :id => "new-key" %></td>
+    <td><%= submit_tag 'Add Key', :class => 'btn btn-primary add-key' %></td>
+    <td></td>
+  </tr>
+  </table>
+  <%= f.submit 'Save', :class => 'btn btn-primary' %>
+<% end %>

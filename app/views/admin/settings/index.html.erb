@@ -1,20 +1,12 @@
 <h1>Settings</h1>
 
-<table class="table table-hover">
   <% @settings.each do |category, settings| %>
-    <tr>
-      <th class="span12" colspan="2"><%= category %></th>
-    </tr>
+    <h4><%= category %></h4>
     <% settings.each do |setting| %>
-      <tr>
-        <td><%= setting.friendly_name %></td>
-        <td>
-          <%= form_for(setting, :url => admin_setting_path(setting), :html => {:class => 'form-inline'}) do |f| %>
-            <%= f.send(setting.field_type, :value, setting.field_configuration.merge(:id => "setting_value_#{setting.id}")) %>
-            <%= f.submit 'Save', :class => 'btn btn-primary' %>
-          <% end %>
-        </td>
-      </tr>
+      <% if setting.field_type == "hash" %>
+        <%= render "hash_form", :setting => setting %>
+      <% else %>
+        <%= render "form", :setting => setting %>
+      <% end %>
     <% end %>
   <% end %>
-</table>
