@@ -18,7 +18,7 @@ describe 'settings administration' do
       end
     end
     it "should organize miscellaneous settings first" do
-      expect(all("th").first).to have_content("Miscellaneous Settings")
+      expect(all("h4").first).to have_content("Miscellaneous Settings")
     end
     it "should persist the setting being changed" do
       expect(page).to have_content("Max Concurrent Reservations")
