@@ -231,6 +231,12 @@ class ReservationPopupManager
     # Set labels
     @popup.find(".time-range-label .start-time").text(start_time_object.format("h:mm A"))
     @popup.find(".time-range-label .end-time").text(end_time_object.format("h:mm A"))
+    # Set Duration
+    minute_diff = end_time_object.diff(start_time_object, 'minutes')
+    hour_diff = Math.floor(minute_diff/60)
+    minute_diff -= hour_diff*60
+    minute_diff = "00" if minute_diff == 0
+    @popup.find(".reservation-duration").text("#{hour_diff}:#{minute_diff}")
   # Just for binding the automatic User fillout stuff at the moment.
   # This should probably be factored out somewhere, along with the user query stuff.
   admin_binds: ->
