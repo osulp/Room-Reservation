@@ -19,6 +19,7 @@ RoomReservation::Application.routes.draw do
     resources :filters, :only => [:index, :new, :create, :edit, :update, :destroy]
     resources :cleaning_records
     resources :room_hours
+    resources :logs, :only => [:index]
     resources :key_cards, :only => [:index, :new, :create, :edit, :update, :destroy] do
       collection do
         post 'checkin/:key', :to => 'key_cards#checkin'
@@ -27,6 +28,7 @@ RoomReservation::Application.routes.draw do
     resources :reservations, :only => [] do
       member do
         post 'checkout/:key', :to => 'reservations#checkout'
+        get 'history'
       end
     end
     resources :users, :only => [] do

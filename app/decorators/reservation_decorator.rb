@@ -22,6 +22,10 @@ class ReservationDecorator < EventDecorator
     created_at.strftime("%m/%d %l:%M %p")
   end
 
+  def formatted_updated_at
+    updated_at.strftime("%m/%d %l:%M %p")
+  end
+
   def formatted_truncated_at
     truncated_at.strftime("%m/%d %l:%M %p")
   end
