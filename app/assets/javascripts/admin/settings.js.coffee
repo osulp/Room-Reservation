@@ -3,7 +3,6 @@ jQuery ->
     e.preventDefault()
     value = $("#new-key").val()
     return if value == "" || !value?
-    console.log("New value: #{value}")
     sample_input = $("input[name='setting[value][default]']").clone()
     sample_input.attr("id", sample_input.attr("id").replace("default", value))
     sample_input.attr("name", sample_input.attr("name").replace("default", value))
