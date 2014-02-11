@@ -72,11 +72,11 @@ class User < OpenStruct
   end
 
   def default_reservation_time
-    APP_CONFIG["users"]["reservation_times"]["default"]
+    reservation_times["default"]
   end
 
   def reservation_times
-    APP_CONFIG["users"]["reservation_times"]
+    Setting.reservation_times
   end
 
 end

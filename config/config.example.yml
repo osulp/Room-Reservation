@@ -1,7 +1,3 @@
-users:
-  reservation_times:
-    default: 180
-    admin: 360
 hours:
   key_name: 'Testing'
 deployment:
