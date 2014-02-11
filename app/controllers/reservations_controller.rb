@@ -85,7 +85,7 @@ class ReservationsController < ApplicationController
 
   def default_serializer_options
     {
-        root: false
+        :root => false
     }
   end
 end

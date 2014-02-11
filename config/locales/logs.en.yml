@@ -1,0 +1,10 @@
+en:
+  logs:
+    rooms:
+      name: "Room"
+    room: "Room"
+    user_onid: "User"
+    reserver_onid: "Reserver"
+    end_time: "Ends Before"
+    start_time: "Starts After"
+    updated_at: "Reserved At"

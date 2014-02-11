@@ -1,35 +1,47 @@
 <h1>Reservation Logs</h1>
 
-<% unless @facets.empty? %>
+<%= form_tag admin_logs_path, :method => :get, :class => "form-search" do %>
+    <%= text_field_tag "facets[user_onid]", '', :placeholder => "ONID", :class => "input-medium search-query" %>
+    <% @presenter.facets.each do |facet, value| %>
+      <% next if facet.downcase == "user_onid" %>
+      <%= hidden_field_tag "facets[#{facet}]", value %>
+    <% end %>
+    <%= hidden_field_tag "sort_field", @presenter.sort_field %>
+    <%= hidden_field_tag "sort_order", @presenter.sort_order %>
+    <%= submit_tag "Search", :class => "btn" %>
+<% end %>
+
+<% unless @presenter.facets.empty? %>
   <strong>Facets:</strong>
 <% end %>
+
 <span class="facets">
-  <% @facets.each do |facet, value| %>
-    <span class="label label-info"><%= facet_to_label(facet) %>: <%= value %><%= link_to_delete_label(facet) %></span>
+  <% @presenter.facets.each do |facet, value| %>
+    <span class="label label-info"><%= @presenter.field(facet).label %>: <%= value %><%= @presenter.field(facet).delete_link %></span>
   <% end %>
 </span>
 
 <table class="table table-hover">
   <thead>
     <th>ID</th>
-    <th><%= raw sort_field(:user_onid,"User") %></th>
-    <th><%= raw sort_field(:room,"Room") %></th>
-    <th><input type="text" style="display:none" id="start_time" class="hidden-datepicker" /><%= raw sort_field(:start_time, "Start") %> <%= link_to image_tag('calendar.gif'), filter_field_link(:start_time, "FILLER"), :data => {:trigger => "start_time"} %> </th>
-    <th><input type="text" style="display:none" id="end_time" class="hidden-datepicker" /><%= raw sort_field(:end_time, "End") %> <%= link_to image_tag('calendar.gif'), filter_field_link(:end_time, "FILLER"), :data => {:trigger => "end_time"} %></th>
-    <th><%= raw sort_field(:reserver_onid, "Reserved By") %></th>
-    <th><%= raw sort_field(:updated_at, "Reserved At") %></th>
+    <th><%= raw @presenter.field(:user_onid).sort_link %></th>
+    <th><%= raw @presenter.field(:room).sort_link %></th>
+    <th><input type="text" style="display:none" id="start_time" class="hidden-datepicker" /><%= raw @presenter.field(:start_time).sort_link %> <%= link_to image_tag('calendar.gif'), @presenter.field(:start_time).facet_link("FILLER"), :data => {:trigger => "start_time"} %> </th>
+    <th><input type="text" style="display:none" id="end_time" class="hidden-datepicker" /><%= raw @presenter.field(:end_time).sort_link %> <%= link_to image_tag('calendar.gif'), @presenter.field(:end_time).facet_link("FILLER"), :data => {:trigger => "end_time"} %></th>
+    <th><%= raw @presenter.field(:reserver_onid).sort_link %></th>
+    <th><%= raw @presenter.field(:updated_at).sort_link %></th>
     <th></th>
     <th></th>
   </thead>
   <tbody>
-    <% @reservations.each do |reservation| %>
+    <% @presenter.reservations.each do |reservation| %>
       <tr>
         <td><%= reservation.id %></td>
-        <td><%= filter_field(:user_onid,reservation.user.onid) %></td>
-        <td><%= filter_field(:room,reservation.room.name) %></td>
+        <td><%= @presenter.field(:user_onid).full_facet_link(reservation.user.onid) %></td>
+        <td><%= @presenter.field(:room).full_facet_link(reservation.room.name) %></td>
         <td><%= reservation.formatted_start %></td>
         <td><%= raw reservation.formatted_end %></td>
-        <td><%= filter_field(:reserver_onid,reservation.reserver.onid) %></td>
+        <td><%= @presenter.field(:reserver_onid).full_facet_link(reservation.reserver.onid) %></td>
         <td><%= reservation.formatted_updated_at %></td>
         <td><%= reservation.status_string %></td>
         <td><%= link_to_unless reservation.versions.size <= 1, "History", history_admin_reservation_path(reservation) %></td>
@@ -38,4 +50,4 @@
   </tbody>
 </table>
 
-<%= paginate @reservations %>
+<%= paginate @presenter.reservations %>

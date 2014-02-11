@@ -17,11 +17,21 @@ describe "Admin Logs" do
     it "should show them" do
       expect(page).to have_content(reservation.user_onid)
     end
+    context "and a username is searched" do
+      before(:each) do
+        fill_in 'ONID', :with => reservation.user_onid
+        click_button 'Search'
+      end
+      it "should only show that reservation" do
+        expect(page).to have_content(reservation.user_onid)
+        expect(page).not_to have_content(reservation_2.user_onid)
+      end
+    end
     context "and they go to the next page" do
       let(:setup_methods) do
         reservation
         reservation_2
-        Admin::LogsController.any_instance.stub(:per_page).and_return(1)
+        LogsPresenter.any_instance.stub(:per_page).and_return(1)
       end
       it "should only show the the elements on the first page" do
         expect(page).not_to have_content(reservation_2.user_onid)
@@ -61,6 +71,12 @@ describe "Admin Logs" do
       it "should not lose the filter when you sort" do
         find("a[data-sort=start_time]").click
         expect(page).not_to have_content(reservation_2.user_onid)
+      end
+      it "should not lose the filter when you search" do
+        all("tr td a")[1].click # Click the first user.
+        fill_in "ONID", :with => reservation_2.user_onid
+        click_button "Search"
+        expect(page).to have_selector(".close", :count => 2)
       end
     end
     context "and the reservation has a history", :versioning => true do
