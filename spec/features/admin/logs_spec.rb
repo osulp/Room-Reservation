@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe "Admin Logs" do
   let(:user) {build(:user, :admin)}
-  let(:reservation) {create(:reservation)}
+  let(:reservation) {create(:reservation, :user_onid => "joe")}
   let(:reservation_2) {create(:reservation, :start_time => reservation.start_time-1.minute)}
   let(:setup_methods) {nil}
   before(:each) do
@@ -23,6 +23,28 @@ describe "Admin Logs" do
         click_button 'Search'
       end
       it "should only show that reservation" do
+        expect(page).to have_content(reservation.user_onid)
+        expect(page).not_to have_content(reservation_2.user_onid)
+      end
+    end
+    context "and an ID is swiped" do
+      before(:each) do
+        create(:banner_record, :onid => reservation.user_onid, :osu_id => "931590000")
+        fill_in 'ONID', :with => "11931590000"
+        click_button 'Search'
+      end
+      it "should only show that user's reservations" do
+        expect(page).to have_content(reservation.user_onid)
+        expect(page).not_to have_content(reservation_2.user_onid)
+      end
+    end
+    context "and an ID is entered" do
+      before(:each) do
+        create(:banner_record, :onid => reservation.user_onid, :osu_id => "931590000")
+        fill_in 'ONID', :with => "931590000"
+        click_button 'Search'
+      end
+      it "should only show that user's reservations" do
         expect(page).to have_content(reservation.user_onid)
         expect(page).not_to have_content(reservation_2.user_onid)
       end

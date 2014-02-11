@@ -9,7 +9,7 @@ class LogsPresenter
 
   def facets
     @facets ||= Hash[(params[:facets] || {}).map{|facet, value|
-      [field_map[facet.downcase.to_sym] || facet.downcase.to_sym, value]
+      [field_map[facet.downcase.to_sym] || facet.downcase.to_sym, transform_value(facet, value)]
     }.select{|x| safe_filter_fields.include?(x[0])}]
   end
 
@@ -42,6 +42,14 @@ class LogsPresenter
   end
 
   protected
+
+  def transform_value(field, value)
+    if field.downcase.to_sym == :user_onid
+      b = BannerRecord.soft_find_by_osu_id(value.gsub(/^11(?<id>[0-9]{9})/, '\k<id>'))
+      return (b.try(:onid) || value)
+    end
+    return value
+  end
 
   def ordered_reservations
     Reservation.all.with_deleted.joins(:room).order("#{sort_field} #{sort_order}")
