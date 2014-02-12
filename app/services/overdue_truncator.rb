@@ -25,7 +25,7 @@ class OverdueTruncator
   end
 
   def eligible_reservations
-    @eligible_reservations ||= Reservation.ongoing.inactive.where("start_time < ? AND truncated_at IS NULL", Time.current-truncate_limit)
+    @eligible_reservations ||= Reservation.ongoing.inactive.where("start_time < ? AND (truncated_at IS NULL OR truncated_at < start_time)", Time.current-truncate_limit)
   end
 
   # TODO: Move to configuration.
