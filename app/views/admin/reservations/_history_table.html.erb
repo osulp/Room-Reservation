@@ -22,7 +22,7 @@
         <td><%= raw reservation.formatted_end %></td>
         <td><%= reservation.reserver_onid %></td>
         <td><%= reservation.formatted_updated_at %></td>
-        <td><%= reservation.version.try(:originator) %></td>
+        <td><%= reservation.version ? reservation.version.originator : reservation.originator %></td>
         <td><%= reservation.status_string %></td>
       </tr>
     <% end %>
