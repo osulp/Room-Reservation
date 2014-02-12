@@ -56,4 +56,9 @@ class Reservation < ActiveRecord::Base
     end_time < Time.current
   end
 
+  def current_originator
+    return originator if !version
+    version.originator
+  end
+
 end
