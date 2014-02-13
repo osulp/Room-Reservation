@@ -15,15 +15,10 @@ class SearchGroupsAdmin
     )
   populate_modal: (data)->
     @modal.find('.modal-body').html(data.attr("id", "group-search-modal-content").wrap('<div>').parent().html())
-    @modal.modal().css({
-        width: 'auto',
-        'margin-left': ->
-          return -($(this).width() / 2);
-      }
-    )
+    @modal.modal().attr("style",'')
     options = {
       valueNames: ['description', 'room', 'start_time', 'end_time'],
-      page: 10,
+      page: 5,
       plugins: [
         ListFuzzySearch({}),
         ListPagination({paginationClass: 'paginatingList'})
