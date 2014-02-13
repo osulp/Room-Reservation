@@ -14,7 +14,7 @@
       <tr>
         <td class="description"><%= reservation.description %></td>
         <td class="room"><%= reservation.room.name %></td>
-        <td class="start_time"><%= reservation.formatted_start %></td>
+        <td class="start_time"><%= raw reservation.formatted_start %></td>
         <td class="end_time"><%= reservation.formatted_end %></td>
       </tr>
     <% end %>
