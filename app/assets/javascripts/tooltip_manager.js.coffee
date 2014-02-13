@@ -13,3 +13,4 @@ class TooltipManager
     });
     unless User.current().get_value("onid")?
       $(".bar-success").attr("data-original-title", "Login to Reserve")
+      $(".bar-success").attr("data-action", "login")

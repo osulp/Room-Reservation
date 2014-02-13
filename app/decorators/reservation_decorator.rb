@@ -94,7 +94,6 @@ class ReservationDecorator < EventDecorator
         :id => self.id,
         start: (payload.start_time).iso8601.to_s,
         end: (payload.end_time).iso8601.to_s,
-        action: "cancel",
         user_onid: user_onid
     }
   end
