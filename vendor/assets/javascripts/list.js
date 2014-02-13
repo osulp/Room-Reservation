@@ -430,7 +430,9 @@
          */
 
         exports.bind = function(el, type, fn, capture){
-            el[bind](prefix + type, fn, capture || false);
+            if(typeof el[bind] != "undefined") {
+              el[bind](prefix + type, fn, capture || false);
+            }
             return fn;
         };
 
