@@ -10,7 +10,11 @@ class SearchGroupsAdmin
   show_search_modal: (element, event) ->
     event.preventDefault()
     @modal.find('.modal-title').text("Find Your Group")
-    @modal.find('.modal-body').html($($('#group-search-modal').html()).attr("id", "group-search-modal-content").wrap('<div>').parent().html())
+    $.get('/reservations/upcoming', (data) =>
+      this.populate_modal($(data))
+    )
+  populate_modal: (data)->
+    @modal.find('.modal-body').html(data.attr("id", "group-search-modal-content").wrap('<div>').parent().html())
     @modal.modal().css({
         width: 'auto',
         'margin-left': ->
@@ -19,7 +23,7 @@ class SearchGroupsAdmin
     )
     options = {
       valueNames: ['description', 'room', 'start_time', 'end_time'],
-      page: 30,
+      page: 10,
       plugins: [
         ListFuzzySearch({}),
         ListPagination({paginationClass: 'paginatingList'})

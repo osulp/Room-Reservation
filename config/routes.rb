@@ -7,7 +7,11 @@ RoomReservation::Application.routes.draw do
   get "/reservations", :to => 'reservations#index', :as => :my_reservations, :format => 'html'
   get "/reservations", :to => 'reservations#current_user_reservations', :as => :current_user_reservations, :format => 'json'
   get "/availability/:room_id/:start", :to => 'reservations#availability', :start => /[TZtz0-9:\-\.%]+?/, :format => /html|json/, :as => :availability
-  resources :reservations, :only => [:create, :update, :destroy, :show]
+  resources :reservations, :only => [:create, :update, :destroy, :show] do
+    collection do
+      get 'upcoming'
+    end
+  end
   resources :users, :only => [:show]
 
   get "/admin", :to => 'admin#index'
