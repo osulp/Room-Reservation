@@ -3,11 +3,17 @@ class ReservationsController < ApplicationController
   include_root_in_json = false
   before_filter :require_login, :only => [:create, :destroy, :show, :update]
   before_filter RubyCAS::Filter, :only => :index
+  layout false, :only => :upcoming
 
   def index
     @reservations = ReservationFacade.new(current_user).reservations
     @reservation = Reserver.new # Just for the update popup. Should refactor this eventually.
     respond_with @reservations
+  end
+
+  def upcoming
+    @upcoming_reservations = Reservation.where("end_time >= ? AND end_time <= ? AND reservations.description IS NOT NULL AND reservations.description != ''", Time.current, Time.current+30.days).joins(:room).order("start_time ASC")
+    @upcoming_reservations = UpcomingReservationDecorator.decorate_collection(@upcoming_reservations)
   end
 
   def current_user_reservations

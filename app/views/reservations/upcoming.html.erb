@@ -1,0 +1,28 @@
+<div id="group-search-content">
+  <input type="text" class="search" placeholder="Search Groups" />
+  <table id="group-search-table" class="table">
+    <thead>
+    <tr>
+      <th class="sort" data-sort="description">Description</th>
+      <th class="sort" data-sort="room">Room</th>
+      <th class="sort" data-sort="start_time">Start Time</th>
+      <th class="sort" data-sort="end_time">End Time</th>
+    </tr>
+    </thead>
+    <tbody class="list">
+    <% @upcoming_reservations.each do |reservation| %>
+      <tr>
+        <td class="description"><%= reservation.description %></td>
+        <td class="room"><%= reservation.room.name %></td>
+        <td class="start_time"><%= raw reservation.formatted_start %></td>
+        <td class="end_time"><%= reservation.formatted_end %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <ul class="paginatingList">
+
+    </ul>
+  </div>
+</div>
