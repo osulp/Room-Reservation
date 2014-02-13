@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     calendar = CalendarManager.new(date)
     @presenter = CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
     @reservation = Reserver.new(:user_onid => current_user.onid, :reserver_onid => current_user.onid)
+    @upcoming_reservations = Reservation.where("start_time >= ? AND end_time <= ? AND reservations.description IS NOT NULL", Time.current, Time.current+30.days).joins(:room).decorate
   end
 
   def day
