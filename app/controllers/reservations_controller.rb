@@ -12,7 +12,7 @@ class ReservationsController < ApplicationController
   end
 
   def upcoming
-    @upcoming_reservations = Reservation.where("end_time >= ? AND end_time <= ? AND reservations.description IS NOT NULL AND reservations.description != ''", Time.current, Time.current+30.days).joins(:room).order("start_time DESC")
+    @upcoming_reservations = Reservation.where("end_time >= ? AND end_time <= ? AND reservations.description IS NOT NULL AND reservations.description != ''", Time.current, Time.current+30.days).joins(:room).order("start_time ASC")
     @upcoming_reservations = UpcomingReservationDecorator.decorate_collection(@upcoming_reservations)
   end
 
