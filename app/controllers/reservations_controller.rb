@@ -11,7 +11,7 @@ class ReservationsController < ApplicationController
   end
 
   def upcoming
-    @upcoming_reservations = Reservation.where("start_time >= ? AND end_time <= ? AND reservations.description IS NOT NULL", Time.current, Time.current+30.days).joins(:room).decorate
+    @upcoming_reservations = Reservation.where("start_time >= ? AND end_time <= ? AND reservations.description IS NOT NULL AND reservations.description != ''", Time.current, Time.current+30.days).joins(:room).decorate
     render "upcoming", :layout => false
   end
 
