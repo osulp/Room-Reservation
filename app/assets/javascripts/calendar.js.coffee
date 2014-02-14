@@ -80,6 +80,8 @@ class CalendarManager
       location.reload()
   selected_date: (dateText, inst) =>
     date = @datepicker.datepicker("getDate")
+    m = moment(date).utc()
+    $("#date-header").text(m.format("dddd, MMMM DD, YYYY"))
     @date_selected = [date.getFullYear(), date.getMonth()+1, date.getDate()]
     this.day_changed(date.getFullYear(), date.getMonth()+1, date.getDate())
     return
