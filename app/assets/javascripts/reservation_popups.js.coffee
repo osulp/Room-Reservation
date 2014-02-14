@@ -182,7 +182,7 @@ class ReservationPopupManager
     )
     $.getJSON("/reservations/#{@element.data("id")}.json", (result) =>
       @popup.find("#reserver_user_onid").val(result.user_onid)
-      @popup.find("#reserver_key_card_key").val(result.key_card?.key? || "")
+      @popup.find("#reserver_key_card_key").val(result.key_card?.key || "")
       @popup.find("#reserver_description").val(result.description)
       @popup.find("#update-cancel-button").html(result.cancel_string)
       @popup.find("#update-cancel-button a").text("Cancel Reservation")
