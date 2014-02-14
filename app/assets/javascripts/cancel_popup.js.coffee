@@ -4,7 +4,7 @@ class CancelPopupManager
   constructor: ->
     master = this
     @popup = $("#cancel-popup")
-    return if @popup.length == 0
+    return if @popup.length == 0 || !User.current().get_value("onid")?
     $("body").on("click", "*[data-action=cancel]", (event)->
       master.cancel_clicked($(this), event)
     )

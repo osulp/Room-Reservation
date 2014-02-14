@@ -18,6 +18,10 @@ class CalendarManager
     this.bind_pop_state()
     this.bind_day_limit_hover()
     window.setInterval((=> this.update_truncation()),30000)
+    $("body").on("click", "*[data-action=login]", => this.login())
+    $("body").on("touchend", "*[data-action=login]", => this.login())
+  login: ->
+    window.location = "/login?source=#{window.location.pathname}"
   go_to_today: =>
     day = moment().tz("America/Los_Angeles").format("MM/DD/YYYY")
     @datepicker.datepicker("setDate", day)
@@ -115,7 +119,7 @@ class CalendarManager
   update_room_bars: (data) ->
     # Close all popovers on room-name
     $('.room-name').popover('hide')
-    
+
     new_room_list = $(data)
     for i in [0..new_room_list.length-1]
       div = $(new_room_list[i])

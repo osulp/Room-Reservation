@@ -8,11 +8,11 @@ describe "logged in user changes" do
       visit root_path
     end
     it "should say you have to login to make a reservation" do
-      expect(page).to have_content("Login to make a reservation.")
+      expect(page).to have_content("Login to Reserve")
     end
     it "should let you click the link to login" do
       RubyCAS::Filter.should_receive(:redirect_to_cas_for_authentication).and_return(true)
-      click_link("Login")
+      click_link("Login to Reserve")
     end
   end
   context "when a user is logged in" do

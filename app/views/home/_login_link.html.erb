@@ -1,5 +1,7 @@
 <% if current_user.nil? %>
-  <%= link_to "Login", login_path %> to make a reservation.
+  <div id="login-link-button" class="text-center">
+    <%= link_to "Login to Reserve", login_path, :class => 'btn btn-primary btn-large' %>
+  </div>
 <% else %>
   <p><strong>Logged in as:</strong><br />
     <%= current_user.onid %> <%= link_to '(Reservations)', reservations_path %> <%= link_to('(Admin)', admin_path) if current_user.admin? %> <%= link_to "Logout", logout_path %></p>

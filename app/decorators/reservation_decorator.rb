@@ -52,7 +52,7 @@ class ReservationDecorator < EventDecorator
   def cancel_string
     h.content_tag(:span, :data => {"room-id" => self.room.id, "room-name" => self.room.name}) do
       h.content_tag(:span) do
-        h.link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => data_hash
+        h.link_to "Cancel", '#', :class => "btn btn-danger bar-info", :data => data_hash.merge(:action => "cancel")
       end
     end
   end
@@ -94,7 +94,6 @@ class ReservationDecorator < EventDecorator
         :id => self.id,
         start: (payload.start_time).iso8601.to_s,
         end: (payload.end_time).iso8601.to_s,
-        action: "cancel",
         user_onid: user_onid
     }
   end
