@@ -43,7 +43,7 @@ class CalendarPresenter
     return @event_collection unless @event_collection.blank? || force
     event_collection = @managers.map{|m| m.events_between(@start_time, @end_time, @rooms)}
                                  .flatten
-                                 .sort_by(&:start_time)
+                                 .sort_by{|e| [e.start_time, e.end_time]}
     fix_event_collisions! event_collection
     @event_collection = event_collection
     return @event_collection
