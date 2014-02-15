@@ -37,6 +37,12 @@ describe "calendar", :js => true do
         current_day = Time.current.to_date
         expect(current_path).to eq "/day/#{current_day.strftime("%Y-%m-%-d")}"
       end
+      it "should display the current day in the header" do
+        current_day = Time.current.to_date
+        within("#date-header") do
+          expect(page).to have_content(current_day.strftime("%A, %B %d, %Y"))
+        end
+      end
       context "and a day is clicked" do
         before(:each) do
           all("*[data-handler=next]").first().click
@@ -46,6 +52,13 @@ describe "calendar", :js => true do
           current_day = (Time.current+1.month).to_date
           current_day = Date.new(current_day.year, current_day.month, 1)
           expect(current_path).to eq "/day/#{current_day.strftime("%Y-%-m-%-d")}"
+        end
+        it "should display that day in the header" do
+          current_day = (Time.current+1.month).to_date
+          current_day = Date.new(current_day.year, current_day.month, 1)
+          within("#date-header") do
+            expect(page).to have_content(current_day.strftime("%A, %B %d, %Y"))
+          end
         end
         context "and then the back button is hit" do
           before(:each) do

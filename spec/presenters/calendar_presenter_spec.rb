@@ -54,6 +54,21 @@ describe CalendarPresenter do
           result.second.start_time.should == Time.current.midnight+2.hours
         end
       end
+      context "from the back" do
+        let(:event_1_start) {Time.current.midnight}
+        let(:event_1_end) {Time.current.midnight+1.hours}
+        let(:event_2_start) {Time.current.midnight}
+        let(:event_2_end) {Time.current.midnight+4.hours}
+        context "and the first has higher priority" do
+          let(:event_1_priority) {1}
+          let(:all_events) {[event_2, event_1]}
+          it "should truncate the second event" do
+            result = subject.to_a
+            result.first.end_time.should == Time.current.midnight+1.hours
+            result.second.start_time.should == Time.current.midnight+1.hours
+          end
+        end
+      end
       context "and they have different priorities" do
         let(:event_2_start) {Time.current.midnight+1.hours}
         let(:event_2_priority) {1}
