@@ -209,7 +209,7 @@ class ReservationPopupManager
       values: [0, max_reservation/60/10-1]
     )
     initial_start = 0
-    if new_start_time?
+    if new_start_time? && User.current().get_value("staff") != true
       initial_start = new_start_time.diff(start_time, 'minutes')/10
       initial_start = 0 if initial_start < 0
     this.slid(1, {values: [0, max_reservation/60/10]})
