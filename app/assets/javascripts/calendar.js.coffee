@@ -70,6 +70,7 @@ class CalendarManager
             item.addClass("bar-warning")
             item.attr("data-id","")
           item.attr("data-original-title","")
+    $(".bar-warning").attr("data-action",null)
     $(".tab-pane").attr("style",null)
     return
   refresh_view: ->
