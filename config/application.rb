@@ -61,6 +61,7 @@ module RoomReservation
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.assets.compress = !Rails.env.development?
     config.assets.initialize_on_precompile = false
 
     # Version of your assets, change this if you want to expire all your assets
