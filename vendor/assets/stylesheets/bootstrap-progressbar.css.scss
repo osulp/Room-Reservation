@@ -83,47 +83,23 @@
 }
 .progress-danger.vertical .bar,
 .progress.vertical .bar-danger {
-    background-color: #c43c35;
-    background-image: -moz-linear-gradient(left, #ee5f5b, #c43c35);
-    background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#ee5f5b), to(#c43c35));
-    background-image: -webkit-linear-gradient(left, #ee5f5b, #c43c35);
-    background-image: -o-linear-gradient(left, #ee5f5b, #c43c35);
-    background-image: linear-gradient(to right, #ee5f5b, #c43c35);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffc43c35', GradientType=1);
+    background-color: $danger-end-color;
+    @include gradient-horizontal($danger-start-color, $danger-end-color);
 }
 .progress-success.vertical .bar,
 .progress.vertical .bar-success {
-    background-color: #57a957;
-    background-image: -moz-linear-gradient(left, #62c462, #57a957);
-    background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#62c462), to(#57a957));
-    background-image: -webkit-linear-gradient(left, #62c462, #57a957);
-    background-image: -o-linear-gradient(left, #62c462, #57a957);
-    background-image: linear-gradient(to right, #62c462, #57a957);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff57a957', GradientType=1);
+    background-color: $success-end-color;
+    @include gradient-horizontal($success-start-color, $success-end-color);
 }
 .progress-info.vertical .bar,
 .progress.vertical .bar-info {
-    background-color: #339bb9;
-    background-image: -moz-linear-gradient(left, #5bc0de, #339bb9);
-    background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#5bc0de), to(#339bb9));
-    background-image: -webkit-linear-gradient(left, #5bc0de, #339bb9);
-    background-image: -o-linear-gradient(left, #5bc0de, #339bb9);
-    background-image: linear-gradient(to right, #5bc0de, #339bb9);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff339bb9', GradientType=1);
+    background-color: $info-end-color;
+    @include gradient-horizontal($info-start-color, $info-end-color);
 }
 .progress-warning.vertical .bar,
 .progress.vertical .bar-warning {
-    background-color: #f89406;
-    background-image: -moz-linear-gradient(left, #fbb450, #f89406);
-    background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#fbb450), to(#f89406));
-    background-image: -webkit-linear-gradient(left, #fbb450, #f89406);
-    background-image: -o-linear-gradient(left, #fbb450, #f89406);
-    background-image: linear-gradient(to right, #fbb450, #f89406);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', endColorstr='#fff89406', GradientType=1);
+    background-color: $warning-end-color;
+    @include gradient-horizontal($warning-start-color, $warning-end-color);
 }
 
 .progress.vertical .bar {

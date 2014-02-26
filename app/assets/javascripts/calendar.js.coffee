@@ -111,8 +111,8 @@ class CalendarManager
     this.update_room_bars(data)
     $('#loading-spinner').hide()
     window.FilterManager.apply_filters()
-    window.TooltipManager.set_tooltips()
     this.truncate_to_now()
+    window.TooltipManager.set_tooltips()
     this.color_reservations("#{year}-#{month}-#{day}")
     window.ReservationPopupManager.hide_popup() unless @background_loading
     window.CancelPopupManager.hide_popup() unless @background_loading

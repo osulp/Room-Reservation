@@ -11,6 +11,7 @@ class TooltipManager
       placement: 'right',
       container: 'body'
     });
+    $(".bar-warning").attr("data-original-title", "Can't Reserve in Past")
     unless User.current().get_value("onid")?
       $(".bar-success").attr("data-original-title", "Login to Reserve")
       $(".bar-success").attr("data-action", "login")
