@@ -72,6 +72,9 @@ gem 'carrierwave'
 # Kaminari for pagination
 gem 'kaminari'
 
+# Let's try compression by google
+gem 'closure-compiler'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
