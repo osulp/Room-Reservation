@@ -9,6 +9,7 @@ $room_time_height: 20px;
   #dayviewTable {
     position: relative;
     height: $room_time_height * 25 + 50px;
+    margin-top: 5px;
 
     #room-time-list {
       margin-top: $room_time_height / 2;
