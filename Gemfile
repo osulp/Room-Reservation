@@ -74,6 +74,7 @@ gem 'kaminari'
 
 # Let's try compression by google
 gem 'closure-compiler'
+gem 'yui-compressor'
 
 group :development do
   #gem 'better_errors'

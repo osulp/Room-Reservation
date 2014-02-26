@@ -21,6 +21,7 @@ RoomReservation::Application.configure do
 
   # Use Closure Compiler
   config.assets.js_compressor = :closure
+  config.assets.css_compressor = :yui
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
