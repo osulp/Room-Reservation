@@ -13,9 +13,6 @@ RoomReservation::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
-  # Compress JavaScripts and CSS
-  config.assets.compress = true
-
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
 
@@ -23,8 +20,7 @@ RoomReservation::Application.configure do
   config.assets.digest = true
 
   # Use Closure Compiler
-  require 'closure-compiler'
-  config.assets.js_compressor = Closure::Compiler.new(compilation_level: 'ADVANCED_OPTIMIZATIONS')
+  config.assets.js_compressor = :closure
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
