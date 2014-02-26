@@ -1,0 +1,5 @@
+@import "layout/bars";
+$danger-start-color: lighten(#7E7E7E, 15%);
+$danger-end-color: #7E7E7E;
+$warning-start-color: $danger-start-color;
+$warning-end-color:   $danger-end-color;

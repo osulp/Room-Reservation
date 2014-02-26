@@ -70,6 +70,7 @@ class CalendarManager
             item.addClass("bar-warning")
             item.attr("data-id","")
           item.attr("data-original-title","")
+    $(".bar-warning").attr("data-action",null)
     $(".tab-pane").attr("style",null)
     return
   refresh_view: ->
@@ -111,8 +112,8 @@ class CalendarManager
     this.update_room_bars(data)
     $('#loading-spinner').hide()
     window.FilterManager.apply_filters()
-    window.TooltipManager.set_tooltips()
     this.truncate_to_now()
+    window.TooltipManager.set_tooltips()
     this.color_reservations("#{year}-#{month}-#{day}")
     window.ReservationPopupManager.hide_popup() unless @background_loading
     window.CancelPopupManager.hide_popup() unless @background_loading

@@ -144,6 +144,7 @@ class ReservationPopupManager
     room_id = room_element.data("room-id")
     room_name = room_element.data("room-name")
     max_reservation = User.current().get_value("maxReservation")
+    new_time = this.get_relative_start_time(start_time, end_time, event)
     return if !max_reservation?
     @popup.find("#room-name").text(room_name)
     @popup.find("#reserver_room_id").val(room_id)
@@ -152,10 +153,17 @@ class ReservationPopupManager
     @popup.find("#reserver_user_onid[type=text]").focus()
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json", (result) =>
       availability = result.availability
-      this.build_slider(start_time, end_time, max_reservation, availability)
+      this.build_slider(start_time, end_time, max_reservation, availability, new_time)
       this.position_popup(event.pageX, event.pageY)
       @popup.show()
     )
+  get_relative_start_time: (start_time, end_time, event) ->
+    offset = Math.floor(event.offsetY*3/10)*10
+    new_time = start_time.clone().add("minutes", offset)
+    if new_time < end_time
+      return new_time
+    else
+      return start_time
   populate_update_popup: (room_element, start_time, end_time, event) ->
     $(".popup").hide()
     this.hide_popup()
@@ -177,7 +185,6 @@ class ReservationPopupManager
       s.second(0)
       s.minute(Math.ceil(s.minute()/10)*10)
       @slider_element.slider(values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10])
-      this.slid(1, {values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10]})
       this.position_popup(event.pageX, event.pageY)
     )
     $.getJSON("/reservations/#{@element.data("id")}.json", (result) =>
@@ -187,7 +194,7 @@ class ReservationPopupManager
       @popup.find("#update-cancel-button").html(result.cancel_string)
       @popup.find("#update-cancel-button a").text("Cancel Reservation")
     )
-  build_slider: (start_time, end_time, max_reservation, available_time) ->
+  build_slider: (start_time, end_time, max_reservation, available_time, new_start_time) ->
     @slider_element = @popup.find(".reservation-slider")
     @start_time = start_time
     @end_time = end_time
@@ -198,9 +205,15 @@ class ReservationPopupManager
       min: 0
       max: maximum
       slide: this.slid
+      change: this.slid
       values: [0, max_reservation/60/10-1]
     )
+    initial_start = 0
+    if new_start_time? && User.current().get_value("staff") != true
+      initial_start = new_start_time.diff(start_time, 'minutes')/10
+      initial_start = 0 if initial_start < 0
     this.slid(1, {values: [0, max_reservation/60/10]})
+    @slider_element.slider("values", [initial_start, max_reservation/60/10+initial_start])
     @popup.show()
   slid: (event, ui) =>
     start = ui.values[0]
