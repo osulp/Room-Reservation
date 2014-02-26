@@ -1,4 +1,4 @@
-<%= simple_form_for(@filter, :url => admin_filter_path(@filter), :html => {:class => 'form-horizontal'}) do |f| %>
+<%= simple_form_for([:admin,@filter], :html => {:class => 'form-horizontal'}) do |f| %>
   <%= f.input :name %>
   <%= f.association :rooms, as: :check_boxes, :wrapper_html => {:class => 'inline-checkbox'} %>
   <div class="control-group">

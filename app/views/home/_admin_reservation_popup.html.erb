@@ -4,7 +4,7 @@
   </h3>
   <div class="popup-content popover-content">
     <div class="popup-content-errors alert alert-danger"></div>
-    <%= simple_form_for @reservation, :url => reservation_path(@reservation.reservation), :remote => true, :format => :json, :html => {:class => "reserver"} do |f| %>
+    <%= simple_form_for @reservation, :as => :reserver, :remote => true, :format => :json, :html => {:class => "reserver"} do |f| %>
       <%= f.input :room_id, :as => :hidden %>
       <%= f.input :start_time, :as => :hidden %>
       <%= f.input :end_time, :as => :hidden %>
