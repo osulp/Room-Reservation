@@ -1,6 +1,8 @@
 @import "layout/bars";
-$warning-start-color: #ee5f5b;
-$warning-end-color:   #c43c35;
+$danger-start-color: lighten(#7E7E7E, 15%);
+$danger-end-color: #7E7E7E;
+$warning-start-color: $danger-start-color;
+$warning-end-color:   $danger-end-color;
 $successText: $success-end-color;
 $infoText: $info-end-color;
 $errorText: $danger-end-color;
