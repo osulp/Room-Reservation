@@ -9,6 +9,15 @@
     height: 20px;
     display: inline-block;
   }
+  .label-success {
+    background-color: $success-end-color;
+  }
+  .label-important {
+    background-color: $danger-end-color;
+  }
+  .label-info {
+    background-color: $info-end-color;
+  }
 }
 
 @media (max-width: 979px) and (min-width: 768px) {
