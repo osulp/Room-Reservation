@@ -1,6 +1,6 @@
 <h1>New role</h1>
 <br /><br />
-<%= simple_form_for(@role, :url => admin_role_path(@role), :html => {:class => 'form-horizontal'}) do |f| %>
+<%= simple_form_for([:admin,@role], :html => {:class => 'form-horizontal'}) do |f| %>
   <%= f.input :onid %>
   <div class="control-group">
     <%= f.label :role %>

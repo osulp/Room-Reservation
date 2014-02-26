@@ -30,6 +30,11 @@ class Reserver
   def self.reflect_on_association(association)
     Reservation.reflect_on_association(association)
   end
+
+  def self.model_name
+    Reservation.model_name
+  end
+
   def initialize(attributes = {},options={})
     @options = options
     if attributes.kind_of?(Reservation)

@@ -79,7 +79,7 @@ gem 'yui-compressor'
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
-  gem 'jazz_hands'
+  gem 'jazz_hands', :github => "terrellt/jazz_hands"
   gem 'meta_request'
   gem 'binding_of_caller'
   gem 'spring'

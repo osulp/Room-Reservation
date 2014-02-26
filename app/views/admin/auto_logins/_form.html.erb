@@ -1,4 +1,4 @@
-<%= simple_form_for(@auto_login, :url => admin_auto_login_path(@auto_login), :html => {:class => 'form-horizontal cleaning-record-form'}) do |f| %>
+<%= simple_form_for([:admin, @auto_login], :html => {:class => 'form-horizontal cleaning-record-form'}) do |f| %>
   <%= f.input :username %>
   <%= f.simple_fields_for :ip_addresses do |p| %>
     <%= render "ip_address_fields", :f => p %>
