@@ -14,6 +14,12 @@ GIT
     rubycas-client (2.3.10.rc1)
       activesupport
 
+GIT
+  remote: git://github.com/tobiasr/sprockets-digest-assets-fix.git
+  revision: 88c756c20c17038fb5b463ae2430d13da35f33a8
+  specs:
+    sprockets-digest-assets-fix (1.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -414,6 +420,7 @@ DEPENDENCIES
   sidetiq
   simple_form
   spring
+  sprockets-digest-assets-fix!
   therubyracer
   thin
   timecop

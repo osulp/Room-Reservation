@@ -41,7 +41,7 @@ gem 'bootstrap-sass'
 gem "compass-rails"
 
 # Old Asset Precompile Behavior for Stylesheets
-#gem "sprockets-digest-assets-fix", :github => "tobiasr/sprockets-digest-assets-fix"
+gem "sprockets-digest-assets-fix", :github => "tobiasr/sprockets-digest-assets-fix"
 
 # Faye
 gem 'faye'
