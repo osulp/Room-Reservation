@@ -185,7 +185,6 @@ class ReservationPopupManager
       s.second(0)
       s.minute(Math.ceil(s.minute()/10)*10)
       @slider_element.slider(values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10])
-      this.slid(1, {values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10]})
       this.position_popup(event.pageX, event.pageY)
     )
     $.getJSON("/reservations/#{@element.data("id")}.json", (result) =>
@@ -212,6 +211,7 @@ class ReservationPopupManager
     initial_start = 0
     if new_start_time?
       initial_start = new_start_time.diff(start_time, 'minutes')/10
+      initial_start = 0 if initial_start < 0
     this.slid(1, {values: [0, max_reservation/60/10]})
     @slider_element.slider("values", [initial_start, max_reservation/60/10+initial_start])
     @popup.show()
