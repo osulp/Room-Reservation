@@ -158,7 +158,8 @@ class ReservationPopupManager
       @popup.show()
     )
   get_relative_start_time: (start_time, end_time, event) ->
-    offset = Math.floor(event.offsetY*3/10)*10
+    offset = (event.offsetY || event.pageY - $(event.target).offset().top)
+    offset = Math.floor(offset*3/10)*10
     new_time = start_time.clone().add("minutes", offset)
     if new_time < end_time
       return new_time
