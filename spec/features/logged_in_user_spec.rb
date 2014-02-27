@@ -24,6 +24,24 @@ describe "logged in user changes" do
       within("#login-link") do
         expect(page).to have_content("Logout")
       end
+
+    end
+
+    context "they do not have a banner record" do
+      it "should display username" do
+        expect(page).to have_content("fakeuser")
+      end
+    end
+
+    context "and they have a banner record" do
+      before(:each)do
+        create(:banner_record, :onid => "fakeuser", :fullName => "Sample Name" )
+        visit root_path
+      end
+      it "should display the full name" do
+        expect(page).to have_content("Sample Name")
+      end
     end
   end
 end
+

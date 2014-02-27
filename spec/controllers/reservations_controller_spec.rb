@@ -106,6 +106,8 @@ describe ReservationsController do
     end
   end
 
+
+
   describe "availability" do
     before(:each) do
       @room = create(:room)
