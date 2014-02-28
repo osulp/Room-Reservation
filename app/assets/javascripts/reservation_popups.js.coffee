@@ -220,7 +220,7 @@ class ReservationPopupManager
     $(".picker").each ->
       element = $(this)
       timepicker = element.timepicker()
-      m.pickers << timepicker
+      m.pickers << element.data("timepicker")
       element.on("blur", (e) -> m.updatedTimeLabel(element, e))
     @popup.show()
   updatedTimeLabel: (target_element, event) =>
@@ -230,18 +230,19 @@ class ReservationPopupManager
     else
       element_time = @start_time
       index = 1
-    #event.stopPropagation()
+    event.stopPropagation()
     start_time = element_time.clone().tz("America/Los_Angeles")
     input_time = moment("#{start_time.format("YYYY-MM-DD")} #{target_element.val()}", "YYYY-MM-DD h:m:s A").tz("America/Los_Angeles")
     if index == 1 && input_time < @start_time
       input_time.add('days',1)
     difference = Math.floor(input_time.diff(start_time, 'minutes')/10)
     max = @slider_element.slider("option", "max")
+    values = @slider_element.slider("values")
     if index == 1
       difference = Math.abs(difference)
-    difference = 0 if difference < 0
-    difference = max if difference > max
-    values = @slider_element.slider("values")
+    if difference < 0 || difference > max
+      error = true
+      difference = values[index]
     values[index] = difference
     # Push the other value if it breaks max reservation.
     max_reservation = @max_reservation/60/10
@@ -249,16 +250,23 @@ class ReservationPopupManager
       if values[1] < values[0]
         values[1] = values[0]+1
       if values[0] > values[1]
-        values[0] = values[1]-1
+        values[1] = @slider_element.slider("values")[0]
+        error = true
       if values[1] - values[0] > max_reservation
         values[1] = values[0] + max_reservation
     if index == 1
       if values[1] < values[0]
         values[0] = values[1]-1
       if values[0] > values[1]
-        values[1] = values[0]+1
+        values[1] = @slider_element.slider("values")[1]
+        error = true
       if values[1] - values[0] > max_reservation
         values[0] = values[1] - max_reservation
+    if error == true
+      @popup.find(".popup-content-errors").text("#{input_time.format("h:mm A")} is not available.")
+      @popup.find(".popup-content-errors").show()
+    else
+      @popup.find(".popup-content-errors").hide()
     @slider_element.slider("values", [values[0], values[1]])
     $(".picker").timepicker()
   slid: (event, ui) =>
