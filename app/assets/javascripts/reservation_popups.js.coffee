@@ -206,7 +206,7 @@ class ReservationPopupManager
       min: 0
       max: maximum
       slide: this.slid
-      change: this.slid
+      change: (event, ui)=> this.slid(false, ui)
       values: [0, max_reservation/60/10-1]
     )
     initial_start = 0
@@ -215,21 +215,66 @@ class ReservationPopupManager
       initial_start = 0 if initial_start < 0
     this.slid(1, {values: [0, max_reservation/60/10]})
     @slider_element.slider("values", [initial_start, max_reservation/60/10+initial_start])
+    @pickers = []
+    m = this
+    $(".picker").each ->
+      element = $(this)
+      timepicker = element.timepicker()
+      m.pickers << timepicker
+      element.on("blur", (e) -> m.updatedTimeLabel(element, e))
     @popup.show()
+  updatedTimeLabel: (target_element, event) =>
+    if target_element.attr("id") == "start_picker"
+      element_time = @start_time
+      index = 0
+    else
+      element_time = @start_time
+      index = 1
+    #event.stopPropagation()
+    start_time = element_time.clone().tz("America/Los_Angeles")
+    input_time = moment("#{start_time.format("YYYY-MM-DD")} #{target_element.val()}", "YYYY-MM-DD h:m:s A").tz("America/Los_Angeles")
+    if index == 1 && input_time < @start_time
+      input_time.add('days',1)
+    difference = Math.floor(input_time.diff(start_time, 'minutes')/10)
+    max = @slider_element.slider("option", "max")
+    if index == 1
+      difference = Math.abs(difference)
+    difference = 0 if difference < 0
+    difference = max if difference > max
+    values = @slider_element.slider("values")
+    values[index] = difference
+    # Push the other value if it breaks max reservation.
+    max_reservation = @max_reservation/60/10
+    if index == 0
+      if values[1] < values[0]
+        values[1] = values[0]+1
+      if values[0] > values[1]
+        values[0] = values[1]-1
+      if values[1] - values[0] > max_reservation
+        values[1] = values[0] + max_reservation
+    if index == 1
+      if values[1] < values[0]
+        values[0] = values[1]-1
+      if values[0] > values[1]
+        values[1] = values[0]+1
+      if values[1] - values[0] > max_reservation
+        values[0] = values[1] - max_reservation
+    @slider_element.slider("values", [values[0], values[1]])
+    $(".picker").timepicker()
   slid: (event, ui) =>
     start = ui.values[0]
     end = ui.values[1]
     max_reservation = @max_reservation/60/10
     # Don't allow less than 10 minutes.
-    if(end-start < 1)
-      event.preventDefault()
+    if(end-start < 1 && event != false)
+      event?.preventDefault()
       return
     # Force end back if it goes too far
     if end > @slider_element.slider("option","max")
       end = @slider_element.slider("option","max")
     # Force the other slider closer if they get past the maximum reservation time.
-    if(end-start > max_reservation)
-      if @slider_element.slider("values",0) != start
+    if(end-start > max_reservation && event != false)
+      if @slider_element.slider("values")[0] != start
         @slider_element.slider("values",1,start+max_reservation)
         end = start+max_reservation
       else
@@ -243,8 +288,8 @@ class ReservationPopupManager
     @popup.find("#reserver_start_time").val(start_time_object.toISOString())
     @popup.find("#reserver_end_time").val(end_time_object.toISOString())
     # Set labels
-    @popup.find(".time-range-label .start-time").text(start_time_object.format("h:mm A"))
-    @popup.find(".time-range-label .end-time").text(end_time_object.format("h:mm A"))
+    @popup.find(".time-range-label .start-time .picker").val(start_time_object.format("h:mm A"))
+    @popup.find(".time-range-label .end-time .picker").val(end_time_object.format("h:mm A"))
     # Set Duration
     minute_diff = end_time_object.diff(start_time_object, 'minutes')
     hour_diff = Math.floor(minute_diff/60)
