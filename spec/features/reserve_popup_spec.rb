@@ -41,8 +41,8 @@ describe 'reserve popup' do
       context "and they have no banner record" do
         it "should default to a 3 hour time range" do
           within("#reservation-popup") do
-            expect(find(".start-time")).to have_content("12:00 AM")
-            expect(find(".end-time")).to have_content("3:00 AM")
+            expect(find(".start-time .picker").value).to eq("12:00 AM")
+            expect(find(".end-time .picker").value).to eq("3:00 AM")
           end
         end
         describe "clicking yes" do
@@ -175,8 +175,8 @@ describe 'reserve popup' do
           let(:banner_record) {create(:banner_record, :onid => user.onid, :status => "Undergraduate")}
           it "should default to a 3 hour time range" do
             within("#reservation-popup") do
-              expect(find(".start-time")).to have_content("12:00 AM")
-              expect(find(".end-time")).to have_content("3:00 AM")
+              expect(find(".start-time .picker").value).to eq("12:00 AM")
+              expect(find(".end-time .picker").value).to eq("3:00 AM")
             end
           end
 
@@ -187,8 +187,8 @@ describe 'reserve popup' do
             end
             it "should default to the configured time range" do
               within("#reservation-popup") do
-                expect(find(".start-time")).to have_content("12:00 AM")
-                expect(find(".end-time")).to have_content("6:00 AM")
+                expect(find(".start-time .picker").value).to eq("12:00 AM")
+                expect(find(".end-time .picker").value).to eq("6:00 AM")
               end
             end
           end
@@ -200,8 +200,8 @@ describe 'reserve popup' do
           end
           it "should set a 6 hour time range" do
             within("#reservation-popup") do
-              expect(find(".start-time")).to have_content("12:00 AM")
-              expect(find(".end-time")).to have_content("6:00 AM")
+              expect(find(".start-time .picker").value).to eq("12:00 AM")
+              expect(find(".end-time .picker").value).to eq("6:00 AM")
             end
           end
         end

@@ -27,4 +27,5 @@
 //= require list
 //= require list.fuzzysearch
 //= require list.pagination
+//= require bootstrap-timepicker
 //= require_tree .

@@ -54,12 +54,12 @@ describe "editing a reservation" do
           end
           it "should display the start time" do
             within("#update-popup") do
-              expect(page).to have_content(@start_time.strftime("%l:%M %p"))
+              expect(find(".start-time .picker").value).to eq(@start_time.strftime("%l:%M %p").strip)
             end
           end
           it "should display the end time" do
             within("#update-popup") do
-              expect(page).to have_content(@end_time.strftime("%l:%M %p"))
+              expect(find(".end-time .picker").value).to eq(@end_time.strftime("%l:%M %p").strip)
             end
           end
           it "should let you change the time" do
