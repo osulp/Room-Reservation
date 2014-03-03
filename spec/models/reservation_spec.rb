@@ -2,13 +2,19 @@ require 'spec_helper'
 
 describe Reservation do
   describe "validations" do
-     it {should validate_presence_of(:user_onid)}
-     it {should validate_presence_of(:reserver_onid)}
-     it {should validate_presence_of(:start_time)}
-     it {should validate_presence_of(:end_time)}
-     it {should validate_presence_of(:room)}
-     it {should belong_to(:room)}
-     it {should have_one(:key_card)}
+    it {should validate_presence_of(:user_onid)}
+    it {should validate_presence_of(:reserver_onid)}
+    it {should validate_presence_of(:start_time)}
+    it {should validate_presence_of(:end_time)}
+    it {should validate_presence_of(:room)}
+    it {should belong_to(:room)}
+    it {should have_one(:key_card)}
+    context "when the description has a swear word in it" do
+      let(:reservation) {build(:reservation, :description => "shit dude")}
+      it "should not be valid" do
+        expect(reservation).not_to be_valid
+      end
+    end
   end
   describe ".ongoing" do
     subject {Reservation.ongoing}

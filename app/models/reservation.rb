@@ -5,6 +5,7 @@ class Reservation < ActiveRecord::Base
   has_one :key_card
   before_destroy :touch
   validates :end_time, :start_time, :reserver_onid, :user_onid, :room, presence: true
+  validate :not_swearing
 
   def self.active
     joins(:key_card)
@@ -59,6 +60,12 @@ class Reservation < ActiveRecord::Base
   def current_originator
     return originator if !version
     version.originator
+  end
+
+  protected
+
+  def not_swearing
+    errors.add(:description, "is innapropriate.") if SwearFilter.profane?(description)
   end
 
 end
