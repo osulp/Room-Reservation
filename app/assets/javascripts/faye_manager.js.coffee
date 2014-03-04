@@ -12,4 +12,5 @@ class FayeManager
       window.CalendarManager.background_loading = true
       window.CalendarManager.cached_reservations = null
       window.CalendarManager.populate_calendar(data)
+      $.event.trigger({type: "fayeUpdated", time: new Date(), element: window.CalendarManager})
     )
