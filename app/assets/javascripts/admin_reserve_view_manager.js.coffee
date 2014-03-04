@@ -49,7 +49,7 @@ class AdminReserveViewManager
       return 0
     max_duration = parseInt(objects[0]["duration_number"])
     for object in objects
-      object["width"] = 500*parseInt(object["duration_number"])/max_duration
+      object["width"] = 400*parseInt(object["duration_number"])/max_duration
     return {'bars': objects}
   bar_to_object: (bar, availability) ->
     object = {}
