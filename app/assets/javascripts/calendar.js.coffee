@@ -4,6 +4,7 @@ class CalendarManager
   constructor: ->
     this.initialize_calendar() if $("#datepicker").length > 0
     # When events are updated, refresh the calendar.
+    $.event.trigger({type: "calendarInitialized", time: new Date(), element: this})
     $(document).on("eventsUpdated", => this.refresh_view())
   initialize_calendar: ->
     @datepicker = $("#datepicker")
@@ -41,7 +42,7 @@ class CalendarManager
     bar_length = @current_increment*60*10/180
     return if @current_increment < 0 || (current_time - start_time) > 24*60*60*1000
     $(".tab-pane").show()
-    $(".bar").each (key, item) =>
+    $(".room-data-wrap .bar").each (key, item) =>
       item = $(item)
       start_offset = item.parent().offset().top
       start_at = item.offset().top - start_offset
@@ -90,6 +91,7 @@ class CalendarManager
     # Set cookies
     this.update_cookie(year, month, day)
     this.load_day(year, month, day)
+    window.EventsManager.dayChanged(year,month,day)
     # Highlight day on map
     $(".day").removeClass("day-selected")
     $(".day[day=#{day}]").addClass("day-selected")

@@ -1,0 +1,20 @@
+<div class="alternate-admin-view" style="display: none;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Immediate Reservation</h4>
+  </div>
+  <div class="modal-body">
+    <div id="modal-alert" class="alert" style="display: none;"></div>
+    {{#each bars}}
+      <div class="room-data" data-room-id="{{room-id}}" data-room-name="{{room-name}}" style="width: 100%;text-align:left;">
+        <span style="font-weight:bold;margin-right: 10px;position:relative;top:-5px;display:inline-block;width:50px;">{{room-name}}: </span>
+        <div class="room-data-bar progress horizontal" style="width: 400px; height: 20px; display:inline-block;margin-bottom:0;">
+          <div class="bar bar-success" data-action="reserve" data-end="{{end}}" data-start="{{start}}" style="width: {{width}}px;" data-original-title="Click to Reserve"></div>
+        </div>
+        <span style="font-weight:bold;top:-5px;position:relative;"><i class="icon-time"></i>{{duration}}</span>
+      </div>
+    {{/each}}
+  </div>
+  <div class="modal-footer">
+  </div>
+</div>

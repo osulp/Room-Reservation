@@ -6,6 +6,7 @@ RoomReservation::Application.routes.draw do
   get "/logout", :to => 'sessions#logout'
   get "/reservations", :to => 'reservations#index', :as => :my_reservations, :format => 'html'
   get "/reservations", :to => 'reservations#current_user_reservations', :as => :current_user_reservations, :format => 'json'
+  get "/availability/all/:start", :to => 'reservations#all_availability', :start => /[TZtz0-9:\-\.%]+?/, :format => /html|json/, :as => :all_availability
   get "/availability/:room_id/:start", :to => 'reservations#availability', :start => /[TZtz0-9:\-\.%]+?/, :format => /html|json/, :as => :availability
   resources :reservations, :only => [:create, :update, :destroy, :show] do
     collection do

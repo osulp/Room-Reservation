@@ -42,14 +42,14 @@ class AdminShortcutsManager
     this.reload_user(this.show_success)
     return
   show_success: =>
-    alert = $("#modal-alert")
+    alert = @modal.find("#modal-alert")
     alert.removeClass("alert-error")
     alert.addClass("alert-success")
     alert.html("Key Card Checked Out")
     alert.show()
     return
   keycard_checkout_failure: (data) =>
-    alert = $("#modal-alert")
+    alert = @modal.find("#modal-alert")
     alert.removeClass("alert-success")
     alert.addClass("alert-error")
     data = data.responseJSON
