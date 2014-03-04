@@ -1,9 +1,27 @@
-jQuery ->
-  window.AdminReserveViewManager = new AdminReserveViewManager
+$(document).on("calendarInitialized", (e) ->
+  window.AdminReserveViewManager = new AdminReserveViewManager(e.element)
+)
 class AdminReserveViewManager
-  constructor: ->
+  constructor: (calendar) ->
     @modal = $("#modal_skeleton")
     this.handlebars_skeleton()
+    $("*[data-action=alternate-view]").click(=> this.initialize_modal())
+    selected_date = moment(calendar.datepicker.datepicker("getDate")).tz("America/Los_Angeles")
+    today = moment().tz("America/Los_Angeles")
+    if(selected_date.day() != today.day() || selected_date.month() != today.month() || selected_date.year() != today.year())
+      $("*[data-action=alternate-view]").hide()
+    else
+      $("*[data-action=alternate-view]").show()
+    $(document).on("dayChanged", (event)=>
+      current_day = moment().tz("America/Los_Angeles")
+      if(event.day.day() != current_day.day() || event.day.month() != current_day.month() || event.day.year() != current_day.year())
+        $("*[data-action=alternate-view]").hide()
+        @modal.modal("hide")
+      else
+        $("*[data-action=alternate-view]").show()
+      if @modal.is(':visible') && @modal.css("opacity") != "0"
+        this.initialize_modal()
+    )
   free_bars: ->
     m = this
     current_time = moment().tz("America/Los_Angeles")
@@ -57,6 +75,7 @@ class AdminReserveViewManager
     @handlebars_compiled = Handlebars.compile($(".alternate-admin-view").first().html())
   initialize_modal: ->
     element = this.free_bars()[0]
+    return unless element?
     end_time = moment(element.data("start")).tz("America/Los_Angeles")
     end_time.second(0)
     end_time.minute(Math.ceil(end_time.minute()/10)*10)

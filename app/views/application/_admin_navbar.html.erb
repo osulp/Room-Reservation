@@ -6,6 +6,7 @@
         <%= text_field_tag('keycard_entry', '',:placeholder => 'Swipe Keycard', :class => "span2") %>
         <%= text_field_tag('user_lookup', '',:placeholder => 'Search for User', :class => "span2") %>
       </form>
+      <button data-action="alternate-view" class="btn btn-small span2">Immediate Reservation</button>
       <span id="staff-shortcut-message" class="navbar-text span2"></span>
       <form class="navbar-form form-inline pull-right span3">
         <%= label_tag('patron_mode', "Patron Mode", :class => 'navbar-text') %>

@@ -4,6 +4,7 @@ class CalendarManager
   constructor: ->
     this.initialize_calendar() if $("#datepicker").length > 0
     # When events are updated, refresh the calendar.
+    $.event.trigger({type: "calendarInitialized", time: new Date(), element: this})
     $(document).on("eventsUpdated", => this.refresh_view())
   initialize_calendar: ->
     @datepicker = $("#datepicker")
@@ -90,6 +91,7 @@ class CalendarManager
     # Set cookies
     this.update_cookie(year, month, day)
     this.load_day(year, month, day)
+    window.EventsManager.dayChanged(year,month,day)
     # Highlight day on map
     $(".day").removeClass("day-selected")
     $(".day[day=#{day}]").addClass("day-selected")
