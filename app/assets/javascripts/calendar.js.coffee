@@ -41,7 +41,7 @@ class CalendarManager
     bar_length = @current_increment*60*10/180
     return if @current_increment < 0 || (current_time - start_time) > 24*60*60*1000
     $(".tab-pane").show()
-    $(".bar").each (key, item) =>
+    $(".room-data-wrap .bar").each (key, item) =>
       item = $(item)
       start_offset = item.parent().offset().top
       start_at = item.offset().top - start_offset
