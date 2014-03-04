@@ -50,14 +50,14 @@ class ReservationsController < ApplicationController
   def all_availability
     start_time = Time.zone.parse(params[:start])
     result = {}
-    Room.all.each do |room|
+    availability_checker = AvailabilityChecker.new(Room.all, start_time, start_time+24.hours)
+    availability_checker.events.each do |room, events|
       available_time = 24.hours
-      availability_checker = AvailabilityChecker.new(room, start_time, start_time+24.hours)
-      unless availability_checker.available?
-        available_time = availability_checker.events.first.start_time - start_time
+      unless events.empty?
+        available_time = events.first.start_time - start_time
         available_time = 0 if available_time < 0
       end
-      result[room.name] = {:availability => available_time.to_i}
+      result[room] = {:availability => available_time.to_i}
     end
     respond_with(result)
   end

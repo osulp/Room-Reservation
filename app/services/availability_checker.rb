@@ -26,8 +26,8 @@ class AvailabilityChecker
         @events[r.name] |= r.events.select{|event| event.end_time > start_time && event.start_time < end_time && event.try(:object).try(:payload) != blacklist} if rooms.include?(r)
       end
     end
-    unless room.kind_of?(Array)
-      return @events[room.name]
+    unless room.respond_to?(:each)
+      @events = @events[room.name]
     end
     @events
   end
