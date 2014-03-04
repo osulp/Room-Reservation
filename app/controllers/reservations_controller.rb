@@ -47,6 +47,21 @@ class ReservationsController < ApplicationController
     respond_with({:availability => available_time.to_i})
   end
 
+  def all_availability
+    start_time = Time.zone.parse(params[:start])
+    result = {}
+    Room.all.each do |room|
+      available_time = max_availability
+      availability_checker = AvailabilityChecker.new(room, start_time, start_time+max_availability)
+      unless availability_checker.available?
+        available_time = availability_checker.events.first.start_time - start_time
+        available_time = 0 if available_time < 0
+      end
+      result[room.name] = {:availability => available_time.to_i}
+    end
+    respond_with(result)
+  end
+
   def create
     reserver = Reserver.new(reserver_params)
     reserver.reserver = current_user
