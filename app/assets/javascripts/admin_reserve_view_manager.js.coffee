@@ -94,7 +94,7 @@ class AdminReserveViewManager
       @modal.off("shown")
     )
     @modal.modal().css({
-      width: 'auto',
+      width: '600px',
       'margin-left': ->
         return -($(this).width() / 2);
       }
