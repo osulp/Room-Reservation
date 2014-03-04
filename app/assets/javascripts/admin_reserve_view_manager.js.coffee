@@ -7,7 +7,7 @@ class AdminReserveViewManager
     @modal = $("#modal_skeleton")
     this.handlebars_skeleton()
     $("*[data-action=alternate-view]").click(=> this.initialize_modal())
-    selected_date = moment(calendar.datepicker.datepicker("getDate")).tz("America/Los_Angeles")
+    selected_date = moment(calendar.datepicker.datepicker("getDate"))
     today = moment().tz("America/Los_Angeles")
     if(selected_date.day() != today.day() || selected_date.month() != today.month() || selected_date.year() != today.year())
       $("*[data-action=alternate-view]").hide()
