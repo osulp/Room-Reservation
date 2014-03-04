@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "immediate reservation", :js => true, :focus => true do
+describe "immediate reservation", :js => true do
   let(:user) {build(:user, :admin)}
   let(:room) {create(:room)}
   let(:room_2) {create(:room)}
