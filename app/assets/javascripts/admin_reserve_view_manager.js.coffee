@@ -3,6 +3,7 @@ $(document).on("calendarInitialized", (e) ->
 )
 class AdminReserveViewManager
   constructor: (calendar) ->
+    return if $(".alternate-admin-view").length == 0
     @modal = $("#modal_skeleton")
     this.handlebars_skeleton()
     $("*[data-action=alternate-view]").click(=> this.initialize_modal())
@@ -76,7 +77,7 @@ class AdminReserveViewManager
     return object
   handlebars_skeleton: ->
     return @handlebars_compiled if @handlebars_compiled?
-    @handlebars_compiled = Handlebars.compile($(".alternate-admin-view").first().html())
+    @handlebars_compiled = Handlebars.compile($(".alternate-admin-view").first().html()) if $(".alternate-admin-view").first().html()?
   initialize_modal: ->
     element = this.free_bars()[0]
     return unless element?
