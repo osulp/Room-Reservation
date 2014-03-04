@@ -51,7 +51,7 @@ class ReservationsController < ApplicationController
     start_time = Time.zone.parse(params[:start])
     result = {}
     Room.all.each do |room|
-      available_time = max_availability
+      available_time = 24.hours
       availability_checker = AvailabilityChecker.new(room, start_time, start_time+24.hours)
       unless availability_checker.available?
         available_time = availability_checker.events.first.start_time - start_time
