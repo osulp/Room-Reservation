@@ -43,7 +43,7 @@ class AdminReserveViewManager
       diff_a = parseInt(a["duration_number"])#moment(a["end"]).tz("America/Los_Angeles").diff(moment(a["start"]).tz("America/Los_Angeles"), 'minutes')
       diff_b = parseInt(b["duration_number"])#moment(b["end"]).tz("America/Los_Angeles").diff(moment(b["start"]).tz("America/Los_Angeles"), 'minutes')
       return 1 if diff_b > diff_a
-      return -1 if diff_b <
+      return -1 if diff_b < diff_a
       return 1 if a["room-name"] > b["room-name"]
       return -1 if a["room-name"] < b["room-name"]
       return 0
