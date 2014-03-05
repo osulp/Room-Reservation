@@ -24,6 +24,7 @@ describe Canceller do
         let(:reservation) do
           r = create(:reservation, :user_onid => user.onid, :start_time => Time.current+2.hours, :end_time => Time.current+3.hours)
           create(:key_card, :reservation => r, :room => r.room)
+          r.reload
           r
         end
         it "should be invalid" do
