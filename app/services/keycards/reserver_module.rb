@@ -2,7 +2,6 @@ module Keycards::ReserverModule
   extend ActiveSupport::Concern
   included do
     validate :keycard_validations
-    before_reservation_save :add_keycard
   end
 
   def keycard
@@ -14,6 +13,8 @@ module Keycards::ReserverModule
 
   def keycard_validations
     if APP_CONFIG[:keycards][:enabled]
+      keycard_not_checked_out
+      add_keycard
       authorized_to_card
       has_keycard
       keycard_exists
@@ -44,4 +45,10 @@ module Keycards::ReserverModule
     return if !user || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
     errors.add(:base, "You can not reserve a room when you have one checked out.") if user.reservations.joins(:key_card).size > 0
   end
+
+  def keycard_not_checked_out
+    return if !keycard
+    errors.add(:base, "This keycard is already checked out.") if keycard.reservation && keycard.reservation != reservation
+  end
+
 end
