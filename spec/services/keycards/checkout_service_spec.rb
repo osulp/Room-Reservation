@@ -37,7 +37,8 @@ describe Keycards::CheckoutService do
     end
   end
   context "when the reservation is checked out already" do
-    let(:reservation) {create(:reservation, :user_onid => user.onid, :reserver_onid => user.onid, :start_time => start_time, :end_time => end_time, :key_card => create(:key_card))}
+    let(:room) {create(:room)}
+    let(:reservation) {create(:reservation, :user_onid => user.onid, :reserver_onid => user.onid, :start_time => start_time, :end_time => end_time, :key_card => create(:key_card, :room => room), :room => room)}
     it "should be invalid" do
       expect(subject).not_to be_valid
     end
