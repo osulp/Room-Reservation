@@ -3,7 +3,7 @@ $(document).on("calendarInitialized", (e) ->
 )
 class AdminReserveViewManager
   constructor: (calendar) ->
-    return if $(".alternate-admin-view").length == 0
+    return if $(".alternate-admin-view").length == 0 || User.current().get_value("staff") != true
     @modal = $("#modal_skeleton")
     this.handlebars_skeleton()
     $("*[data-action=alternate-view]").click(=> this.initialize_modal())
