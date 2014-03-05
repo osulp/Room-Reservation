@@ -9,3 +9,4 @@ threaded: true
 rackup: faye.ru
 port: 9000
 daemonize: true
+chdir: /var/www/RoomReservation/current
