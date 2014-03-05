@@ -2,6 +2,10 @@ class ReservationDecorator < EventDecorator
   decorates_association :user
   decorates_association :reserver
 
+  def self.collection_decorator_class
+    Draper::CollectionDecorator
+  end
+
   def color
     return 'danger'
   end

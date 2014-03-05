@@ -2,6 +2,10 @@ class AdminReservationDecorator < ReservationDecorator
 
   delegate :current_page, :total_pages, :limit_value
 
+  def self.collection_decorator_class
+    Draper::CollectionDecorator
+  end
+
   def formatted_start
     start_time.strftime("%m/%d %H:%M")
   end
