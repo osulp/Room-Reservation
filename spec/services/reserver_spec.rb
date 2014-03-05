@@ -20,6 +20,33 @@ describe Reserver do
     it {should validate_presence_of :reserver_onid}
     it {should validate_presence_of :user_onid}
     it {should be_valid}
+    context "when the key card key is given" do
+      let(:user) {build(:user, :admin)}
+      before(:each) do
+        APP_CONFIG[:keycards].stub(:[]).with(:enabled).and_return(true)
+      end
+      context "and it exists" do
+        let(:key_card) {create(:key_card)}
+        subject {Reserver.new({:reserver_onid => reserver.onid, :user_onid => user.onid, :room_id => room.id, :start_time => start_time, :end_time => end_time, :key_card_key => key_card.key})}
+        context "but it is for the wrong room" do
+          it "should be invalid" do
+            expect(subject).not_to be_valid
+          end
+        end
+        context "and it is already checked out" do
+          let(:key_card) {create(:key_card, :room => room, :reservation => create(:reservation, :room => room))}
+          it "should be invalid" do
+            expect(subject).not_to be_valid
+          end
+        end
+        context "and it is not checked out" do
+          let(:key_card) {create(:key_card, :room => room)}
+          it "should be valid" do
+            expect(subject).to be_valid
+          end
+        end
+      end
+    end
     context "when the duration is greater than what the user can have" do
       let(:end_time) {start_time + 4.hours}
       context "and the reserver is not an admin" do

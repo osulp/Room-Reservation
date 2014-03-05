@@ -11,6 +11,6 @@ class KeyCard < ActiveRecord::Base
 
   def reservation_room_valid
     return if !reservation
-    errors.add(:reservation, "is not for a room associated with this keycard.") if reservation.room != room
+    errors.add(:base, "Keycard does not match reservation's room.") if reservation.room != room
   end
 end

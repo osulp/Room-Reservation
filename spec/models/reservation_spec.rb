@@ -15,6 +15,24 @@ describe Reservation do
         expect(reservation).not_to be_valid
       end
     end
+    context "when the reservation has a key card" do
+      let(:reservation) {build(:reservation)}
+      let(:keycard) {create(:key_card, :room => reservation.room)}
+      before(:each) do
+        reservation.key_card = keycard
+      end
+      context "and it's an invalid keycard" do
+        let(:keycard) {create(:key_card)}
+        it "should be invalid" do
+          expect(reservation).not_to be_valid
+        end
+      end
+      context "and it's a valid keycard" do
+        it "should be valid" do
+          expect(reservation).to be_valid
+        end
+      end
+    end
   end
   describe ".ongoing" do
     subject {Reservation.ongoing}

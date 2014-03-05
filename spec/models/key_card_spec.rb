@@ -14,7 +14,7 @@ describe KeyCard do
       end
       it "should not be valid" do
         expect(subject).not_to be_valid
-        expect(subject.errors.messages[:reservation]).to include("is not for a room associated with this keycard.")
+        expect(subject.errors.messages[:base]).to include("Keycard does not match reservation's room.")
       end
     end
     context "when there is no reservation" do

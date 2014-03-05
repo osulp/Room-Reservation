@@ -7,6 +7,7 @@ class AdminReserveViewManager
     @modal = $("#modal_skeleton")
     this.handlebars_skeleton()
     $("*[data-action=alternate-view]").click(=> this.initialize_modal())
+    @calendar = calendar
     selected_date = moment(calendar.datepicker.datepicker("getDate"))
     today = moment().tz("America/Los_Angeles")
     if(selected_date.day() != today.day() || selected_date.month() != today.month() || selected_date.year() != today.year())
@@ -80,6 +81,12 @@ class AdminReserveViewManager
     return @handlebars_compiled if @handlebars_compiled?
     @handlebars_compiled = Handlebars.compile($(".alternate-admin-view").first().html()) if $(".alternate-admin-view").first().html()?
   initialize_modal: ->
+    selected_date = moment(@calendar.datepicker.datepicker("getDate"))
+    today = moment().tz("America/Los_Angeles")
+    if(selected_date.day() != today.day() || selected_date.month() != today.month() || selected_date.year() != today.year())
+      $("*[data-action=alternate-view]").hide()
+      @modal.modal("hide")
+      return
     element = this.free_bars()[0]
     return unless element?
     end_time = moment(element.data("start")).tz("America/Los_Angeles")

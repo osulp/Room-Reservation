@@ -151,6 +151,7 @@ class ReservationPopupManager
     @popup.find("#reserver_start_time").val(start_time.toISOString())
     @popup.find("#reserver_user_onid[type=text]").val("")
     @popup.find("#reserver_user_onid[type=text]").focus()
+    @popup.find("#reserver_key_card_key").val("")
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability, new_time)
