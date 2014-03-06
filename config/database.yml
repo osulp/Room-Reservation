@@ -53,7 +53,7 @@ banner_production:
   password: <%= ENV['ROOMRES_BANNER_DB_PASSWORD'] %>
   host: <%= ENV['ROOMRES_BANNER_DB_HOST'] %>
 
-openroom_development:
+openroom_development: &openroom_development
   adapter: mysql2
   database: <%= ENV['ROOMRES_OPENROOM_DATABASE'] || "openroom_development" %>
   username: <%= ENV['ROOMRES_OPENROOM_USERNAME'] || "root" %>
