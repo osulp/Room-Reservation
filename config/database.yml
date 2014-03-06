@@ -61,7 +61,8 @@ openroom_development: &openroom_development
   host: <%= ENV['ROOMRES_OPENROOM_HOST'] || "127.0.0.1" %>
   port: <%= ENV['ROOMRES_OPENROOM_PORT'] || "3306" %>
 
-openroom_production <<: *openroom_development
+openroom_production:
+  <<: *openroom_development
 
 openroom_test:
   <<: *default
