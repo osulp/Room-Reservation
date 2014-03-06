@@ -62,3 +62,7 @@ openroom_development: &openroom_development
   port: <%= ENV['ROOMRES_OPENROOM_PORT'] || "3306" %>
 
 openroom_production <<: *openroom_development
+
+openroom_test:
+  <<: *default
+  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>
