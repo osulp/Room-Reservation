@@ -22,11 +22,11 @@ class Openroom::Reservation < ActiveRecord::Base
   end
 
   def converted_start
-    start + 10.minutes
+    start + 10.minutes - Time.zone.utc_offset
   end
 
   def converted_end
-    self.end + 1.second
+    self.end + 1.second - Time.zone.utc_offset
   end
 
 end

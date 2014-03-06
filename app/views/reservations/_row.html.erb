@@ -1,12 +1,12 @@
     <tr class="reservation"
-      data-room-id="<%= reservation.room.id %>"
-      data-room-name="<%= reservation.room.name %>"
+      data-room-id="<%= reservation.room.try(:id) %>"
+      data-room-name="<%= reservation.room.try(:name) %>"
     >
-      <td class="show-desktop"><%= reservation.room.name %></td>
+      <td class="show-desktop"><%= reservation.room.try(:name) %></td>
       <td>
-        <span class="hide-desktop">Room: <%= reservation.room.name %></span>
+        <span class="hide-desktop">Room: <%= reservation.room.try(:name) %></span>
         <div class="hide-desktop weekday inline-block"><div class="d<%= reservation.end_time.wday %>"></div></div>
-        
+
         <%= reservation.formatted_start %> -
         <%= raw reservation.formatted_end %>
         <i class="icon-time"></i><%= (reservation.duration / 3600).round %>
