@@ -24,7 +24,7 @@ class ReservationsController < ApplicationController
       result = result.where("start_time <= ? AND end_time >= ?", date.tomorrow.midnight, date.midnight)
     end
     result.includes(:key_card, :room)
-    respond_with(result)
+    respond_with(Array.wrap(result))
   end
 
   def show
