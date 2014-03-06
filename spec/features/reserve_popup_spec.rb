@@ -126,7 +126,19 @@ describe 'reserve popup' do
                 end
               end
               it "should throw an error" do
-                expect(page).to have_content("You can only make 1 reservations per day.")
+                expect(page).to have_content("You can only make 1 reservation per day.")
+              end
+            end
+            context "and the app is configured to allow 2 per day (and there are two)" do
+              before(:each) do
+                Setting.stub(:max_concurrent_reservations).and_return(2)
+                create(:reservation, :user_onid => user.onid, :reserver_onid => user.onid, :start_time => Time.current.midnight+19.hours, :end_time => Time.current.midnight+20.hours)
+                within("#reservation-popup") do
+                  click_button "Reserve"
+                end
+              end
+              it "should show a pluralized error" do
+                expect(page).to have_content("You can only make 2 reservations per day.")
               end
             end
           end

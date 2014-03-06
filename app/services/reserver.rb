@@ -1,5 +1,6 @@
 class Reserver
   include ActiveModel::Model
+  include ActionView::Helpers::TextHelper
   # Callbacks
   define_model_callbacks :reservation_save
   # Keycard Include
@@ -109,7 +110,7 @@ class Reserver
     max_concurrent = Setting.max_concurrent_reservations.to_i
     return if !user || !reserver || !start_time || max_concurrent == 0 || reserver_ability.can?(:ignore_restrictions,self.class)
     current_reservations = user.reservations.where("start_time <= ? AND end_time >= ? AND start_time >= ? AND reserver_onid = ?", start_time.tomorrow.midnight-1.second, start_time.midnight, start_time.midnight, user.onid).size
-    errors.add(:base, "You can only make #{max_concurrent} reservations per day.") if current_reservations >= max_concurrent
+    errors.add(:base, "You can only make #{pluralize(max_concurrent, "reservation")} per day.") if current_reservations >= max_concurrent
   end
 
   def authorized_to_reserve
