@@ -12,7 +12,7 @@ class ReservationSerializer < ActiveModel::Serializer
   end
 
   def cancel_string
-    ""#object.decorate.cancel_string
+    object.decorate.cancel_string
   end
 
   private
