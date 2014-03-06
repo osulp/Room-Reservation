@@ -6,7 +6,7 @@ class Openroom::Room < ActiveRecord::Base
   def converted
     r = ::Room.where(:name => roomname).first || ::Room.new
     r.name = roomname
-    r.description = roomdescription unless roomdescription.blank?
+    r.description = converted_description
     r.floor = room_group.roomgroupname[0,1].to_i
     keycards.each do |key|
       new_key = key.converted
@@ -14,5 +14,28 @@ class Openroom::Room < ActiveRecord::Base
       r.key_cards << new_key
     end
     r
+  end
+
+  def converted_description
+    description = roomdescription
+    return nil if description.blank?
+    description = description.gsub(/([0-9 ]),/) do |match|
+        current_match = $1.strip
+        a = ""
+        a = case current_match
+        when "1"
+          "ADA compliant"
+        when "2"
+          "Dry-erase wall"
+        when "3"
+          "Window"
+        when "4"
+          "Monitor"
+        when "5"
+          "Near a restroom"
+        end
+        "#{a}, "
+    end
+    description.gsub("  ", " ")
   end
 end
