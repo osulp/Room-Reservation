@@ -67,14 +67,29 @@ describe "GET /reservations", :versioning => true do
         end
       end
       context "and the reservation is expired" do
+        before(:each) do
+          Timecop.travel(Time.current.midnight+1.day)
+        end
+        after(:each) do
+          Timecop.return
+        end
+        context "and the reservation is checked out" do
+          before(:each) do
+            r = Reservation.last
+            create(:key_card, :reservation => r, :room => r.room)
+          end
+          it "should show in the top as overdue" do
+            visit my_reservations_path
+            expect(page).not_to have_content("Empty")
+            expect(page).to have_content "Key Card Overdue"
+          end
+        end
         it "should display as expired" do
-          Timecop.travel(Time.current.midnight + 1.day)
           visit my_reservations_path
           expect(page).to have_content("Empty")
           expect(page).to have_selector(".reservation")
           expect(page).to have_content(@room1.name)
           expect(page).to have_content('Expired')
-          Timecop.return
         end
       end
       context "and the reservation has been truncated" do

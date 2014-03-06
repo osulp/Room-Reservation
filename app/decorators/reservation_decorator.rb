@@ -2,6 +2,10 @@ class ReservationDecorator < EventDecorator
   decorates_association :user
   decorates_association :reserver
 
+  def self.collection_decorator_class
+    Draper::CollectionDecorator
+  end
+
   def color
     return 'danger'
   end
@@ -36,7 +40,12 @@ class ReservationDecorator < EventDecorator
     end
     return deleted_string if deleted?
     return truncated_string unless truncated_at.blank?
+    return overdue_string if key_card
     h.content_tag(:span, :class => "label") {"Expired"}
+  end
+
+  def overdue_string
+    h.content_tag(:span, :class => 'label label-important') {"Key Card Overdue"}
   end
 
   def deleted_string
