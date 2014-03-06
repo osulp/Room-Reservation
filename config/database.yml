@@ -59,4 +59,6 @@ openroom_development:
   username: <%= ENV['ROOMRES_OPENROOM_USERNAME'] || "root" %>
   password: <%= ENV['ROOMRES_OPENROOM_PASSWORD'] || "vagrant" %>
   host: <%= ENV['ROOMRES_OPENROOM_HOST'] || "127.0.0.1" %>
-  port: <%= ENV['TOUCHSCREENKIOSK_OPENROOM_PORT'] || "3306" %>
+  port: <%= ENV['ROOMRES_OPENROOM_PORT'] || "3306" %>
+
+openroom_production <<: *openroom_development
