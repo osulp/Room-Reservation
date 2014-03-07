@@ -28,7 +28,10 @@ class AdminReserveViewManager
   free_bars: ->
     m = this
     current_time = moment().tz("America/Los_Angeles")
+    current_min = current_time.minutes()
     current_time.minutes(Math.ceil(current_time.minute()/10)*10)
+    # Round up if right on the money.
+    current_time.minutes(current_time.minutes()+10) if current_time.minutes() == current_min
     current_time.seconds(0)
     bars = []
     $(".room-data-wrap .bar-success").each ->
