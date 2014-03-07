@@ -12,6 +12,7 @@ development: &default
   username: <%= ENV['ROOMRES_DB_USERNAME'] %>
   password: <%= ENV['ROOMRES_DB_PASSWORD'] %>
   host: <%= ENV['ROOMRES_DB_HOST'] %>
+  port: <%= ENV['ROOMRES_DB_PORT'] || "3306" %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -51,3 +52,18 @@ banner_production:
   username: <%= ENV['ROOMRES_BANNER_DB_USERNAME'] %>
   password: <%= ENV['ROOMRES_BANNER_DB_PASSWORD'] %>
   host: <%= ENV['ROOMRES_BANNER_DB_HOST'] %>
+
+openroom_development: &openroom_development
+  adapter: mysql2
+  database: <%= ENV['ROOMRES_OPENROOM_DATABASE'] || "openroom_development" %>
+  username: <%= ENV['ROOMRES_OPENROOM_USERNAME'] || "root" %>
+  password: <%= ENV['ROOMRES_OPENROOM_PASSWORD'] || "vagrant" %>
+  host: <%= ENV['ROOMRES_OPENROOM_HOST'] || "127.0.0.1" %>
+  port: <%= ENV['ROOMRES_OPENROOM_PORT'] || "3306" %>
+
+openroom_production:
+  <<: *openroom_development
+
+openroom_test:
+  <<: *default
+  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>

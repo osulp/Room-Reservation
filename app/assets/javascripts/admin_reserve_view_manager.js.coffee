@@ -28,7 +28,7 @@ class AdminReserveViewManager
   free_bars: ->
     m = this
     current_time = moment().tz("America/Los_Angeles")
-    current_time.minutes(Math.ceil(current_time.minute()/10)*10+10)
+    current_time.minutes(Math.ceil(current_time.minute()/10)*10)
     current_time.seconds(0)
     bars = []
     $(".room-data-wrap .bar-success").each ->
@@ -50,7 +50,7 @@ class AdminReserveViewManager
       return 1 if a["room-name"] > b["room-name"]
       return -1 if a["room-name"] < b["room-name"]
       return 0
-    max_duration = parseInt(objects[0]["duration_number"])
+    max_duration = parseInt(objects[0]["duration_number"]) if objects.length > 0
     for object in objects
       object["width"] = 400*parseInt(object["duration_number"])/max_duration
     return {'bars': objects}
@@ -88,8 +88,10 @@ class AdminReserveViewManager
       @modal.modal("hide")
       return
     element = this.free_bars()[0]
-    return unless element?
-    end_time = moment(element.data("start")).tz("America/Los_Angeles")
+    if element?
+      end_time = moment(element.data("start")).tz("America/Los_Angeles")
+    else
+      end_time = moment().tz("America/Los_Angeles")
     end_time.second(0)
     end_time.minute(Math.ceil(end_time.minute()/10)*10)
     $.getJSON("/availability/all/#{end_time.toISOString()}.json", (result) =>

@@ -40,18 +40,18 @@ class User < OpenStruct
   end
 
   def role_names
-    roles.pluck(:role)
+    @role_names ||= roles.pluck(:role)
   end
 
   def staff?
     return false if onid.blank?
     roles = role_names
-    role_names.include?("admin") || role_names.include?("staff")
+    @staff ||= role_names.include?("admin") || role_names.include?("staff")
   end
 
   def admin?
     return false if onid.blank?
-    role_names.include?("admin")
+    @admin ||= role_names.include?("admin")
   end
 
   def attributes

@@ -10,7 +10,7 @@ services:
 env:
   matrix:
   - ROOMRES_ADAPTER=postgresql ROOMRES_DB_PREFIX=roomres ROOMRES_DB_USERNAME=travis
-    ROOMRES_DB_HOST=127.0.0.1
+    ROOMRES_DB_HOST=127.0.0.1 ROOMRES_DB_PORT=$PGPORT
   global:
     - BUNDLE_ARCHIVE="RoomReservation"
     - AWS_S3_BUCKET="CI-Artifacts"
