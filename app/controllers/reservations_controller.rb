@@ -69,7 +69,7 @@ class ReservationsController < ApplicationController
       respond_with(reserver_params, :location => root_path, :responder => JsonResponder, :status => :not_found)
     else
       reserver = Reserver.new(reserver_params)
-      reserver.reserver = current_user
+      reserver.reserver = current_user unless params[:reserver][:user_onid_id] && current_user.staff?
       reserver.user = current_user if params[:reserver][:user_onid] == current_user.onid
       reserver.save
       respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
