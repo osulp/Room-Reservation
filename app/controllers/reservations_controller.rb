@@ -124,6 +124,8 @@ class ReservationsController < ApplicationController
       if current_user.staff?
         # Impersonate user for reservation - this is for kiosk.
         params[:reserver][:reserver_onid] = b.onid
+      else
+        return {:errors => "Invalid permissions."}
       end
     end
     if params[:reserver][:startTime] && params[:reserver][:endTime] && params[:reserver][:date] && !params[:reserver][:start_time] && !params[:reserver][:end_time]
