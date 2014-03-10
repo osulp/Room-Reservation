@@ -121,7 +121,6 @@ class ReservationsController < ApplicationController
         return {:errors => "No user found for that ID card."}
       end
       params[:reserver][:user_onid] = b.onid
-      reserving_user = User.new(b.onid)
       if current_user.staff?
         # Impersonate user for reservation - this is for kiosk.
         params[:reserver][:reserver_onid] = b.onid
