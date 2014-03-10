@@ -113,6 +113,10 @@ class AdminShortcutsManager
       @modal.find(".modal-content").data("user", user_query)
       @modal.find(".modal-content").html(data)
       callback?()
+      @modal.on("shown", =>
+        $(document).off("focusin.modal")
+        @modal.off("shown")
+      )
       @modal.modal().css({
           width: 'auto',
           'margin-left': ->

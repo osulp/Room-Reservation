@@ -78,5 +78,13 @@ module RoomReservation
 
     # Disable implicit joining
     config.active_record.disable_implicit_join_references = true
+
+    # CORS
+    config.middleware.use Rack::Cors do
+      allow do
+        origins /.*\.library\.oregonstate\.edu/
+        resource '/*'
+      end
+    end
   end
 end

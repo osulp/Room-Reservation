@@ -64,11 +64,16 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    reserver = Reserver.new(reserver_params)
-    reserver.reserver = current_user
-    reserver.user = current_user if params[:reserver][:user_onid] == current_user.onid
-    reserver.save
-    respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
+    reserver_params = self.reserver_params
+    if reserver_params[:errors]
+      respond_with(reserver_params, :location => root_path, :responder => JsonResponder, :status => :not_found)
+    else
+      reserver = Reserver.new(reserver_params)
+      reserver.reserver = current_user unless params[:reserver][:user_onid_id] && current_user.staff?
+      reserver.user = current_user if params[:reserver][:user_onid] == current_user.onid
+      reserver.save
+      respond_with(reserver, :location => root_path, :responder => JsonResponder, :serializer => ReservationSerializer)
+    end
   end
 
   def update
@@ -96,8 +101,38 @@ class ReservationsController < ApplicationController
   protected
 
   def reserver_params
+    params[:reserver] ||= {}
     params[:reserver] = params[:reserver].merge(:reserver_onid => current_user.onid)
+    return flex_params if flex_params
     params.require(:reserver).permit(:reserver_onid, :user_onid, :start_time, :room_id, :end_time, :description, :key_card_key)
+  end
+
+  def flex_params
+    if params[:reserver][:room_name] && !params[:reserver][:room_id]
+      room = Room.where(:name => params[:reserver][:room_name]).first
+      if !room
+        return {:errors => "Invalid room requested."}
+      end
+      params[:reserver][:room_id] = room.id
+    end
+    if params[:reserver][:user_onid_id] && !params[:reserver][:user_onid]
+      b = BannerRecord.soft_find_by_osu_id(params[:reserver][:user_onid_id])
+      if !b
+        return {:errors => "No user found for that ID card."}
+      end
+      params[:reserver][:user_onid] = b.onid
+      if current_user.staff?
+        # Impersonate user for reservation - this is for kiosk.
+        params[:reserver][:reserver_onid] = b.onid
+      else
+        return {:errors => "Invalid permissions."}
+      end
+    end
+    if params[:reserver][:startTime] && params[:reserver][:endTime] && params[:reserver][:date] && !params[:reserver][:start_time] && !params[:reserver][:end_time]
+      params[:reserver][:start_time] = Time.zone.parse("#{params[:reserver][:date]} #{params[:reserver][:startTime]}").iso8601
+      params[:reserver][:end_time] = Time.zone.parse("#{params[:reserver][:date]} #{params[:reserver][:endTime]}").iso8601
+    end
+    return
   end
 
   # @TODO: Make this configurable

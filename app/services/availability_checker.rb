@@ -27,7 +27,7 @@ class AvailabilityChecker
       end
     end
     unless room.respond_to?(:each)
-      @events = @events[room.name]
+      @events = @events[room.name] || []
     end
     @events
   end
