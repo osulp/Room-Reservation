@@ -121,6 +121,11 @@ class ReservationsController < ApplicationController
         return {:errors => "No user found for that ID card."}
       end
       params[:reserver][:user_onid] = b.onid
+      reserving_user = User.new(b.onid)
+      if reserving_user.staff?
+        # Impersonate user for reservation - this is for kiosk.
+        params[:reserver][:reserver_onid] = b.onid
+      end
     end
     if params[:reserver][:startTime] && params[:reserver][:endTime] && params[:reserver][:date] && !params[:reserver][:start_time] && !params[:reserver][:end_time]
       params[:reserver][:start_time] = Time.zone.parse("#{params[:reserver][:date]} #{params[:reserver][:startTime]}").iso8601
