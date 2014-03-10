@@ -23,7 +23,7 @@ class AdminReserveViewManager
       @modal.modal("hide")
     else
       $("*[data-action=alternate-view]").show()
-    if @modal.is(':visible') && @modal.css("opacity") != "0"
+    if @modal.is(':visible') && @modal.css("opacity") != "0" && @modal.find(".modal-title").text() == "Immediate Reservation"
       this.initialize_modal()
   free_bars: ->
     m = this
