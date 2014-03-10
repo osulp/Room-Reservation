@@ -76,6 +76,8 @@ gem 'kaminari'
 gem 'closure-compiler'
 gem 'yui-compressor'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
