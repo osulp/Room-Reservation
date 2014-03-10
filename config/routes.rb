@@ -13,6 +13,11 @@ RoomReservation::Application.routes.draw do
       get 'upcoming'
     end
   end
+  resources :rooms, :only => [] do
+    collection do
+      get 'free_times'
+    end
+  end
   resources :users, :only => [:show]
 
   get "/admin", :to => 'admin#index'
