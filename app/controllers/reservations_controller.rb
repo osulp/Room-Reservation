@@ -122,7 +122,7 @@ class ReservationsController < ApplicationController
       end
       params[:reserver][:user_onid] = b.onid
       reserving_user = User.new(b.onid)
-      if reserving_user.staff?
+      if current_user.staff?
         # Impersonate user for reservation - this is for kiosk.
         params[:reserver][:reserver_onid] = b.onid
       end
