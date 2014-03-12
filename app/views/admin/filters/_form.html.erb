@@ -1,6 +1,6 @@
 <%= simple_form_for([:admin,@filter], :html => {:class => 'form-horizontal'}) do |f| %>
   <%= f.input :name %>
-  <%= f.association :rooms, as: :check_boxes, :wrapper_html => {:class => 'inline-checkbox'} %>
+  <%= f.association :rooms, as: :check_boxes, :wrapper_html => {:class => 'inline-checkbox'}, :collection => Room.order(:name) %>
   <div class="control-group">
     <div class="controls"><%= f.button :submit, 'Save', :class => 'btn-primary' %></div>
   </div>
