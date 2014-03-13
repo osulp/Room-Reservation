@@ -37,6 +37,6 @@ class Openroom::Room < ActiveRecord::Base
         return "" if a.strip.blank?
         "#{a}, "
     end
-    description.gsub("  ", " ").gsub(" ,"," ").gsub(/,$/,"")
+    description.gsub("  ", " ").gsub(" ,"," ").gsub(/, $/,"")
   end
 end
