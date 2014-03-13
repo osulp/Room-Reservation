@@ -20,6 +20,7 @@ set :deploy_to, config['deploy_to']
 set :use_sudo, false
 set :keep_releases, 5
 set :shared_children, shared_children + %w{pids sockets tmp public/uploads}
+set :rails_env, config['rails_env'] || 'production'
 
 # if you want to clean up old releases on each deploy uncomment this:
 after 'deploy:restart', 'deploy:cleanup'
@@ -42,10 +43,10 @@ end
 namespace :roomreservation do
   desc "Clears Cache"
   task :clear_cache, :roles => :app do
-    run "cd #{release_path} && rbenv exec bundle exec rake roomreservation:clear_cache"
+    run "cd #{current_path} && rbenv exec bundle exec rake roomreservation:clear_cache"
   end
   desc "Warms Cache"
   task :warm_cache, :roles => :app do
-    run "cd #{release_path} && rbenv exec bundle exec rake roomreservation:warm_cache"
+    run "cd #{current_path} && rbenv exec bundle exec rake roomreservation:warm_cache"
   end
 end
