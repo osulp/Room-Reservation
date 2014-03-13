@@ -19,7 +19,7 @@ class Openroom::Room < ActiveRecord::Base
   def converted_description
     description = roomdescription
     return nil if description.blank?
-    description = description.gsub(/([0-9 ]),/) do |match|
+    description = description.gsub(/([0-9])/) do |match|
         current_match = $1.strip
         a = ""
         a = case current_match
