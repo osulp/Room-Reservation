@@ -60,6 +60,7 @@ banner_production: &banner_production
   username: <%= ENV['ROOMRES_BANNER_DB_USERNAME'] %>
   password: <%= ENV['ROOMRES_BANNER_DB_PASSWORD'] %>
   host: <%= ENV['ROOMRES_BANNER_DB_HOST'] %>
+  port: <%= ENV['ROOMRES_BANNER_DB_PORT'] || '3306' %>
 
 banner_staging:
   <<: *banner_production
