@@ -34,6 +34,7 @@ class Openroom::Room < ActiveRecord::Base
         when "5"
           "Near a restroom"
         end
+        return "" if a.strip.blank?
         "#{a}, "
     end
     description.gsub("  ", " ")
