@@ -25,6 +25,10 @@ production:
   <<: *default
   database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_production" %>
 
+staging:
+  <<: *default
+  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_staging" %>
+
 drupal_development:
   <<: *default
 
@@ -32,12 +36,15 @@ drupal_test:
   <<: *default
   database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>
 
-drupal_production:
+drupal_production: &drupal_production
   <<: *default
   database: <%= "#{ENV['ROOMRES_DRUPAL_DB']}" %>
   username: <%= ENV['ROOMRES_DRUPAL_DB_USERNAME'] %>
   password: <%= ENV['ROOMRES_DRUPAL_DB_PASSWORD'] %>
   host: <%= ENV['ROOMRES_DRUPAL_DB_HOST'] %>
+
+drupal_staging:
+  <<: *drupal_production
 
 banner_development:
   <<: *default
@@ -46,12 +53,15 @@ banner_test:
   <<: *default
   database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>
 
-banner_production:
+banner_production: &banner_production
   <<: *default
   database: <%= "#{ENV['ROOMRES_BANNER_DB']}" %>
   username: <%= ENV['ROOMRES_BANNER_DB_USERNAME'] %>
   password: <%= ENV['ROOMRES_BANNER_DB_PASSWORD'] %>
   host: <%= ENV['ROOMRES_BANNER_DB_HOST'] %>
+
+banner_staging:
+  <<: *banner_production
 
 openroom_development: &openroom_development
   adapter: mysql2
@@ -61,8 +71,11 @@ openroom_development: &openroom_development
   host: <%= ENV['ROOMRES_OPENROOM_HOST'] || "127.0.0.1" %>
   port: <%= ENV['ROOMRES_OPENROOM_PORT'] || "3306" %>
 
-openroom_production:
+openroom_production: &openroom_production
   <<: *openroom_development
+
+openroom_staging:
+  <<: *openroom_production
 
 openroom_test:
   <<: *default
