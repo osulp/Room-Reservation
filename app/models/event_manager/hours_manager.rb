@@ -93,6 +93,11 @@ class EventManager::HoursManager < EventManager::EventManager
           events << build_event(start_at, end_at, room)
         end
         unless local_hours["close"] == special
+          # During dead week the hours say they "close" at 1 AM. Lies, but still.
+          # TODO: Find a way to add extra 1 hour the next day.
+          if local_hours["close"] == one
+            next
+          end
           start_at = string_to_time(date, local_hours["close"])
           end_at = (date+1.day).at_beginning_of_day
           events << build_event(start_at, end_at, room)
