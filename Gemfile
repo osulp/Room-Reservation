@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 
 gem 'jquery-rails'
 gem 'mysql2'
-gem 'pg'
 gem 'rails', '~> 4.0.0'
 gem 'simple_form'
 gem 'yard'
@@ -93,6 +92,7 @@ end
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'pg'
 end
 
 group :test do
