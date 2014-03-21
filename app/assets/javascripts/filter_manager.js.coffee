@@ -24,11 +24,8 @@ class FilterManager
       # Hide any floors that have all room data elements filtered out.
       displays = jQuery.unique(element.find(".room-data").map(-> $(this).css("display")))
       if displays.length == 1 && displays[0] == "none"
-        console.log("Hiding #{element.attr('id')}")
         element.hide()
         $("a[href^='##{element.attr('id')}']").parent().hide()
-      else
-        console.log("Not hiding #{element.attr('id')}")
   all_filter: ->
     return @all_filter_element if @all_filter_element?
     for filter in @filters
