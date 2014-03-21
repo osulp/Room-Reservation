@@ -12,11 +12,23 @@ class FilterManager
   apply_filters: ->
     @all_filter().element.prop('checked', false) if this.applied_filter_count() > 0
     @all_filter().element.prop('checked', true) if this.applied_filter_count() <= 0
-    $(".room-data").show()
+    $(".room-data").attr("style", null)
+    $("a[href^='#floor']").parent().show()
+    $("*[id^=floor-]").attr("style",null)
     unless @all_filter().is_checked()
       for filter in @filters
         if filter.is_checked()
           $(".room-data:not(.filter-#{filter.id})").hide()
+    $("*[id^=floor-]").each ->
+      element = $(this)
+      # Hide any floors that have all room data elements filtered out.
+      displays = jQuery.unique(element.find(".room-data").map(-> $(this).css("display")))
+      if displays.length == 1 && displays[0] == "none"
+        console.log("Hiding #{element.attr('id')}")
+        element.hide()
+        $("a[href^='##{element.attr('id')}']").parent().hide()
+      else
+        console.log("Not hiding #{element.attr('id')}")
   all_filter: ->
     return @all_filter_element if @all_filter_element?
     for filter in @filters
