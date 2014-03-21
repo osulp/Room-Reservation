@@ -54,6 +54,30 @@ describe "filters" do
         end
       end
     end
+    describe "hiding floors", :js => true do
+      before(:each) do
+        @room_2 = create(:room, :floor => 2)
+        @room_2.filters << @filter
+        visit root_path
+      end
+      context "when a filter is clicked" do
+        before(:each) do
+          find("#filter-#{@filter.id}").click
+        end
+        it "should hide floors that don't match" do
+          expect(page).not_to have_content("1st Floor")
+        end
+        context "and then display all rooms is clicked" do
+          before(:each) do
+            find("#filter_all").click
+          end
+          it "should display them all again" do
+            expect(page).to have_content("1st Floor")
+            expect(page).to have_content("2nd Floor")
+          end
+        end
+      end
+    end
     describe "filter interaction" do
       before(:each) do
         @room_2 = create(:room, :floor => 1)
