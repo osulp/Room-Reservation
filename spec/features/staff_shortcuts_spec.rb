@@ -35,12 +35,14 @@ describe "staff shortcuts", :versioning => true do
     context "when the user is staff" do
       it "should not show" do
         expect(page).not_to have_selector("#patron_mode")
+        expect(page).not_to have_content("Patron Mode")
       end
     end
     context "when the user is an admin" do
       let(:user) {build(:user, :admin)}
       it "should show" do
         expect(page).to have_selector("#patron_mode")
+        expect(page).to have_content("Patron Mode")
       end
     end
   end
