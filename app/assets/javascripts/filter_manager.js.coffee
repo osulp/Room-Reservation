@@ -27,7 +27,7 @@ class FilterManager
         element.hide()
         $("a[href^='##{element.attr('id')}']").parent().hide()
     if $("#tabs-floor li.active").css("display") == "none"
-      $("#tabs-floor li:visible").click()
+      $("#tabs-floor li:visible a").first().click()
   all_filter: ->
     return @all_filter_element if @all_filter_element?
     for filter in @filters
