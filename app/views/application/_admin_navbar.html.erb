@@ -9,8 +9,10 @@
       <button data-action="alternate-view" class="btn btn-small span2" style="display:none;">Immediate Reservation</button>
       <span id="staff-shortcut-message" class="navbar-text span2"></span>
       <form class="navbar-form form-inline pull-right span3">
-        <%= label_tag('patron_mode', "Patron Mode", :class => 'navbar-text') %>
-        <%= check_box_tag('patron_mode', "Patron Mode",false, :class => 'checkbox') if current_user.admin? %>
+        <% if current_user.admin? %>
+          <%= label_tag('patron_mode', "Patron Mode", :class => 'navbar-text') %>
+          <%= check_box_tag('patron_mode', "Patron Mode",false, :class => 'checkbox') %>
+        <% end %>
       </form>
     </div>
   </div>
