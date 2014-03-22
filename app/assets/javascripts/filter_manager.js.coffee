@@ -26,6 +26,8 @@ class FilterManager
       if displays.length == 1 && displays[0] == "none"
         element.hide()
         $("a[href^='##{element.attr('id')}']").parent().hide()
+    if $("#tabs-floor li.active").css("display") == "none"
+      $("#tabs-floor li:visible").show()
   all_filter: ->
     return @all_filter_element if @all_filter_element?
     for filter in @filters
