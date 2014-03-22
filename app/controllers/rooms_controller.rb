@@ -9,7 +9,10 @@ class RoomsController < ApplicationController
       time = Time.zone.parse(date.to_s)
       presenter = CalendarPresenter.cached(time.midnight, time.tomorrow.midnight)
       presenter.rooms.each do |room|
-        hash[room.name] ||= {date.to_s => []}
+        hash[room.name] ||= {}
+        hash[room.name][date.to_s] = []
+        hash[room.name]["image"] = room.image.url unless room.image.blank?
+        hash[room.name]["image"] ||= ""
         room.decorated_events(time).each do |event|
           if event.kind_of?(AvailableDecorator)
             hash[room.name][date.to_s] << {"start" => event.start_time.iso8601, "end" => event.end_time.iso8601}
