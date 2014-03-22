@@ -86,5 +86,8 @@ module RoomReservation
         resource '/*'
       end
     end
+
+    # Don't ignore IPs from local trusted network!
+    config.action_dispatch.trusted_proxies = /^127\.0\.0\.1$/ # localhost
   end
 end
