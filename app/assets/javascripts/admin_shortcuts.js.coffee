@@ -73,6 +73,8 @@ class AdminShortcutsManager
     @message.text('Key Card Checked In')
     @keycard_field.removeClass("error")
     @keycard_field.addClass("success")
+    @keycard_field.focus()
+    return
   keycard_failure: (data) =>
     @message.removeClass('text-success')
     @message.addClass('text-error')
@@ -84,6 +86,8 @@ class AdminShortcutsManager
     @message.text(errors)
     @keycard_field.removeClass("success")
     @keycard_field.addClass("error")
+    @keycard_field.focus()
+    return
   bind_user_search: ->
     @user_field.on("blur", => this.user_searched())
     # Bind to enter key.
