@@ -83,7 +83,7 @@ describe 'reserve popup' do
                 it "should send an email" do
                   expect(ActionMailer::Base.deliveries.length).to eq 1
                   email = ActionMailer::Base.deliveries.first
-                  expect(email.subject).to eq "Study Room Reservations Reservation"
+                  expect(email.subject).to eq "Study Room Reservation"
                   expect(email.body.to_s).to include user.onid
                   expect(email.body.to_s).to include user.banner_record.email
                   expect(email.body.to_s).to include Room.first.name

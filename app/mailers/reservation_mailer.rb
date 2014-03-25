@@ -24,7 +24,7 @@ class ReservationMailer < ActionMailer::Base
   private
 
   def reservation_subject
-    "Study Room Reservations Reservation"
+    "Study Room Reservation"
   end
 
   def cancellation_subject
