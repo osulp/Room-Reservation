@@ -2,24 +2,19 @@ class CalendarPresenter
   include Enumerable
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
 
-  def self.cached(start_time, end_time)
+  def self.cached(start_time, end_time,skip_publish=false)
     key = "Cached/#{form_cache_key(start_time, end_time, Room.all)}"
     result = Rails.cache.read(key)
     if result.nil?
       result = new(start_time, end_time)
       Rails.cache.write(key, result)
-      self.publish_changed(start_time, end_time, result)
+      self.publish_changed(start_time, end_time, key) unless skip_publish
     end
     return result
   end
   # Publishes info to Faye
-  def self.publish_changed(start_time, end_time, presenter=nil)
-    start_time = start_time.to_date
-    end_time = (end_time-1.minute).to_date unless end_time.kind_of?(Date)
-    notifier = DateUpdateNotifier.new
-    start_time.upto(end_time) do |date|
-      notifier.notify_update(date,presenter)
-    end
+  def self.publish_changed(start_time, end_time, presenter_key=nil)
+    FayePublishChangedDates.perform_async(start_time, end_time, presenter_key)
   end
 
   def initialize(start_time, end_time)
