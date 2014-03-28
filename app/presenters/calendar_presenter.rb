@@ -2,13 +2,13 @@ class CalendarPresenter
   include Enumerable
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
 
-  def self.cached(start_time, end_time)
+  def self.cached(start_time, end_time,skip_publish=false)
     key = "Cached/#{form_cache_key(start_time, end_time, Room.all)}"
     result = Rails.cache.read(key)
     if result.nil?
       result = new(start_time, end_time)
       Rails.cache.write(key, result)
-      self.publish_changed(start_time, end_time, key)
+      self.publish_changed(start_time, end_time, key) unless skip_publish
     end
     return result
   end
