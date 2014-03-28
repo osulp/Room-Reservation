@@ -29,11 +29,29 @@ describe UsersController do
         let(:user) {build(:user, :staff)}
         context "and the user exists" do
           let(:banner_record) {create(:banner_record, :onid => "fakeuser", :osu_id => "931590000")}
-          before(:each) do
-            get :show, :format => :json, :id => "931590000"
+          context "and they search by ID" do
+            before(:each) do
+              get :show, :format => :json, :id => "931590000"
+            end
+            it "should return the user's information" do
+              expect(JSON.parse(response.body)["onid"]).to eq "fakeuser"
+            end
           end
-          it "should return the user's information" do
-            expect(JSON.parse(response.body)["onid"]).to eq "fakeuser"
+          context "and they swipe a card" do
+            before(:each) do
+              get :show, :format => :json, :id => "11931590000"
+            end
+            it "should return the user's information" do
+              expect(JSON.parse(response.body)["onid"]).to eq "fakeuser"
+            end
+          end
+          context "and they search by the banner record's ONID" do
+            before do
+              get :show, :format => :json, :id => "fakeuser"
+            end
+            it "should return the user's information" do
+              expect(JSON.parse(response.body)["onid"]).to eq "fakeuser"
+            end
           end
         end
         context "and the user doesn't exist" do
