@@ -43,6 +43,21 @@ describe "admin reservation popup", :js => true do
           fill_in("reserver_user_onid", :with => "921590000")
           expect(page).to have_field("reserver_user_onid", :with => "fakeuser")
         end
+        context "and they enter an ID" do
+          before do
+            fill_in("reserver_user_onid", :with => "921590000")
+          end
+          it "should fill in the username" do
+            expect(page).to have_field("reserver_user_onid", :with => "fakeuser")
+          end
+          it "should adjust the time limit" do
+            within("#reservation-popup") do
+              sleep(1)
+              expect(find(".start-time .picker").value).to eq("12:00 AM")
+              expect(find(".end-time .picker").value).to eq("3:00 AM")
+            end
+          end
+        end
         it "should fill in the username when a card is swiped" do
           fill_in("reserver_user_onid", :with => "11921590000")
           expect(page).to have_field("reserver_user_onid", :with => "fakeuser")

@@ -319,7 +319,16 @@ class ReservationPopupManager
         $(this).trigger("blur")
         return false
     )
-  set_reservation_onid: (user, element)->
+  update_max_reservation_limit: (limit) ->
+    @max_reservation = limit
+    vals = @slider_element.slider("values")
+    limit = limit/60/10
+    if vals[1] - vals[0] > limit
+      vals[1] = vals[0] + limit
+    @slider_element.slider("values", vals)
+  set_reservation_onid: (user, element) =>
     if user.get_value("onid")?
+      if user.get_value("max_reservation_time")?
+        this.update_max_reservation_limit(user.get_value("max_reservation_time"))
       element.val(user.get_value("onid"))
       element.parent().parent().next().find("input").trigger("focus")
