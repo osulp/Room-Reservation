@@ -153,6 +153,20 @@ describe Reserver do
           it "should be invalid" do
             expect(subject).not_to be_valid
           end
+          context "and it's checked out" do
+            before do
+              APP_CONFIG[:keycards].stub(:[]).with(:enabled).and_return(true)
+              @r1.key_card = create(:key_card, :room => @r1.room)
+              @r1.save
+            end
+            context "and the reservation they're making is for the next day" do
+              let(:start_time) {Time.current.tomorrow.midnight+1.hour}
+              let(:end_time) {Time.current.tomorrow.midnight+2.hours}
+              it "should be valid" do
+                expect(subject).to be_valid
+              end
+            end
+          end
         end
         context "that was made by an admin" do
           let(:other_user) {"bologna"}

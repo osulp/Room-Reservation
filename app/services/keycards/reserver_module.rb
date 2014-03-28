@@ -42,7 +42,8 @@ module Keycards::ReserverModule
   end
 
   def keycard_limitation
-    return if !user || !reserver || reserver_ability.can?(:ignore_restrictions,self.class)
+    return if !user || !reserver || reserver_ability.can?(:ignore_restrictions,self.class) || !reservation
+    return if reservation.start_time > Time.current.tomorrow.midnight || reservation.start_time < Time.current.midnight
     errors.add(:base, "You can not reserve a room when you have one checked out.") if user.reservations.joins(:key_card).size > 0
   end
 
