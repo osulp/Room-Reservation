@@ -8,18 +8,13 @@ class CalendarPresenter
     if result.nil?
       result = new(start_time, end_time)
       Rails.cache.write(key, result)
-      self.publish_changed(start_time, end_time, result)
+      self.publish_changed(start_time, end_time, key)
     end
     return result
   end
   # Publishes info to Faye
-  def self.publish_changed(start_time, end_time, presenter=nil)
-    start_time = start_time.to_date
-    end_time = (end_time-1.minute).to_date unless end_time.kind_of?(Date)
-    notifier = DateUpdateNotifier.new
-    start_time.upto(end_time) do |date|
-      notifier.notify_update(date,presenter)
-    end
+  def self.publish_changed(start_time, end_time, presenter_key=nil)
+    FayePublishChangedDates.perform_async(start_time, end_time, presenter_key)
   end
 
   def initialize(start_time, end_time)
