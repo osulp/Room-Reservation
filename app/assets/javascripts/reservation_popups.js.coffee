@@ -150,13 +150,13 @@ class ReservationPopupManager
     @popup.find("#reserver_room_id").val(room_id)
     @popup.find("#reserver_start_time").val(start_time.toISOString())
     @popup.find("#reserver_user_onid[type=text]").val("")
-    @popup.find("#reserver_user_onid[type=text]").focus()
     @popup.find("#reserver_key_card_key").val("")
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json", (result) =>
       availability = result.availability
       this.build_slider(start_time, end_time, max_reservation, availability, new_time)
       this.position_popup(event.pageX, event.pageY)
       @popup.show()
+      @popup.find("#reserver_user_onid[type=text]").focus()
     )
   get_relative_start_time: (start_time, end_time, event) ->
     offset = (event.offsetY || event.pageY - $(event.target).offset().top)
@@ -177,7 +177,6 @@ class ReservationPopupManager
     @popup.find("#reserver_room_id").val(room_id)
     @popup.find("#reserver_start_time").val(start_time.toISOString())
     @popup.find("#reserver_user_onid[type=text]").val("")
-    @popup.find("#reserver_user_onid[type=text]").focus()
     @popup.find("form").attr("action", "/reservations/#{@element.data("id")}.json")
     @popup.find("form").attr("method", "post")
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json?blacklist=#{@element.data("id")}", (result) =>
@@ -224,6 +223,7 @@ class ReservationPopupManager
       m.pickers << element.data("timepicker")
       element.on("blur", (e) -> m.updatedTimeLabel(element, e))
     @popup.show()
+    @popup.find("#reserver_user_onid[type=text]").focus()
   updatedTimeLabel: (target_element, event) =>
     if target_element.attr("id") == "start_picker"
       element_time = @start_time

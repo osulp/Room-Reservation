@@ -37,6 +37,10 @@ describe "admin reservation popup", :js => true do
       it "should have an editable username" do
         expect(page).to have_selector("#reserver_user_onid[type='text']")
       end
+      it "should focus the username" do
+        expect(page).to have_selector("#reserver_user_onid[type='text']")
+        expect(page.evaluate_script("document.activeElement.id")).to eq "reserver_user_onid"
+      end
       context "and they enter a banner ID" do
         let(:banner_record) {create(:banner_record, :onid => "fakeuser", :status => "Undergraduate", :osu_id => "921590000")}
         it "should fill in the username when an ID is entered" do
