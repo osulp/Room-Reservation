@@ -9,3 +9,6 @@ en:
     from_address: "From Address"
     cancellation_email: "Cancellation Email Footer"
     reservation_padding: "Padding Between Events (in Minutes):"
+    email_reservation_subject: "Reservation Email Subject - Successful"
+    email_cancellation_subject: "Reservation Email Subject - Cancellation"
+    email_update_subject: "Reservation Email Subject - Updated"

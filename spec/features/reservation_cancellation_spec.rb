@@ -92,7 +92,7 @@ describe 'cancelling a reservation' do
             body = email.body.to_s
             expect(body).to include Room.first.name
             expect(body).to include "has been cancelled."
-            expect(email.subject).to eq "Study Room Reservations Cancellation"
+            expect(email.subject).to eq Setting.email_cancellation_subject
           end
         end
         describe "then clicking to reserve again" do
