@@ -32,6 +32,15 @@ from_name:
 from_address:
   category: Email Settings
   default: 'no-reply@roomreservation.com'
+email_reservation_subject:
+  category: Email Settings
+  default: 'Study Room Reservation'
+email_cancellation_subject:
+  category: Email Settings
+  default: 'Study Room Reservations Cancellation'
+email_update_subject:
+  category: Email Settings
+  default: 'Study Room Reservation Updated'
 announcement_header_message:
   default: ''
 reservation_padding:
