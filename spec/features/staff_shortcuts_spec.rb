@@ -149,6 +149,13 @@ describe "staff shortcuts", :versioning => true do
               expect(page).to have_selector(".keycard-checkout")
             end
           end
+          it "should focus on the keycard entry field" do
+            within("#modal_skeleton") do
+              expect(page).to have_selector(".keycard-checkout")
+              sleep(1)
+              expect(page.evaluate_script("document.activeElement.id")).to eq "keycard-checkout-#{reservation.id}"
+            end
+          end
           context "and a card is swiped" do
             let(:keycard) {create(:key_card, :room => reservation.room)}
             before(:each) do

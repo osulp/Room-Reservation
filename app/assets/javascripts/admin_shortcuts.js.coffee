@@ -122,6 +122,7 @@ class AdminShortcutsManager
       @modal.on("shown", =>
         $(document).off("focusin.modal")
         @modal.off("shown")
+        @modal.find(".keycard-checkout").first().focus()
       )
       @modal.modal().css({
           width: 'auto',
