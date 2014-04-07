@@ -36,6 +36,7 @@ class AdminReserveViewManager
     bars = []
     $(".room-data-wrap .bar-success").each ->
       element = $(this)
+      return if element.parent().parent().css("display") == "none" # Do not add filtered out items.
       bar_start = moment(element.data("start")).tz("America/Los_Angeles")
       bar_end = moment(element.data("end")).tz("America/Los_Angeles")
       if bar_start <= current_time && bar_end > current_time
