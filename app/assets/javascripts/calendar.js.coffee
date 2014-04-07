@@ -157,7 +157,7 @@ class CalendarManager
         element.attr("data-original-title","Click to Cancel")
       else
         element.data("user-onid", reservation.user_onid)
-        element.attr("data-original-title", "#{reservation.user_onid}: Click to Update")
+        element.attr("data-original-title", "#{reservation.user_name}: Click to Update")
   get_date_from_cookie: ->
     result = $.cookie('date')
     unless result?
