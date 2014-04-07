@@ -114,12 +114,14 @@ describe "staff shortcuts", :versioning => true do
             expect(page).not_to have_link("Cancel")
           end
         end
-        it "should have a working edit button" do
+        it "should have a working edit button", :focus => true do
           sleep(1)
           within("#modal_skeleton") do
             click_link "Edit"
           end
           expect(page).to have_selector("#update-popup",:visible => true)
+          expect(find(".start-time .picker").value).to eq("12:00 AM")
+          expect(find(".end-time .picker").value).to eq "11:50 PM"
         end
         context "which has been truncated by the auto truncator" do
           let(:reservation) {create(:reservation, :user_onid => user.onid, :start_time => Time.current - 1.hours, :end_time => Time.current+1.hours)}
