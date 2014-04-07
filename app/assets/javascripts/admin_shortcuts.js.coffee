@@ -71,6 +71,7 @@ class AdminShortcutsManager
     @message.removeClass('text-error')
     @message.addClass('text-success')
     @message.text('Key Card Checked In')
+    @message.fadeTo("fast", 0).fadeTo("fast",1)
     @keycard_field.removeClass("error")
     @keycard_field.addClass("success")
     @keycard_field.focus()
@@ -78,6 +79,7 @@ class AdminShortcutsManager
   keycard_failure: (data) =>
     @message.removeClass('text-success')
     @message.addClass('text-error')
+    @message.fadeTo("fast", 0).fadeTo("fast",1)
     data = data.responseJSON
     if data?["errors"]?
       errors = data["errors"].join(", ")
@@ -120,6 +122,7 @@ class AdminShortcutsManager
       @modal.on("shown", =>
         $(document).off("focusin.modal")
         @modal.off("shown")
+        @modal.find(".keycard-checkout").first().focus()
       )
       @modal.modal().css({
           width: 'auto',

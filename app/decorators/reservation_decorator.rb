@@ -55,7 +55,7 @@ class ReservationDecorator < EventDecorator
   def keycard_checkout
     return if start_time > Time.current+12.hours # TODO: Make this configurable.
     return "Checked Out" if key_card
-    h.text_field_tag "keycard-checkout-#{self.id}", '', :class => 'keycard-checkout', :placeholder => "Swipe Keycard to Check Out", :data => {:id => id}
+    h.text_field_tag "keycard-checkout-#{self.id}", '', :class => 'keycard-checkout', :placeholder => "Scan Keycard to Check Out", :data => {:id => id}
   end
 
   def cancel_string
