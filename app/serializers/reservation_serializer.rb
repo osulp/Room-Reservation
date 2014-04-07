@@ -1,5 +1,5 @@
 class ReservationSerializer < ActiveModel::Serializer
-  attributes :id, :reserver_onid, :user_onid, :start_time, :end_time, :room_id, :description, :cancel_string
+  attributes :id, :reserver_onid, :user_onid, :start_time, :end_time, :room_id, :description, :cancel_string, :user_name
   has_one :room
   has_one :key_card
 
@@ -9,6 +9,10 @@ class ReservationSerializer < ActiveModel::Serializer
       hash.except!(:room_id, :reserver_onid)
     end
     return hash
+  end
+
+  def user_name
+    object.user.decorate.name
   end
 
   def cancel_string

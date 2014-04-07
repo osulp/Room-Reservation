@@ -71,10 +71,12 @@ describe "GET / reservation bars" do
         end
       end
       context "when there are reservations" do
+        let(:reservation) {create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1, :user => reserved_for)}
+        let(:reserved_for) {build(:user)}
         before(:each) do
           Timecop.return
           create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
-          r = create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1)
+          reservation
           visit root_path
         end
         context "when user not logged in" do
@@ -100,6 +102,32 @@ describe "GET / reservation bars" do
             visit root_path
 
             expect(page).to have_selector(".bar-info")
+          end
+        end
+        context "and the user is a staff member", :js => true do
+          let(:user) do
+            u = build(:user, :staff)
+            u.onid
+          end
+          it "should display the bar as a different color" do
+            expect(page).to have_selector(".bar-info")
+          end
+          context "and the reserved user has no banner record" do
+            it "should show the user's onid on hover" do
+              find(".bar-info").trigger(:mouseover)
+              expect(page).to have_content reserved_for.onid
+            end
+          end
+          context "and the reserved user has a banner record" do
+            let(:reserved_for_banner) {create(:banner_record, :onid => "terrellt")}
+            let(:reserved_for) do
+              reserved_for_banner
+              "terrellt"
+            end
+            it "should show the user's name on hover" do
+              find(".bar-info").trigger(:mouseover)
+              expect(page).to have_content reserved_for_banner.fullName
+            end
           end
         end
         it "should show the red bar for the reservation" do
