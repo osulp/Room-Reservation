@@ -16,11 +16,12 @@ class ReservationSerializer < ActiveModel::Serializer
   end
 
   def cancel_string
+    return {} unless show_view?
     object.decorate.cancel_string
   end
 
   def available_times
-    return {} unless object.class == Reservation # It's only a reservation in show - otherwise it's decorated.
+    return {} unless show_view?
     object.decorate.available_times
   end
 
@@ -28,5 +29,10 @@ class ReservationSerializer < ActiveModel::Serializer
 
   def current_ability
     @current_ability ||= Ability.new(current_user)
+  end
+
+  # This is done so that the more complicated calculations don't happen in the bulk reservation query.
+  def show_view?
+    object.class == Reservation
   end
 end
