@@ -88,7 +88,10 @@ describe "staff shortcuts", :versioning => true do
         end
       end
       context "and the user has a reservation" do
-        let(:reservation) {create(:reservation, :user_onid => user.onid, :start_time => Time.current + 2.hours, :end_time => Time.current+4.hours)}
+        let(:reservation) do
+          create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
+          create(:reservation, :user_onid => user.onid, :start_time => Time.current + 2.hours, :end_time => Time.current+4.hours)
+        end
         it "should show it" do
           within("#modal_skeleton") do
             expect(page).to have_content("User Reservations")
@@ -120,6 +123,17 @@ describe "staff shortcuts", :versioning => true do
             click_link "Edit"
           end
           expect(page).to have_selector("#update-popup",:visible => true)
+        end
+        it "should maintain available times for the edit button" do
+          sleep(1)
+          within("#modal_skeleton") do
+            click_link "Edit"
+          end
+          expect(page).to have_selector("#update-popup",:visible => true)
+          page.execute_script("window.ReservationPopupManager.slider_element.slider('values', [0,1000]);")
+          current_time = Time.zone.at((Time.current.to_f / 10.minutes).ceil * 10.minutes)
+          expect(find(".start-time .picker").value).to eq(current_time.strftime("%l:%M %p").strip)
+          expect(find(".end-time .picker").value).to eq("12:00 AM")
         end
         context "which has been truncated by the auto truncator" do
           let(:reservation) {create(:reservation, :user_onid => user.onid, :start_time => Time.current - 1.hours, :end_time => Time.current+1.hours)}
