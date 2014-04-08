@@ -181,19 +181,23 @@ class ReservationPopupManager
     @popup.find("form").attr("method", "post")
     $.getJSON("/availability/#{room_id}/#{end_time.toISOString()}.json?blacklist=#{@element.data("id")}", (result) =>
       availability = result.availability
-      this.build_slider(start_time, end_time, max_reservation, availability)
-      s = moment(@element.data("start")).tz("America/Los_Angeles")
-      s.second(0)
-      s.minute(Math.ceil(s.minute()/10)*10)
-      @slider_element.slider(values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10])
-      this.position_popup(event.pageX, event.pageY)
-    )
-    $.getJSON("/reservations/#{@element.data("id")}.json", (result) =>
-      @popup.find("#reserver_user_onid").val(result.user_onid)
-      @popup.find("#reserver_key_card_key").val(result.key_card?.key || "")
-      @popup.find("#reserver_description").val(result.description)
-      @popup.find("#update-cancel-button").html(result.cancel_string)
-      @popup.find("#update-cancel-button a").text("Cancel Reservation")
+      $.getJSON("/reservations/#{@element.data("id")}.json", (result) =>
+        start_time = result.available_times.start_time
+        start_time = moment(start_time).tz("America/Los_Angeles")
+        start_time.second(0)
+        start_time.minute(Math.ceil(start_time.minute()/10)*10)
+        this.build_slider(start_time, end_time, max_reservation, availability)
+        s = moment(@element.data("start")).tz("America/Los_Angeles")
+        s.second(0)
+        s.minute(Math.ceil(s.minute()/10)*10)
+        @slider_element.slider(values: [(s-start_time)/1000/60/10,(end_time-start_time)/1000/60/10])
+        this.position_popup(event.pageX, event.pageY)
+        @popup.find("#reserver_user_onid").val(result.user_onid)
+        @popup.find("#reserver_key_card_key").val(result.key_card?.key || "")
+        @popup.find("#reserver_description").val(result.description)
+        @popup.find("#update-cancel-button").html(result.cancel_string)
+        @popup.find("#update-cancel-button a").text("Cancel Reservation")
+      )
     )
   build_slider: (start_time, end_time, max_reservation, available_time, new_start_time) ->
     @slider_element = @popup.find(".reservation-slider")
