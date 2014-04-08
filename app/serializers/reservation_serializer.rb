@@ -20,6 +20,7 @@ class ReservationSerializer < ActiveModel::Serializer
   end
 
   def available_times
+    return {} unless object.class == Reservation # It's only a reservation in show - otherwise it's decorated.
     object.decorate.available_times
   end
 
