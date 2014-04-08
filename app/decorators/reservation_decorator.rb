@@ -69,7 +69,6 @@ class ReservationDecorator < EventDecorator
   def edit_string
     h.content_tag(:span, :data => {"room-id" => self.room.id, "room-name" => self.room.name}) do
       h.content_tag(:span) do
-        h.content_tag(:span, "", :data => {:start => available_times[:start_time]}, :class => "hidden bar-success") +
         h.link_to("Edit", '#', :class => "btn btn-primary bar-info", :data => data_hash.merge(:action => "update"))
       end
     end
