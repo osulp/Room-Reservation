@@ -104,6 +104,7 @@ class CalendarManager
     $.get("/home/day/#{encodeURIComponent("#{year}-#{month}-#{day}")}", (data) =>
       return unless @date_selected.toString() == [year, month, day].toString()
       this.populate_calendar(data)
+      $.event.trigger({type: "dayLoaded", time: new Date()})
     )
     return
   populate_calendar: (data) ->

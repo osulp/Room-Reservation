@@ -5,10 +5,7 @@ describe 'cancelling a reservation' do
   include VisitWithAfterHook
   let(:banner_record) {nil}
   def after_visit(*args)
-    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-    expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
-    expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
+    disable_day_truncation
   end
   let(:user) {build(:user)}
   before(:all) do
