@@ -2,10 +2,7 @@ require 'spec_helper'
 describe "editing a reservation" do
   include VisitWithAfterHook
   def after_visit(*args)
-    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-    expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
-    expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
+    disable_day_truncation
   end
   let(:user) {build(:user)}
   let(:banner_record) {nil}

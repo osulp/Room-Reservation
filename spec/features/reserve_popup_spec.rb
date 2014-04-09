@@ -10,10 +10,7 @@ describe 'reserve popup' do
     page.execute_script("$('#reservation-popup').find('#reserver_end_time').val('#{end_time}');")
   end
   def after_visit(*args)
-    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-    expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
-    expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
+    disable_day_truncation
   end
   let(:user) {build(:user)}
   # TODO: Test this. Can't think of a good way to do it - The gateway filter would break things.

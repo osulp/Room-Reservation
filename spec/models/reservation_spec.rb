@@ -34,6 +34,24 @@ describe Reservation do
       end
     end
   end
+
+  describe ".user_banner_record" do
+    subject {create(:reservation, :user_onid => "bla")}
+    context "when the user has no banner record" do
+      it "should be null" do
+        expect(subject.user_banner_record).to be_nil
+      end
+    end
+    context "when the user has a banner record" do
+      let(:banner_record) {create(:banner_record, :onid => subject.user_onid)}
+      before(:each) do
+        banner_record
+      end
+      it "should return the banner record" do
+        expect(subject.user_banner_record).to eq banner_record
+      end
+    end
+  end
   describe ".ongoing" do
     subject {Reservation.ongoing}
     let(:reservation) {create(:reservation, :start_time => start_time, :end_time => end_time)}

@@ -18,7 +18,7 @@ class Reserver
   validate :append_reservation_errors
   validate :day_limit_applied
 
-  delegate :reserver, :user, :reserver_onid, :user_onid, :room_id, :room, :start_time, :end_time, :description, :key_card, :decorate, :to => :reservation
+  delegate :reserver, :user, :reserver_onid, :user_onid, :room_id, :room, :start_time, :end_time, :description, :key_card, :decorate, :user_banner_record, :to => :reservation
   delegate :start_time=, :end_time=, :room=, :reserver=, :user=, :reserver_onid=, :user_onid=, :to => :reservation
   attr_accessor :key_card_key
   attr_reader :reservation

@@ -23,7 +23,7 @@ class ReservationsController < ApplicationController
       date = Time.zone.parse(params[:date])
       result = result.where("start_time <= ? AND end_time >= ?", date.tomorrow.midnight, date.midnight)
     end
-    result = ReservationDecorator.decorate_collection(result.includes(:key_card, :room))
+    result = ReservationDecorator.decorate_collection(result.includes(:key_card, :room, :user_banner_record))
     respond_with(result)
   end
 

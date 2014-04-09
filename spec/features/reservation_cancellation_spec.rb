@@ -3,10 +3,7 @@ require 'spec_helper'
 describe 'cancelling a reservation' do
   include VisitWithAfterHook
   def after_visit(*args)
-    page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]
-    page.execute_script("window.CalendarManager.go_to_today()") if example.metadata[:js]
-    expect(page).to have_selector("#loading-spinner") if example.metadata[:js]
-    expect(page).not_to have_selector("#loading-spinner") if example.metadata[:js]
+    disable_day_truncation
   end
   before(:all) do
     Timecop.return
