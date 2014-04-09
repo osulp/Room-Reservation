@@ -12,7 +12,10 @@ class ReservationSerializer < ActiveModel::Serializer
   end
 
   def user_name
-    object.user.decorate.name
+    return @user_name if @user_name
+    u = object.user
+    u.banner_record = object.user_banner_record || BannerRecord.new
+    @user_name ||= u.decorate.name
   end
 
   def cancel_string

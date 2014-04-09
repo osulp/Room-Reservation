@@ -1,5 +1,6 @@
 class User < OpenStruct
   include Draper::Decoratable
+  attr_writer :banner_record
   def initialize(name, extra_params={})
     extra_params ||= {}
     extra_params[:onid] = name
