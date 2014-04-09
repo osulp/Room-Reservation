@@ -48,7 +48,7 @@ class RoomHourDecorator < Draper::Decorator
   end
 
   def all_rooms
-    @all_rooms ||= Room.all
+    @all_rooms ||= Room.order(:name)
   end
 
   def room_selection
