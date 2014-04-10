@@ -9,6 +9,12 @@ describe "Room Hours Administration" do
       perform_setup
       visit admin_room_hours_path
     end
+    describe "room selection" do
+      before(:each) do
+        click_link "New Room Hour"
+      end
+      it_behaves_like "has clickable floor pickers"
+    end
     context "when there are room hours" do
       let(:room_hour) {create(:room_hour)}
       let(:perform_setup) {room_hour}
