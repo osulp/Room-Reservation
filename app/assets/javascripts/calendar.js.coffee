@@ -73,6 +73,7 @@ class CalendarManager
           item.attr("data-original-title","")
     $(".bar-warning").attr("data-action",null)
     $(".tab-pane").attr("style",null)
+    $.event.trigger({type: "eventsTruncated", time: new Date(), day: moment()})
     return
   refresh_view: ->
     if @datepicker?
