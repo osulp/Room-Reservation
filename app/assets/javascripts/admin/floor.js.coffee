@@ -1,5 +1,5 @@
 jQuery ->
-  $("*[data-trigger-floor]").change(->
+  $("*[data-trigger-floor]").click(->
     check_room(this)
   )
   $("*[data-floor]").click(->

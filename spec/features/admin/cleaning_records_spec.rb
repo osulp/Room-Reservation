@@ -9,6 +9,12 @@ describe "cleaning record administration" do
       perform_setup
       visit admin_cleaning_records_path
     end
+    describe "Room Selection" do
+      before(:each) do
+        click_link "New Cleaning Record"
+      end
+      it_behaves_like "has clickable floor pickers"
+    end
     context "when there are cleaning records" do
       let(:cleaning_record) {create(:cleaning_record)}
       let(:perform_setup) do
