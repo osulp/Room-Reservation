@@ -35,9 +35,11 @@ describe "Room Hours Administration" do
       end
     end
     context "when the new button is clicked" do
-      let(:room) {create(:room)}
+      let(:room) {create(:room, :name => "BRoom")}
+      let(:room_2) {create(:room, :name => "ARoom")}
       before(:each) do
         room
+        room_2
         click_link "New Room Hour"
       end
       it "should show the header" do
@@ -45,6 +47,9 @@ describe "Room Hours Administration" do
       end
       it "should show the form" do
         expect(page).to have_selector("form")
+      end
+      it "should sort rooms by name" do
+        expect(page.body.index(room.name)).to be > page.body.index(room_2.name)
       end
       context "when there is an error in the form" do
         before(:each) do
