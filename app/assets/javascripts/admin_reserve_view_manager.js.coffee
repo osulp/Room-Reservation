@@ -16,6 +16,7 @@ class AdminReserveViewManager
       $("*[data-action=alternate-view]").show()
     $(document).on("dayChanged", this.day_changed)
     $(document).on("fayeUpdated", this.day_changed)
+    $(document).on("eventsTruncated", this.day_changed)
   day_changed: (event)=>
     current_day = moment().tz("America/Los_Angeles")
     if(event.day.day() != current_day.day() || event.day.month() != current_day.month() || event.day.year() != current_day.year())
