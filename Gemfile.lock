@@ -149,6 +149,7 @@ GEM
       http_parser.rb (>= 0.6.0)
     em-socksify (0.3.0)
       eventmachine (>= 1.0.0.beta.4)
+    envb-rails (0.0.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -397,6 +398,7 @@ DEPENDENCIES
   database_cleaner
   draper
   druthers
+  envb-rails
   execjs
   factory_girl_rails
   faye
