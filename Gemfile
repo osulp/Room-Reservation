@@ -77,6 +77,9 @@ gem 'yui-compressor'
 
 gem 'rack-cors', :require => 'rack/cors'
 
+# Displays a notification banner for development/staging environments.
+gem 'envb-rails'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
