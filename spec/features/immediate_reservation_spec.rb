@@ -54,6 +54,13 @@ describe "immediate reservation", :js => true do
           expect(page).to have_selector(".bar-success", :count => 3)
         end
       end
+      it "should show what time they're available until" do
+        time = 24.hours - Time.current.hour.hours - (((Time.current.min/10).ceil+1)*10).minutes
+        new_time = Time.zone.at((Time.current.to_f/10.minutes).ceil*10.minutes)+time
+        within("#modal_skeleton") do
+          expect(page).to have_content(new_time.strftime("%H:%M"))
+        end
+      end
       context "and one of the rooms has a reservation" do
         let(:reservation) {create(:reservation, :room => room, :start_time => Time.current.midnight, :end_time => Time.current.tomorrow.midnight)}
         it "should show success bars for only one" do
