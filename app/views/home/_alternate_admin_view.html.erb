@@ -11,8 +11,7 @@
         <div class="room-data-bar progress horizontal" style="width: 400px; height: 20px; display:inline-block;margin-bottom:0;">
           <div class="bar bar-success" data-action="reserve" data-end="{{end}}" data-start="{{start}}" style="width: {{width}}px;" data-original-title="Click to Reserve"></div>
         </div>
-        <span style="font-weight:bold;top:-5px;position:relative;"><i class="icon-time"></i>{{duration}}</span>
-        <span style="font-weight:bold;top:-5px;position:relative;">({{end_time_string}})</span>
+        <span style="font-weight:bold;top:-5px;position:relative;" class="admin-room-duration" data-toggle="tooltip" data-placement="right" data-container="body" title="Ends: {{end_time_string}}"><i class="icon-time"></i>{{duration}}</span>
       </div>
     {{/each}}
   </div>
