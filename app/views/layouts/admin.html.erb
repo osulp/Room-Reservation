@@ -8,6 +8,7 @@
   <meta name="author" content="">
   <title>Study Room Reservation Admin Panel | OSU Libraries | Oregon State University</title>
   <%= stylesheet_link_tag 'admin/application', :media => 'all' %>
+  <%= stylesheet_link_tag('envb') unless Envb::Rails.options[:excludes].include?(::Rails.env) %>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
   <%= csrf_meta_tags %>
 </head>
