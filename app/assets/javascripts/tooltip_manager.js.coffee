@@ -5,6 +5,7 @@ class TooltipManager
     this.set_tooltips()
   set_tooltips: ->
     $(".tooltip").remove()
+    $("*[data-toggle=tooltip]").tooltip()
     bars = $('.bar')
     return if bars.length == 0
     bars.tooltip({

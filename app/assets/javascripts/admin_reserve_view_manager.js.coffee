@@ -48,8 +48,8 @@ class AdminReserveViewManager
     for bar in this.free_bars()
       objects.push this.bar_to_object(bar, availability)
     objects = objects.sort (a, b) ->
-      diff_a = parseInt(a["duration_number"])#moment(a["end"]).tz("America/Los_Angeles").diff(moment(a["start"]).tz("America/Los_Angeles"), 'minutes')
-      diff_b = parseInt(b["duration_number"])#moment(b["end"]).tz("America/Los_Angeles").diff(moment(b["start"]).tz("America/Los_Angeles"), 'minutes')
+      diff_a = parseInt(a["duration_number"])
+      diff_b = parseInt(b["duration_number"])
       return 1 if diff_b > diff_a
       return -1 if diff_b < diff_a
       return 1 if a["room-name"] > b["room-name"]
@@ -81,6 +81,7 @@ class AdminReserveViewManager
     minute_diff -= hour_diff*60
     minute_diff = "00" if minute_diff == 0
     object["duration"] = "#{hour_diff}:#{minute_diff}"
+    object["end_time_string"] = end_time_object.format("h:mm A")
     return object
   handlebars_skeleton: ->
     return @handlebars_compiled if @handlebars_compiled?
