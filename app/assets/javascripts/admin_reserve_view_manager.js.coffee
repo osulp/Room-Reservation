@@ -81,7 +81,7 @@ class AdminReserveViewManager
     minute_diff -= hour_diff*60
     minute_diff = "00" if minute_diff == 0
     object["duration"] = "#{hour_diff}:#{minute_diff}"
-    object["end_time_string"] = end_time_object.format("HH:mm")
+    object["end_time_string"] = end_time_object.format("h:mm A")
     return object
   handlebars_skeleton: ->
     return @handlebars_compiled if @handlebars_compiled?
