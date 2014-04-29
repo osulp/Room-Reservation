@@ -113,4 +113,28 @@ describe "Admin Logs" do
       end
     end
   end
+
+  describe 'history', :versioning => true do
+    let(:setup_methods) do
+      reservation
+    end
+    context "when a reservation is cancelled" do
+      before do
+        reservation.destroy
+        visit admin_logs_path
+        click_link "History"
+      end
+      it "should show one history - an active record when it was created" do
+        within("#history tbody") do
+          expect(page).to have_selector("tr", :count => 1)
+          expect(page).to have_content("Active")
+        end
+      end 
+      it "should show its current state as cancelled" do
+        within("#current_reservation") do
+          expect(page).to have_content("Cancelled")
+        end
+      end
+    end
+  end
 end

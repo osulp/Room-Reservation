@@ -113,4 +113,27 @@ describe Reservation do
       expect(Reservation.ongoing.inactive).to eq [@reservation_2]
     end
   end
+
+  describe 'versioning', :versioning => true do
+    let(:reservation) {create(:reservation)}
+    context "when a reservation is created" do
+      it "should create an initial empty version" do
+        expect(reservation.versions.size).to eq 1
+      end
+      it "should have an empty object in the first version" do
+        expect(reservation.versions.first.object).to be_nil
+      end
+    end
+    context "and then it's deleted" do
+      before do
+        reservation.destroy
+      end
+      it "should have two versions" do
+        expect(reservation.versions.size).to eq 2
+      end
+      it "should create a version that was before the destruction" do
+        expect(reservation.versions.last.reify.deleted_at).to be_nil
+      end
+    end
+  end
 end
