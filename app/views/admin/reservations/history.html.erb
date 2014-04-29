@@ -1,9 +1,10 @@
 <h1>History for Reservation ID: <%= @reservation.id %></h1>
 
 <h2>Current Record:</h2>
-
+<div id="current_reservation">
 <%= render "history_table", :reservations => [@reservation] %>
-
+</div>
 <h2>History:</h2>
-
+<div id="history">
 <%= render "history_table", :reservations => @reservation.versions.order("created_at DESC").map{|x| x.reify}.compact %>
+</div>
