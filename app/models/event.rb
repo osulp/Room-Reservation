@@ -1,5 +1,6 @@
 class Event
   include ActiveModel::Validations
+  include Events::Concerns::ViewLogic
 
   attr_accessor :start_time, :end_time, :priority, :room_id
   attr_reader :payload
@@ -20,19 +21,4 @@ class Event
     end_time - start_time
   end
 
-  def respond_to_missing?(sym, include_private = false)
-    if @payload.nil?
-      return super
-    else
-      @payload.respond_to?(sym, include_private)
-    end
-  end
-
-  def method_missing(m, *args, &block)
-    if @payload.nil?
-      return super
-    else
-      @payload.send(m, *args, &block)
-    end
-  end
 end

@@ -3,11 +3,12 @@ class RoomDecorator < Draper::Decorator
   attr_accessor :events
 
   def filter_string
+    return @filter_string unless @filter_string.blank?
     string = ""
     filters.each do |filter|
       string += "filter-#{filter.id} "
     end
-    string.strip
+    @filter_string = string.strip
   end
 
 

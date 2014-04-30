@@ -29,16 +29,6 @@ describe Event do
         return o
       }
       subject{build(:event, object: object)}
-      it "should raise on the payload's undefined method" do
-        expect{subject.not_exist}.to raise_error
-      end
-      it "should delegate to payload if method doesn't exist" do
-        expect(subject.blabla).to eq "bla"
-      end
-      it "should prefer the event's return value" do
-        subject.stub(:blabla).and_return("monkey")
-        expect(subject.blabla).to eq "monkey"
-      end
       it "should be able to access the payload via .payload" do
         subject.stub(:blabla).and_return("monkey")
         expect(subject.payload.blabla).to eq "bla"
