@@ -1,4 +1,5 @@
 class Event
+  include ActiveModel::Validations
   include Events::Concerns::ViewLogic
 
   attr_accessor :start_time, :end_time, :priority, :room_id

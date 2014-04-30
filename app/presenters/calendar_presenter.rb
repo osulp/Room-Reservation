@@ -1,53 +1,28 @@
 class CalendarPresenter
   extend ::NewRelic::Agent::MethodTracer
-  include Enumerable
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
+  delegate :to_a, :to => :event_collection
 
   def self.cached(start_time, end_time,skip_publish=false)
     key = "Cached/#{form_cache_key(start_time, end_time, Room.all)}"
     result = nil
-    self.class.trace_execution_scoped(['Custom/CachePresenter/Read']) do
-      result = Rails.cache.read(key)
+    self.class.trace_execution_scoped(['Custom/CachePresenter/Generate']) do
+      result = new(start_time, end_time, key)
     end
-    if result.nil?
-      result = new(start_time, end_time)
-      self.class.trace_execution_scoped(['Custom/CachePresenter']) do
-        Rails.cache.write(key, result)
+    unless Rails.cache.exist?(key)
+      self.class.trace_execution_scoped(['Custom/CachePresenter/CacheJob']) do
+        cache_result(start_time.to_i, end_time.to_i, key, skip_publish)
       end
-      self.publish_changed(start_time, end_time, key) unless skip_publish
     end
     return result
+  end
+
+  def self.cache_result(start_time, end_time, key, skip_publish=false)
+    CacheCalendarPresenter.perform_async(start_time, end_time, key, skip_publish)
   end
   # Publishes info to Faye
   def self.publish_changed(start_time, end_time, presenter_key=nil)
     FayePublishChangedDates.perform_async(start_time, end_time, presenter_key)
-  end
-
-  def initialize(start_time, end_time)
-    @start_time = start_time
-    @end_time = end_time
-    @managers = managers
-    @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).order(:floor, :name).load)
-    @floors = @rooms.map(&:floor).uniq
-    @filters = Filter.all
-    sort_events_into_rooms
-  end
-
-  def each
-    return enum_for(:each) unless block_given?
-    event_collection.each do |event|
-      yield event
-    end
-  end
-
-  def event_collection(force=false)
-    return @event_collection unless @event_collection.blank? || force
-    event_collection = @managers.map{|m| m.events_between(@start_time, @end_time, @rooms)}
-                                 .flatten
-                                 .sort_by{|e| [e.start_time, e.end_time]}
-    fix_event_collisions! event_collection
-    @event_collection = event_collection
-    return @event_collection
   end
 
   def self.form_cache_key(start_time, end_time, rooms)
@@ -61,9 +36,66 @@ class CalendarPresenter
     return key
   end
 
+  def initialize(start_time, end_time,presenter_key=nil)
+    @presenter_key = presenter_key
+    @start_time = start_time
+    @end_time = end_time
+    @managers = managers
+    @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).order(:floor, :name).load)
+    @floors = @rooms.map(&:floor).uniq
+    @filters = Filter.all
+  end
+
+  def rooms
+    return @rooms unless (!@rooms_cached && @event_collection.blank?)
+    populate_from_cached_version
+    return @rooms if @rooms_cached
+    sort_events_into_rooms
+    @rooms_cached = true
+    @rooms
+  end
+
+  def populate_from_cached_version
+    return if @presenter_key.blank?
+    @cached_version ||= begin
+                          result = nil
+                          self.class.trace_execution_scoped(['Custom/CachePresenter/Read']) do
+                            result = Rails.cache.read(@presenter_key)
+                          end
+                          result
+                        end 
+    if @cached_version
+      Rails.logger.info("Obtained cached version.")
+      @rooms = @cached_version.rooms
+      @rooms_cached = true
+    end
+  end
+
+  def marshal_dump
+    [@start_time, @end_time, @rooms]
+  end
+
+  def marshal_load(arr)
+    @managers = managers
+    @filters = Filter.all
+    @start_time, @end_time, @rooms = arr
+    @floors = @rooms.map(&:floor).uniq
+    @rooms_cached = true
+  end
+
+  def event_collection(force=false)
+    return @event_collection unless @event_collection.blank? || force
+    event_collection = @managers.map{|m| m.events_between(@start_time, @end_time, @rooms)}
+                                 .flatten
+                                 .sort_by{|e| [e.start_time, e.end_time]}
+    fix_event_collisions! event_collection
+    @event_collection = event_collection
+    return @event_collection
+  end
+
   def cache_key
     return @cache_key if @cache_key
-    formed_key = self.class.form_cache_key(start_time, end_time, rooms)
+    formed_key = self.class.form_cache_key(start_time, end_time, @rooms)
     @cache_key = Rails.cache.fetch("cached_key/#{formed_key}") do
       "#{formed_key}/#{SecureRandom.hex}"
     end
@@ -85,7 +117,7 @@ class CalendarPresenter
 
   def sort_events_into_rooms
     all_events = event_collection.group_by(&:room_id)
-    rooms.each do |room|
+    @rooms.each do |room|
       room.events = all_events[room.id] if all_events.has_key?(room.id)
       room.events = [] if room.events.blank?
       room.decorated_events(start_time)

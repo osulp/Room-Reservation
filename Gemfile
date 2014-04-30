@@ -87,6 +87,7 @@ group :development do
   gem 'meta_request'
   gem 'binding_of_caller'
   gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'guard'
   gem 'guard-rspec'
   gem 'better_errors'
