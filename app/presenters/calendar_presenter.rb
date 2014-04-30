@@ -1,4 +1,5 @@
 class CalendarPresenter
+  extend ::NewRelic::Agent::MethodTracer
   include Enumerable
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
 
@@ -7,7 +8,9 @@ class CalendarPresenter
     result = Rails.cache.read(key)
     if result.nil?
       result = new(start_time, end_time)
-      Rails.cache.write(key, result)
+      self.class.trace_execution_scoped(['Custom/CachePresenter']) do
+        Rails.cache.write(key, result)
+      end
       self.publish_changed(start_time, end_time, key) unless skip_publish
     end
     return result
