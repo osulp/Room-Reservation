@@ -1,7 +1,7 @@
-class HoursDecorator < EventDecorator
-
+class Events::HourEvent < Event
+  
   def color
-    return 'danger'
+    'danger'
   end
 
   def description

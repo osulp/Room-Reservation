@@ -45,7 +45,7 @@ describe "editing a reservation" do
           find(".bar-info").trigger(:mouseover)
           expect(page).to have_content("Click to Update")
         end
-        context "when the bar is clicked" do
+        context "when the bar is clicked", :caching => true do
           before(:each) do
             find(".bar-info").trigger("click")
           end

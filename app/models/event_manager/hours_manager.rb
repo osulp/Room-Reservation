@@ -122,7 +122,7 @@ class EventManager::HoursManager < EventManager::EventManager
     if (start_time.hour + start_time.min + start_time.sec) != 0
       start_time -= hour_buffer
     end
-    HoursDecorator.new(Event.new(start_time, end_time, priority, nil, room.id))
+    Events::HourEvent.new(start_time, end_time, priority, nil, room.id)
   end
 
   # TODO: Make this configurable
