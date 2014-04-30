@@ -8,6 +8,7 @@ class LogsPresenter
   end
 
   def facets
+    params[:facets] = nil if params[:facets].blank?
     @facets ||= Hash[(params[:facets] || {}).map{|facet, value|
       [field_map[facet.downcase.to_sym] || facet.downcase.to_sym, transform_value(facet, value)]
     }.select{|x| safe_filter_fields.include?(x[0])}]

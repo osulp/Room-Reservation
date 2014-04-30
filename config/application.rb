@@ -77,9 +77,6 @@ module RoomReservation
     config.rubycas.validate_url = application_config["rubycas"]["validate_url"]
     config.rubycas.cas_destination_logout_param_name = application_config["rubycas"]["cas_destination_logout_param_name"]
 
-    # Disable implicit joining
-    config.active_record.disable_implicit_join_references = true
-
     # CORS
     config.middleware.use Rack::Cors do
       allow do

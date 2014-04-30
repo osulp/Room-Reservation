@@ -1,5 +1,5 @@
 class Hours::IntersessionHour < ActiveRecord::Base
-  establish_connection "drupal_#{Rails.env}"
+  establish_connection :"drupal_#{Rails.env}"
   self.table_name = 'int_hours'
   # @param dates [Array<Date>] Array of dates you want the hours for.
   # @return [Hash<Hash>] Hash where each key is the date with the hours containing a hash with an "open" and "close" key representing the close/open time.

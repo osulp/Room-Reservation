@@ -8,7 +8,7 @@ describe SessionsController do
       end
       it "should redirect to CAS" do
         expect(response).to be_redirect
-        expect(response).not_to redirect_to root_path
+        expect(response.location).not_to eq root_url
       end
     end
     context "when logged in" do
@@ -17,6 +17,7 @@ describe SessionsController do
         get :new
       end
       it "should redirect back to the root path" do
+        expect(response.location).to eq root_url
         expect(response).to redirect_to root_path
       end
     end
