@@ -25,7 +25,7 @@ class EventManager::ReservationManager < EventManager::EventManager
 
   # @TODO: Move this into configuration
   def reservation_padding
-    Setting.reservation_padding.to_i.minutes
+    @reservation_padding ||= Setting.reservation_padding.to_i.minutes
   end
 
   def priority
