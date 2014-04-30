@@ -152,7 +152,7 @@ GEM
       term-ansicolor
       thor
     daemons (1.1.9)
-    dalli (2.6.4)
+    dalli (2.7.0)
     database_cleaner (1.1.1)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
