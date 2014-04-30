@@ -5,6 +5,7 @@ class CalendarPresenter
 
   def self.cached(start_time, end_time,skip_publish=false)
     key = "Cached/#{form_cache_key(start_time, end_time, Room.all)}"
+    result = nil
     self.class.trace_execution_scoped(['Custom/CachePresenter/Read']) do
       result = Rails.cache.read(key)
     end
