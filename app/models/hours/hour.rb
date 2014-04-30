@@ -1,5 +1,5 @@
 class Hours::Hour < ActiveRecord::Base
-  establish_connection "drupal_#{Rails.env}"
+  establish_connection :"drupal_#{Rails.env}"
   # @param dates [Array<Date>] Array of dates you want the hours for.
   # @return [Hash<Hash>] Hash where each key is the date with the hours containing a hash with an "open" and "close" key representing the close/open time.
   # @note This function must be named the same in Hour, SpecialHour and IntersessionHour for HourManager to work.

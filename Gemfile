@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 gem 'jquery-rails'
 gem 'mysql2'
-gem 'rails', '~> 4.0.0'
+gem 'rails', :github => 'rails/rails', :branch => '4-1-stable'
 gem 'simple_form'
 gem 'yard'
 gem 'active_model_serializers', '~> 0.8.0'
@@ -13,7 +13,7 @@ gem 'draper'
 
 # CAS Client
 gem 'rubycas-client', git: 'git://github.com/terrellt/rubycas-client.git', branch: 'master'
-gem 'rubycas-client-rails', :git => 'git://github.com/rubycas/rubycas-client-rails.git'
+gem 'rubycas-client-rails', :git => 'git://github.com/osulp/rubycas-client-rails.git'
 
 # New Relic
 gem 'newrelic_rpm'
@@ -31,12 +31,12 @@ gem 'cache_digests'
 gem 'paranoia', '~> 2.0'
 
 gem 'coffee-rails'
-gem 'sass-rails'
+gem 'sass-rails', '~>4.0'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
 gem 'jquery-ui-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~>2.3.0'
 gem "compass-rails"
 
 # Old Asset Precompile Behavior for Stylesheets
@@ -102,7 +102,7 @@ group :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'database_cleaner'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', :require => false
   gem 'timecop'
   gem 'capybara-screenshot'
   gem 'coveralls', require: false

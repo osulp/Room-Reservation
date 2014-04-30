@@ -1,5 +1,5 @@
 class Openroom::Keycard < ActiveRecord::Base
-  establish_connection "openroom_#{Rails.env}"
+  establish_connection :"openroom_#{Rails.env}"
   belongs_to :room, :foreign_key => :roomid, :primary_key => :roomid, :class_name => "Openroom::Room"
   has_many :reservations, :foreign_key => :keycardid, :primary_key => :id
 

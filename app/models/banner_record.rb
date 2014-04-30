@@ -1,5 +1,5 @@
 class BannerRecord < ActiveRecord::Base
-  establish_connection "banner_#{Rails.env}"
+  establish_connection :"banner_#{Rails.env}"
   self.table_name = "BannerLookup"
 
   validates :onid, :presence => true

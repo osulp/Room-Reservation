@@ -1,5 +1,5 @@
 class Hours::SpecialHour < ActiveRecord::Base
-  establish_connection "drupal_#{Rails.env}"
+  establish_connection :"drupal_#{Rails.env}"
   self.table_name = "special_hours"
   def self.time_info(dates)
     dates = Array.wrap(dates)
