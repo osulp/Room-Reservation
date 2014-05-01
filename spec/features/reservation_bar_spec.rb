@@ -157,11 +157,14 @@ describe "GET / reservation bars" do
           end
           context "when the page is visited again" do
             before(:each) do
-              CalendarPresenter.should_receive(:new).exactly(1).times.and_call_original
+              CalendarPresenter.should_receive(:cache_result).exactly(1).times.and_call_original
               create(:reservation, :start_time => Time.current.midnight+5.hours, :end_time => Time.current.midnight+7.hours, :room => @room1)
               visit root_path
               expect(page).to have_selector(".bar-danger", :count => 2)
               visit root_path
+              expect(page).to have_selector(".bar-danger", :count => 2)
+              visit root_path
+              expect(page).to have_selector(".bar-danger", :count => 2)
             end
             it "should use a cache" do
               visit root_path

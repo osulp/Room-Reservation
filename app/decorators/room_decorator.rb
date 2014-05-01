@@ -42,6 +42,15 @@ class RoomDecorator < Draper::Decorator
     AvailableDecorator.new(Event.new(start_time, end_time, 0))
   end
 
+  def marshal_dump
+    [@filter_string, @decorated_events, object]
+  end
+
+  def marshal_load(arr)
+    @filter_string, @decorated_events, @object = arr
+    @events = @decorated_events.select{|x| !x.kind_of?(AvailableDecorator)}
+  end
+
   def popover_content
     content = ''
 

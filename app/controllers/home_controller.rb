@@ -3,16 +3,20 @@ class HomeController < ApplicationController
   before_filter :convert_cookie_to_param
   before_filter :admin_date_restriction
   def index
-    calendar = CalendarManager.new(date)
-    @presenter = CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
+    @presenter = presenter
     @reservation = Reserver.new(:user_onid => current_user.onid, :reserver_onid => current_user.onid)
   end
 
   def day
-    calendar = CalendarManager.new(date)
-    @presenter = CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
+    @presenter = presenter
     render :partial => 'room_list', :locals => {:floors => @floors}
   end
+
+  def presenter
+    calendar = CalendarManager.new(date)
+    @presenter ||= CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
+  end
+  helper_method :presenter
 
   private
 

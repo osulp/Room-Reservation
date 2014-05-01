@@ -22,6 +22,7 @@ describe "immediate reservation", :js => true do
       filter_1
       reservation
       visit root_path
+      click_button "Today"
     end
     it "should have a button to view immediate reservations" do
       expect(page).to have_button "Immediate Reservation"

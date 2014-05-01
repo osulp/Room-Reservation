@@ -152,7 +152,7 @@ GEM
       term-ansicolor
       thor
     daemons (1.1.9)
-    dalli (2.6.4)
+    dalli (2.7.0)
     database_cleaner (1.1.1)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
@@ -344,7 +344,9 @@ GEM
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
     slop (3.4.6)
-    spring (0.0.10)
+    spring (1.1.2)
+    spring-commands-rspec (1.0.2)
+      spring (>= 0.9.1)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -438,6 +440,7 @@ DEPENDENCIES
   sidetiq
   simple_form
   spring
+  spring-commands-rspec
   sprockets-digest-assets-fix!
   therubyracer
   thin
