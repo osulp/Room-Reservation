@@ -9,7 +9,7 @@ class CalendarPresenter
     self.class.trace_execution_scoped(['Custom/CachePresenter/Generate']) do
       result = new(start_time, end_time, key)
     end
-    unless Rails.cache.exist?(key)
+    unless Rails.cache.exist?(key, :deserialize => false)
       self.class.trace_execution_scoped(['Custom/CachePresenter/CacheJob']) do
         cache_result(start_time.to_i, end_time.to_i, key, skip_publish)
       end
@@ -64,7 +64,10 @@ class CalendarPresenter
                           end
                           result
                         end 
-    if @cached_version
+    if @cached_version.kind_of?(String) && !@cached_version.blank?
+      @cached_version = Marshal.load(@cached_version)
+    end
+    unless @cached_version.blank?
       Rails.logger.info("Obtained cached version.")
       @rooms = @cached_version.rooms
       @rooms_cached = true

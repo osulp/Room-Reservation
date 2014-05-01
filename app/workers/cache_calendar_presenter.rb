@@ -3,7 +3,7 @@ class CacheCalendarPresenter
   def perform(start_time, end_time, key, skip_publish)
     start_time = Time.zone.at(start_time)
     end_time = Time.zone.at(end_time)
-    unless Rails.cache.exist?(key)
+    unless Rails.cache.exist?(key, :deserialize => false)
       presenter = CalendarPresenter.new(start_time, end_time)
       presenter.rooms
       Rails.cache.write(key, presenter)
