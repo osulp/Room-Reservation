@@ -66,45 +66,13 @@ class EventManager::HoursManager < EventManager::EventManager
 
   private
 
-  def midnight
-    "12:00 am"
-  end
-
-  def one
-    "1:00 am"
-  end
-
-  def special
-    "12:15 am"
-  end
 
   def hours_to_events(hours,date)
-    default_start_at = date.at_beginning_of_day
-    default_end_at = (date+1.day).at_beginning_of_day
     events = []
     all_rooms = hours[:rooms] || rooms
     all_rooms.each do |room|
       local_hours = build_room_hours(room) || hours
-      next if local_hours["open"] == midnight && local_hours["close"] == midnight
-      unless local_hours.blank? || (local_hours["open"] == one && local_hours["close"] == one)
-        unless local_hours["open"] == special
-          start_at = date.at_beginning_of_day
-          end_at = string_to_time(date, local_hours["open"])
-          events << build_event(start_at, end_at, room)
-        end
-        unless local_hours["close"] == special
-          # During dead week the hours say they "close" at 1 AM. Lies, but still.
-          # TODO: Find a way to add extra 1 hour the next day.
-          if local_hours["close"] == one
-            next
-          end
-          start_at = string_to_time(date, local_hours["close"])
-          end_at = (date+1.day).at_beginning_of_day
-          events << build_event(start_at, end_at, room)
-        end
-      else
-        events << build_event(default_start_at, default_end_at, room)
-      end
+      events |= EventManager::EventManager::HourEventConverter.new(local_hours, date, room, priority).events
     end
     return events
   end
@@ -118,27 +86,12 @@ class EventManager::HoursManager < EventManager::EventManager
     return {"open" => open_time, "close" => close_time}
   end
 
-  def build_event(start_time, end_time, room)
-    if (start_time.hour + start_time.min + start_time.sec) != 0
-      start_time -= hour_buffer
-    end
-    Events::HourEvent.new(start_time, end_time, priority, nil, room.id)
-  end
-
-  # TODO: Make this configurable
-  def hour_buffer
-    Setting.reservation_padding.to_i.minutes
-  end
-
-  def string_to_time(date, time)
-    Time.zone.parse("#{date} #{time}")
-  end
 
   def self.hour_models
     [
-        Hours::Hour,
-        Hours::IntersessionHour,
-        Hours::SpecialHour
+      Hours::Hour,
+      Hours::IntersessionHour,
+      Hours::SpecialHour
     ].sort_by(&:priority).reverse!
   end
 end
