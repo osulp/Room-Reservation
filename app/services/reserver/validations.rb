@@ -4,13 +4,13 @@ class Reserver
     included do
       validate :run_validations
       validate :user_not_nil
+      validate :room_is_persisted
     end
 
     def run_validations
       if required_values_exist?
         start_time_less_than_end_time
         reservation_not_in_past
-        room_is_persisted
         time_is_available
         duration_correct
         authorized_to_reserve
@@ -69,7 +69,7 @@ class Reserver
     end
 
     def room_is_persisted
-      errors.add(:base, "The requested room does not exist.") if !room.persisted?
+      errors.add(:base, "The requested room does not exist.") if !room || !room.persisted?
     end
 
     def time_is_available
