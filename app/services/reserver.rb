@@ -10,7 +10,7 @@ class Reserver
   # Reservation Validations
   include Reservation::Validations
 
-  delegate :reserver, :user, :reserver_onid, :user_onid, :room_id, :room, :start_time, :end_time, :description, :key_card, :decorate, :user_banner_record, :to => :reservation
+  delegate :reserver, :user, :reserver_onid, :user_onid, :room_id, :room, :start_time, :end_time, :description, :key_card, :decorate, :user_banner_record, :persisted?,  :to => :reservation
   delegate :start_time=, :end_time=, :room=, :reserver=, :user=, :reserver_onid=, :user_onid=, :to => :reservation
   attr_accessor :key_card_key
   attr_reader :reservation
@@ -41,15 +41,10 @@ class Reserver
 
   def save
     return false unless valid?
-    @reservation ||= Reservation.new
 
     run_callbacks :reservation_save do
-      @reservation.save
+      reservation.save
     end
-  end
-
-  def persisted?
-    reservation.persisted?
   end
 
   def reservation
@@ -71,7 +66,6 @@ class Reserver
 
   def email_method
     @email_method ||= begin
-      return @options[:email_method] unless @options[:email_method].blank?
       if reservation.versions.size > 1
         :update_email
       else
@@ -82,17 +76,6 @@ class Reserver
 
   def day_limit
     (Setting.day_limit || 0).to_i
-  end
-
-
-
-  def append_reservation_errors
-    return if !reservation
-    unless reservation.valid?
-      reservation.errors.full_messages.each do |msg|
-        self.errors.add(:base, msg)
-      end
-    end
   end
 
   def reset_truncated_at
