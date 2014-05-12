@@ -88,7 +88,7 @@ describe EventManager::HoursManager do
         expect(subject.first.end_time).to eq Time.current.midnight+13.hours
       end
       it "should lock up the schedule from (22:00:00 - hour_buffer) to midnight" do
-        expect(subject[1].start_time).to eq Time.current.midnight+22.hours-hours_manager.send(:hour_buffer)
+        expect(subject[1].start_time).to eq Time.current.midnight+22.hours-EventManager::EventManager::HourEventConverter.send(:hour_buffer)
         expect(subject[1].end_time).to eq Time.current.midnight+24.hours
       end
     end
@@ -125,7 +125,7 @@ describe EventManager::HoursManager do
         expect(subject.length).to eq 1
       end
       it "should only lock the schedule from (4:00 - hour_buffer) to midnight" do
-        expect(subject.first.start_time).to eq Time.current.midnight+16.hours-hours_manager.send(:hour_buffer)
+        expect(subject.first.start_time).to eq Time.current.midnight+16.hours-EventManager::EventManager::HourEventConverter.send(:hour_buffer)
         expect(subject.first.end_time).to eq Time.current.tomorrow.midnight
       end
     end

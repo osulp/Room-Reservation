@@ -73,6 +73,7 @@ describe "editing a reservation" do
               expect(page).to have_field("Username:", :with => "otheruser")
               end_time = (@end_time+20.minutes).iso8601.split("-")[0..-2].join("-")
               page.execute_script("$('#update-popup').find('#reserver_end_time').val('#{end_time}');")
+              sleep(1)
               click_button "Reserve"
               expect(page).not_to have_field("Username:", :with => "otheruser")
               expect(page).to have_content("Until")
