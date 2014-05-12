@@ -1,4 +1,5 @@
 class Reservation < ActiveRecord::Base
+  include Reservation::Validations
   has_paper_trail
   acts_as_paranoid
   belongs_to :room
@@ -6,9 +7,6 @@ class Reservation < ActiveRecord::Base
   has_one :user_banner_record, :class_name => "BannerRecord", :foreign_key => "onid", :primary_key => "user_onid"
   before_destroy :touch
   before_destroy :create_previous_item
-  validates :end_time, :start_time, :reserver_onid, :user_onid, :room, presence: true
-  validate :not_swearing
-  validate :key_card_valid
 
   def self.active
     joins(:key_card)
@@ -66,20 +64,6 @@ class Reservation < ActiveRecord::Base
   end
 
   protected
-
-  def key_card_valid
-    return unless key_card
-    key_card.reservation = self
-    unless key_card.valid?
-      key_card.errors.full_messages.each do |msg|
-        self.errors.add(:base, msg)
-      end
-    end
-  end
-
-  def not_swearing
-    errors.add(:description, "is innapropriate.") if SwearFilter.profane?(description)
-  end
 
   def create_previous_item
     @previous_state = self.send(:item_before_change)
