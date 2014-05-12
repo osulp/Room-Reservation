@@ -83,7 +83,6 @@ gem 'envb-rails'
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
-  gem 'jazz_hands', :github => "terrellt/jazz_hands"
   gem 'meta_request'
   gem 'binding_of_caller'
   gem 'spring'
@@ -97,6 +96,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'pg'
+  gem 'jazz_hands', :github => "terrellt/jazz_hands"
 end
 
 group :test do
