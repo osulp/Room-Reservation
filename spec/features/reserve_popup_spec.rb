@@ -43,6 +43,19 @@ describe 'reserve popup' do
           end
         end
         describe "clicking yes" do
+          context "when there is a swear word" do
+            before(:each) do
+              Reservation.destroy_all
+              fill_in "reserver_description", :with => "Shit"
+              set_reservation_time
+              click_button "Reserve"
+            end
+            it "should show an error" do
+              within("#reservation-popup") do
+                expect(page).to have_content("innapropriate")
+              end
+            end
+          end
           context "when everything is valid" do
             before(:each) do
               Reservation.destroy_all
