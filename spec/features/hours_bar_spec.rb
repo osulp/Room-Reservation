@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe "hour bars" do
+  let(:user) {build(:user)}
   before(:each) do
-    RubyCAS::Filter.fake("user")
+    RubyCAS::Filter.fake(user.onid)
     @room1 = create(:room, :floor => 1)
   end
   context "when there are no hours" do
@@ -19,6 +20,17 @@ describe "hour bars" do
       end
       it "should only show one bar - the hours bar" do
         expect(page).to have_selector(".bar-danger", :count => 1)
+      end
+      context "and the user has patron mode on", :js => true do
+        let(:user) {build(:user, :admin)}
+        before do
+          page.find("#patron_mode").click
+          sleep(1)
+          expect(page.find("#patron_mode")).to be_checked
+        end
+        it "should only show one bar - the reservation" do
+          expect(page).to have_selector(".bar-success", :count => 1)
+        end
       end
     end
   end

@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
     current_user.onid.to_s
   end
 
+  def patron_mode?
+    !!session[:patron_mode]
+  end
+
   def require_login
     redirect_to login_path(:source => request.original_fullpath) if current_user.nil?
   end
