@@ -80,13 +80,13 @@ class CalendarPresenter
   end
 
   def marshal_dump
-    [@start_time, @end_time, @rooms]
+    [@start_time, @end_time, @rooms, @ignore_managers]
   end
 
   def marshal_load(arr)
     @managers = managers
     @filters = Filter.all
-    @start_time, @end_time, @rooms = arr
+    @start_time, @end_time, @rooms, @ignore_managers = arr
     @floors = @rooms.map(&:floor).uniq
     @rooms_cached = true
   end
@@ -103,7 +103,7 @@ class CalendarPresenter
 
   def cache_key
     return @cache_key if @cache_key
-    formed_key = self.class.form_cache_key(start_time, end_time, @rooms)
+    formed_key = self.class.form_cache_key(start_time, end_time, @rooms, @ignore_managers)
     @cache_key = Rails.cache.fetch("cached_key/#{formed_key}") do
       "#{formed_key}/#{SecureRandom.hex}"
     end

@@ -31,6 +31,11 @@ describe "hour bars" do
         it "should only show one bar - the reservation" do
           expect(page).to have_selector(".bar-success", :count => 1)
         end
+        context "and caching is turned on", :caching => true do
+          it "should only show one bar - the reservation" do
+            expect(page).to have_selector(".bar-success", :count => 1)
+          end
+        end
       end
     end
   end
