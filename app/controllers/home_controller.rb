@@ -22,7 +22,7 @@ class HomeController < ApplicationController
   private
 
   def ignore_managers
-    return [EventManager::HoursManager, EventManager::CleaningRecordsManager] if patron_mode?
+    return [EventManager::HoursManager, EventManager::CleaningRecordsManager] unless patron_mode?
     []
   end
 

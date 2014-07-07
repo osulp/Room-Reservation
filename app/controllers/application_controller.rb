@@ -15,7 +15,8 @@ class ApplicationController < ActionController::Base
   end
 
   def patron_mode?
-    !!session[:patron_mode]
+    return true unless current_user.admin?
+    !!!session[:patron_mode_disabled]
   end
 
   def require_login

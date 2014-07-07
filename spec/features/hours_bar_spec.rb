@@ -21,12 +21,12 @@ describe "hour bars" do
       it "should only show one bar - the hours bar" do
         expect(page).to have_selector(".bar-danger", :count => 1)
       end
-      context "and the user has patron mode on", :js => true do
+      context "and the user has patron mode off", :js => true do
         let(:user) {build(:user, :admin)}
         before do
           page.find("#patron_mode").click
           sleep(1)
-          expect(page.find("#patron_mode")).to be_checked
+          expect(page.find("#patron_mode")).not_to be_checked
         end
         it "should only show one bar - the reservation" do
           expect(page).to have_selector(".bar-success", :count => 1)
