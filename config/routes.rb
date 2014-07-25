@@ -46,5 +46,7 @@ RoomReservation::Application.routes.draw do
     end
     resources :settings, :only => [:index, :update]
     resources :auto_logins
+    post "/patron_mode/:enable", :to => "patron_mode#enable"
+    get "/patron_mode", :to => "patron_mode#status"
   end
 end

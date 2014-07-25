@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   before_filter RubyCAS::GatewayFilter, :only => :index, :if => -> {current_user.nil?}
   before_filter :convert_cookie_to_param
   before_filter :admin_date_restriction
+
   def index
     @presenter = presenter
     @reservation = Reserver.new(:user_onid => current_user.onid, :reserver_onid => current_user.onid)
@@ -14,11 +15,16 @@ class HomeController < ApplicationController
 
   def presenter
     calendar = CalendarManager.new(date)
-    @presenter ||= CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight)
+    @presenter ||= CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight, false, ignore_managers)
   end
   helper_method :presenter
 
   private
+
+  def ignore_managers
+    return [EventManager::HoursManager, EventManager::CleaningRecordsManager] unless patron_mode?
+    []
+  end
 
   def date
     current_date = Time.current.to_date

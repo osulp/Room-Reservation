@@ -3,32 +3,32 @@ class CalendarPresenter
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
   delegate :to_a, :to => :event_collection
 
-  def self.cached(start_time, end_time,skip_publish=false)
-    key = "Cached/#{form_cache_key(start_time, end_time, Room.all)}"
+  def self.cached(start_time, end_time,skip_publish=false, ignore_managers = [])
+    key = "Cached/#{form_cache_key(start_time, end_time, Room.all, ignore_managers)}"
     result = nil
     self.class.trace_execution_scoped(['Custom/CachePresenter/Generate']) do
-      result = new(start_time, end_time, key)
+      result = new(start_time, end_time, key, ignore_managers)
     end
     unless Rails.cache.exist?(key, :deserialize => false)
       self.class.trace_execution_scoped(['Custom/CachePresenter/CacheJob']) do
-        cache_result(start_time.to_i, end_time.to_i, key, skip_publish)
+        cache_result(start_time.to_i, end_time.to_i, key, skip_publish, ignore_managers)
       end
     end
     return result
   end
 
-  def self.cache_result(start_time, end_time, key, skip_publish=false)
-    CacheCalendarPresenter.perform_async(start_time, end_time, key, skip_publish)
+  def self.cache_result(start_time, end_time, key, skip_publish=false, ignore_managers=[])
+    CacheCalendarPresenter.perform_async(start_time, end_time, key, skip_publish, ignore_managers)
   end
   # Publishes info to Faye
   def self.publish_changed(start_time, end_time, presenter_key=nil)
     FayePublishChangedDates.perform_async(start_time, end_time, presenter_key)
   end
 
-  def self.form_cache_key(start_time, end_time, rooms)
+  def self.form_cache_key(start_time, end_time, rooms, ignore_managers = [])
     key = "#{self.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"
     key += Room.order("updated_at DESC").first.try(:cache_key) || ''
-    managers.each do |manager|
+    cleaned_managers(managers, ignore_managers).each do |manager|
       if manager.respond_to? :cache_key
         key += "/#{manager.cache_key(start_time, end_time, rooms)}"
       end
@@ -36,11 +36,16 @@ class CalendarPresenter
     return key
   end
 
-  def initialize(start_time, end_time,presenter_key=nil)
+  def self.cleaned_managers(managers, ignore_managers)
+    managers.select{|x| !ignore_managers.include?(x.class)}
+  end
+
+  def initialize(start_time, end_time,presenter_key=nil, ignore_managers=[])
     @presenter_key = presenter_key
     @start_time = start_time
     @end_time = end_time
-    @managers = managers
+    @ignore_managers = ignore_managers
+    @managers = self.class.cleaned_managers(managers, ignore_managers)
     @rooms = RoomDecorator.decorate_collection(Room.includes(:filters).order(:floor, :name).load)
     @floors = @rooms.map(&:floor).uniq
     @filters = Filter.all
@@ -75,13 +80,13 @@ class CalendarPresenter
   end
 
   def marshal_dump
-    [@start_time, @end_time, @rooms]
+    [@start_time, @end_time, @rooms, @ignore_managers]
   end
 
   def marshal_load(arr)
     @managers = managers
     @filters = Filter.all
-    @start_time, @end_time, @rooms = arr
+    @start_time, @end_time, @rooms, @ignore_managers = arr
     @floors = @rooms.map(&:floor).uniq
     @rooms_cached = true
   end
@@ -98,7 +103,7 @@ class CalendarPresenter
 
   def cache_key
     return @cache_key if @cache_key
-    formed_key = self.class.form_cache_key(start_time, end_time, @rooms)
+    formed_key = self.class.form_cache_key(start_time, end_time, @rooms, @ignore_managers)
     @cache_key = Rails.cache.fetch("cached_key/#{formed_key}") do
       "#{formed_key}/#{SecureRandom.hex}"
     end
