@@ -102,6 +102,12 @@ class CalendarManager
     history.pushState?({}, '', "/day/#{year}-#{month}-#{day}") unless @push == false
     @push = true
     @cached_reservations = null
+    $.get("/home/timebars/#{encodeURIComponent("#{year}-#{month}-#{day}")}", (data) =>
+      new_content = $(data).html()
+      current_tag = $("#time-list")
+      if current_tag.html() != new_content
+        current_tag.html(new_content)
+    )
     $.get("/home/day/#{encodeURIComponent("#{year}-#{month}-#{day}")}", (data) =>
       return unless @date_selected.toString() == [year, month, day].toString()
       this.populate_calendar(data)
