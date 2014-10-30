@@ -13,6 +13,11 @@ class HomeController < ApplicationController
     render :partial => 'room_list', :locals => {:floors => @floors}
   end
 
+  def timebars
+    start_time = date.midnight
+    render :partial => "time_list", :locals => {:start_time => start_time }
+  end
+
   def presenter
     calendar = CalendarManager.new(date)
     @presenter ||= CalendarPresenter.cached(calendar.day.midnight, calendar.day.tomorrow.midnight, false, ignore_managers)
