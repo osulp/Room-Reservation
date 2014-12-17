@@ -39,3 +39,6 @@ pids
 
 # Ignore uploads
 public/uploads
+
+# Ignore Vagrant
+.vagrant
