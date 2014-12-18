@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Source for RVM
+source ~/.bashrc
+# Install Dependencies
+echo "Updating System"
+sudo apt-get update -qq
+sudo apt-get install -qq libmagickwand-dev \
+  graphicsmagick redis-server git gcc build-essential libmysqlclient-dev \
+  phantomjs memcached postgresql postgresql-contrib libpq-dev
+
+# Install RVM
+if [[ ! -e "/usr/local/rvm/scripts/rvm" ]]; then
+  echo "Install RVM, Ruby, Gems"
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+  curl -sSL https://get.rvm.io | bash -s stable --ruby > /dev/null 2>&1
+  source /usr/local/rvm/scripts/rvm
+  usermod -G rvm vagrant
+  rvm install ruby-2.1.1
+  rvm --default use 2.1.1
+  echo "Installed `ruby --version`"
+fi
+source ~/.bashrc
+sudo -u vagrant rvm fix-permissions
+
+
+# Add environment variables
+if [[ ! -e "/home/vagrant/.env_vars" ]]; then
+  echo 'export ROOMRES_ADAPTER=postgresql' >> /home/vagrant/.bashrc
+  echo 'export ROOMRES_DB_PREFIX=roomres' >> /home/vagrant/.bashrc
+  echo 'export ROOMRES_DB_USERNAME=roomres' >> /home/vagrant/.bashrc
+  echo 'export ROOMRES_DB_PASSWORD=roomres' >> /home/vagrant/.bashrc
+  echo 'export ROOMRES_DB_HOST=127.0.0.1' >> /home/vagrant/.bashrc
+  echo 'export ROOMRES_DB_PORT=5432' >> /home/vagrant/.bashrc
+  sudo -u postgres psql -c "CREATE USER roomres PASSWORD 'roomres';"
+  sudo -u postgres psql -c "ALTER USER roomres WITH SUPERUSER;"
+  touch /home/vagrant/.env_vars
+fi
+source /home/vagrant/.bashrc
+export ROOMRES_ADAPTER=postgresql
+export ROOMRES_DB_PREFIX=roomres
+export ROOMRES_DB_USERNAME=roomres
+export ROOMRES_DB_PASSWORD=roomres
+export ROOMRES_DB_HOST=127.0.0.1
+export ROOMRES_DB_PORT=5432
+
+# Run tasks for Oregon Digital
+cd /vagrant
+bundle install
+rake db:create db:migrate
+rake db:test:prepare
+
+echo "Server set up"
