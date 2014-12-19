@@ -1,0 +1,184 @@
+/* ---------- OSUL Search Styles ----------- */
+
+[id^=block-osul-search-] div.content {
+    margin: 0;
+}
+
+div.form-type-textfield {
+    margin-bottom: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    float: left;
+}
+
+#osul-search-library-form input[id^=edit-submit].form-submit,
+#osul-search-reserves-form input[id^=edit-submit].form-submit {
+    margin-top: 5px;
+    margin-bottom: 1px;
+    width: 72px;
+    background: #C34500;
+    height: 28px;
+    line-height: 8px;
+    font-size: small;
+    border: none;
+    color: #FFFFFF;
+}
+
+input[id^=query_temp].search.form-text {
+    margin-bottom: 2px;
+    width: 255px;
+    height: 18px;
+    font-size: small;
+}
+
+@media (max-width: 979px) {
+    input[id^=query_temp].search.form-text {
+        width: 508px;
+    }
+}
+
+form.osul-search-form {
+    width: 100%;
+    height: 41px;
+    background-color: #403152;
+    padding: 3px 0 0 8px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    margin-bottom: 0;
+}
+
+.osul-search-form a {
+    font-size: small;
+    display: inline-block;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+div.search-links {
+    float: right;
+    padding-top: 3px;
+    margin-right: 8px;
+}
+
+.search-links a {
+    display: block;
+    margin: 0;
+    padding: 0;
+    line-height: 16px;
+}
+
+.search-links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+
+
+/* ----- Quicktabs ----- */
+
+div#quicktabs-osu_library_search {
+    font: inherit;
+}
+
+div#quicktabs-osu_library_search .quicktabs-hide {
+    display: none;
+}
+
+div#quicktabs-osu_library_search ul.quicktabs-tabs {
+    margin-top: 0;
+}
+div#quicktabs-osu_library_search ul.quicktabs-tabs li {
+    display: inline;
+    background: none;
+    list-style-type: none;
+    padding: 2px;
+    white-space: nowrap;
+}
+div#quicktabs-osu_library_search ul.quicktabs-tabs li a:focus {
+    outline: none;
+}
+
+
+/* ----- Quicktabs - Tabstyles: OSULP----- */
+div[id^=block-quicktabs-] {
+    z-index: 10;
+}
+
+div#quicktabs-osu_library_search .quicktabs_main.quicktabs-style-osulp {
+    margin: -3px 0 0 0;
+    background-color: #403152;
+    border-top: none;
+    border-top: none;
+    clear: both;
+    border-radius: 4px;
+    float: right;
+}
+
+div#quicktabs-osu_library_search ul.quicktabs-tabs.quicktabs-style-osulp {
+    font-size: small;
+    padding: 0 0 0 0;
+    height: 19px;
+    margin: -28px 30px 0 0;
+    float: right;
+}
+
+div#quicktabs-osu_library_search ul.quicktabs-tabs.quicktabs-style-osulp a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 0;
+}
+
+div#quicktabs-osu_library_search ul.quicktabs-tabs.quicktabs-style-osulp li {
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #403152;
+    border-bottom: none;
+    padding: 2px 10px;
+    margin: 0 3px 0 0;
+    position: relative;
+    background-color: #666666;
+    display: inline-block;
+}
+
+div#quicktabs-osu_library_search ul.quicktabs-tabs.quicktabs-style-osulp li:hover {
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #C34500;
+    color: #FFFFFF;
+}
+
+div#quicktabs-osu_library_search ul.quicktabs-tabs.quicktabs-style-osulp li.active {
+    background-color: #403152;
+}
+
+div#quicktabs-osu_library_search .ui-widget-header {
+    border: none;
+    background: none;
+}
+
+div#quicktabs-osu_library_search .ui-widget-content {
+    border: none;
+}
+
+ul.quicktabs-tabs.quicktabs-style-osulp li.active a {
+}
+
+div#quicktabs-osu_library_search {
+    border: none;
+}
+
+#quicktabs-osu_library_search .search-links a {
+    color: #FFFFFF;
+}
+
+@media (max-width: 979px) {
+    div[id^=block-quicktabs-] {
+        float:right;
+        margin-top: 20px;
+        margin-right: 10px;
+    }
+    div#block-megamenu-menu-menu-osul {
+        float: left;
+        width: 100%;
+    }
+
+}

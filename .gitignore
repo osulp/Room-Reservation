@@ -42,3 +42,6 @@ public/uploads
 
 # Ignore Vagrant
 .vagrant
+
+#Ignore RubyMine project files
+.idea
