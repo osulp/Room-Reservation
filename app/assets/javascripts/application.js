@@ -28,4 +28,6 @@
 //= require list.fuzzysearch
 //= require list.pagination
 //= require bootstrap-timepicker
-//= require_tree .
+//= require jquery.ui.tabs
+//= require osul_search
+// = require_tree .

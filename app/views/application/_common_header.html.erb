@@ -60,53 +60,74 @@
 <!-- Main menu navbar -->
 <div id="main-menu">
   <div class="region region-nav osu-purple">
-    <div id="tabs-search" class="">
-      <ul class="nav nav-tabs">
-        <li class="active">
-          <a href="#1Search" class="onesearch" data-toggle="tab">
-            <span>1Search</span>
-          </a>
-        </li>
-        <li class="">
-          <a href="#books-media" class="books" data-toggle="tab">
-            <span>Books &amp; Media</span>
-          </a>
-        </li>
-        <li class="">
-          <a href="#site-search" class="site" data-toggle="tab">
-            <span>Website</span>
-          </a>
-        </li>
-      </ul>
-      <div class="tab-content osu-background">
-        <div id="1Search" class="tab-pane active">
-          <form method="get" action="http://oregonstate.summon.serialssolutions.com/search/results">
-            <fieldset>
-              <input type="text" name="q" maxlength="256" accesskey="s" value="Articles, Books, eCollections" onfocus="if(value=='Articles, Books, eCollections'){value=''};this.style.color='black'">
-              <input class="icon-search word-hide form-submit" type="submit">
-            </fieldset>
-          </form>
-        </div>
-        <div id="books-media" class="tab-pane">
-          <form method="get" action="http://oasis.oregonstate.edu/search/">
-            <fieldset>
-              <input type="hidden" name="searchtype" value="X">
-              <input type="text" name="searcharg" maxlength="256" accesskey="s" value="Search the catalog" onfocus="if(value=='Search the catalog'){value=''};this.style.color='black'">
-              <input type="hidden" name="searchscope" value="13">
-              <input class="icon-search word-hide form-submit" type="submit">
-            </fieldset>
-          </form>
-        </div>
-        <div id="site-search" class="tab-pane">
-          <form action="<%= APP_CONFIG['baseurl'] %>/" method="post" id="google-appliance-block-form" accept-charset="UTF-8">
-            <fieldset>
-              <h2 class="hide">Search Google Appliance</h2>
-              <label class="hide" for="edit-search-keys">Enter the terms you wish to search for. </label>
-              <input onfocus="if(this.value=='Search this site') {value='';};this.style.color='black'" type="text" id="edit-search-keys" name="search_keys" value="Search this site" size="15" maxlength="128" class="form-text">
-              <input class="icon-search word-hide form-submit" type="submit" id="edit-submit" name="op" value="Search">
-              <input type="hidden" name="form_id" value="google_appliance_block_form">
-            </fieldset>
-          </form>
+
+    <div id="block-quicktabs-osu-library-search" class="block block-quicktabs">
+      <div class="content">
+        <div id="quicktabs-osu_library_search" class="quicktabs-wrapper quicktabs-style-osulp jquery-once-1-processed">
+          <div class="item-list">
+            <ul class="quicktabs-tabs quicktabs-style-osulp">
+              <li class="active first">
+                <a href="#quicktabs-tabpage-osu_library_search-0" id="quicktabs-tab-osu_library_search-0" class="active quicktabs-loaded jquery-once-2-processed">1Search</a>
+              </li>
+              <li>
+                <a href="#quicktabs-tabpage-osu_library_search-1" id="quicktabs-tab-osu_library_search-1" class="active jquery-once-2-processed">Course Reserves</a>
+              </li>
+            </ul>
+          </div>
+          <div id="quicktabs-container-osu_library_search" class="quicktabs_main quicktabs-style-osulp">
+            <div id="quicktabs-tabpage-osu_library_search-0" class="quicktabs-tabpage ">
+              <div id="block-osul-search-osul-search" class="block block-osul-search">
+                <div class="content">
+                  <form class="osul-search-form" action="//library.oregonstate.edu/" method="post" id="osul-search-library-form" accept-charset="UTF-8">
+                    <div>
+                      <div class="form-item form-type-textfield form-item-query-temp">
+                        <input id="query_temp" placeholder="&quot;Use quotation marks for exact match&quot;" class="search form-text"
+                               size="100" maxlength="128" type="text"  name="query_temp" value="">
+                      </div>
+                      <input alt="search" type="submit" id="edit-submit" name="op" value="Search" class="form-submit">
+                      <div class="search-links">
+                        <a href="http://search.library.oregonstate.edu/primo_library/libweb/action/search.do?mode=Advanced&amp;ct=AdvancedSearch&amp;vid=OSU">Advanced Search</a>
+                        <a href="//guides.library.oregonstate.edu/Primo">Search tips</a>
+                      </div>
+                      <input name="search_scope" type="hidden" value="everything">
+                      <input name="institution" type="hidden" value="OSU">
+                      <input name="vid" type="hidden" value="OSU">
+                      <input name="displayMode" type="hidden" value="full">
+                      <input name="query" type="hidden" value="">
+                      <input name="tab" type="hidden" value="default_tab">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div id="quicktabs-tabpage-osu_library_search-1" class="quicktabs-tabpage quicktabs-hide">
+              <div id="block-osul-search-course-reserves" class="block block-osul-search">
+                <div class="content">
+                  <form class="osul-search-form" action="//library.oregonstate.edu/" method="post" id="osul-search-reserves-form" accept-charset="UTF-8">
+                    <div>
+                      <div class="form-item form-type-textfield form-item-query-temp-reserve">
+                        <input id="query_temp_reserve"  placeholder="&quot;Use quotation marks for exact match&quot;" class="search form-text"
+                               size="100"  maxlength="128" type="text" name="query_temp_reserve" value="">
+                      </div>
+                      <input alt="search"type="submit" id="edit-submit--2" name="op" value="Search" class="form-submit">
+                      <div class="search-links">
+                        <a href="http://search.library.oregonstate.edu/primo_library/libweb/action/search.do?mode=Advanced&amp;ct=AdvancedSearch&amp;vid=OSU&amp;tab=cr_tab">Advanced Search</a>
+                        <a href="//guides.library.oregonstate.edu/Primo">Search tips</a>
+                      </div>
+                      <input name="search_scope" type="hidden" value="osu_cr">
+                      <input name="institution" type="hidden" value="OSU">
+                      <input name="vid" type="hidden" value="OSU">
+                      <input name="displayMode" type="hidden" value="full">
+                      <input name="displayField" type="hidden" value="all">
+                      <input name="highlight" type="hidden" value="true">
+                      <input name="mode" type="hidden" value="Basic">
+                      <input name="tab" type="hidden" value="cr_tab">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -122,33 +143,31 @@
             <h2 class="megamenu-parent-title">
               <a href="<%= APP_CONFIG['baseurl'] %>/find-it">Find It</a>
             </h2>
-            <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 624px;">
+            <ul class="megamenu-bin megamenu-slots-columnar" style="top: -9000px; left: 0px; width: 624px;">
               <li id="megamenu-mlid-182051" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
                 <h3 class="megamenu-slot-title">
                   <span class="nolink">Search Tools</span>
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-182046" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="http://oregonstate.summon.serialssolutions.com/search?s.q=">1Search</a>
+                    <a href="http://search.library.oregonstate.edu/primo_library/libweb/action/search.do?mode=Basic&amp;vid=OSU&amp;tab=default_tab&amp;">1Search</a>
                   </li>
                   <li id="megamenu-mlid-182056" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="http://oasis.oregonstate.edu/">Library Catalog</a>
-                  </li>
-                  <li id="megamenu-mlid-232831" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
-                    <a href="http://summit.worldcat.org/">Summit/Worldcat</a>
-                  </li>
-                  <li id="megamenu-mlid-182061" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
+                    <a href="//oasis.oregonstate.edu/">Library Catalog</a></li>
+                  <li id="megamenu-mlid-182061" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
                     <a href="<%= APP_CONFIG['baseurl'] %>/research-databases">Databases</a>
                   </li>
-                  <li id="megamenu-mlid-182116" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
-                    <a href="http://ica.library.oregonstate.edu/subject-guide/1471-OSU-Libraries-Ebooks">E-books</a>
+                  <li id="megamenu-mlid-182116" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
+                    <a href="//ica.library.oregonstate.edu/subject-guide/1471-OSU-Libraries-Ebooks">E-books</a>
                   </li>
-                  <li id="megamenu-mlid-182066" class="megamenu-item megamenu-item-5 even half-2 leaf-5 last  last">
-                    <a href="http://mw8xt6bj7r.search.serialssolutions.com/">E-journals</a>
+                  <li id="megamenu-mlid-182066" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 last  last">
+                    <!--<a href="http://search.library.oregonstate.edu/primo_library/libweb/action/dlSearch.do?institution=OSU&amp;query=facet_atoz%2cexact%2cA&amp;indx=1&amp;bulkSize=30&amp;dym=false&amp;loc=local%2cscope%3a(AZOSU)&amp;fn=goAlmaAz&amp;sortField=stitle&amp;almaAzSearch=true&amp;azSearch=true">E-journals</a>-->
+                    <a href="http://search.library.oregonstate.edu/primo_library/libweb/action/search.do?mode=Basic&amp;vid=OSU&amp;tab=default_tab&amp;">E-journals</a>
                   </li>
                 </ul>
               </li>
-              <li id="megamenu-mlid-228296" class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 ">
+              <li id="megamenu-mlid-228296"
+                  class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 ">
                 <h3 class="megamenu-slot-title">
                   <span class="nolink">Services</span>
                 </h3>
@@ -157,39 +176,37 @@
                     <a href="<%= APP_CONFIG['baseurl'] %>/reserves">Course Reserves</a>
                   </li>
                   <li id="megamenu-mlid-183596" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="https://osulibrary.oregonstate.edu/ill">Interlibrary Loan</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/ill">Interlibrary Loan</a>
                   </li>
-                  <li id="megamenu-mlid-228926" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 ">
-                    <a href="<%= APP_CONFIG['baseurl'] %>/scan-deliver">Scan &amp; Deliver</a>
+                  <li id="megamenu-mlid-252791" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 ">
+                    <a href="<%= APP_CONFIG['baseurl'] %>/purchase-request">Purchase Requests</a>
                   </li>
-                  <li id="megamenu-mlid-230251" class="megamenu-item megamenu-item-3 even half-2 leaf-3 last  last">
-                    <a href="<%= APP_CONFIG['baseurl'] %>/summit">Summit Borrowing</a>
+                  <li id="megamenu-mlid-228926" class="megamenu-item megamenu-item-3 even half-2 leaf-3 last  last">
+                    <a href="<%= APP_CONFIG['baseurl'] %>/scan-deliver">Scan  &amp; Deliver</a>
                   </li>
                 </ul>
               </li>
-              <li id="megamenu-mlid-228301" class="megamenu-slot megamenu-slot-2 odd half-2 leaf-2 last  last">
-                <h3 class="megamenu-slot-title">
-                  <span class="nolink">Help</span>
-                </h3>
+              <li id="megamenu-mlid-228301"
+                  class="megamenu-slot megamenu-slot-2 odd half-2 leaf-2 last  last">
+                <h3 class="megamenu-slot-title"><span class="nolink">Help</span></h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-228321" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
-                    <a href="<%= APP_CONFIG['baseurl'] %>/reference">Ask a Librarian</a>
-                  </li>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/reference">Ask a Librarian</a></li>
                   <li id="megamenu-mlid-228311" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="http://guides.library.oregonstate.edu">Research Guides</a>
+                    <a href="guides.library.oregonstate.edu">Research Guides</a></li>
+                  <li id="megamenu-mlid-228316" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 ">
+                    <a href="//ica.library.oregonstate.edu/tutorials/">Tutorials</a>
                   </li>
-                  <li id="megamenu-mlid-228316" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 last  last">
-                    <a href="http://ica.library.oregonstate.edu/tutorials/">Tutorials</a>
-                  </li>
+                  <li id="megamenu-mlid-254846" class="megamenu-item megamenu-item-3 even half-2 leaf-3 last  last">
+                    <a href="//diy.library.oregonstate.edu/">Library DIY: Do It Yourself</a></li>
                 </ul>
               </li>
             </ul>
           </li>
-          <li id="megamenu-mlid-182161" class="megamenu-parent megamenu-parent-2 odd half-2 leaf-2 menu-182161">
-            <h2 class="megamenu-parent-title">
-              <a href="<%= APP_CONFIG['baseurl'] %>/in-the-library">In the Library</a>
-            </h2>
-            <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 624px;">
+          <li id="megamenu-mlid-182161"
+              class="megamenu-parent megamenu-parent-2 odd half-2 leaf-2 menu-182161">
+            <h2 class="megamenu-parent-title"><a href="<%= APP_CONFIG['baseurl'] %>/in-the-library">In the Library</a></h2>
+            <ul class="megamenu-bin megamenu-slots-columnar" style="top: -9000px; left: 0px; width: 624px;">
               <li id="megamenu-mlid-183581" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
                 <h3 class="megamenu-slot-title">
                   <span class="nolink">Services</span>
@@ -199,22 +216,21 @@
                     <a href="<%= APP_CONFIG['baseurl'] %>/borrowing">Borrowing</a>
                   </li>
                   <li id="megamenu-mlid-183586" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="http://oregonstate.edu/is/mediaservices/sms/">Student Multimedia Services</a>
+                    <a href="//oregonstate.edu/is/mediaservices/sms/">Student Multimedia Services</a>
                   </li>
                   <li id="megamenu-mlid-183591" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
-                    <a href="http://oregonstate.edu/childcare/ourlittlevillage">Child Care</a>
+                    <a href="//oregonstate.edu/childcare/ourlittlevillage">Child Care</a>
                   </li>
                   <li id="megamenu-mlid-183606" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
                     <a href="<%= APP_CONFIG['baseurl'] %>/accessibility-services">Accessibility Services</a>
                   </li>
                   <li id="megamenu-mlid-239866" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 last  last">
-                    <a href="http://oregonstate.edu/is/tss/och">OSU Computer Helpdesk</a>
+                    <a href="//oregonstate.edu/is/tss/och">OSU Computer Helpdesk</a>
                   </li>
                 </ul>
               </li>
               <li id="megamenu-mlid-183476" class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 ">
-                <h3 class="megamenu-slot-title">
-                  <span class="nolink">Equipment</span>
+                <h3 class="megamenu-slot-title"><span class="nolink">Equipment</span>
                 </h3>
                 <ul class="megamenu-items ">
                   <li id="megamenu-mlid-183561" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first">
@@ -233,7 +249,7 @@
                     <a href="<%= APP_CONFIG['baseurl'] %>/printers">Printers</a>
                   </li>
                   <li id="megamenu-mlid-183491" class="megamenu-item megamenu-item-5 even half-2 leaf-5 ">
-                    <a href="<%= APP_CONFIG['baseurl'] %>/kindle">Kindles</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/kindles">Kindles</a>
                   </li>
                   <li id="megamenu-mlid-239966" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last">
                     <a href="<%= APP_CONFIG['baseurl'] %>/tablets">Tablets</a>
@@ -264,7 +280,7 @@
                     <a href="<%= APP_CONFIG['baseurl'] %>/research-rooms">Research Rooms</a>
                   </li>
                   <li id="megamenu-mlid-183601" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last">
-                    <a href="http://webcam.oregonstate.edu/java2/">Java II</a>
+                    <a href="//webcam.oregonstate.edu/java2/">Java II</a>
                   </li>
                 </ul>
               </li>
@@ -274,7 +290,7 @@
             <h2 class="megamenu-parent-title">
               <a href="<%= APP_CONFIG['baseurl'] %>/about">About</a>
             </h2>
-            <ul class="megamenu-bin megamenu-slots-columnar" style="left: 0px; top: -9000px; width: 648px;">
+            <ul class="megamenu-bin megamenu-slots-columnar" style="top: -9000px; left: 0px; width: 648px;">
               <li id="megamenu-mlid-185241" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first">
                 <h3 class="megamenu-slot-title">
                   <span class="nolink">The Valley Library</span>
@@ -312,7 +328,7 @@
                     <a href="<%= APP_CONFIG['baseurl'] %>/civility">Civility Campaign</a>
                   </li>
                   <li id="megamenu-mlid-239716" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="<%= APP_CONFIG['baseurl'] %>/about">About OSU Libraries</a>
+                    <a href="<%= APP_CONFIG['baseurl'] %>/about/OSU-Libraries">About OSU Libraries</a>
                   </li>
                   <li id="megamenu-mlid-185246" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
                     <a href="<%= APP_CONFIG['baseurl'] %>/staff/directory">Staff Directory</a>
@@ -327,10 +343,10 @@
                     <a href="<%= APP_CONFIG['baseurl'] %>/departments">Departments</a>
                   </li>
                   <li id="megamenu-mlid-185261" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 ">
-                    <a href="http://blogs.oregonstate.edu/cascadeslibrary/">Cascades Campus Library</a>
+                    <a href="//blogs.oregonstate.edu/cascadeslibrary/">Cascades Campus Library</a>
                   </li>
                   <li id="megamenu-mlid-185266" class="megamenu-item megamenu-item-7 even half-2 leaf-7 last  last">
-                    <a href="http://guin.library.oregonstate.edu">Guin Library</a>
+                    <a href="//guin.library.oregonstate.edu">Guin Library</a>
                   </li>
                 </ul>
               </li>
@@ -343,26 +359,24 @@
                     <a href="http://oregondigital.org">Digital Collections</a>
                   </li>
                   <li id="megamenu-mlid-239816" class="megamenu-item megamenu-item-1 even half-1 leaf-1 ">
-                    <a href="http://cdss.library.oregonstate.edu/">Center for Digital Scholarship</a>
+                    <a href="//cdss.library.oregonstate.edu/">Center for Digital Scholarship</a>
                   </li>
                   <li id="megamenu-mlid-185296" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 ">
-                    <a href="http://ir.library.oregonstate.edu/dspace/">ScholarsArchive</a>
+                    <a href="//ir.library.oregonstate.edu/dspace/">ScholarsArchive</a>
                   </li>
                   <li id="megamenu-mlid-185286" class="megamenu-item megamenu-item-3 even half-2 leaf-3 ">
                     <a href="http://oregonexplorer.info">Oregon Explorer</a>
                   </li>
                   <li id="megamenu-mlid-185301" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 ">
-                    <a href="http://scarc.library.oregonstate.edu/">Special Collections &amp; Archives Research Center</a>
+                    <a href="//scarc.library.oregonstate.edu/">Special Collections &amp; Archives Research Center</a>
                   </li>
                   <li id="megamenu-mlid-185291" class="megamenu-item megamenu-item-5 even half-2 leaf-5 last  last">
                     <a href="http://osupress.oregonstate.edu/">OSU Press</a>
                   </li>
                 </ul>
               </li>
-              <li id="megamenu-mlid-185326" class="megamenu-slot megamenu-slot-3 even half-2 leaf-3 last  last" style="">
-                <h3 class="megamenu-slot-title">
-                  <a href="<%= APP_CONFIG['baseurl'] %>/news/messenger">The Messenger</a>
-                </h3>
+              <li id="megamenu-mlid-185326" class="megamenu-slot megamenu-slot-3 even half-2 leaf-3 last  last">
+                <h3 class="megamenu-slot-title"><a href="<%= APP_CONFIG['baseurl'] %>/giving">Giving to OSU Libraries and Press</a></h3>
               </li>
             </ul>
           </li>
