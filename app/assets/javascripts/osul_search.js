@@ -13,9 +13,9 @@
         event.preventDefault();
         var extra = '';
         if ($(this).closest('form[id]').attr('id') == 'osul-search-library-form') {
-            $('input[name=query]').val('any,contains,' + $('input[name=query_temp]').val());
+            $('input[name=query]').val('any,contains,' + $('input[name=query_temp]').val().replace(',',' '));
         } else {
-            extra = '&query=any,contains,' + $('input[name=query_temp_reserve]').val();
+            extra = '&query=any,contains,' + $('input[name=query_temp_reserve]').val().replace(',',' ');
         }
         window.location = "http://search.library.oregonstate.edu/primo_library/libweb/action/dlSearch.do?" + $(this).serialize() + extra;
     }
