@@ -129,3 +129,40 @@ body { font-family: "Gudea", "Arial", "Verdana", sans-serif;}
   overflow: hidden;
   height: 1px;
 }
+
+.osu-question-icon {
+  background: url(question-w22.png) no-repeat transparent;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  float: left;
+}
+
+#top-hat-chat {
+  font-size: 19px;
+  color: #ffffff;
+  float: right;
+  margin-right: 20px;
+  margin-top:6px;
+  width:200px;
+  a {
+    padding: 0 0 0 5px;
+    border-radius: 0;
+  }
+  a:hover {
+    background: none;
+    text-decoration: underline;
+    text-align: right;
+  }
+  a:active, a:focus {
+    background: none;
+  }
+}
+
+.top-hat-chat-sm {
+  font-size: 13px;
+  font-weight:normal;
+  color: #CCC;
+}
+
+
