@@ -4,6 +4,6 @@ class BannerRecordSerializer < ActiveModel::Serializer
 
 
   def max_reservation_time
-    User.new(onid).max_reservation_time
+    User.new(object.onid).max_reservation_time
   end
 end

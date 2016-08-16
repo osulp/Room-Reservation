@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
-  before_filter RubyCAS::GatewayFilter, :only => :index, :if => -> {current_user.nil?}
-  before_filter :convert_cookie_to_param
-  before_filter :admin_date_restriction
+  before_action RubyCAS::GatewayFilter, :only => :index, :if => -> {current_user.nil?}
+  before_action :convert_cookie_to_param
+  before_action :admin_date_restriction
 
   def index
     @presenter = presenter

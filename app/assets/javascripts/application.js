@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.datepicker
-//= require jquery.ui.slider
-//= require jquery.ui.draggable
+//= require jquery-ui/datepicker
+//= require jquery-ui/slider
+//= require jquery-ui/draggable
 //= require jquery.ui.touch-punch
 //= require bootstrap
 //= require jquery.cookie
@@ -28,6 +28,6 @@
 //= require list.fuzzysearch
 //= require list.pagination
 //= require bootstrap-timepicker
-//= require jquery.ui.tabs
+//= require jquery-ui/tabs
 //= require osul_search
 // = require_tree .

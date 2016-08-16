@@ -1,19 +1,22 @@
 source 'https://rubygems.org'
 
-
 gem 'jquery-rails'
-gem 'mysql2'
-gem 'rails', :github => 'rails/rails', :branch => '4-1-stable'
+gem 'mysql2', '~> 0.3.18'
+gem 'rails', '~> 5.0'
+
+# Required to enable responds_to at controller level
+gem 'responders'
+
 gem 'simple_form'
 gem 'yard'
-gem 'active_model_serializers', '~> 0.8.0'
 
 # Draper for decoration
-gem 'draper'
+# v 3.0+ works with Rails5
+gem 'draper', git: 'https://github.com/drapergem/draper'
 
 # CAS Client
-gem 'rubycas-client', git: 'git://github.com/terrellt/rubycas-client.git', branch: 'master'
-gem 'rubycas-client-rails', :git => 'git://github.com/osulp/rubycas-client-rails.git'
+gem 'rubycas-client', git: 'https://github.com/osulp/rubycas-client.git'
+gem 'rubycas-client-rails', git: 'https://github.com/osulp/rubycas-client-rails.git'
 
 # New Relic
 gem 'newrelic_rpm'
@@ -24,23 +27,17 @@ gem 'dalli'
 # Unicorn for web server.
 gem 'unicorn'
 
-# Cache digests for rails partials
-gem 'cache_digests'
-
 # Paranoia to simply hide deleted records
-gem 'paranoia', '~> 2.0'
+gem "paranoia", git: "https://github.com/rubysherpas/paranoia", branch: "rails5"
 
 gem 'coffee-rails'
-gem 'sass-rails', '~>4.0'
+gem 'sass-rails'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
 gem 'jquery-ui-rails'
-gem 'bootstrap-sass', '~>2.3.0'
+gem 'bootstrap-sass'
 gem "compass-rails"
-
-# Old Asset Precompile Behavior for Stylesheets
-gem "sprockets-digest-assets-fix", :github => "tobiasr/sprockets-digest-assets-fix"
 
 # Faye
 gem 'faye'
@@ -50,6 +47,8 @@ gem 'thin'
 
 # Sidekiq for asynchronous jobs
 gem 'sidekiq'
+gem 'redis-namespace'
+
 # Sidetiq for scheduling of jobs
 gem 'sidetiq'
 
@@ -63,7 +62,7 @@ gem 'druthers'
 gem 'tinymce-rails'
 
 # PaperTrail for versioning
-gem 'paper_trail', '~> 3.0.0'
+gem 'paper_trail'
 
 # File uploading
 gem 'carrierwave'
@@ -77,12 +76,7 @@ gem 'yui-compressor'
 
 gem 'rack-cors', :require => 'rack/cors'
 
-# Displays a notification banner for development/staging environments.
-gem 'envb-rails'
-
 group :development do
-  #gem 'better_errors'
-  #gem 'binding_of_caller'
   gem 'meta_request'
   gem 'binding_of_caller'
   gem 'spring'
@@ -96,7 +90,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'pg'
-  gem 'jazz_hands', :github => "terrellt/jazz_hands"
 end
 
 group :test do

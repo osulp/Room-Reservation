@@ -1,14 +1,8 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
-# Pick the frameworks you want:
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-#require "active_resource/railtie"
-require "sprockets/railtie"
-# require "rails/test_unit/railtie"
+require 'rails/all'
+Bundler.require(*Rails.groups)
 
-Bundler.require(:default, Rails.env)
 module RoomReservation
   class Application < Rails::Application
     application_config = YAML.load_file('config/config.yml')|| {}
@@ -87,5 +81,11 @@ module RoomReservation
 
     # Don't ignore IPs from local trusted network!
     config.action_dispatch.trusted_proxies = /^127\.0\.0\.1$/ # localhost
+
+    config.action_controller.permit_all_parameters = true
+
+    #Rails5 to use old timezone
+    # DEPRECATION WARNING: Time columns will become time zone aware in Rails 5.1. This still causes `String`s to be parsed as if they were in `Time.zone`, and `Time`s to be converted to `Time.zone`.
+    config.active_record.time_zone_aware_types = [:datetime, :time]
   end
 end
