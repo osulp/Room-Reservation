@@ -39,9 +39,6 @@ gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
 gem "compass-rails"
 
-# Faye
-gem 'faye'
-
 # Thin for faye
 gem 'thin'
 

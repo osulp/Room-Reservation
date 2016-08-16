@@ -19,9 +19,6 @@ deployment:
     default_environment:
       PATH: rbenv_path_information:$PATH
       PKG_CONFIG_PATH: /usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-push:
-  server: http://faye/server:9020
-  token: putatokenherethatissecureandhiddenfromusers
 rubycas:
   cas_base_url: https://link.to.cas/cas
   validate_url: https://link.to.saml/samlValidate
