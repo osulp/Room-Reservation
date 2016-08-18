@@ -20,10 +20,6 @@ class CalendarPresenter
   def self.cache_result(start_time, end_time, key, skip_publish=false, ignore_managers=[])
     CacheCalendarPresenter.perform_async(start_time, end_time, key, skip_publish, ignore_managers)
   end
-  # Publishes info to Faye
-  def self.publish_changed(start_time, end_time, presenter_key=nil)
-    FayePublishChangedDates.perform_async(start_time, end_time, presenter_key)
-  end
 
   def self.form_cache_key(start_time, end_time, rooms, ignore_managers = [])
     key = "#{self.to_s}/event_collection/#{start_time.to_i}/#{end_time.to_i}"

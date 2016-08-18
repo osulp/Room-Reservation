@@ -23,7 +23,6 @@
 //= require moment-with-langs
 //= require moment-timezone
 //= require moment-timezone-data
-//= require faye
 //= require list
 //= require list.fuzzysearch
 //= require list.pagination

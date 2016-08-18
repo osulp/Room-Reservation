@@ -15,7 +15,6 @@ class AdminReserveViewManager
     else
       $("*[data-action=alternate-view]").show()
     $(document).on("dayChanged", this.day_changed)
-    $(document).on("fayeUpdated", this.day_changed)
     $(document).on("eventsTruncated", this.day_changed)
   day_changed: (event)=>
     current_day = moment().tz("America/Los_Angeles")
