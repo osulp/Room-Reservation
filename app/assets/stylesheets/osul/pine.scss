@@ -1,0 +1,191 @@
+/* Pine header & footer customizations */
+html {
+    background-color: #292929;
+}
+
+.pine {
+    background-color: #ffffff;
+}
+
+.pine .row {
+    margin-left: 0;
+}
+
+.pine h1, .pine h2 {
+    font-family: "EksjaExtremesRegular", "Arial", "Helvetica", "Verdana", sans-serif;
+    color: #c34500;
+}
+
+.pine #main-menu .menu, .pine #main-menu .nice-menu {
+    margin-left: 6em;
+}
+.pine #main-menu .nice-menu > li.menuparent a:hover {
+    background-color: #c34500;
+}
+.pine a#search-link {
+    display: none;
+}
+.pine #osu-top-hat.new #search-link i {
+    color: #c34500;
+    text-decoration: none;
+}
+.pine #osu-top-hat.new #search-link:hover i {
+    color: #ffffff;
+}
+
+.pine #main-menu .nice-menu span.nolink {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #252525;
+    border: none;
+    line-height: 16px;
+    margin: 0 2px;
+    display: inline-block;
+    padding: 10px 16px;
+}
+
+.pine #main-menu .nice-menu > li.menuparent:hover > span,
+.pine #main-menu .nice-menu > li.over > span {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+}
+
+/* Footer */
+.pine #footer .content > .menu > li {
+    float: none;
+    margin-left: 0;
+    max-width: none;
+    padding: 0 0 3px 0;
+}
+
+.pine #footer .content > .menu > li > a {
+    font-size: 14px;
+    text-transform: none;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+.pine #footer a {
+    text-decoration: underline;
+}
+
+.pine #footer a:hover, #footer a:active, #footer a:focus {
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+.pine #footer .content hr {
+    border-top: 1px solid #c34500;
+    border-bottom: none;
+    margin: 10px 0;
+    width: 25%;
+}
+
+.pine #footer .block-menu .content {
+    margin-left: 3em;
+    margin-top: 0;
+}
+
+.pine #footer a.gift-btn {
+    font-size: 20px;
+    background-color: #c34500;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.pine [id^="osul-footer-"] {
+    float: left;
+    margin-right: 20px;
+}
+
+.pine [id^="osul-footer-"] h2 {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 30px;
+    margin-bottom: 12px;
+    padding: 0 10px 0 2px;
+}
+
+.pine #footer ul {
+    margin-left: 15px;
+    margin-bottom: 25px;
+}
+
+.pine #footer .footer-links .content {
+    margin: 0 0 0 10px;
+}
+
+.pine #footer div.footer-gift {
+    display: inline-block;
+}
+
+.pine #footer .social-media {
+    font-size: 18px;
+    padding-top: 15px;
+}
+
+.pine #footer .social-media a {
+    padding-bottom: 12px;
+}
+
+.pine #footer a i {
+    color: #ffffff;
+}
+
+.pine button.btn,
+.pine a.btn.btn-primary {
+    text-decoration: none;
+    background-color: #c34500;
+    background-image: none;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 10px 14px;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.pine button.btn:hover,
+.pine button.btn:active,
+.pine button.btn:focus,
+.pine a.btn.btn-primary:hover,
+.pine a.btn.btn-primary:focus,
+.pine a.btn.btn-primary:active {
+    text-decoration: underline;
+    transition: none;
+    -webkit-transition: none;
+    background: none;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.pine .widget {
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+.pine .widget-title {
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #c34500;
+    background-color: #f5f2ed;
+    border: none;
+    border-radius: 0;
+}
+
+.pine #sidebar .ui-datepicker .ui-widget-header {
+    background: #f5f2ed;
+    color: #c34500;
+    text-transform: uppercase;
+}
+
+.pine .ui-datepicker .ui-widget-header .ui-icon {
+  background-image: url(image_path("glyphicons-halflings-white.png")) !important;
+  background-color: #000000;
+}
