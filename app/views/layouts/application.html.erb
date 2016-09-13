@@ -12,11 +12,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body data-push-server="<%= APP_CONFIG['push']['server'] %>">
+  <div class="pine">
   <%= render 'admin_navbar' if current_user.staff? %>
   <%= raw current_user.tag  unless current_user.nil?%>
-  <% cache "Tophat" do -%>
-    <%= render 'common_tophat' -%>
-  <% end -%>
   <div class="container">
     <div id="common-header" class="_osul">
     <% cache "Header" do -%>
@@ -31,6 +29,7 @@
     <%= render 'common_footer' -%>
   <% end -%>
   <%= render 'modal_skeleton' %>
+  </div>
   <%= render 'javascript' %>
 </body>
 </html>
