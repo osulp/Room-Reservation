@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140203170058) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "BannerLookup", primary_key: "ID", force: true do |t|
     t.string "onid",     limit: 9,   null: false
     t.string "status",   limit: 30,  null: false
@@ -33,8 +36,8 @@ ActiveRecord::Schema.define(version: 20140203170058) do
   create_table "cleaning_record_rooms", force: true do |t|
     t.integer  "cleaning_record_id"
     t.integer  "room_id"
-    t.datetime "created_at",         limit: 6
-    t.datetime "updated_at",         limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "cleaning_record_rooms", ["cleaning_record_id"], name: "index_cleaning_record_rooms_on_cleaning_record_id", using: :btree
@@ -45,16 +48,16 @@ ActiveRecord::Schema.define(version: 20140203170058) do
     t.date     "end_date"
     t.time     "start_time"
     t.time     "end_time"
-    t.datetime "created_at", limit: 6
-    t.datetime "updated_at", limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "weekdays"
     t.datetime "deleted_at"
   end
 
   create_table "filters", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", limit: 6
-    t.datetime "updated_at", limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "hours", force: true do |t|
@@ -127,8 +130,8 @@ ActiveRecord::Schema.define(version: 20140203170058) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "description"
-    t.datetime "created_at",    limit: 6
-    t.datetime "updated_at",    limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
     t.datetime "truncated_at"
   end
@@ -153,8 +156,8 @@ ActiveRecord::Schema.define(version: 20140203170058) do
   create_table "room_filters", force: true do |t|
     t.integer  "room_id"
     t.integer  "filter_id"
-    t.datetime "created_at", limit: 6
-    t.datetime "updated_at", limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "room_filters", ["filter_id"], name: "index_room_filters_on_filter_id", using: :btree
@@ -163,8 +166,8 @@ ActiveRecord::Schema.define(version: 20140203170058) do
   create_table "room_hour_records", force: true do |t|
     t.integer  "room_id"
     t.integer  "room_hour_id"
-    t.datetime "created_at",   limit: 6
-    t.datetime "updated_at",   limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "room_hour_records", ["room_hour_id"], name: "index_room_hour_records_on_room_hour_id", using: :btree
@@ -175,16 +178,16 @@ ActiveRecord::Schema.define(version: 20140203170058) do
     t.date     "end_date"
     t.time     "start_time"
     t.time     "end_time"
-    t.datetime "created_at", limit: 6
-    t.datetime "updated_at", limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 
   create_table "rooms", force: true do |t|
     t.string   "name"
     t.integer  "floor"
-    t.datetime "created_at",  limit: 6
-    t.datetime "updated_at",  limit: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "description"
     t.string   "image"
     t.string   "floor_map"
