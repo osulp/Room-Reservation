@@ -47,6 +47,12 @@ RSpec.configure do |config|
   # Focus Settings
   config.filter_run :focus => true
   config.run_all_when_everything_filtered = true
+  config.include Rails.application.routes.url_helpers
+  config.include Capybara::DSL
+  config.include Capybara::RSpecMatchers
+  config.infer_spec_type_from_file_location!
+  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 end
 
 Capybara.javascript_driver = :poltergeist

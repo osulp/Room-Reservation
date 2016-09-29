@@ -31,4 +31,4 @@ RoomReservation::Application.configure do
   #config.action_mailer.default_url_options = { host: 'RoomReservation.local' }
   config.eager_load = false
 end
-BetterErrors::Middleware.allow_ip! '10.0.2.2' if Rails.env.development?
+# BetterErrors::Middleware.allow_ip! '10.0.2.2' if Rails.env.development?

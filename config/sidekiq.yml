@@ -1,5 +1,5 @@
 ---
 :concurrency: 25
-:pidfile: pids/sidekiq.pid
+:pidfile: tmp/pids/sidekiq.pid
 :daemon: true
 :logfile: log/sidekiq.log

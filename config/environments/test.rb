@@ -32,4 +32,5 @@ RoomReservation::Application.configure do
 
   #config.action_mailer.default_url_options = { host: 'www.example.com' }
   config.eager_load = true
+  config.active_support.test_order = :sorted
 end

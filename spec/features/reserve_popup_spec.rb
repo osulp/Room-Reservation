@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'reserve popup' do
-  include VisitWithAfterHook
+  # include VisitWithAfterHook
   def set_reservation_time
     # Set start and end time to a valid time.
     start_time = (Time.current+1.hour).iso8601
@@ -10,7 +10,7 @@ describe 'reserve popup' do
     page.execute_script("$('#reservation-popup').find('#reserver_end_time').val('#{end_time}');")
   end
   def after_visit(*args)
-    disable_day_truncation
+    VisitWithAfterHook::disable_day_truncation
   end
   let(:user) {build(:user)}
   # TODO: Test this. Can't think of a good way to do it - The gateway filter would break things.

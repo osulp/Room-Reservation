@@ -1,6 +1,9 @@
 class ReservationsController < ApplicationController
   respond_to :json, :html
-  include_root_in_json = false
+  # include_root_in_json = false
+  ActiveSupport.on_load(:active_record) do
+    self.include_root_in_json = false
+  end
   before_filter :require_login, :only => [:create, :destroy, :show, :update]
   before_filter RubyCAS::Filter, :only => :index
   layout false, :only => :upcoming

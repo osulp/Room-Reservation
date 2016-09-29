@@ -31,3 +31,10 @@ without the caching for general use. Implementing caching requires the following
 * A database server which supports sub-second timestamps.
   * Required to avoid race conditions in which two records are updated at the same time.
   * Currently we use MariaDB 5.5 for this. Postgresql should also work.
+
+Add Admin user
+----------------------------
+admin = Role.new
+admin.onid = "onidusername"
+admin.role = "admin"
+admin.save!

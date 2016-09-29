@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "GET / reservation bars" do
-  include VisitWithAfterHook
+  # include VisitWithAfterHook
   def after_visit(*args)
     expect(page).to have_content("Today") if example.metadata[:js]
     page.execute_script("window.CalendarManager.truncate_to_now = function(){}") if example.metadata[:js]

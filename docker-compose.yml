@@ -1,0 +1,59 @@
+version: '2'
+services:
+  redis:
+    image: redis:3.0.5
+    command: redis-server
+    ports:
+      - '6372:6379'
+    volumes:
+      - redis-data:/var/lib/redis/data
+  db:
+    image: library/mysql:5.6.22
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+    ports:
+      - '3307:3306'
+    volumes:
+      - roomres-mysql:/var/lib/mysql/data
+    links:
+      - redis
+  web:
+    build: . # look in the current directory for a Dockerfile
+    restart: always
+    # tty: true
+    # stdin_open: true
+    links:
+      - db
+      - redis
+      - sidekiq
+    volumes:
+      - .:/roomres
+    ports:
+      - "9000:3000"
+      - "9993:8983"
+      - "9292:9292"
+    command: ./docker-start-app.sh
+    env_file:
+      - .web.env
+    depends_on:
+      - db
+      - redis
+      - sidekiq
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    links:
+      - db
+      - redis
+    volumes:
+      - .:/roomres
+    env_file:
+      - .web.env
+    depends_on:
+      - db
+      - redis
+volumes:
+  redis-data:
+    driver: local
+  roomres-mysql:
+    driver: local
