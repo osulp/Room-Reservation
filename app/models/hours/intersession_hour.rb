@@ -1,4 +1,4 @@
-class Hours::IntersessionHour < ActiveRecord::Base
+class Hours::IntersessionHour < ApplicationRecord
   establish_connection :"drupal_#{Rails.env}"
   self.table_name = 'int_hours'
   # @param dates [Array<Date>] Array of dates you want the hours for.

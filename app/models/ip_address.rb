@@ -1,8 +1,8 @@
 require 'ipaddr'
-class IpAddress < ActiveRecord::Base
+class IpAddress < ApplicationRecord
   validates :ip_address, :ip_address_i, :presence => true
   validate :ip_address_is_ip
-  belongs_to :auto_login
+  belongs_to :auto_login, optional: true
 
   def ip_address=(value)
     self.ip_address_i = value

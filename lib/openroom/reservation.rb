@@ -1,7 +1,7 @@
-class Openroom::Reservation < ActiveRecord::Base
+class Openroom::Reservation < ApplicationRecord
   establish_connection :"openroom_#{Rails.env}"
-  belongs_to :user, :foreign_key => :username, :primary_key => :username, :class_name => "Openroom::User"
-  belongs_to :room, :foreign_key => :roomid, :primary_key => :roomid, :class_name => "Openroom::Room"
+  belongs_to :user, optional: true, :foreign_key => :username, :primary_key => :username, :class_name => "Openroom::User"
+  belongs_to :room, optional: true, :foreign_key => :roomid, :primary_key => :roomid, :class_name => "Openroom::Room"
   has_one :description, :class_name => "Openroom::Description", :foreign_key => :reservationid, :primary_key => :reservationid
   has_one :keycard, :class_name => "Openroom::Keycard", :foreign_key => :barcode, :primary_key => :keycardid
 

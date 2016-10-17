@@ -1,4 +1,4 @@
-class ReservationMailer < ActionMailer::Base
+class ReservationMailer < ApplicationMailer
   def reservation_email(reservation, user)
     @user = user
     @reservation = reservation

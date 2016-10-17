@@ -1,4 +1,4 @@
-class Filter < ActiveRecord::Base
+class Filter < ApplicationRecord
   validates :name, presence: true
 
   has_many :room_filters

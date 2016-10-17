@@ -1,4 +1,4 @@
-class CleaningRecord < ActiveRecord::Base
+class CleaningRecord < ApplicationRecord
   acts_as_paranoid
   has_paper_trail
   before_destroy :touch

@@ -1,7 +1,7 @@
-class KeyCard < ActiveRecord::Base
+class KeyCard < ApplicationRecord
   has_paper_trail
-  belongs_to :reservation
-  belongs_to :room
+  belongs_to :reservation, optional: true
+  belongs_to :room, optional: true
 
   validates :room, :key, :presence => true
   validates :key, :numericality => {:only_integer => true}

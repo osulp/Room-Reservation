@@ -1,4 +1,4 @@
-class AutoLogin < ActiveRecord::Base
+class AutoLogin < ApplicationRecord
   has_paper_trail
   validates :username, :presence => true
   has_many :ip_addresses, :dependent => :destroy

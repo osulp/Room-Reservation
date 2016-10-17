@@ -1,4 +1,4 @@
-class Room < ActiveRecord::Base
+class Room < ApplicationRecord
   has_paper_trail
   validates :floor, :name, presence: true
   validates :floor, numericality: {only_integer: true}

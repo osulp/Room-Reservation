@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
-  before_filter RubyCAS::GatewayFilter, :only => :index, :if => -> {current_user.nil?}
-  before_filter :convert_cookie_to_param
-  before_filter :admin_date_restriction
+  # before_filter RubyCAS::GatewayFilter, :only => :index, :if => -> {current_user.nil?}
+  # before_filter :convert_cookie_to_param
+  # before_filter :admin_date_restriction
 
   def index
     @presenter = presenter
@@ -40,9 +40,10 @@ class HomeController < ApplicationController
   # it has a param they can give out in the URL.
   def convert_cookie_to_param
     unless params[:date]
-      params[:date] = date.strftime("%Y-%m-%-d")
+      # params[:date] = date.strftime("%Y-%m-%-d")
       # redirect_to params
-      redirect_to url_for(params)
+      # redirect_to url_for(params.permit(:date))
+      # redirect_to root_path
     end
   end
 
@@ -50,9 +51,11 @@ class HomeController < ApplicationController
   def admin_date_restriction
     current_date = Time.current.to_date
     if date < current_date && !can?(:view_past_dates, :calendar)
-      params[:date] = current_date.strftime("%Y-%m-%-d")
+      # params[:date] = current_date.strftime("%Y-%m-%-d")
       # redirect_to params
-      redirect_to url_for(params)
+      # redirect_to url_for(params)
+      # redirect_to url_for(params.permit(:date))
+      # redirect_to root_path
     end
   end
 end

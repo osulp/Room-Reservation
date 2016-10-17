@@ -1,4 +1,4 @@
-class BannerRecord < ActiveRecord::Base
+class BannerRecord < ApplicationRecord
   establish_connection :"banner_#{Rails.env}"
   self.table_name = "BannerLookup"
 

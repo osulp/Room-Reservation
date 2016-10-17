@@ -1,4 +1,4 @@
-class RoomHourRecord < ActiveRecord::Base
-  belongs_to :room
-  belongs_to :room_hour, :touch => true
+class RoomHourRecord < ApplicationRecord
+  belongs_to :room, optional: true
+  belongs_to :room_hour, :touch => true, optional: true
 end

@@ -1,8 +1,8 @@
-class Reservation < ActiveRecord::Base
+class Reservation < ApplicationRecord
   include Reservation::Validations
   has_paper_trail
   acts_as_paranoid
-  belongs_to :room
+  belongs_to :room, optional: true
   has_one :key_card
   has_one :user_banner_record, :class_name => "BannerRecord", :foreign_key => "onid", :primary_key => "user_onid"
   before_destroy :touch

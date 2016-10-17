@@ -1,6 +1,6 @@
-class Openroom::Keycard < ActiveRecord::Base
+class Openroom::Keycard < ApplicationRecord
   establish_connection :"openroom_#{Rails.env}"
-  belongs_to :room, :foreign_key => :roomid, :primary_key => :roomid, :class_name => "Openroom::Room"
+  belongs_to :room, optional: true, :foreign_key => :roomid, :primary_key => :roomid, :class_name => "Openroom::Room"
   has_many :reservations, :foreign_key => :keycardid, :primary_key => :id
 
   def converted

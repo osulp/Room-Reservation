@@ -1,7 +1,7 @@
-class Openroom::Room < ActiveRecord::Base
+class Openroom::Room < ApplicationRecord
   establish_connection :"openroom_#{Rails.env}"
   has_many :reservations, :foreign_key => :roomid, :primary_key => :roomid, :class_name => "Openroom::Reservation"
-  belongs_to :room_group, :class_name => "Openroom::RoomGroup", :foreign_key => :roomgroupid, :primary_key => :roomgroupid
+  belongs_to :room_group, optional: true, :class_name => "Openroom::RoomGroup", :foreign_key => :roomgroupid, :primary_key => :roomgroupid
   has_many :keycards, :foreign_key => :roomid, :primary_key => :roomid, :class_name => "Openroom::Keycard"
   def converted
     r = ::Room.where(:name => roomname).first || ::Room.new

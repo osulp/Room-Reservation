@@ -1,6 +1,6 @@
-class CleaningRecordRoom < ActiveRecord::Base
-  belongs_to :cleaning_record, :touch => true
-  belongs_to :room
+class CleaningRecordRoom < ApplicationRecord
+  belongs_to :cleaning_record, :touch => true, optional: true
+  belongs_to :room, optional: true
   validate :not_overriding_previous_record
 
   private

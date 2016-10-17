@@ -3,14 +3,15 @@ source 'https://rubygems.org'
 gem 'jquery-rails'
 # gem 'mysql'
 gem 'mysql2', '~> 0.3.20'
-gem 'rails', :github => 'rails/rails', :branch => '4-2-stable'
-# gem 'rails', '>= 5.0.0.rc2', '< 5.1'
+gem 'rails', :github => 'rails/rails', :branch => '5-0-stable'
 gem 'simple_form'
 gem 'yard'
-gem 'active_model_serializers', '~> 0.8.0'
+# gem 'active_model_serializers', '~> 0.10.0'
 
 # Draper for decoration
-gem 'draper'
+gem 'activemodel-serializers-xml', github: 'rails/activemodel-serializers-xml'
+# gem 'draper'
+gem 'draper', github: 'audionerd/draper', branch: 'rails5'
 
 # CAS Client
 gem 'rubycas-client', git: 'git://github.com/terrellt/rubycas-client.git', branch: 'master'
@@ -29,21 +30,21 @@ gem 'unicorn'
 # gem 'cache_digests'
 
 # Paranoia to simply hide deleted records
-gem 'paranoia', '~> 2.0'
+gem 'paranoia', '~> 2.2.0.pre'
 
 gem 'coffee-rails'
-gem 'sass-rails', '~>4.0'
+# gem 'sass-rails', '>= 3.2'
+gem 'sass-rails', '~> 5.0', '>= 5.0.1'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
 # gem 'jquery-ui-rails'
 gem 'jquery-ui-rails', '~>4.2'
-gem 'bootstrap-sass', '~>2.3.0'
+gem 'bootstrap-sass', '~>3.3.7'
 gem "compass-rails"
 gem 'responders', '~> 2.0'
 
 # Old Asset Precompile Behavior for Stylesheets
-gem "sprockets-digest-assets-fix", :github => "tobiasr/sprockets-digest-assets-fix"
 
 # Faye
 gem 'faye'
@@ -66,10 +67,10 @@ gem 'druthers'
 gem 'tinymce-rails'
 
 # PaperTrail for versioning
-gem 'paper_trail', '~> 3.0.0'
+gem 'paper_trail', '~> 5.0.0'
 
 # File uploading
-gem 'carrierwave'
+gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
 
 # Kaminari for pagination
 gem 'kaminari'

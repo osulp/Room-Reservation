@@ -1,4 +1,4 @@
-class RoomHour < ActiveRecord::Base
+class RoomHour < ApplicationRecord
   acts_as_paranoid
   has_paper_trail
   before_destroy :touch
