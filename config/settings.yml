@@ -42,6 +42,9 @@ email_update_subject:
   category: Email Settings
   default: 'Study Room Reservation Updated'
 announcement_header_message:
+  tag_attributes:
+    class: tinymce
+  field_type: text_area
   default: ''
 reservation_padding:
   tag_attributes:

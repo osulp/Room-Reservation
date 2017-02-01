@@ -1,5 +1,5 @@
 <% unless Setting.announcement_header_message.empty? %>
 <div class="alert alert-info" id="remindermessage">
-  <%= Setting.announcement_header_message %>
+  <%= Setting.announcement_header_message.html_safe %>
 </div>
 <% end %>
