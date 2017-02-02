@@ -31,6 +31,8 @@ vendor/bundler_gems
 
 # Ignore production configuration files
 config/config.yml
+config/thin.yml
+config/sidekiq.yml
 config/unicorn.rb
 config/god.conf
 
@@ -45,3 +47,7 @@ public/uploads
 
 #Ignore RubyMine project files
 .idea
+/logs*
+/public*
+/log*
+/sockets*
