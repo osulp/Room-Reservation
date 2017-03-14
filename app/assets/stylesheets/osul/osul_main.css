@@ -1122,3 +1122,12 @@ ul.nice-menu-down li ul li ul {
 .ui-accordion a {
     color: #c34500;
 }
+
+#block-block-406 {
+  float: right;
+}
+
+#block-block-406 a {
+    text-decoration: none;
+    font-weight: bold;
+}
