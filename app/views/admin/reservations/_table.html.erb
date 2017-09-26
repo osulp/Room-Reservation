@@ -8,11 +8,11 @@
   </tr>
   <% @reservations[0].each do |reservation| %>
     <tr
-    data-room-id="<%= reservation.room.id %>"
-    data-room-name="<%= reservation.room.name %>"
+    data-room-id="<%= reservation.room.id unless reservation.room.nil? %>"
+    data-room-name="<%= reservation.room.name unless reservation.room.nil? %>"
     class="reservation"
     >
-      <td><%= reservation.room.name %></td>
+      <td><%= reservation.room.name unless reservation.room.nil? %></td>
       <td>
         <%= reservation.formatted_start %> -
         <%= raw reservation.formatted_end %>
@@ -33,7 +33,7 @@
   <% end %>
   <% @reservations[1].each do |reservation| %>
     <tr class="reservation">
-      <td><%= reservation.room.name %></td>
+      <td><%= reservation.room.name unless reservation.room.nil? %></td>
       <td>
         <%= reservation.formatted_start %> -
         <%= raw reservation.formatted_end %>
