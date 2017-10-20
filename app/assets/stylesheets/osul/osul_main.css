@@ -37,11 +37,14 @@
 }
 @font-face {
     font-family: 'EksjaExtremesRegular';
-    src: url(http://oregonstate.edu/osuhomepage/css/fonts/Eksja/Eksja-regular-webfont.eot);
-    src: local('☺'), url(http://oregonstate.edu/osuhomepage/css/fonts/Eksja/Eksja-regular-webfont.woff) format('woff'), url(http://oregonstate.edu/osuhomepage/css/fonts/Eksja/Eksja-regular-webfont.ttf) format('truetype'), url(http://oregonstate.edu/osuhomepage/css/fonts/Eksja/Eksja-regular-webfont.svg#webfont) format('svg');
+    src: url(https://oregonstate.edu/osuhomepage/css/fonts/Eksja/Eksja-regular-webfont.eot);
+    src: local('☺'), url(https://oregonstate.edu/osuhomepage/css/fonts/Eksja/Eksja-regular-webfont.woff) format('woff'), url(https://oregonstate.edu/osuhomepage/css/fonts/Eksja/Eksja-regular-webfont.ttf) format('truetype'), url(https://oregonstate.edu/osuhomepage/css/fonts/Eksja/Eksja-regular-webfont.svg#webfont) format('svg');
     font-weight: normal;
     font-style: normal;
 }
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 html {
     background-color: #252525;
 }
@@ -57,7 +60,7 @@ body {
 }
 h1,
 h2 {
-    font-family: 'EksjaExtremesRegular', Arial, Helvetica, Verdana, sans-serif;
+    font-family: 'Open sans', sans-serif;
 }
 h1 {
     font-size: 30px;
@@ -107,7 +110,7 @@ h3 {
 }
 h2,
 h4 {
-    color: #c34500;
+    color: #dc4405;
 }
 h4 {
     font-size: 110%;
@@ -389,7 +392,7 @@ ul.contextual-links li a:focus {
 }
 #osu-top-hat.new .parent,
 #osu-top-hat.new a.parent {
-    color: #c34500;
+    color: #dc4405;
     font-size: 15px;
     font-style: normal;
     text-transform: uppercase;
@@ -411,7 +414,7 @@ ul.contextual-links li a:focus {
 }
 #osu-top-hat.new h1 a {
     padding: 0;
-    color: #c34500;
+    color: #dc4405;
     border-radius: 0;
 }
 #osu-top-hat.new h1 a:active,
@@ -425,12 +428,12 @@ ul.contextual-links li a:focus {
     top: 25px;
     right: 20px;
     font-size: 24px;
-    color: #c34500;
+    color: #dc4405;
 }
 #osu-top-hat.new #search-link:active,
 #osu-top-hat.new #search-link:focus,
 #osu-top-hat.new #search-link:hover {
-    background: #c34500;
+    background: #dc4405;
     color: #fff;
 }
 /* Search overlay for new search within doug fir */
@@ -460,7 +463,7 @@ ul.contextual-links li a:focus {
     border-radius: 0;
 }
 #search-overlay #osu-search-top-hat-form input.form-submit {
-    background: #c34500 url('../../images/search.png') no-repeat 50% 50%;
+    background: #dc4405 url('../../images/search.png') no-repeat 50% 50%;
     border-radius: 0;
     box-shadow: 0;
     margin: 0 0 0 -3px;
@@ -544,7 +547,7 @@ ul.quicktabs-tabs.quicktabs-style-basic li.active {
 }
 ul.quicktabs-tabs.quicktabs-style-basic li.active a {
     color: #fff;
-    background: #c34500;
+    background: #dc4405;
 }
 ul.quicktabs-tabs.quicktabs-style-basic li:hover {
     border: none;
@@ -567,7 +570,7 @@ ul.quicktabs-tabs.quicktabs-style-basic li a:hover,
 ul.quicktabs-tabs.quicktabs-style-basic li a:active,
 ul.quicktabs-tabs.quicktabs-style-basic li a:focus {
     color: #fff;
-    background: #c34500;
+    background: #dc4405;
 }
 /* New tweaks for horizontal tabs */
 .horizontal-tabs ul.horizontal-tabs-list {
@@ -593,20 +596,20 @@ ul.quicktabs-tabs.quicktabs-style-basic li a:focus {
 }
 input.form-submit {
     /* using a class, once we drop support for ie7 we can use the selector */
-    background: #c34500;
+    background: #dc4405;
     /* Old browsers */
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2MzNDUwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM5ODM2MDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-    background: -moz-linear-gradient(top, #c34500 0%, #983600 100%);
+    background: -moz-linear-gradient(top, #dc4405 0%, #983600 100%);
     /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #c34500), color-stop(100%, #983600));
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dc4405), color-stop(100%, #983600));
     /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #c34500 0%, #983600 100%);
+    background: -webkit-linear-gradient(top, #dc4405 0%, #983600 100%);
     /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #c34500 0%, #983600 100%);
+    background: -o-linear-gradient(top, #dc4405 0%, #983600 100%);
     /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #c34500 0%, #983600 100%);
+    background: -ms-linear-gradient(top, #dc4405 0%, #983600 100%);
     /* IE10+ */
-    background: linear-gradient(top, #c34500 0%, #983600 100%);
+    background: linear-gradient(top, #dc4405 0%, #983600 100%);
     /* W3C */
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     color: #fff;
@@ -617,7 +620,7 @@ input.form-submit {
     margin-right: 10px;
 }
 .ie input.form-submit {
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c34500', endColorstr='#983600', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dc4405', endColorstr='#983600', GradientType=0);
     /* IE6-8 */
 }
 input.form-submit:hover,
@@ -977,7 +980,7 @@ ul.nice-menu-down li ul li ul {
 #sidebar-first ul.menu li a:focus,
 #audience-menu ul.menu li a:focus {
     color: #fff;
-    background-color: #c34500;
+    background-color: #dc4405;
 }
 #sidebar-first ul.menu li.active-trail > a.active:hover,
 #audience-menu ul.menu li.active-trail > a.active:hover,
@@ -992,7 +995,7 @@ ul.nice-menu-down li ul li ul {
 }
 #sidebar-first .content > ul.menu > li > a.active,
 #audience-menu .content > ul.menu > li > a.active {
-    color: #c34500;
+    color: #dc4405;
 }
 #sidebar-first .content > ul.menu > li > a.active:hover,
 #audience-menu .content > ul.menu > li > a.active:hover,
@@ -1017,7 +1020,7 @@ ul.nice-menu-down li ul li ul {
 .ui-accordion .ui-accordion-header.ui-state-default:hover,
 .ui-accordion .ui-accordion-header.ui-state-default:active,
 .ui-accordion .ui-accordion-header.ui-state-default:focus {
-    background: #c34500;
+    background: #dc4405;
 }
 .ui-accordion .ui-accordion-header.ui-state-default:hover a,
 .ui-accordion .ui-accordion-header.ui-state-default:active a,
@@ -1120,7 +1123,7 @@ ul.nice-menu-down li ul li ul {
     padding: 10px;
 }
 .ui-accordion a {
-    color: #c34500;
+    color: #dc4405;
 }
 
 #block-block-406 {
@@ -1131,3 +1134,271 @@ ul.nice-menu-down li ul li ul {
     text-decoration: none;
     font-weight: bold;
 }
+
+/*******************************************************************
+**************************2017 BRANDING*****************************
+**************************2017 BRANDING*****************************
+**************************2017 BRANDING*****************************
+**************************2017 BRANDING*****************************
+**************************2017 BRANDING*****************************
+*******************************************************************/
+
+/*
+******
+HEADER STYLES
+******
+*/
+
+#header h1 {
+    color: #fff;
+    background-color: #000;
+}
+
+#header h1 a {
+color: #fff;
+font-size: 20px;
+}
+
+#header #osu-top-hat {
+    width: 100%;
+}
+
+#header #osu-top-hat.new img {
+    height: 80px;
+    margin: 10px;
+}
+#header .group-header {
+    background: #000;
+    color: #fff;
+    padding: 10px;
+}
+
+#header .group-header h1 {
+    display: inline;
+    padding: 0;
+}
+
+#header .group-header a {
+    text-decoration: none;
+}
+
+#header #page-wrapper.container-fluid {
+    padding-left: 0;
+}
+#header #main-menu .menu, #main-menu .nice-menu {
+    margin-left: 6em;
+}
+
+#header li.menu-dropdown-item:hover {
+    background-color: #666;
+}
+
+#header .nice-menu > li {
+    float: left;
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+    border: none;
+}
+
+#header a#search-link {
+    display: none;
+}
+
+#header #osu-top-hat.new {
+    background: #dc4405;
+    height: 100px;
+    border-bottom: none;
+    position: relative;
+    padding-left: 0;
+    padding-right: 0;
+}
+#header ul li, #header ol li {
+line-height: 1.4rem;
+}
+
+
+/* Menu position  */
+/* @media (min-width: 980px) */
+#header .menu-container {
+padding-left: 85px;
+padding-right: 85px;
+margin: 10px 0;
+}
+
+/* menu top level item position */
+#header .menuparent .menu-top-level {
+padding: 10px 16px;
+}
+
+/* dropdown menu magic  */
+
+#header .menu-dropdown {
+    display: none;
+}
+
+#header .menuparent:hover .menu-dropdown {
+    display: block;
+    z-index: 9999;
+}
+/* dropdown styles */
+
+#header ul li .menuparent{
+    list-style-type: none;
+}
+
+#header li.menu-parent {
+    position: relative;
+}
+
+#header ul.menu-dropdown {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    margin-top: 13px;
+    padding: 10px 0;
+}
+
+#header li.menu-dropdown-item {
+    padding: 15px;
+    list-style-type: none;
+}
+
+#header li.menu-dropdown-item a {
+    text-decoration:none;
+    color: white;
+}
+
+#header #main-menu .nice-menu {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #252525;
+    border: none;
+    line-height: 16px;
+    margin: 0 2px;
+    display: inline-block;
+    padding: 10px 16px;
+}
+#header #main-menu .nice-menu > li.menuparent:hover > span,
+#header #main-menu .nice-menu > li.over > span {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+}
+
+/* Mobile Magic */
+@media (max-width: 850px) {
+#header .menu-container {
+padding-left: 0;
+margin: 0;
+}
+
+#header #main-menu .nice-menu {
+font-family: "Open Sans", sans-serif;
+text-transform: none;
+background: #373737;
+color: white;
+display: block;
+width: 100vw;
+margin: 0;
+padding: 10px 0;
+}
+
+#header .nice-menu li {
+float: none;
+}
+
+#header ul.menu-dropdown {
+position: relative;
+}
+
+#header .menuparent .menu-top-level {
+background-color: inherit;
+padding: 5px;
+}
+
+#header #main-menu .nice-menu > li.menuparent:hover > span, #header #main-menu .nice-menu > li.over > span {
+background-color: inherit;
+}
+
+#header ul.menu-dropdown {
+background-color: inherit;
+margin-top: inherit;
+padding: 0;
+}
+
+#header li.menu-dropdown-item {
+padding: 0;
+padding-left: 25px;
+line-height: 40px;o
+}
+#header .nice-menu .menuparent {
+border-top: 1px solid #474747;
+}
+
+}
+
+/*
+*********
+END HEADER
+*********
+*/
+
+/*
+********
+FOOTER STYLES
+********
+*/
+#footer {
+    background: url(http://oregonstate.edu/themes/osu/drupal8-osuhomepage/assets/images/repeatable-treeline.png) #373737 repeat-x left bottom;
+    border-top: 4px solid #dc4405;
+    min-height: 270px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 20px;
+}
+
+#footer h2, #footer h3 {
+    color: #fff;
+    font-size: 120%;
+    margin-top: 0;
+    line-height: inherit;
+}
+
+#footer a {
+    color: #fff;
+}
+
+#footer .row {
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-around;
+}
+
+#footer ul li {
+    list-style: none;
+}
+
+#footer hr {
+    border-top: 2px solid #DC4405;
+    border-bottom: none;
+    margin: 10px 0;
+    width: 25%;
+}
+
+/* mobile magic */
+@media (max-width: 850px) {
+
+    #footer .row {
+        flex-direction: column;
+    }
+
+    #footer .col {
+        margin-bottom: 15px;
+    }
+}
+/*
+********
+END FOOTER
+********
+*/
