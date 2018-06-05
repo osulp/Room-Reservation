@@ -65,7 +65,7 @@ Sidekiq.configure_client do |config|
 end
 ```
 
-### 2. Build and install
+### 3. Build and install
 
 ```
 cp docker-compose.override.example.yml docker-compose.override.yml
@@ -73,7 +73,7 @@ docker-compose build
 docker-compose up
 ```
 
-### 3. Run rake tasks in the libraryfind_web container ###
+### Run rake tasks in the libraryfind_web container ###
 
 Run db migrations 
 ```
