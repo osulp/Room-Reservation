@@ -73,7 +73,7 @@ docker-compose build
 docker-compose up
 ```
 
-### Run rake tasks in the libraryfind_web container ###
+### Run rake tasks in the web container ###
 
 Run db migrations 
 ```
