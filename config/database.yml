@@ -67,14 +67,11 @@ banner_staging:
 
 openroom_development: &openroom_development
   adapter: mysql2
-  # database: <%= ENV['ROOMRES_OPENROOM_DATABASE'] || "roomres_development" %>
+  database: <%= ENV['ROOMRES_OPENROOM_DATABASE'] || "openroom_development" %>
   username: <%= ENV['ROOMRES_OPENROOM_USERNAME'] || "root" %>
-  password: <%= ENV['ROOMRES_OPENROOM_PASSWORD'] || "test" %>
-  host: <%= ENV['ROOMRES_OPENROOM_HOST'] || "0.0.0.0" %>
-  port: <%= ENV['ROOMRES_OPENROOM_PORT'] || "3307" %>
-  pool: 5
-  protocol: 'tcp'
-  # socket: /tmp/mysql.sock
+  password: <%= ENV['ROOMRES_OPENROOM_PASSWORD'] || "vagrant" %>
+  host: <%= ENV['ROOMRES_OPENROOM_HOST'] || "127.0.0.1" %>
+  port: <%= ENV['ROOMRES_OPENROOM_PORT'] || "3306" %>
 
 openroom_production: &openroom_production
   <<: *openroom_development

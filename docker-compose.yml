@@ -3,16 +3,10 @@ services:
   redis:
     image: redis:3.0.5
     command: redis-server
-    ports:
-      - '6372:6379'
     volumes:
       - redis-data:/var/lib/redis/data
   db:
     image: library/mysql:5.6.22
-    environment:
-      MYSQL_ROOT_PASSWORD: admin123
-    ports:
-      - '3401:3306'
     volumes:
       - roomres-mysql:/var/lib/mysql/data
     links:
@@ -28,11 +22,6 @@ services:
       - sidekiq
     volumes:
       - .:/roomres
-    ports:
-      - "9000:3000"
-      - "9993:8983"
-      - "9292:9292"
-    command: ./docker-start-app.sh
     env_file:
       - .web.env
     depends_on:
