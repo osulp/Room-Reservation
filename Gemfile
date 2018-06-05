@@ -1,10 +1,8 @@
 source 'https://rubygems.org'
 
 
-gem 'eventmachine', :git => 'git://github.com/eventmachine/eventmachine.git', :branch => 'master'
 gem 'jquery-rails'
-# gem 'mysql2'
-gem 'mysql2', '~> 0.3.20'
+gem 'mysql2'
 gem 'rails', :github => 'rails/rails', :branch => '4-1-stable'
 gem 'simple_form'
 gem 'yard'
@@ -24,7 +22,7 @@ gem 'newrelic_rpm'
 gem 'dalli'
 
 # Unicorn for web server.
-# gem 'unicorn'
+gem 'unicorn'
 
 # Cache digests for rails partials
 gem 'cache_digests'
@@ -37,21 +35,18 @@ gem 'sass-rails', '~>4.0'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
-# gem 'jquery-ui-rails'
-gem 'jquery-ui-rails', '~>4.2'
+gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~>2.3.0'
 gem "compass-rails"
 
 # Old Asset Precompile Behavior for Stylesheets
-# gem "sprockets-digest-assets-fix", :github => "tobiasr/sprockets-digest-assets-fix"
+gem "sprockets-digest-assets-fix", :github => "tobiasr/sprockets-digest-assets-fix"
 
 # Faye
-# gem 'faye', '~> 1.0.1'
 gem 'faye'
 
 # Thin for faye
 gem 'thin'
-# gem 'thin', '~> 1.6.3'
 
 # Sidekiq for asynchronous jobs
 gem 'sidekiq'
@@ -85,6 +80,8 @@ gem 'rack-cors', :require => 'rack/cors'
 # Displays a notification banner for development/staging environments.
 gem 'envb-rails'
 
+gem 'capistrano', '~> 2.14'
+
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
@@ -92,19 +89,16 @@ group :development do
   gem 'binding_of_caller'
   gem 'spring'
   gem 'spring-commands-rspec'
-  # gem 'guard'
-  # gem 'guard-rspec'
-  # gem 'better_errors'
-  # gem 'debugger2', :git => "git://github.com/ko1/debugger2.git"
-  # gem 'pry'
-  # gem 'pry-byebug'
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'better_errors'
 end
 
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'pg'
-  # gem 'jazz_hands', :github => "terrellt/jazz_hands"
+  gem 'jazz_hands', :github => "terrellt/jazz_hands"
 end
 
 group :test do
