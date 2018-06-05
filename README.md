@@ -53,6 +53,18 @@ without the caching for general use. Implementing caching requires the following
 * Set jquery-ui-rails gem to: 
   - `gem 'jquery-ui-rails', '~>4.2'`
 
+### 2. Update sidekiq initializer and set redis url to `redis://redis:6379`
+`config/initializers/sidekiq.rb`:
+```
+Sidekiq.configure_server do |config|
+  config.redis = {:url => 'redis://redis:6379',:namespace => "roomreservation"}
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = {:url => 'redis://redis:6379',:namespace => "roomreservation"}
+end
+```
+
 ### 2. Build and install
 
 ```
