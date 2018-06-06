@@ -1,0 +1,49 @@
+version: '2'
+services:
+  redis:
+    image: redis:3.0.5
+    command: redis-server
+    volumes:
+      - redis-data:/var/lib/redis/data
+  db:
+    image: library/mysql:5.6.22
+    volumes:
+      - roomres-mysql:/var/lib/mysql/data
+    links:
+      - redis
+  web:
+    build: . # look in the current directory for a Dockerfile
+    restart: always
+    # tty: true
+    # stdin_open: true
+    links:
+      - db
+      - redis
+      - sidekiq
+    volumes:
+      - .:/roomres
+    env_file:
+      - .web.env
+    depends_on:
+      - db
+      - redis
+      - sidekiq
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    # command: bundle exec sidekiq -C
+    links:
+      - db
+      - redis
+    volumes:
+      - .:/roomres
+    env_file:
+      - .web.env
+    depends_on:
+      - db
+      - redis
+volumes:
+  redis-data:
+    driver: local
+  roomres-mysql:
+    driver: local
