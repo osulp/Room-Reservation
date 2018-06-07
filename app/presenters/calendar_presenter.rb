@@ -22,7 +22,7 @@ class CalendarPresenter
   end
   # Publishes info to Faye
   def self.publish_changed(start_time, end_time, presenter_key=nil)
-    FayePublishChangedDates.perform_async(start_time, end_time, presenter_key)
+    #FayePublishChangedDates.perform_async(start_time, end_time, presenter_key)
   end
 
   def self.form_cache_key(start_time, end_time, rooms, ignore_managers = [])
@@ -68,7 +68,7 @@ class CalendarPresenter
                             result = Rails.cache.read(@presenter_key)
                           end
                           result
-                        end 
+                        end
     if @cached_version.kind_of?(String) && !@cached_version.blank?
       @cached_version = Marshal.load(@cached_version)
     end

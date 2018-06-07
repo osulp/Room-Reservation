@@ -1,16 +1,16 @@
-version: '2'
+version: '2.3'
 services:
-  redis:
-    ports:
-      - '6372:6379'
+#  redis:
+#    ports:
+#      - '6372:6379'
   db:
     environment:
       MYSQL_ROOT_PASSWORD: admin123
-    ports:
-      - '3401:3306'
+#    ports:
+#      - '3401:3306'
   web:
-    ports:
-      - "9000:3000"
-      - "9993:8983"
-      - "9292:9292"
+#    ports:
+#      - "9000:3000"
+#      - "9993:8983"
+#      - "9292:9292"
     command: ./docker-start-app.sh

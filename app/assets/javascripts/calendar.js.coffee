@@ -128,7 +128,7 @@ class CalendarManager
     window.ReservationPopupManager.hide_popup() unless @background_loading
     window.CancelPopupManager.hide_popup() unless @background_loading
     @background_loading = false
-    window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
+    #window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
   update_room_bars: (data) ->
     # Close all popovers on room-name
     $('.room-name').popover('hide')

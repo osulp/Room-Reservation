@@ -1,5 +1,6 @@
 #! /bin/sh
-rackup faye.ru -s thin -E production &
+#rackup faye.ru -s thin -E production &
+rm tmp/pids/*
 RAILS_ENV=development bundle exec rake db:create
 RAILS_ENV=development bundle exec rake db:migrate
 # RAILS_ENV=test bundle exec rake db:create

@@ -1,49 +1,65 @@
-version: '2'
+version: '2.3'
+
+networks:
+  external:
+  internal:
+
 services:
   redis:
     image: redis:3.0.5
     command: redis-server
     volumes:
-      - redis-data:/var/lib/redis/data
+      - redis:/var/lib/redis/data
+    networks:
+      internal:
+    depends_on:
+      db:
+        condition: service_started
   db:
     image: library/mysql:5.6.22
+    restart: always
     volumes:
-      - roomres-mysql:/var/lib/mysql/data
-    links:
-      - redis
+      - db:/var/lib/mysql/data
+    networks:
+      internal:
   web:
     build: . # look in the current directory for a Dockerfile
     restart: always
     # tty: true
     # stdin_open: true
-    links:
-      - db
-      - redis
-      - sidekiq
     volumes:
       - .:/roomres
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
     env_file:
       - .web.env
     depends_on:
-      - db
-      - redis
-      - sidekiq
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+      sidekiq:
+        condition: service_started
+    networks:
+      internal:
+      external:
   sidekiq:
     build: .
     command: bundle exec sidekiq -C config/sidekiq.yml
-    # command: bundle exec sidekiq -C
-    links:
-      - db
-      - redis
+    restart: always
     volumes:
       - .:/roomres
     env_file:
       - .web.env
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      internal:
 volumes:
-  redis-data:
-    driver: local
-  roomres-mysql:
-    driver: local
+  redis:
+  db:
