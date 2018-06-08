@@ -6,7 +6,7 @@ RoomReservation::Application.configure do # Settings specified here will take pr
 
   # Eager Loading
   config.eager_load = true
-  config.cache_store = :dalli_store
+  config.cache_store = :file_store, 'tmp/cache'
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true

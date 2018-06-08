@@ -8,10 +8,9 @@
   <meta name="author" content="">
   <title>Study Room Reservation | OSU Libraries | Oregon State University</title>
   <%= stylesheet_link_tag :application, :media => 'all' %>
-  <%= stylesheet_link_tag('envb') unless Envb::Rails.options[:excludes].include?(::Rails.env) %>
   <%= csrf_meta_tags %>
 </head>
-<body data-push-server="<%= APP_CONFIG['push']['server'] %>">
+<body>
   <div class="pine">
   <%= render 'admin_navbar' if current_user.staff? %>
   <%= raw current_user.tag  unless current_user.nil?%>
