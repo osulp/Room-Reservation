@@ -29,12 +29,6 @@ gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~>2.3.0'
 gem "compass-rails"
 
-# Old Asset Precompile Behavior for Stylesheets
-gem "sprockets-digest-assets-fix", :github => "tobiasr/sprockets-digest-assets-fix"
-
-# Faye
-#gem 'faye'
-
 gem 'puma'
 
 # Sidekiq for asynchronous jobs
