@@ -9,3 +9,5 @@ en:
       default: '%a, %b %-d, %Y at %r'
       date: '%b %-d, %Y'
       short: '%B %d'
+  help:
+    reserve-help: ' To make a reservation, click a green highlight on the desired day. A blue highlight means a reservation was already made. Once chosen, choose a desired time frame, fill in your onid username and click the reserve button.'
