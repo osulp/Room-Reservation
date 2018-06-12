@@ -27,7 +27,7 @@
     <% end %>
     </td>
     <td>
-      <code class="text-info"><%= keycard.room.name %></code>
+      <code class="text-info"><%= keycard.room.name unless keycard.room.nil? %></code>
     </td>
     <td>
       <%= link_to 'Edit', edit_admin_key_card_path(keycard), :class => 'btn' %>
