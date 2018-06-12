@@ -6,6 +6,7 @@ class CalendarManager
     # When events are updated, refresh the calendar.
     $.event.trigger({type: "calendarInitialized", time: new Date(), element: this})
     $(document).on("eventsUpdated", => this.refresh_view())
+    window.setInterval((=> this.refresh_view()),20000)
   initialize_calendar: ->
     @datepicker = $("#datepicker")
     @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"), maxDate: @datepicker.data("max-date"))
