@@ -18,7 +18,7 @@ class Reservation
     end
 
     def not_swearing
-      errors.add(:description, "is innapropriate.") if SwearFilter.profane?(description)
+      errors.add(:description, "is inappropriate.") if SwearFilter.profane?(description)
     end
 
   end
