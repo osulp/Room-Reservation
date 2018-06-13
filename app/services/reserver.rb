@@ -56,20 +56,10 @@ class Reserver
   def send_email
     return if @options[:ignore_email]
     unless user.email.blank?
-      begin
-        ReservationMailer.send(email_method, reservation, user.decorate)
-      rescue Redis::CannotConnectError
-        return
-      end
-    end
-  end
-
-  def email_method
-    @email_method ||= begin
       if reservation.versions.size > 1
-        :update_email
+        ReservationMailer.update_email(reservation, user.decorate).deliver_now
       else
-        :reservation_email
+        ReservationMailer.reservation_email(reservation, user.decorate).deliver_now
       end
     end
   end
