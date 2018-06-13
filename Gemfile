@@ -98,4 +98,5 @@ group :test do
   gem 'timecop'
   gem 'capybara-screenshot'
   gem 'coveralls', require: false
+  gem 'rspec_junit_formatter'
 end

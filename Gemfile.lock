@@ -317,6 +317,8 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     ruby-debug-ide (0.6.1)
       rake (>= 0.8.1)
     ruby_dep (1.5.0)
@@ -424,6 +426,7 @@ DEPENDENCIES
   redis-namespace
   responders (~> 2.0)
   rspec-rails
+  rspec_junit_formatter
   ruby-debug-ide
   rubycas-client!
   rubycas-client-rails!
