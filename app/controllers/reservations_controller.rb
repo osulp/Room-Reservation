@@ -24,7 +24,7 @@ class ReservationsController < ApplicationController
       result = result.where("start_time <= ? AND end_time >= ?", date.tomorrow.midnight, date.midnight)
     end
     result = ReservationDecorator.decorate_collection(result.includes(:key_card, :room, :user_banner_record))
-    respond_with(result)
+    respond_with(result.object)
   end
 
   def show

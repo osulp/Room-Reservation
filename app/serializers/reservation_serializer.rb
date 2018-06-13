@@ -16,6 +16,7 @@ class ReservationSerializer < ActiveModel::Serializer
     u = object.user
     u.banner_record = object.user_banner_record || BannerRecord.new
     @user_name ||= u.decorate.name
+    @user_name
   end
 
   def cancel_string

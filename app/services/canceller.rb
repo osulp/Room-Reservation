@@ -37,7 +37,7 @@ class Canceller
     reserved_for = cancelling_user if reserved_for.onid == cancelling_user.onid
     unless reserved_for.email.blank?
       begin
-        ReservationMailer.delay.cancellation_email(reservation, reserved_for)
+        ReservationMailer.cancellation_email(reservation, reserved_for)
       rescue Redis::CannotConnectError
         return
       end

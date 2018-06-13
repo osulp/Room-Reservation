@@ -1,5 +1,4 @@
 class BannerRecordSerializer < ActiveModel::Serializer
-  type ''
   attributes :onid, :status, :fullName, :max_reservation_time
 
 
