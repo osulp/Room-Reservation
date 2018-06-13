@@ -50,3 +50,4 @@ public/uploads
 /public*
 /log*
 /sockets*
+docker-compose.override.yml

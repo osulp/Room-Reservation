@@ -135,6 +135,9 @@ GEM
       tins (~> 1.6)
     crass (1.0.4)
     database_cleaner (1.7.0)
+    debase (0.2.2)
+      debase-ruby_core_source (>= 0.10.2)
+    debase-ruby_core_source (0.10.3)
     debug_inspector (0.0.3)
     diff-lcs (1.3)
     docile (1.1.5)
@@ -314,6 +317,8 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
+    ruby-debug-ide (0.6.1)
+      rake (>= 0.8.1)
     ruby_dep (1.5.0)
     sass (3.2.19)
     sass-rails (4.0.5)
@@ -396,6 +401,8 @@ DEPENDENCIES
   compass-rails
   coveralls
   database_cleaner
+  debase
+  debase-ruby_core_source
   draper
   druthers
   execjs
@@ -417,6 +424,7 @@ DEPENDENCIES
   redis-namespace
   responders (~> 2.0)
   rspec-rails
+  ruby-debug-ide
   rubycas-client!
   rubycas-client-rails!
   sass-rails (~> 4.0)
