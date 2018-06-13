@@ -51,3 +51,4 @@ public/uploads
 /log*
 /sockets*
 docker-compose.override.yml
+.vscode*
