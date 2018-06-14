@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.datepicker
-//= require jquery.ui.slider
-//= require jquery.ui.draggable
-//= require jquery.ui.touch-punch
+//= require jquery-ui/widgets/datepicker
+//= require jquery-ui/widgets/slider
+//= require jquery-ui/widgets/draggable
 //= require bootstrap
 //= require jquery.cookie
 //= require local_iso
@@ -23,11 +22,10 @@
 //= require moment-with-langs
 //= require moment-timezone
 //= require moment-timezone-data
-//= require faye
 //= require list
 //= require list.fuzzysearch
 //= require list.pagination
 //= require bootstrap-timepicker
-//= require jquery.ui.tabs
+//= require jquery-ui/widgets/tabs
 //= require osul_search
 // = require_tree .

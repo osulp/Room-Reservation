@@ -1,6 +1,6 @@
 RoomReservation::Application.routes.draw do
   root :to => 'home#index'
-  get "/(day/:date)", :to => "home#index", :date => /[TZtz0-9:\-\.%]+?/, :format => /html|json/
+  get "/(day/:date)", :to => "home#index", :date => /[TZtz0-9:\-\.%]+?/, :format => /html|json/, :as => 'day'
   get "/home/day/:date", :to => "home#day", :date => /[TZtz0-9:\-\.%]+?/, :format => /html|json/
   get "/home/timebars/:date", :to => "home#timebars", :date => /[TZtz0-9:\-\.%]+?/, :format => /html|json/
   get "/login", :to => 'sessions#new'

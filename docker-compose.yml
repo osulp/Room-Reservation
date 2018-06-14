@@ -1,49 +1,82 @@
-version: '2'
+version: '2.3'
+
+networks:
+  external:
+  internal:
+
 services:
   redis:
     image: redis:3.0.5
     command: redis-server
     volumes:
-      - redis-data:/var/lib/redis/data
+      - redis:/var/lib/redis/data
+    networks:
+      internal:
+    depends_on:
+      db:
+        condition: service_started
   db:
-    image: library/mysql:5.6.22
-    volumes:
-      - roomres-mysql:/var/lib/mysql/data
-    links:
-      - redis
-  web:
-    build: . # look in the current directory for a Dockerfile
+    image: mysql:5.6
     restart: always
-    # tty: true
-    # stdin_open: true
-    links:
-      - db
-      - redis
-      - sidekiq
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin123
+      - MYSQL_PASSWORD=admin123
     volumes:
-      - .:/roomres
-    env_file:
-      - .web.env
-    depends_on:
-      - db
-      - redis
-      - sidekiq
-  sidekiq:
+      - db:/var/lib/mysql/data
+    networks:
+      internal:
+  app:
     build: .
-    command: bundle exec sidekiq -C config/sidekiq.yml
-    # command: bundle exec sidekiq -C
-    links:
-      - db
-      - redis
+    env_file:
+      - .env
     volumes:
       - .:/roomres
-    env_file:
-      - .web.env
+    networks:
+      internal:
+  ##
+  # Ensure that the database migrations are run on the appropriate database related to the RAILS_ENV running
+  db_migrate:
+    extends: app
+    restart: on-failure
+    command: >
+      bash -c "bundle exec rake db:create
+      && bundle exec rake db:migrate"
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_started
+  web:
+    extends: app
+    restart: always
+    command: >
+      bash -c "rm -f tmp/pids/server.pid
+      && bundle exec rails server -p 3000 -b '0.0.0.0' -e ${RAILS_ENV}"
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    depends_on:
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+      sidekiq:
+        condition: service_started
+      db_migrate:
+        condition: service_started
+    networks:
+      internal:
+      external:
+  sidekiq:
+    extends: app
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      internal:
 volumes:
-  redis-data:
-    driver: local
-  roomres-mysql:
-    driver: local
+  redis:
+  db:

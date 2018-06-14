@@ -6,6 +6,10 @@ class CalendarManager
     # When events are updated, refresh the calendar.
     $.event.trigger({type: "calendarInitialized", time: new Date(), element: this})
     $(document).on("eventsUpdated", => this.refresh_view())
+    window.setInterval((=>
+      if $('.popup.popover:visible').length == 0
+        this.refresh_view()
+    ),20000)
   initialize_calendar: ->
     @datepicker = $("#datepicker")
     @datepicker.datepicker(onSelect: this.selected_date, showButtonPanel: true, minDate: @datepicker.data("min-date"), maxDate: @datepicker.data("max-date"))
@@ -128,7 +132,7 @@ class CalendarManager
     window.ReservationPopupManager.hide_popup() unless @background_loading
     window.CancelPopupManager.hide_popup() unless @background_loading
     @background_loading = false
-    window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
+    #window.FayeManager?.subscribe_to_date("#{year}-#{month}-#{day}")
   update_room_bars: (data) ->
     # Close all popovers on room-name
     $('.room-name').popover('hide')

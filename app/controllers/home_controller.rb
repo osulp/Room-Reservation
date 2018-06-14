@@ -41,7 +41,7 @@ class HomeController < ApplicationController
   def convert_cookie_to_param
     unless params[:date]
       params[:date] = date.strftime("%Y-%m-%-d")
-      redirect_to params
+      redirect_to day_path(params[:date])
     end
   end
 
@@ -50,7 +50,7 @@ class HomeController < ApplicationController
     current_date = Time.current.to_date
     if date < current_date && !can?(:view_past_dates, :calendar)
       params[:date] = current_date.strftime("%Y-%m-%-d")
-      redirect_to params
+      redirect_to day_path(params[:date])
     end
   end
 end

@@ -3,7 +3,7 @@ class ReservationSerializer < ActiveModel::Serializer
   has_one :room
   has_one :key_card
 
-  def attributes
+  def attributes(*attrs)
     hash = super
     unless current_ability.can?(:manage, Reservation)
       hash.except!(:room_id, :reserver_onid, :available_times)
@@ -16,6 +16,7 @@ class ReservationSerializer < ActiveModel::Serializer
     u = object.user
     u.banner_record = object.user_banner_record || BannerRecord.new
     @user_name ||= u.decorate.name
+    @user_name
   end
 
   def cancel_string
