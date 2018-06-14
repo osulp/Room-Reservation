@@ -10,4 +10,4 @@ en:
       date: '%b %-d, %Y'
       short: '%B %d'
   help:
-    reserve-help: ' To make a reservation, click a green highlight on the desired day. A blue highlight means a reservation was already made. Once chosen, choose a desired time frame, fill in your onid username and click the reserve button.'
+    reserve-help: "To make a reservation, log in.  Available times and rooms will display as green bars. Click a green bar on the desired day and time.  A pop-up will appear with the option to shift the time or to add a group name.  Click the reserve button. A blue bar indicates your completed reservation."
