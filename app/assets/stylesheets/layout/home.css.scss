@@ -95,15 +95,17 @@ p.help-box {
   }
 }
 
+li.my-account {
+  float: right !important;
+}
+
 #login-link {
   font-size: 16px;
-  @media (min-width: 768px) {
-    float: right;
-  }
 }
 
 #sidebar {
   font-size: 16px;
+  margin: 0;
   .ui-datepicker .ui-widget-header {
     font-size: 1em;
   }
