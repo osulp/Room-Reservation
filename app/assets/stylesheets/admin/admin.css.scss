@@ -15,7 +15,7 @@
       margin: 0 15px 15px 0;
       transition: 2s;
       a {
-        background-color: #01316C;
+        background-color: #01316c;
         font-size: 1.25em;
         box-shadow: none !important;
         display: block;
@@ -32,11 +32,11 @@
           display: block;
         }
         &.active {
-          background-color: #3498DB;
+          background-color: #3498db;
         }
       }
       a:hover {
-        background-color: #21518C;
+        background-color: #21518c;
       }
     }
   }
@@ -56,10 +56,15 @@
   }
 
   .form-horizontal .inline-checkbox {
-    .checkbox, .radio {
+    .checkbox,
+    .radio {
       width: auto;
       display: inline-block;
       margin-right: 10px;
     }
   }
+}
+
+.mce-toolbar.mce-stack-layout-item {
+  display: inline-block;
 }
