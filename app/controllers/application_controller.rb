@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ip_login_username
-    ip = IPAddr.new(request.remote_ip).to_i
+    ip = IPAddr.new(request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip).to_i
     ip_addr = IpAddress.joins(:auto_login).where(:ip_address_i => ip).first
     return ip_addr.try(:auto_login).try(:username)
   end
