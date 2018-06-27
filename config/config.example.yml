@@ -19,6 +19,9 @@ deployment:
     default_environment:
       PATH: rbenv_path_information:$PATH
       PKG_CONFIG_PATH: /usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+api:
+  url: http://api.server.domain
+  hours_action: /hours_action_url.json
 push:
   server: http://faye/server:9020
   token: putatokenherethatissecureandhiddenfromusers
