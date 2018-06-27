@@ -5,6 +5,7 @@ gem 'mysql2', '0.3.21'
 gem 'rails'
 gem 'simple_form'
 gem 'yard'
+gem 'sprockets', '~> 2.12'
 #gem 'active_model_serializers', '~> 0.8.0'
 
 # Draper for decoration
