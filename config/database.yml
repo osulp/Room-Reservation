@@ -29,24 +29,6 @@ staging:
   <<: *default
   database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_staging" %>
 
-drupal_development:
-  <<: *default
-
-drupal_test:
-  <<: *default
-  database: <%= "#{ENV['ROOMRES_DB_PREFIX']}_test" %>
-
-drupal_production: &drupal_production
-  <<: *default
-  database: <%= "#{ENV['ROOMRES_DRUPAL_DB']}" %>
-  username: <%= ENV['ROOMRES_DRUPAL_DB_USERNAME'] %>
-  password: <%= ENV['ROOMRES_DRUPAL_DB_PASSWORD'] %>
-  host: <%= ENV['ROOMRES_DRUPAL_DB_HOST'] %>
-  port: <%= ENV['ROOMRES_DRUPAL_DB_PORT'] || "3306" %>
-
-drupal_staging:
-  <<: *drupal_production
-
 banner_development:
   <<: *default
 

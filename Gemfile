@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-
 gem 'jquery-rails'
 gem 'mysql2', '0.3.21'
 gem 'rails'
 gem 'simple_form'
 gem 'yard'
+gem 'sprockets', '~> 2.12'
 #gem 'active_model_serializers', '~> 0.8.0'
 
 # Draper for decoration
@@ -43,6 +43,8 @@ gem 'cancan'
 gem 'druthers'
 
 gem 'responders', '~> 2.0'
+
+gem 'faraday'
 
 # TinyMCE
 gem 'tinymce-rails'
