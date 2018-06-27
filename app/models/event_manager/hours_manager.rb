@@ -1,23 +1,62 @@
+require 'faraday'
+
 class EventManager::HoursManager < EventManager::EventManager
   def hours(date, rooms=[])
     @hours ||= {}
     return @hours[date] if @hours.has_key?(date)
-    result = get_drupal_hours(date, rooms)
+    result = get_api_hours(date, rooms)
     @hours[date] = result
     return @hours[date]
   end
 
-  def get_drupal_hours(date, rooms)
-    result = {}
-    self.class.hour_models.each do |hour_model|
-      result = hour_model.time_info(date)
-      result = result[date] unless result.blank?
-      unless result.blank?
-        result[:rooms] = rooms
-        break
-      end
+  ##
+  # Fetch the open hours for the date provided
+  # @param date [Date] the date to query open hours
+  # @param rooms [Array<Room>] an array of rooms
+  # @return [Hash] the open hours and the rooms queried
+  def get_api_hours(date, rooms)
+    body = api_request(date)
+    json = JSON.parse(body)
+    result = json.keep_if { |k,v| k.start_with?(date.to_s) }.first[1]
+    result = fix_api_hours(result)
+    result[:rooms] = rooms
+    result
+  end
+
+  ##
+  # The app has some magic built in that an open&close time of 1am indicates that the Library is closed to all public access.
+  # @param api_result [Hash] the result from the api call
+  # @return [Hash] fixed hash to indicate the library is closed if the api event_status says 'CLOSE'
+  def fix_api_hours(api_result)
+    api_result['event_status'] ||= ''
+    if api_result['event_status'].casecmp('close').zero?
+      api_result['open'] = '1:00 am'
+      api_result['close'] = '1:00 am'
     end
-    return result
+    api_result
+  end
+
+  ##
+  # Fetch the dates from the API server
+  # @param date [String] a string date to query for
+  # @return [Response] the response object from the HTTP call
+  def api_request(date)
+    api_cache_key = "api_request/#{date}"
+    if Rails.cache.exist?(api_cache_key)
+      result = Rails.cache.read(api_cache_key)
+      Rails.logger.debug "#{api_cache_key} found in cache, will not query the api until the cache expires. Cached result returned: #{result}"
+      return result
+    end
+    return Rails.cache.read(api_cache_key) if Rails.cache.exist?(api_cache_key)
+    conn = Faraday.new(url: APP_CONFIG["api"]["url"]) do |faraday|
+      faraday.request :url_encoded
+      faraday.adapter Faraday.default_adapter
+    end
+    response = conn.post APP_CONFIG["api"]["hours_action"], { dates: [date] }
+    Rails.logger.debug "Failed api_request, will not cache: api_request(#{date}) returned #{response.body}" unless response.success?
+    Rails.cache.write(api_cache_key, response.body, expires_in: 6.hours) if response.success?
+    Rails.logger.debug "Successful api_request, will cache: api_request(#{date}) returned #{response.body}" if response.success?
+    response.body
   end
 
   def specific_room_hours
@@ -66,7 +105,6 @@ class EventManager::HoursManager < EventManager::EventManager
 
   private
 
-
   def hours_to_events(hours,date)
     events = []
     all_rooms = hours[:rooms] || rooms
@@ -85,7 +123,6 @@ class EventManager::HoursManager < EventManager::EventManager
     close_time = room_hours.end_time.strftime("%l:%M %P")
     return {"open" => open_time, "close" => close_time}
   end
-
 
   def self.hour_models
     [

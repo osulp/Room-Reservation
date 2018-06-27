@@ -10,7 +10,7 @@ class EventManager::ReservationManager < EventManager::EventManager
   end
 
   def range_reservations(start_time, end_time)
-    Reservation.where("start_time <= ? AND end_time >= ? AND room_id IN (?)", end_time, start_time, rooms)
+    Reservation.where("start_time <= ? AND end_time >= ? AND room_id IN (?)", end_time, start_time, rooms.map(&:id))
   end
 
   def get_events

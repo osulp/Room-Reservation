@@ -153,6 +153,8 @@ GEM
     execjs (2.7.0)
     factory_bot (4.10.0)
       activesupport (>= 3.0.0)
+    faraday (0.15.2)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.25)
     formatador (0.2.5)
     fssm (0.2.10)
@@ -222,6 +224,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.13.1)
+    multipart-post (2.0.0)
     mysql2 (0.3.21)
     nenv (0.3.0)
     net-scp (1.2.1)
@@ -409,6 +412,7 @@ DEPENDENCIES
   druthers
   execjs
   factory_bot
+  faraday
   guard
   guard-rspec
   jquery-rails

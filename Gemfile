@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 gem 'jquery-rails'
 gem 'mysql2', '0.3.21'
 gem 'rails'
@@ -43,6 +42,8 @@ gem 'cancan'
 gem 'druthers'
 
 gem 'responders', '~> 2.0'
+
+gem 'faraday'
 
 # TinyMCE
 gem 'tinymce-rails'
