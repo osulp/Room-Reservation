@@ -70,10 +70,6 @@ describe OverdueTruncator do
         expect(reservation.reload.truncated_at).not_to be_blank
         expect(reservation_2.reload.truncated_at).not_to be_blank
       end
-      it "should the change to days to be published once" do
-        expect(CalendarPresenter).to receive(:publish_changed).exactly(1).times.with(start_time.to_date, end_time.to_date)
-        subject.call
-      end
     end
     context "when there are no reservations to be truncated" do
       it "should not error" do
