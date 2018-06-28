@@ -32,12 +32,7 @@ class Keycards::CheckinService
       result &&= Reserver.new(reservation, :ignore_email => true).save if reservation
       raise ActiveRecord::Rollback unless result == true
     end
-    notify_dates(old_start, old_end) if reservation
     return true
-  end
-
-  def notify_dates(start_time, end_time)
-    CalendarPresenter.publish_changed(start_time, end_time)
   end
 
   def attributes

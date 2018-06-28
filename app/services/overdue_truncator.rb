@@ -13,16 +13,9 @@ class OverdueTruncator
         ranges << (reservation.start_time.to_date..reservation.end_time.to_date)
       end
     end
-    notify_updates(ranges)
   end
 
   private
-
-  def notify_updates(ranges)
-    merge_ranges(ranges).each do |range|
-      CalendarPresenter.publish_changed(range.first, range.last) if range
-    end
-  end
 
   def eligible_reservations
     @eligible_reservations ||= Reservation.ongoing.inactive.where("start_time < ? AND (truncated_at IS NULL OR truncated_at < start_time)", Time.current-truncate_limit)

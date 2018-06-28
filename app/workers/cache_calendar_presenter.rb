@@ -8,7 +8,6 @@ class CacheCalendarPresenter
       presenter = CalendarPresenter.new(start_time, end_time, nil, ignore_managers)
       presenter.rooms
       Rails.cache.write(key, presenter)
-      CalendarPresenter.publish_changed(start_time, end_time, key) unless skip_publish
     end
   end
 end
