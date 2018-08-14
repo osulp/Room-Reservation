@@ -15,9 +15,6 @@ gem 'draper'
 gem 'rubycas-client', git: 'git://github.com/osulp/rubycas-client.git'
 gem 'rubycas-client-rails', :git => 'git://github.com/osulp/rubycas-client-rails.git'
 
-# New Relic
-gem 'newrelic_rpm'
-
 # Paranoia to simply hide deleted records
 gem 'paranoia', '~> 2.0'
 
@@ -71,6 +68,10 @@ gem 'capistrano', '~> 2.14'
 
 gem 'active_model_serializers'
 gem 'redis-namespace'
+
+group :staging, :production do
+  gem 'ddtrace'
+end
 
 group :development do
   #gem 'better_errors'
