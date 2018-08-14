@@ -1,20 +1,15 @@
 class CalendarPresenter
-  extend ::NewRelic::Agent::MethodTracer
   attr_reader :start_time, :end_time, :rooms, :floors, :filters
   delegate :to_a, :to => :event_collection
 
   def self.cached(start_time, end_time,skip_publish=false, ignore_managers = [])
     key = "Cached/#{form_cache_key(start_time, end_time, Room.all, ignore_managers)}"
     result = nil
-    self.class.trace_execution_scoped(['Custom/CachePresenter/Generate']) do
-      result = new(start_time, end_time, key, ignore_managers)
+    result = new(start_time, end_time, key, ignore_managers)
+    unless Rails.cache.exist?(key, deserialize: false)
+      cache_result(start_time.to_i, end_time.to_i, key, skip_publish, ignore_managers)
     end
-    unless Rails.cache.exist?(key, :deserialize => false)
-      self.class.trace_execution_scoped(['Custom/CachePresenter/CacheJob']) do
-        cache_result(start_time.to_i, end_time.to_i, key, skip_publish, ignore_managers)
-      end
-    end
-    return result
+    result
   end
 
   def self.cache_result(start_time, end_time, key, skip_publish=false, ignore_managers=[])
