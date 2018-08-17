@@ -53,13 +53,7 @@ class CalendarPresenter
 
   def populate_from_cached_version
     return if @presenter_key.blank?
-    @cached_version ||= begin
-                          result = nil
-                          self.class.trace_execution_scoped(['Custom/CachePresenter/Read']) do
-                            result = Rails.cache.read(@presenter_key)
-                          end
-                          result
-                        end
+    @cached_version ||= Rails.cache.read(@presenter_key)
     if @cached_version.kind_of?(String) && !@cached_version.blank?
       @cached_version = Marshal.load(@cached_version)
     end
