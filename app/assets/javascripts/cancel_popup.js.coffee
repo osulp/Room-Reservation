@@ -100,7 +100,8 @@ class CancelPopupManager
       @popup.css("margin-left",-1)
       @popup.css("margin-top",-1)
     else
-      @popup.offset({top: $(window).height()/2 - $("#cancel-popup").height(), left: $(window).width()/2 - $("#cancel-popup").width()})
+      @popup.css("top", $(window).scrollTop() + 200)
+      @popup.css("left",$(window).width()/2 - $("#cancel-popup").width())
     @popup.hide()
   populate_cancel_popup: (room_element, start_time, end_time, reserve_element) ->
     $(".popup").hide()
