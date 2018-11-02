@@ -6,7 +6,7 @@ describe Reserver do
   end
   let(:user) {build(:user)}
   let(:reserver) {user}
-  let(:room) {FactoryGirl.create(:room)}
+  let(:room) {FactoryBot.create(:room)}
   let(:start_time) {Time.current.midnight+12.hours}
   let(:end_time) {Time.current.midnight+14.hours+10.minutes}
   subject {Reserver.new({:reserver_onid => reserver.onid, :user_onid => user.onid, :room_id => room.id, :start_time => start_time, :end_time => end_time})}
