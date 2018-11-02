@@ -24,7 +24,9 @@ class EventManager::HoursManager < EventManager::EventManager
   end
 
   ##
-  # The app has some magic built in that an open&close time of 1am indicates that the Library is closed to all public access.
+  # The app has some magic built in;
+  #  - open&close time of 1am indicates that the Library is closed to all public access.
+  #  - open&close time of 12am indicates that the Library is open for 24 hours for public access.
   # @param api_result [Hash] the result from the api call
   # @return [Hash] fixed hash to indicate the library is closed if the api event_status says 'CLOSE'
   def fix_api_hours(api_result)
@@ -32,6 +34,9 @@ class EventManager::HoursManager < EventManager::EventManager
     if api_result['event_status'].casecmp('close').zero?
       api_result['open'] = '1:00 am'
       api_result['close'] = '1:00 am'
+    elsif !api_result['open_all_day'].blank? && api_result['open_all_day']
+      api_result['open'] = '12:00 am'
+      api_result['close'] = '12:00 am'
     end
     api_result
   end
