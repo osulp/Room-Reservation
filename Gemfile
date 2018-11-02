@@ -89,6 +89,7 @@ group :development, :test do
   gem 'debase'
   gem 'debase-ruby_core_source'
   gem 'factory_bot'
+  gem 'factory_bot_rails'
   gem 'ruby-debug-ide'
   gem 'rspec-rails'
 end
