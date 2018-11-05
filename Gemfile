@@ -92,6 +92,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'ruby-debug-ide'
   gem 'rspec-rails'
+  gem 'webmock'
 end
 
 group :test do
