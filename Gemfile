@@ -69,6 +69,9 @@ gem 'capistrano', '~> 2.14'
 gem 'active_model_serializers'
 gem 'redis-namespace'
 
+# Security audit update
+gem 'loofah', '>=2.2.3'
+
 group :staging, :production do
   gem 'ddtrace'
 end
