@@ -257,7 +257,7 @@ GEM
       slop (~> 3.4)
     public_suffix (3.0.2)
     puma (3.11.4)
-    rack (1.6.10)
+    rack (1.6.11)
     rack-contrib (1.8.0)
       rack (~> 1.4)
     rack-cors (1.0.2)
