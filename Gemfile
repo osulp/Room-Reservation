@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'jquery-rails'
 gem 'mysql2', '0.3.21'
-gem 'rails'
+gem 'rails', '4.2.11'
 gem 'simple_form'
 gem 'yard'
 gem 'sprockets', '~> 2.12'
@@ -71,6 +71,7 @@ gem 'redis-namespace'
 
 # Security audit update
 gem 'loofah', '>=2.2.3'
+gem "activejob", ">= 4.2.11"
 
 group :staging, :production do
   gem 'ddtrace'
