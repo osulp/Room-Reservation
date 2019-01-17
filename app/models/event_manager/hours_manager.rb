@@ -37,6 +37,8 @@ class EventManager::HoursManager < EventManager::EventManager
     elsif api_result['open_all_day'].present? && api_result['open_all_day']
       api_result['open'] = '12:00 am'
       api_result['close'] = '12:00 am'
+    elsif api_result['close'] == '11:59pm'
+      api_result['close'] = '12:15 am'
     end
     api_result
   end
