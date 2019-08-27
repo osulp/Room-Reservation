@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'jquery-rails'
-gem 'mysql2', '0.3.21'
+gem 'mysql2'
 gem 'rails', '4.2.11'
 gem 'simple_form'
 gem 'yard'
