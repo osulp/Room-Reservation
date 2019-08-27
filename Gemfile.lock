@@ -424,7 +424,7 @@ DEPENDENCIES
   kaminari
   loofah (>= 2.2.3)
   meta_request
-  mysql2 (= 0.3.21)
+  mysql2
   paper_trail (~> 3.0.0)
   paranoia (~> 2.0)
   poltergeist
