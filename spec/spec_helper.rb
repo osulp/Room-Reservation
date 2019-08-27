@@ -47,6 +47,9 @@ RSpec.configure do |config|
   # Focus Settings
   config.filter_run :focus => true
   config.run_all_when_everything_filtered = true
+  config.before do
+    FactoryBot.find_definitions
+  end
 end
 
 Capybara.javascript_driver = :poltergeist
