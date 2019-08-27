@@ -1,6 +1,6 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :special_hour, :class => Hours::SpecialHour do
     hours_id 0
     start_date {Time.current.yesterday.midnight}

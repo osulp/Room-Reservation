@@ -1,6 +1,6 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :hour, :class => Hours::Hour do
     loc APP_CONFIG["hours"]["key_name"]
     open_time_1 "12:00 am"

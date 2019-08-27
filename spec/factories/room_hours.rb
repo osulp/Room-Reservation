@@ -1,6 +1,6 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :room_hour do
     start_date "2013-08-28"
     end_date "2013-08-28"
