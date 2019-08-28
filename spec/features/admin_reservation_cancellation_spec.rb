@@ -13,7 +13,7 @@ describe 'cancelling a reservation' do
   end
   before(:each) do
     RubyCAS::Filter.fake(user.onid)
-    create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+    # create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
     banner_record
     @room = create(:room)
     @start_time = Time.current+1.hours
