@@ -62,18 +62,13 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
 
-    stub_request(:any, 'api.server.domain').to_return(body:{
-      "2018-11-05T00:00:00+00:00":{
-      "open": "12:00am",
-      "close": "11:59pm",
-      "string_date": "Mon, Nov 5, 2018",
-      "sortable_date": "2018-11-05",
-      "formatted_hours": "Open 24 Hours",
-      "open_all_day": true,
-      "closes_at_night": false,
-      "event_desc": "",
-      "event_status": ""
-      }
-    }.to_s)
+    stub_request(:get, "http://127.0.0.1:41641/__identify__").
+                  with(
+                    headers: {
+                	  'Accept'=>'*/*',
+                	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                	  'User-Agent'=>'Ruby'
+                    }).
+                  to_return(status: 200, body: "", headers: {})
   end
 end
