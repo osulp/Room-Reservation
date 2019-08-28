@@ -74,6 +74,6 @@ RSpec.configure do |config|
       "event_desc": "",
       "event_status": ""
       }
-      })
+    }.to_s)
   end
 end
