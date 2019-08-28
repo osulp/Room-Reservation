@@ -4,6 +4,10 @@ require 'rspec/rails'
 require 'database_cleaner'
 require 'support/factory_bot'
 require 'webmock/rspec'
+require 'webmock'
+include WebMock::API
+
+WebMock.enable!
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -58,18 +62,18 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
 
-    # stub_request(:any, 'api.server.domain').to_return({
-    #   "2018-11-05T00:00:00+00:00":{
-    #   "open": "12:00am",
-    #   "close": "11:59pm",
-    #   "string_date": "Mon, Nov 5, 2018",
-    #   "sortable_date": "2018-11-05",
-    #   "formatted_hours": "Open 24 Hours",
-    #   "open_all_day": true,
-    #   "closes_at_night": false,
-    #   "event_desc": "",
-    #   "event_status": ""
-    #   }
-    #   })
+    stub_request(:any, 'api.server.domain').to_return({
+      "2018-11-05T00:00:00+00:00":{
+      "open": "12:00am",
+      "close": "11:59pm",
+      "string_date": "Mon, Nov 5, 2018",
+      "sortable_date": "2018-11-05",
+      "formatted_hours": "Open 24 Hours",
+      "open_all_day": true,
+      "closes_at_night": false,
+      "event_desc": "",
+      "event_status": ""
+      }
+      })
   end
 end
