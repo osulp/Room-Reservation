@@ -10,7 +10,7 @@ describe "cleaning bars" do
   before(:each) do
     RubyCAS::Filter.fake("user")
     @room1 = create(:room)
-    @special_hour = create(:special_hour, start_date: Time.current.yesterday.to_date, end_date: Time.current.tomorrow.to_date, open_time: "00:00:00", close_time: "00:00:00")
+    #@special_hour = create(:special_hour, start_date: Time.current.yesterday.to_date, end_date: Time.current.tomorrow.to_date, open_time: "00:00:00", close_time: "00:00:00")
   end
   context "when there are no cleanings" do
     before(:each) do

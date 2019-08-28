@@ -62,7 +62,7 @@ describe "hour bars" do
     end
     context "and those hours aren't special" do
       before(:each) do
-        create(:special_hour, open_time: "06:00:00", close_time: "14:00:00")
+        #create(:special_hour, open_time: "06:00:00", close_time: "14:00:00")
         visit root_path
       end
       it "should create two bars locking down available reservation times to those hours" do
@@ -132,43 +132,43 @@ describe "hour bars" do
         end
       end
     end
-    context "and the hours lock the whole day down" do
-      before(:each) do
-        create(:special_hour, open_time: "01:00:00", close_time: "01:00:00")
-        visit root_path
-      end
-      it "should only display one reservation bar" do
-        expect(page).to have_selector(".bar-danger", :count => 1)
-      end
-    end
-    context "and the hours only lock down after a certain point" do
-      before(:each) do
-        create(:special_hour, open_time: "00:15:00", close_time: "12:00:00")
-        visit root_path
-      end
-      it "should only display one reservation bar" do
-        expect(page).to have_selector(".bar-danger", :count => 1)
-      end
-    end
+    # context "and the hours lock the whole day down" do
+    #   before(:each) do
+    #     #create(:special_hour, open_time: "01:00:00", close_time: "01:00:00")
+    #     visit root_path
+    #   end
+    #   it "should only display one reservation bar" do
+    #     expect(page).to have_selector(".bar-danger", :count => 1)
+    #   end
+    # end
+    # context "and the hours only lock down after a certain point" do
+    #   before(:each) do
+    #     create(:special_hour, open_time: "00:15:00", close_time: "12:00:00")
+    #     visit root_path
+    #   end
+    #   it "should only display one reservation bar" do
+    #     expect(page).to have_selector(".bar-danger", :count => 1)
+    #   end
+    # end
   end
   describe "caching", :caching => true do
     context "when hours change" do
-      before(:each) do
-        @hour = create(:special_hour, open_time: "00:15:00", close_time: "12:00:00")
-        visit root_path
-      end
-      it "should change the number of bars if necessary" do
-        expect(page).to have_selector(".bar-danger", :count => 1)
-        @hour.open_time = "04:00:00"
-        @hour.close_time = "08:00:00"
-        @hour.save
-        visit root_path
-        expect(page).to have_selector(".bar-danger", :count => 2)
-      end
+      # before(:each) do
+      #   @hour = create(:special_hour, open_time: "00:15:00", close_time: "12:00:00")
+      #   visit root_path
+      # end
+      # it "should change the number of bars if necessary" do
+      #   expect(page).to have_selector(".bar-danger", :count => 1)
+      #   @hour.open_time = "04:00:00"
+      #   @hour.close_time = "08:00:00"
+      #   @hour.save
+      #   visit root_path
+      #   expect(page).to have_selector(".bar-danger", :count => 2)
+      # end
     end
     context "when a reservation changes" do
       before(:each) do
-        @hour = create(:special_hour, open_time: "00:15:00", close_time: "22:00:00")
+        # @hour = create(:special_hour, open_time: "00:15:00", close_time: "22:00:00")
         @r = create(:reservation, :start_time => Time.current.midnight, :end_time => Time.current.midnight+2.hours, :room => @room1)
         visit root_path
       end
