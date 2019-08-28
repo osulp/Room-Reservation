@@ -62,7 +62,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
 
-    stub_request(:any, 'api.server.domain').to_return({
+    stub_request(:any, 'api.server.domain').to_return(body:{
       "2018-11-05T00:00:00+00:00":{
       "open": "12:00am",
       "close": "11:59pm",
