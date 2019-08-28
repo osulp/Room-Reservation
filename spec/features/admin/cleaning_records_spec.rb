@@ -138,7 +138,7 @@ describe "cleaning record administration" do
         end
         it "should show the record on the home page" do
           c = CleaningRecord.first
-          create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
+          #create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
           visit root_path(:day => c.start_date)
           expect(page).to have_selector(".bar-danger", :count => 1)
         end

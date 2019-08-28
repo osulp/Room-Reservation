@@ -11,7 +11,7 @@ describe AvailabilityChecker do
   describe ".available?" do
     context "when hours say it's open" do
       before(:each) do
-        create(:special_hour, start_date: 30.days.ago.to_date, end_date: 30.days.from_now.to_date, open_time: "00:00:00", close_time: "00:00:00")
+        #create(:special_hour, start_date: 30.days.ago.to_date, end_date: 30.days.from_now.to_date, open_time: "00:00:00", close_time: "00:00:00")
       end
       context "when there are no events" do
         it "should return true" do

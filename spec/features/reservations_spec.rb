@@ -7,7 +7,7 @@ describe "GET /reservations", :versioning => true do
     # Fake a login
     login
     # Make the hours "always open"
-    create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
+    #create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
   end
 
   describe "reservation list" do

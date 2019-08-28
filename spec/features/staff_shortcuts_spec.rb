@@ -89,7 +89,7 @@ describe "staff shortcuts", :versioning => true do
       end
       context "and the user has a reservation" do
         let(:reservation) do
-          create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
+          #create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
           create(:reservation, :user_onid => user.onid, :start_time => Time.current + 2.hours, :end_time => Time.current+4.hours)
         end
         it "should show it" do

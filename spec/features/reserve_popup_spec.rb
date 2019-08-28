@@ -25,7 +25,7 @@ describe 'reserve popup' do
     let(:fake) {RubyCAS::Filter.fake(user.onid)}
     before(:each) do
       fake
-      create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+      #create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       banner_record
       create(:room)
       visit root_path

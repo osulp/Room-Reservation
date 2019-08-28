@@ -12,7 +12,7 @@ describe Reserver do
   subject {Reserver.new({:reserver_onid => reserver.onid, :user_onid => user.onid, :room_id => room.id, :start_time => start_time, :end_time => end_time})}
   describe "validations" do
     before(:each) do
-      create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
+      #create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
     end
     it {should validate_presence_of :start_time}
     it {should validate_presence_of :end_time}
@@ -239,7 +239,7 @@ describe Reserver do
   describe ".save" do
     context "when the reserver is passed a reservation object" do
       before(:each) do
-        create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
+        #create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
         subject.save
         @reservation = Reservation.first
         @reservation.end_time = @reservation.end_time + 1.minute
@@ -277,7 +277,7 @@ describe Reserver do
     end
     context "when it's valid" do
       before(:each) do
-        create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
+        #create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
         subject.save
       end
       it "should create a new reservation" do

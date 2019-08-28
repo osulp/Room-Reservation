@@ -15,7 +15,7 @@ describe "Keycard Popup", :js => true do
   end
   before(:each) do
     RubyCAS::Filter.fake(user.onid)
-    create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+    #create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
     create(:room)
     APP_CONFIG[:keycards].stub(:[]).with(:enabled).and_return(keycard_enabled)
     visit root_path

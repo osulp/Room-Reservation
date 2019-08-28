@@ -114,7 +114,7 @@ describe ReservationsController do
     end
     context "when there is nothing blocking availability" do
       before(:each) do
-        create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+        #create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       end
       it "should return the max available time" do
         get :availability, :start => (Time.current.midnight+2.hours).iso8601, :room_id => @room.id, :format => :json
@@ -130,7 +130,7 @@ describe ReservationsController do
     context "when there is a reservation" do
       before(:each) do
         # Free up hours
-        create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+        #create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
       end
       context "in the next day" do
         before(:each) do

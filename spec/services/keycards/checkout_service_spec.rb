@@ -9,7 +9,7 @@ describe Keycards::CheckoutService do
   subject {Keycards::CheckoutService.new(keycard, reservation, user)}
   before(:each) do
     Timecop.freeze
-    create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
+    #create(:special_hour, start_date: 60.days.ago, end_date: 60.days.from_now, open_time: '00:00:00', close_time: '00:00:00')
   end
   it "should be valid" do
     expect(subject).to be_valid

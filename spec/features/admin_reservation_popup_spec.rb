@@ -18,7 +18,7 @@ describe "admin reservation popup", :js => true do
   before(:each) do
     RubyCAS::Filter.fake(user.onid)
     banner_record
-    create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+    #create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
     create(:room)
     visit root_path
     find('.bar-success').trigger("click")

@@ -15,7 +15,7 @@ describe "immediate reservation", :js => true do
   context "when logged in as an admin" do
     before(:each) do
       RubyCAS::Filter.fake(user.onid)
-      create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
+      ##create(:special_hour, open_time: "00:00:00", close_time: "00:00:00")
       room
       room_2
       room_3

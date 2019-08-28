@@ -7,7 +7,7 @@ describe "calendar", :js => true do
   end
   describe "cookie setting" do
     before(:each) do
-      create(:special_hour, start_date: Date.yesterday, end_date: 60.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
+      #create(:special_hour, start_date: Date.yesterday, end_date: 60.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
       create(:reservation, :start_time => Time.current.midnight+20.hours, :end_time => Time.current.midnight+22.hours)
       visit root_path
     end
@@ -145,7 +145,7 @@ describe "calendar", :js => true do
       end
       context "and you have a cookie set for a previous day" do
         before(:each) do
-          create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
+          #create(:special_hour, start_date: Date.yesterday, end_date: Date.tomorrow, open_time: "00:00:00", close_time: "00:00:00")
           create(:reservation, :start_time => Time.current.midnight+23.hours, :end_time => Time.current.midnight+24.hours)
           browser = page.driver
           browser.set_cookie('date', '2013-01-01')
@@ -157,7 +157,7 @@ describe "calendar", :js => true do
       end
       context "and you have a cookie set for a past day" do
         before(:each) do
-          create(:special_hour, start_date: 4.days.ago, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
+          #create(:special_hour, start_date: 4.days.ago, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
           create(:reservation, :start_time => Time.current.midnight-2.days, :end_time => Time.current.midnight-2.days+1.hour)
           current_day = Time.current-2.days
           browser = page.driver
@@ -181,7 +181,7 @@ describe "calendar", :js => true do
       end
       context "and you have a cookie set for a future day" do
         before(:each) do
-          create(:special_hour, start_date: 4.days.ago, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
+          #create(:special_hour, start_date: 4.days.ago, end_date: 4.days.from_now, open_time: "00:00:00", close_time: "00:00:00")
           create(:reservation, :start_time => Time.current.midnight+2.days+23.hours, :end_time => Time.current.midnight+2.days+24.hours)
           current_day = Time.current+2.days
           visit root_path
