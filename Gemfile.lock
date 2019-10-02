@@ -135,8 +135,6 @@ GEM
       tins (~> 1.6)
     crass (1.0.4)
     database_cleaner (1.7.0)
-    ddtrace (0.13.1)
-      msgpack
     debase (0.2.2)
       debase-ruby_core_source (>= 0.10.2)
     debase-ruby_core_source (0.10.3)
@@ -225,7 +223,6 @@ GEM
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
-    msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
     mysql2 (0.3.21)
@@ -409,7 +406,6 @@ DEPENDENCIES
   compass-rails
   coveralls
   database_cleaner
-  ddtrace
   debase
   debase-ruby_core_source
   draper
@@ -453,4 +449,4 @@ DEPENDENCIES
   yui-compressor
 
 BUNDLED WITH
-   1.16.4
+   1.17.1

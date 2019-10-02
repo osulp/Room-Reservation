@@ -73,10 +73,6 @@ gem 'redis-namespace'
 gem 'loofah', '>=2.2.3'
 gem "activejob", ">= 4.2.11"
 
-group :staging, :production do
-  gem 'ddtrace'
-end
-
 group :development do
   #gem 'better_errors'
   #gem 'binding_of_caller'
