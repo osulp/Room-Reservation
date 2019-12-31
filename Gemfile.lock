@@ -67,6 +67,7 @@ GEM
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.2.3)
+    byebug (11.0.1)
     callsite (0.0.11)
     cancan (1.6.10)
     capistrano (2.15.9)
@@ -397,6 +398,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 2.3.0)
+  byebug (~> 11.0)
   cancan
   capistrano (~> 2.14)
   capybara
