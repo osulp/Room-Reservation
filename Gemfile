@@ -103,3 +103,5 @@ group :test do
   gem 'coveralls', require: false
   gem 'rspec_junit_formatter'
 end
+
+gem "byebug", "~> 11.0", :groups => [:development, :test]

@@ -34,6 +34,13 @@ class EventManager::HoursManager < EventManager::EventManager
     if api_result['event_status'].casecmp('close').zero?
       api_result['open'] = '1:00 am'
       api_result['close'] = '1:00 am'
+    elsif api_result['all_open_hours'].count > 1
+      api_result['open'] = Time.parse(api_result['all_open_hours'].first['open']).strftime('%-l:%M %P')
+      if api_result['all_open_hours'].last['close'] == '23:59'
+        api_result['close'] = '12:00 am'
+      else
+        api_result['close'] = Time.parse(api_result['all_open_hours'].last['close']).strftime('%-l:%M %P')
+      end
     elsif api_result['open_all_day'].present? && api_result['open_all_day']
       api_result['open'] = '12:00 am'
       api_result['close'] = '12:00 am'
