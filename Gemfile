@@ -5,7 +5,7 @@ gem 'mysql2', '0.3.21'
 gem 'rails', '4.2.11'
 gem 'simple_form'
 gem 'yard'
-gem 'sprockets', '~> 2.12'
+gem 'sprockets', '~> 3.7.2'
 #gem 'active_model_serializers', '~> 0.8.0'
 
 # Draper for decoration
@@ -19,7 +19,7 @@ gem 'rubycas-client-rails', :git => 'git://github.com/osulp/rubycas-client-rails
 gem 'paranoia', '~> 2.0'
 
 gem 'coffee-rails'
-gem 'sass-rails', '~>4.0'
+gem 'sass-rails', '~>6.0'
 gem 'uglifier'
 gem 'execjs'
 gem 'jquery-ui-rails'
