@@ -1,4 +1,5 @@
 /* Pine header & footer customizations */
+
 html {
     background-color: #292929;
 }
@@ -12,8 +13,9 @@ html {
 }
 
 .pine h1, .pine h2 {
-    font-family: "EksjaExtremesRegular", "Arial", "Helvetica", "Verdana", sans-serif;
-    color: #c34500;
+    font-family: 'Open sans',sans-serif;
+    font-weight: 500;
+    color: #D73F09;
 }
 
 .pine #page-wrapper.container-fluid {
@@ -21,20 +23,20 @@ html {
 }
 
 .pine #main-menu {
-  font-family: 'Gudea',Arial,Verdana,sans-serif;
+  font-family: 'Open sans',sans-serif;
 }
 
 .pine #main-menu .menu, .pine #main-menu .nice-menu {
     margin-left: 6em;
 }
 .pine #main-menu .nice-menu > li.menuparent a:hover {
-    background-color: #c34500;
+    background-color: #D73F09;
 }
 .pine a#search-link {
     display: none;
 }
 .pine #osu-top-hat.new #search-link i {
-    color: #c34500;
+    color: #D73F09;
     text-decoration: none;
 }
 .pine #osu-top-hat.new #search-link:hover i {
@@ -83,7 +85,7 @@ html {
 }
 
 .pine #footer .content hr {
-    border-top: 1px solid #c34500;
+    border-top: 1px solid #D73F09;
     border-bottom: none;
     margin: 10px 0;
     width: 25%;
@@ -96,7 +98,7 @@ html {
 
 .pine #footer a.gift-btn {
     font-size: 20px;
-    background-color: #c34500;
+    background-color: #D73F09;
     padding: 10px 20px;
     text-decoration: none;
 }
@@ -143,7 +145,7 @@ html {
 .pine button.btn,
 .pine a.btn.btn-primary {
     text-decoration: none;
-    background-color: #c34500;
+    background-color: #D73F09;
     background-image: none;
     color: #ffffff;
     font-size: 16px;
@@ -181,7 +183,7 @@ html {
 .pine .widget-title {
     text-transform: uppercase;
     font-size: 18px;
-    color: #c34500;
+    color: #D73F09;
     background-color: #f5f2ed;
     border: none;
     border-radius: 0;
@@ -189,7 +191,7 @@ html {
 
 .pine #sidebar .ui-datepicker .ui-widget-header {
     background: #f5f2ed;
-    color: #c34500;
+    color: #D73F09;
     text-transform: uppercase;
 }
 
