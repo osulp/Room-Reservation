@@ -18,7 +18,12 @@ class UserDecorator < Draper::Decorator
   end
 
   def min_date
-    return '' if object.staff?
+    # Note: returning '' here for the staff role allows the calendar to enable
+    # any day in the calendar, including past dates. Not sure if there was a
+    # use case for this feature, but it's allowing reservations in the past.
+    # Disabling for now to resolve https://github.com/osulp/Room-Reservation/issues/362
+    #
+    # return '' if object.staff?
     date = Time.current
     "#{date.month}/#{date.day}/#{date.year}"
   end

@@ -315,8 +315,10 @@ class ReservationPopupManager
     master = this
     $("*[name='reserver[user_onid]']").blur((e) ->
       id = $(this).val()
-      id = id.substring(id.length-9)
-      User.find(id: id, callback: master.set_reservation_onid, element: $(this))
+      # remove dashes and trim spaces if any before querying for a user
+      id_num = id.replace(/-/g,'').trim()
+      osu_id = id_num.substring(id_num.length-9)
+      User.find(id: osu_id, callback: master.set_reservation_onid, element: $(this))
     )
     $("*[name='reserver[user_onid]']").keypress((e) ->
       if e.which == 13
