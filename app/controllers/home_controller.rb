@@ -45,10 +45,18 @@ class HomeController < ApplicationController
     end
   end
 
-  # Only allow admins to access past dates.
+  # Disable past dates.
   def admin_date_restriction
     current_date = Time.current.to_date
-    if date < current_date && !can?(:view_past_dates, :calendar)
+    # Removing view_past_dates for :calendar to prevent confusion in the home
+    # for users. Not sure if there was a use case for this feature, but it's
+    # allowing reservations in the past. To access/browse past reservations,
+    # admin users can go to /admin/logs Disabling here for now to resolve
+    # https://github.com/osulp/Room-Reservation/issues/362
+    #
+    # if date < current_date && !can?(:view_past_dates, :calendar)
+    #
+    if date < current_date
       params[:date] = current_date.strftime("%Y-%m-%-d")
       redirect_to day_path(params[:date])
     end
